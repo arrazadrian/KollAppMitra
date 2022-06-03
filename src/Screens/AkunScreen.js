@@ -4,7 +4,7 @@ import React from 'react'
 const AkunScreen = () => {
   return (
     <View>
-      <Text>AkunScreen</Text>
+      <Text>AkunScreen Halo</Text>
     </View>
   )
 }
