@@ -13,6 +13,8 @@ import {
     SignUpScreen, 
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
+import { Ijo, Putih } from '../Utils/Warna.js';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

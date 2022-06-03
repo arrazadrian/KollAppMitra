@@ -4,7 +4,7 @@ import {
    IconAkunIjo, IconAkunPutih,
    IconHomeIjo, IconHomePutih,
    IconRiwayatIjo, IconRiwayatPutih
-} from '../assets/Icon/Index'
+} from '../assets/Icons/Index'
 
 import { IjoTua, Putih } from '../Utils/Warna'
 
