@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import Routernih from './src/Router';
+import Routernih from './src/Router/Index.js';
 
 const App = () => {
   return (

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Kuning } from '../Utils/Warna'
 
 const RiwayatScreen = () => {
   return (
-    <View>
+    <View style={styles.latar}>
       <Text>RiwayatScreen</Text>
     </View>
   )
@@ -11,4 +12,9 @@ const RiwayatScreen = () => {
 
 export default RiwayatScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  latar:{
+    backgroundColor: Kuning,
+    flex: 1,
+  },
+})
