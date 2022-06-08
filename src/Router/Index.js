@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
     SplashScreen, 
     HomeScreen, 
+    TambahScreen,
     RiwayatScreen, 
     ProsesScreen,
     AkunScreen, 
@@ -36,8 +37,8 @@ const AppUtama = () =>{
 const Gerbang = () => {
 return(
     <Stack.Navigator>
-    <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
-    <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
 );
 };
@@ -46,6 +47,7 @@ const HomeStackScreen = () => {
     return(
     <HomeStack.Navigator>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
+      <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
     </HomeStack.Navigator>
     );
   };

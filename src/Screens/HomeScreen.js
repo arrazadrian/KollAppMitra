@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -13,7 +13,7 @@ const HomeScreen = () => {
           <Text style={{color:Putih, fontSize: 16}}>Status: Online</Text>
         <View style={{flexDirection:'row', alignItems:'center'}}>
             <Switch
-              style={{marginVertical: -8}}
+              style={{marginVertical:2, marginHorizontal: 10}}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
@@ -27,10 +27,15 @@ const HomeScreen = () => {
       </View>
       <ScrollView style={{padding: 10}}>
           <Text style={styles.judul}>
-            Etalase Produk
+            Daftar Produk
+          </Text>
+          <Text style={styles.deskripsi}>
+            Produk ini tampil pada layar pelanggan.
           </Text>
       </ScrollView>
-      <Pressable style={styles.tambah}>
+      <Pressable style={styles.tambah}
+      onPress={() => navigation.navigate('TambahScreen')}
+      >
         <Text style={{fontSize:30, fontWeight:'bold', color: Putih}}>
           +</Text>
       </Pressable>
@@ -66,5 +71,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: IjoTua,
-  }
+  },
+  deskripsi:{
+    fontSize: 16,
+    color: IjoTua,
+  },
 })
