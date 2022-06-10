@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Switch, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import ListProduk from '../Components/ListProduk';
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -32,6 +33,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.deskripsi}>
             Produk ini tampil pada layar pelanggan.
           </Text>
+          <ListProduk/>
       </ScrollView>
       <Pressable style={styles.tambah}
       onPress={() => navigation.navigate('TambahScreen')}

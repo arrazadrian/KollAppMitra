@@ -1,24 +1,63 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
 import React from 'react'
-import { IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
+import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { IkanMujaer } from '../assets/Images/Index.js'
 
 const TambahScreen = () => {
   return (
-    <View style={styles.latar}>
-      <ScrollView style={styles.container}>
-        <View style={{marginBottom: 10}}>
-        <Text style={styles.judul}>Produk Baru</Text>
-        <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
-        </View>
-        <View style={styles.gantifoto}>
-            <Image source={IkanMujaer} style={styles.foto} />
-            <Text style={styles.deskripsi}>Foto produk harus jelas</Text>
-        </View>
-        <Text>Nama Produk</Text>
-        <TextInput style={styles.input}/>
-      </ScrollView> 
-    </View>
+    <ScrollView style={styles.latar}>
+          <View style={styles.container}>
+            <View style={{marginBottom: 10, paddingTop: 10,}}>
+              <Text style={styles.judul}>Produk Baru</Text>
+              <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
+            </View>
+            <Text style={styles.subjudul}>Nama Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis nama produk"
+            />
+            <Text style={styles.subjudul}>Foto Produk</Text>
+            <View style={styles.gantifoto}>
+                <Image source={IkanMujaer} style={styles.foto} />
+                <Text style={styles.deskripsi} 
+                >Foto produk harus jelas</Text>
+            </View>
+            <Text style={styles.subjudul}>Harga produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis harga produk"
+              keyboardType='numeric'
+            />
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <View>
+                    <Text style={styles.subjudul}>Kuantitas</Text>
+                    <TextInput style={styles.input}
+                      placeholder="Banyaknya produk"
+                      keyboardType='numeric'
+                    />
+              </View>
+              <View>
+                    <Text style={styles.subjudul}>Satuan</Text>
+                    <TextInput style={styles.input}
+                      placeholder="kg/pcs/ikat/dll"
+                      keyboardType='numeric'
+                    />
+              </View>
+            </View>
+            <Text style={styles.subjudul}>Kategori Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tentukan kategori produk"
+            />
+            <Pressable style={styles.tombol}>
+              <Text
+              style={{
+                color: Ijo,
+                fontSize: 20,
+                fontWeight: 'bold',
+                textAlign: 'center'
+              }}
+              >Tambahkan Produk</Text>
+            </Pressable>
+          </View> 
+    </ScrollView>
   )
 }
 
@@ -28,22 +67,30 @@ const styles = StyleSheet.create({
     latar:{
         backgroundColor: Kuning,
         flex: 1,
-        paddingHorizontal: 10,
-        paddingTop: 10,
+        padding: 10,
     },
     container: {
-        padding: 20,
+        paddingHorizontal: 20,
         backgroundColor: IjoMint,
         borderRadius: 20,
+        marginBottom: 20,
     },
     judul:{
         fontSize: 20,
         fontWeight: 'bold',
         color: IjoTua,
+        textAlign: 'center',
+    },
+    subjudul:{
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: IjoTua,
     },
     deskripsi:{
-        fontSize: 16,
+        fontSize: 17,
         color: IjoTua,
+        flexWrap: 'wrap',
+        textAlign: 'center',
     },
     foto:{
         backgroundColor: Putih,
@@ -62,5 +109,18 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       fontSize: 16,
       padding: 10,
+      marginBottom: 10,
+    },
+    tombol:{
+        borderColor: Ijo,
+        borderWidth: 3,
+        borderRadius: 20,
+        padding: 10,
+        width: '100%',
+        alignItems: 'center', 
+        justifyContent: 'center',
+        alignSelf: 'center',   
+        marginTop: 10,
+        marginBottom: 20,
     }
 })
