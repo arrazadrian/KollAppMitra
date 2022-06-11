@@ -8,7 +8,7 @@ const { height, width } = Dimensions.get('window')
 const SplashScreen = ({ navigation }) => {  
   useEffect(() => {
       setTimeout( () =>{
-        navigation.replace('Gerbang');
+        navigation.replace('AppUtama');
       }, 3000)
   }, [navigation]);
 

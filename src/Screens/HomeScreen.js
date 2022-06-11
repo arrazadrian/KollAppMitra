@@ -27,12 +27,14 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <ScrollView style={{padding: 10}}>
-          <Text style={styles.judul}>
-            Daftar Produk
-          </Text>
-          <Text style={styles.deskripsi}>
-            Produk ini tampil pada layar pelanggan.
-          </Text>
+        <View style={{marginBottom:10}}>
+            <Text style={styles.judul}>
+              Daftar Produk
+            </Text>
+            <Text style={styles.deskripsi}>
+              Produk ini tampil pada layar pelanggan.
+            </Text>
+        </View>
           <ListProduk/>
       </ScrollView>
       <Pressable style={styles.tambah}

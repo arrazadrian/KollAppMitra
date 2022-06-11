@@ -7,8 +7,10 @@ import LogoMitra from './LogoMitra.png'
 import KollLong from './KollLong.png'
 import Gerobak from './Gerobak.png'
 import LatarSignIn from './LatarSignIn.png'
+import DPkartu from './Dagangan.png'
 
 export { IkanMujaer, Splash, Tomato, 
         Delete, Image, LogoMitra,
-        KollLong, Gerobak, LatarSignIn
+        KollLong, Gerobak, LatarSignIn,
+        DPkartu,
     }
