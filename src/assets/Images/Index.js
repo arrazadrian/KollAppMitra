@@ -1,4 +1,5 @@
 import IkanMujaer from './IkanMujaer.png'
 import Splash from './splashKollApp.png'
+import Tomato from './Tomato.jpg'
 
-export default { IkanMujaer, Splash }
+export { IkanMujaer, Splash, Tomato }

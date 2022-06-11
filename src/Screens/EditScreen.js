@@ -22,8 +22,6 @@ const EditScreen = () => {
                   />
                 <Text style={styles.judulisi}>Email</Text>
                 <TextInput style={styles.input} value="asiap"/>
-                <Text style={styles.judulisi}>Alamat</Text>
-                <TextInput style={styles.input} value="asiap"/>
             </View>
             <Pressable style={styles.tombol}>
               <Text style={styles.simpan}>Simpan</Text>
@@ -42,8 +40,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   gambar:{
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: 180,
     borderRadius: 20,
     backgroundColor: Putih,
     justifyContent: 'center',

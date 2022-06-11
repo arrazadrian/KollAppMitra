@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
-import { IkanMujaer } from '../assets/Images/Index'
+import { IkanMujaer, Tomato } from '../assets/Images/Index'
 
 const ListProduk = () => {
   return (
     <View>
        <View style={styles.container}>
-          <Image source={IkanMujaer} style={styles.gambar} />
-          <Text style={{fontSize:18, fontWeight:'bold'}}>Rp25.000</Text> 
-          <Text>Ikan Mujaer</Text> 
-          <Text>250g</Text> 
+          <Image source={Tomato} style={styles.gambar} />
+          <View>
+              <Text style={{fontSize:18, fontWeight:'bold'}}>Rp25.000</Text> 
+              <Text>Ikan Mujaer</Text> 
+              <Text>250g</Text> 
+          </View>
        </View> 
     </View>
   )
@@ -29,9 +31,11 @@ const styles = StyleSheet.create({
         width: 120,
         marginHorizontal: 5,
         marginBottom: 10,
+        alignItems: 'center',
     },
     gambar: {
         width: 90,
         height: 90,
+        borderRadius: 10,
     }
 })
