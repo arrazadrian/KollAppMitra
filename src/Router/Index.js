@@ -12,6 +12,8 @@ import {
     EditScreen,
     SignInScreen, 
     SignUpScreen, 
+    ProdukScreen,
+    PreOrderScreen,
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
@@ -47,6 +49,8 @@ const HomeStackScreen = () => {
     return(
     <HomeStack.Navigator>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
+      <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+      <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
     </HomeStack.Navigator>
     );

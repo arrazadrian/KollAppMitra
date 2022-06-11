@@ -7,10 +7,13 @@ import AkunScreen from "./AkunScreen";
 import EditScreen from "./EditScreen";
 import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
+import ProdukScreen from "./ProdukScreen";
+import PreOrderScreen from "./PreOrderScreen";
 
 export {
      SplashScreen, HomeScreen, 
      RiwayatScreen, ProsesScreen,AkunScreen, 
      SignInScreen, SignUpScreen, 
-     EditScreen, TambahScreen,
+     EditScreen, TambahScreen, PreOrderScreen,
+     ProdukScreen,
     };

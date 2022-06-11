@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, Switch, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Switch, Pressable, Image} from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import ListProduk from '../Components/ListProduk';
+import { Gerobak, PreOrder } from '../assets/Images/Index';
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -10,39 +9,58 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.latar}>
-      <View style={styles.container}>
-          <Text style={{color:Putih, fontSize: 16}}>Status: Online</Text>
-        <View style={{flexDirection:'row', alignItems:'center'}}>
-            <Switch
-              style={{marginVertical:2, marginHorizontal: 10}}
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-            <Text style={{color:Putih,fontSize: 18, fontWeight:'bold' }}>
-              Anda aktif terlacak pelanggan
-            </Text>
+      <View style={{
+        paddingTop: 20,
+        flexDirection:'row', 
+        justifyContent:'space-between', 
+        alignItems:'center',
+        marginBottom: 20,
+        }}>
+        <View>
+          <Text style={{
+            fontSize: 20,
+            color: Ijo,
+            marginBottom: -7,
+          }}>Selamat Datang!</Text>
+          <Text style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            color: IjoTua,
+          }}>Sayur Aa Anri</Text>
+        </View>
+        <View>
+          <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
+          <Text style={{color: Ijo, fontWeight:'bold'}}>Senin, 20 Feb 2022</Text>
         </View>
       </View>
-      <ScrollView style={{padding: 10}}>
-        <View style={{marginBottom:10}}>
-            <Text style={styles.judul}>
-              Daftar Produk
+      <View style={styles.status}>
+        <View>
+            <Text style={styles.judul}>Status Anda: 
+            <Text style={{color: IjoTua}}> Aktif</Text>
             </Text>
-            <Text style={styles.deskripsi}>
-              Produk ini tampil pada layar pelanggan.
-            </Text>
+            <Text style={styles.deskripsi}>Anda aktif terlacak calon pelanggan.</Text>
         </View>
-          <ListProduk/>
-      </ScrollView>
-      <Pressable style={styles.tambah}
-      onPress={() => navigation.navigate('TambahScreen')}
-      >
-        <Text style={{fontSize:30, fontWeight:'bold', color: Putih}}>
-          +</Text>
-      </Pressable>
+          <Switch
+            trackColor={{ false: '#767577', true: Ijo }}
+            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+      </View>
+      <View>
+        <Text style={styles.judul}>Etalase Produk</Text>
+        <View style={{flexDirection:'row'}}>
+            <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
+              <Image source={Gerobak} style={styles.gambar}/>
+              <Text style={styles.cardtext}>On Demand Products</Text>
+            </Pressable>
+            <Pressable style={styles.card} onPress={() => navigation.push('PreOrderScreen')}>
+              <Image source={PreOrder} style={styles.gambar}/>
+              <Text style={styles.cardtext}>Pre-Order Products</Text>
+            </Pressable>
+        </View>
+      </View>
     </View>
   )
 }
@@ -53,31 +71,48 @@ const styles = StyleSheet.create({
   latar:{
     backgroundColor: Kuning,
     flex: 1,
+    padding: 20,
   },
-  container: {
-    backgroundColor: Ijo,
-    paddingTop: 24,
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-  },
-  tambah:{
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    height: 70,
-    width: 70,
-    backgroundColor: Ijo,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+  status: {
+    backgroundColor: Putih,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 10,
+    borderColor: Ijo,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   judul:{
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: IjoTua,
+    color: Ijo,
   },
   deskripsi:{
     fontSize: 16,
     color: IjoTua,
+  },
+  cardtext:{
+    fontSize: 16,
+    color: IjoTua,
+    fontWeight: 'bold',
+  },
+  card:{
+    backgroundColor: Putih,
+    width: 120,
+    height: 180,
+    padding: 15,
+    marginTop: 10,
+    marginRight: 20,
+    marginBottom: 20,
+    borderRadius: 10,
+    borderColor: Ijo,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  gambar:{
+    width: 100,
+    height: 100,
+    borderRadius: 10,
   },
 })
