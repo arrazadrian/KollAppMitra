@@ -37,7 +37,7 @@ const SignInScreen = ({navigation}) => {
               <View>
                   <View style={styles.wraper}>
                       <View style={{marginBottom: 10}}>
-                          <Text style={styles.judul}>Masuk Akun</Text>
+                          <Text style={styles.judul}>Masuk Akun Mitra</Text>
                           <Text style={{fontSize: 16}}>Lengkapi email dan kata sandi</Text>
                       </View>
                       <View style={{ marginBottom: 10}}>
