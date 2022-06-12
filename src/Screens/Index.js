@@ -9,11 +9,12 @@ import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
 import ProdukScreen from "./ProdukScreen";
 import PreOrderScreen from "./PreOrderScreen";
+import LangsungScreen from "./LangsungScreen";
 
 export {
      SplashScreen, HomeScreen, 
      RiwayatScreen, ProsesScreen,AkunScreen, 
      SignInScreen, SignUpScreen, 
      EditScreen, TambahScreen, PreOrderScreen,
-     ProdukScreen,
+     ProdukScreen, LangsungScreen,
     };

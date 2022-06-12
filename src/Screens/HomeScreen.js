@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
             </Pressable>
         </View>
           <Text style={styles.judul}>Bertemu di Jalan?</Text>
-          <Pressable style={styles.langsung}>
+          <Pressable style={styles.langsung} onPress={() => navigation.push('LangsungScreen')}>
             <View>
               <Text style={styles.texttemu}>Temu Langsung</Text>
               <Text style={styles.deskripsi}>Buat transaksi baru saat bertemu</Text>
