@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import { IkanMujaer, Tomato } from '../assets/Images/Index'
+import { Edit } from '../assets/Icons/Index'
 
 const ListProduk = () => {
   return (
@@ -13,6 +14,7 @@ const ListProduk = () => {
               <Text>Ikan Mujaer</Text> 
               <Text>250g</Text> 
           </View>
+          <Edit style={{left: 30}}/>
        </View> 
     </View>
   )
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
         borderColor: Ijo,
         borderWidth: 1,
         padding: 10,
-        height: 180,
+        height: 200,
         width: 120,
         marginHorizontal: 5,
         marginBottom: 10,

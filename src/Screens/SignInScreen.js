@@ -46,7 +46,7 @@ const SignInScreen = ({navigation}) => {
                       </View>
                       <View style={{ marginBottom: 10}}>
                           <TextInput secureTextEntry={true} style={styles.input} placeholder="Kata sandi akun anda"/>
-                      <IconLock style={{position:'absolute', top: 14, left: 8}}/>
+                          <IconLock style={{position:'absolute', top: 14, left: 8}}/>
                       </View>
 
                       <View style={styles.tombol}>
