@@ -18,6 +18,7 @@ import {
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
+import TopTab from '../Components/TopTab.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const HomeStackScreen = () =>{
     return(
         <Tab.Navigator tabBar={props => <TabNavigasi {...props}/>}>
             <Tab.Screen name="Beranda" component={HomeScreen} options={{ headerShown: false }}/>
-            <Tab.Screen name="Riwayat" component={RiwayatStackScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Riwayat" component={TopTab} options={{ headerShown: false }}/>
             <Tab.Screen name="Akun" component={AkunStackScreen} options={{ headerShown: false }}/>
         </Tab.Navigator>
     );

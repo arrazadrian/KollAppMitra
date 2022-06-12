@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Kuning } from '../Utils/Warna'
 
 const ProsesScreen = () => {
   return (
-    <View>
+    <View style={styles.latar}>
       <Text>ProsesScreen</Text>
     </View>
   )
@@ -11,4 +12,9 @@ const ProsesScreen = () => {
 
 export default ProsesScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  latar:{
+    backgroundColor: Kuning,
+    flex: 1,
+  }
+})
