@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Switch, Pressable, Image} from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
-import { Gerobak, PreOrder } from '../assets/Images/Index';
+import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -50,16 +50,24 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View>
         <Text style={styles.judul}>Etalase Produk</Text>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'row', justifyContent:'space-around'}}>
             <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
               <Image source={Gerobak} style={styles.gambar}/>
-              <Text style={styles.cardtext}>On Demand Products</Text>
+              <Text style={styles.cardtext}>Produk Utama</Text>
             </Pressable>
             <Pressable style={styles.card} onPress={() => navigation.push('PreOrderScreen')}>
               <Image source={PreOrder} style={styles.gambar}/>
-              <Text style={styles.cardtext}>Pre-Order Products</Text>
+              <Text style={styles.cardtext}>Produk Pre-Order</Text>
             </Pressable>
         </View>
+          <Text style={styles.judul}>Bertemu di Jalan?</Text>
+          <Pressable style={styles.langsung}>
+            <View>
+              <Text style={styles.texttemu}>Temu Langsung</Text>
+              <Text style={styles.deskripsi}>Buat transaksi baru saat bertemu</Text>
+            </View>
+            <Image source={TemuLangsung} style={styles.gambartemu}/>
+          </Pressable>
       </View>
     </View>
   )
@@ -99,11 +107,10 @@ const styles = StyleSheet.create({
   },
   card:{
     backgroundColor: Putih,
-    width: 120,
-    height: 180,
+    width: '45%',
+    height: 170,
     padding: 15,
     marginTop: 10,
-    marginRight: 20,
     marginBottom: 20,
     borderRadius: 10,
     borderColor: Ijo,
@@ -111,8 +118,29 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   gambar:{
-    width: 100,
-    height: 100,
+    width: 110,
+    height: 110,
     borderRadius: 10,
+  },
+  langsung:{
+    backgroundColor: Putih,
+    padding: 15,
+    marginTop: 10,
+    marginBottom: 20,
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  gambartemu:{
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+  },
+  texttemu:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: IjoTua,
   },
 })
