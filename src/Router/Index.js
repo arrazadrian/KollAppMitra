@@ -27,10 +27,10 @@ const HomeStack = createNativeStackNavigator();
 const RiwayatStack = createNativeStackNavigator();
 const AkunStack = createNativeStackNavigator();
 
-const AppUtama = () =>{
+const HomeStackScreen = () =>{
     return(
         <Tab.Navigator tabBar={props => <TabNavigasi {...props}/>}>
-            <Tab.Screen name="Beranda" component={HomeStackScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Beranda" component={HomeScreen} options={{ headerShown: false }}/>
             <Tab.Screen name="Riwayat" component={RiwayatStackScreen} options={{ headerShown: false }}/>
             <Tab.Screen name="Akun" component={AkunStackScreen} options={{ headerShown: false }}/>
         </Tab.Navigator>
@@ -46,10 +46,10 @@ return(
 );
 };
 
-const HomeStackScreen = () => {
+const AppUtama = () => {
     return(
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
+      <HomeStack.Screen name="HomeScreen" component={HomeStackScreen} options={{ headerShown: false }}/>
       <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
