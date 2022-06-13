@@ -11,7 +11,7 @@ import {
 
 const Tab = createMaterialTopTabNavigator();
 
-const TopTab = () => {
+const TopTab = ({ navigation }) => {
   return (
     <Tab.Navigator
         initialRouteName='ProsesScreen'

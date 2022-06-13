@@ -21,7 +21,7 @@ const PreOrderScreen = ({navigation}) => {
       <ListProduk />
     </ScrollView>
     <Pressable style={styles.tambah}
-          onPress={() => navigation.navigate('TambahScreen')}
+          onPress={() => navigation.navigate('TambahPreScreen')}
           >
           <Text style={{fontSize:30, fontWeight:'bold', color: Putih}}>
           +</Text>

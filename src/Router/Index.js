@@ -6,6 +6,7 @@ import {
     SplashScreen, 
     HomeScreen, 
     TambahScreen,
+    TambahPreScreen,
     RiwayatScreen, 
     ProsesScreen,
     AkunScreen, 
@@ -54,6 +55,7 @@ const AppUtama = () => {
       <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+      <HomeStack.Screen name="TambahPreScreen" component={TambahPreScreen} options={{ title: "Tambah Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
     </HomeStack.Navigator>
     );
