@@ -6,7 +6,7 @@ const CheckoutLangScreen = () => {
   return (
     <ScrollView style={styles.latar}>
       <Text style={styles.judul}>QR Code Trsansaksi</Text>
-      <Text style={styles.deskripsi}>Tunjukan QR Code ini kepada pelanggan.</Text>
+      <Text style={styles.deskripsi}>Tunjukan QR Code ini kepada pelanggan bila sudah melunaskan transaksi.</Text>
       <View style={styles.qrcode}>
 
       </View>
