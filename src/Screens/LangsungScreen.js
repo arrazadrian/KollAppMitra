@@ -3,11 +3,12 @@ import React from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
         Kategori05, Kategori06, Kategori07, Kategori08,
-        Kategori09, KollLong} from '../assets/Images/Index'
+        Kategori09, KollLong, Bag} from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import ListProduk from '../Components/ListProduk'
+import JualProduk from '../Components/JualProduk'
 
-const LangsungScreen = () => {
+const LangsungScreen = ({ navigation }) => {
   return (
     <View style={styles.latar}>
           <ScrollView>
@@ -82,14 +83,13 @@ const LangsungScreen = () => {
                 <View style={{marginBottom:10, marginLeft: 10}}>
                     <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
                 </View>
-                <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-                  <ListProduk/>
-                  <ListProduk/>
-                  <ListProduk/>
-                  <ListProduk/>
-                  <ListProduk/>
-                  <ListProduk/>
-                  <ListProduk/>
+                <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around'}}>
+                  <JualProduk/>
+                  <JualProduk/>
+                  <JualProduk/>
+                  <JualProduk/>
+                  <JualProduk/>
+                  <JualProduk/>
                 </View>
             </View>
                 <View>
@@ -97,15 +97,28 @@ const LangsungScreen = () => {
                 </View>
           </ScrollView>
           <View style={{flexDirection: 'column-reverse'}}>
-              <View style={styles.panggil}>
-                <View>
-                    <Text style={{fontWeight:'bold', color: Ijo}}>Menemukan produk yang kamu mau?</Text>
-                    <Text style={{fontWeight:'bold', color: Ijo}}>Yuk panggil mitra!</Text>
-                </View>
-                <Pressable style={{padding: 10, backgroundColor: Ijo, borderRadius: 10}} onPress={() => navigation.push('LokasiScreen')}>
-                    <Text style={{fontWeight:'bold', color:Putih}}>Panggil Mitra</Text>
-                </Pressable>
-              </View>
+              <View style={styles.pesan}>
+                  <View style={{flexDirection:'row'}}>
+                    <View style={{marginHorizontal: 10, justifyContent:'center'}}>
+                      <Image source={Bag} style={{width:40, height:40}}/>
+                    </View>
+                    <View>
+                      <Text style={{color:Putih, fontWeight:'bold'}}>
+                          <Text>0 </Text>
+                          <Text>Produk</Text>
+                      </Text>
+                      <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>
+                          <Text>Rp </Text>
+                          <Text>0</Text>
+                      </Text>
+                    </View>
+                  </View>
+                  <Pressable style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
+                    onPress={() => navigation.navigate('CheckoutLangScreen')}
+                    >
+                    <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
+                  </Pressable>
+            </View>
           </View>
     </View>
   )
@@ -154,19 +167,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  preorder:{
+  pesan:{
     flexDirection: 'row',
-    backgroundColor: Putih,
+    backgroundColor: Ijo,
+    alignItems:'center',
+    justifyContent:'space-between',
+    padding: 10,
     borderRadius: 10,
-    height: 100,
-    padding: 20,
-    marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: Ijo,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    elevation: 5,
+    position: 'absolute',
+    width: '95%',
+    borderColor: IjoTua,
+    borderWidth: 3,
+    margin: 10
   },
   bawah:{
     width: '100%',

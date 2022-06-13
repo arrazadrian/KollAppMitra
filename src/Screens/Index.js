@@ -11,6 +11,7 @@ import SignUpScreen from "./SignUpScreen";
 import ProdukScreen from "./ProdukScreen";
 import PreOrderScreen from "./PreOrderScreen";
 import LangsungScreen from "./LangsungScreen";
+import CheckoutLangScreen from "./CheckoutLangScreen";
 
 export {
      SplashScreen, HomeScreen, 
@@ -18,4 +19,5 @@ export {
      SignInScreen, SignUpScreen, 
      EditScreen, TambahScreen, PreOrderScreen,
      ProdukScreen, LangsungScreen, TambahPreScreen,
+     CheckoutLangScreen,
     };
