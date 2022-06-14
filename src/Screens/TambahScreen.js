@@ -8,7 +8,7 @@ const TambahScreen = () => {
     <ScrollView style={styles.latar}>
           <View style={styles.container}>
             <View style={{marginBottom: 10, paddingTop: 10,}}>
-              <Text style={styles.judul}>Produk Baru</Text>
+              <Text style={styles.judul}>Produk Utama Baru</Text>
               <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
             </View>
             <Text style={styles.subjudul}>Nama Produk</Text>
@@ -54,7 +54,7 @@ const TambahScreen = () => {
                 fontWeight: 'bold',
                 textAlign: 'center'
               }}
-              >Tambahkan Produk</Text>
+              >Tambahkan Produk Utama</Text>
             </Pressable>
           </View> 
     </ScrollView>

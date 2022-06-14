@@ -10,7 +10,7 @@ const PreOrderScreen = ({navigation}) => {
   return (
     <View style={styles.latar}>
     <ScrollView>
-      <View style={{flexDirection:'row', marginBottom:10}}>
+      <View style={{flexDirection:'row', marginVertical:10}}>
         <Image source={KollLong} style={styles.logopojok} />
         <PencarianBar />
       </View>
@@ -18,7 +18,14 @@ const PreOrderScreen = ({navigation}) => {
           <Text style={styles.judul}>Produk Pre-Order</Text>
           <Text style={styles.deskripsi}>Produk yang siap diantar bila dipesan satu hari sebelumnnya.</Text>
       </View>
+      <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
       <ListProduk />
+      <ListProduk />
+      <ListProduk />
+      <ListProduk />
+      <ListProduk />
+      <ListProduk />
+      </View>
     </ScrollView>
     <Pressable style={styles.tambah}
           onPress={() => navigation.navigate('TambahPreScreen')}
@@ -36,7 +43,7 @@ const styles = StyleSheet.create({
   latar: {
     backgroundColor: Kuning,
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   judul:{
     fontSize: 20,
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
   },
   tambah:{
     position: 'absolute',
-    bottom: 20,
+    bottom: 15,
     right: 20,
     height: 70,
     width: 70,
