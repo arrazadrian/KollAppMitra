@@ -10,6 +10,10 @@ const CheckoutLangScreen = () => {
       <View style={styles.qrcode}>
 
       </View>
+      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+        <Text>ID: 28138732893717</Text>
+        <Text>12/02/2022, 08.02</Text>
+      </View>
       <Text style={styles.judul}>Jenis Layanan</Text>
       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={styles.deskripsi}>Temu Langsung</Text>
