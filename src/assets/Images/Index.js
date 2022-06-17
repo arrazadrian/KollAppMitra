@@ -2,7 +2,7 @@ import IkanMujaer from './IkanMujaer.png'
 import Splash from './splashKollMitra.png'
 import Tomato from './Tomato.jpg'
 import Delete from './Delete.png'
-import Image from './Image.png'
+import DPdefault from './Image.png'
 import LogoMitra from './LogoMitra.png'
 import KollLong from './KollLong.png'
 import Gerobak from './Gerobak.png'
@@ -23,7 +23,7 @@ import Bag from './Bag.png'
 import Bawah from './Bawah.png'
 
 export { IkanMujaer, Splash, Tomato, 
-        Delete, Image, LogoMitra,
+        Delete, DPdefault, LogoMitra,
         KollLong, Gerobak, LatarSignIn,
         DPkartu, PreOrder, TemuLangsung,
         Kategori01, Kategori02, Kategori03,

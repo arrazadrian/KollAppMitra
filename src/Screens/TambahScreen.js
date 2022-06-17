@@ -1,9 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import { IkanMujaer } from '../assets/Images/Index.js'
+import {  DPdefault } from '../assets/Images/Index.js'
+import {Picker} from '@react-native-picker/picker';
+
 
 const TambahScreen = () => {
+
+  const [kategori, setKategori] = useState('Pilih Kategori');
+
   return (
     <ScrollView style={styles.latar}>
           <View style={styles.container}>
@@ -17,7 +22,7 @@ const TambahScreen = () => {
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={IkanMujaer} style={styles.foto} />
+                <Image source={DPdefault} style={styles.foto} />
                 <Text style={styles.deskripsi} 
                 >Foto produk harus jelas</Text>
             </View>
@@ -36,16 +41,38 @@ const TambahScreen = () => {
               </View>
               <View>
                     <Text style={styles.subjudul}>Satuan</Text>
-                    <TextInput style={styles.input}
-                      placeholder="kg/pcs/ikat/dll"
-                      keyboardType='numeric'
-                    />
+                    <Picker
+                      mode='dropdown'
+                      style={{backgroundColor: Putih, width: 140}}
+                      selectedValue={kategori}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setKategori(itemValue)
+                      }>
+                      <Picker.Item label="gram" value="g" />
+                      <Picker.Item label="kilogram" value="kg" />
+                      <Picker.Item label="ons" value="ons" />
+                      <Picker.Item label="ikat" value="ikat" />
+                    </Picker>
               </View>
             </View>
             <Text style={styles.subjudul}>Kategori Produk</Text>
-            <TextInput style={styles.input}
-              placeholder="Tentukan kategori produk"
-            />
+            <Picker
+              mode='dropdown'
+              style={{backgroundColor: Putih}}
+              selectedValue={kategori}
+              onValueChange={(itemValue, itemIndex) =>
+                setKategori(itemValue)
+              }>
+              <Picker.Item label="Sayuran" value="Sayuran" />
+              <Picker.Item label="Produk Laut" value="Produk Laut" />
+              <Picker.Item label="Daging" value="Daging" />
+              <Picker.Item label="Buah" value="Buah" />
+              <Picker.Item label="Bahan Pokok" value="Bahan Pokok" />
+              <Picker.Item label="Cemilan" value="Cemilan" />
+              <Picker.Item label="Lauk" value="Lauk" />
+              <Picker.Item label="Bumbu" value="Bumbu" />
+              <Picker.Item label="Frozen Food" value="Frozen Food" />
+            </Picker>
             <Pressable style={styles.tombol}>
               <Text
               style={{
@@ -85,6 +112,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: IjoTua,
+        marginBottom: 8,
     },
     deskripsi:{
         fontSize: 17,
@@ -106,7 +134,7 @@ const styles = StyleSheet.create({
     },
     input:{
       backgroundColor: Putih,
-      borderRadius: 10,
+      //borderRadius: 10,
       fontSize: 16,
       padding: 10,
       marginBottom: 10,
