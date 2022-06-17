@@ -1,6 +1,7 @@
 import { StyleSheet, Text, ScrollView, View, Pressable } from 'react-native'
 import React from 'react'
 import { IjoTua, Kuning, Putih, Ijo } from '../Utils/Warna'
+import ListReceipt from '../Components/ListReceipt'
 
 const CheckoutLangScreen = () => {
   return (
@@ -30,16 +31,7 @@ const CheckoutLangScreen = () => {
         </Text>
       </View>
       <Text style={styles.judul}>Deskripsi Pesanan</Text>
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Text style={styles.deskripsi}>
-            <Text>2x         </Text>
-            <Text>Ikan Mujair</Text>
-        </Text>
-        <Text style={styles.harga}>
-            <Text>Rp</Text>
-            <Text>24000</Text>
-        </Text>
-      </View>
+      <ListReceipt/>
       <View style={styles.total}>
             <Text style={styles.judul}>Total Harga:</Text>
             <Text style={styles.judul}>

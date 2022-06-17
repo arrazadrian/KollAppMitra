@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Minus, Plus } from '../assets/Icons/Index'
 import { Ijo, Putih } from '../Utils/Warna'
 import { Tomato } from '../assets/Images/Index'
+import QuantitySelector from './QuantitySelector'
 
 const JualProduk = () => {
+
+  const [quantity, setQuantity] = useState(0)
+
   return (
     <View>
        <View style={styles.container}>
@@ -16,15 +20,7 @@ const JualProduk = () => {
                 <Text>250g</Text> 
             </View>
         </View>
-          <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
-            <Pressable>
-                <Plus/>
-            </Pressable>
-            <Text style={{fontSize: 20}}>0</Text>
-            <Pressable>
-                <Minus/>
-            </Pressable>
-          </View>
+          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/>
        </View> 
     </View>
   )
@@ -39,8 +35,8 @@ const styles = StyleSheet.create({
         borderColor: Ijo,
         borderWidth: 1,
         padding: 10,
-        //height: 200,
-        //width: 120,
+        height: 210,
+        width: 120,
         marginHorizontal: 5,
         marginBottom: 10,
     },

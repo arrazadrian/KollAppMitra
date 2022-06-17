@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, Modal } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
         Kategori05, Kategori06, Kategori07, Kategori08,
@@ -9,6 +9,9 @@ import ListProduk from '../Components/ListProduk'
 import JualProduk from '../Components/JualProduk'
 
 const LangsungScreen = ({ navigation }) => {
+  
+  const [total, setTotal] = useState(0)
+  
   return (
     <View style={styles.latar}>
           <ScrollView>
@@ -104,7 +107,7 @@ const LangsungScreen = ({ navigation }) => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>0 </Text>
+                          <Text>{total} </Text>
                           <Text>Produk</Text>
                       </Text>
                       <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>

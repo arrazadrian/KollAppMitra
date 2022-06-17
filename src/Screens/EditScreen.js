@@ -36,13 +36,13 @@ export default EditScreen
 const styles = StyleSheet.create({
   latar:{
     flex:1,
-    backgroundColor: Kuning,
+    backgroundColor: IjoTua,
     padding: 20,
   },
   gambar:{
-    width: '100%',
-    height: 180,
-    borderRadius: 20,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: Putih,
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,11 +58,12 @@ const styles = StyleSheet.create({
     borderColor: Ijo,
     marginBottom: 10,
     fontSize: 20,
+    color: Putih,
   },
   judulisi:{
     fontSize: 18,
     fontWeight: 'bold',
-    color: IjoTua,
+    color: Putih,
   },
   tombol:{
     backgroundColor: Ijo,
