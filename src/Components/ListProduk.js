@@ -4,7 +4,9 @@ import { Ijo, Putih } from '../Utils/Warna'
 import { IkanMujaer, Tomato } from '../assets/Images/Index'
 import { Edit } from '../assets/Icons/Index'
 
-const ListProduk = () => {
+
+
+const ListProduk = (props) => {
   return (
     <View>
        <View style={styles.container}>

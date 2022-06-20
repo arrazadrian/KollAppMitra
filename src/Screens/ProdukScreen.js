@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Image, FlatList } from 'react-native'
 import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import { KollLong } from '../assets/Images/Index'
-
+import { daftarproduk } from '../Data/daftarproduk'
 
 const ProdukScreen = ({ navigation }) => {
   return (
     <View style={styles.latar}>
-      <ScrollView>
+      <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
         <Image source={KollLong} style={styles.logopojok} />
         <PencarianBar />
@@ -19,17 +19,13 @@ const ProdukScreen = ({ navigation }) => {
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
       </View>
       <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
-        <ListProduk onPress={() => navigation.navigate('EditProdukScreen')}/>
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
-        <ListProduk />
+       <FlatList
+          style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}
+          data={daftarproduk}
+          renderItem={({ item }) => <ListProduk data={item} navigation={navigation} />}
+       />
       </View>
-      </ScrollView>
+      </View>
       <Pressable style={styles.tambah}
             onPress={() => navigation.navigate('TambahScreen')}
             >

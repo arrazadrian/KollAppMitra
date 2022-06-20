@@ -2,7 +2,7 @@ export const daftarproduk =
 [{
     id: 1, 
     nama: 'Apel',
-    image: require('../assets/Image/apel.jpg'),
+    image: require('../assets/Images/apel.jpg'),
     harga: 5000,
     kuantitas: 300,
     satuan:'g',
@@ -11,7 +11,7 @@ export const daftarproduk =
 { 
     id: 2, 
     nama: 'Jeruk',
-    image: require('../assets/Image/jeruk.jpg'),
+    image: require('../assets/Images/jeruk.jpg'),
     harga: 6500,
     kuantitas: 300,
     satuan:'g',
@@ -20,7 +20,7 @@ export const daftarproduk =
 { 
     id: 3, 
     nama: 'Pisang',
-    image: require('../assets/Image/pisang.jpg'),
+    image: require('../assets/Images/pisang.jpg'),
     harga: 3500,
     kuantitas: 500,
     satuan:'g',
@@ -29,7 +29,7 @@ export const daftarproduk =
 { 
     id: 4, 
     nama: 'Mangga',
-    image: require('../assets/Image/mangga.jpg'),
+    image: require('../assets/Images/mangga.jpg'),
     harga: 7000,
     kuantitas: 400,
     satuan:'g',
