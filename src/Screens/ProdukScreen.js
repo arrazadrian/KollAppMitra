@@ -19,7 +19,7 @@ const ProdukScreen = ({ navigation }) => {
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
       </View>
       <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
-        <ListProduk />
+        <ListProduk onPress={() => navigation.navigate('EditProdukScreen')}/>
         <ListProduk />
         <ListProduk />
         <ListProduk />

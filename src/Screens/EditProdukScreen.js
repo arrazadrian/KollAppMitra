@@ -4,17 +4,13 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 
-
-const TambahPreScreen = () => {
-
-  const [kategori, setKategori] = useState('Pilih Kategori');
-
+const EditProdukScreen = () => {
   return (
-    <ScrollView style={styles.latar}>
+<ScrollView style={styles.latar}>
           <View style={styles.container}>
             <View style={{marginBottom: 10, paddingTop: 10,}}>
-              <Text style={styles.judul}>Produk Pre-Order Baru</Text>
-              <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
+              <Text style={styles.judul}>Perbaiki Data Produk</Text>
+              <Text style={styles.deskripsi}>Perbarui data produk dengan sesuai</Text>
             </View>
             <Text style={styles.subjudul}>Nama Produk</Text>
             <TextInput style={styles.input}
@@ -94,7 +90,7 @@ const TambahPreScreen = () => {
   )
 }
 
-export default TambahPreScreen
+export default EditProdukScreen
 
 const styles = StyleSheet.create({
     latar:{

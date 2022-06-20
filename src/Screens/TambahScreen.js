@@ -20,6 +20,12 @@ const TambahScreen = () => {
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
             />
+            <Text style={styles.subjudul}>Deskripsi Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis deskripsi produk dengan jelas"
+              multiline={true}
+              maxLength={150}
+            />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
                 <Image source={DPdefault} style={styles.foto} />
