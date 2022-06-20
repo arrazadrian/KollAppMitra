@@ -20,9 +20,10 @@ const ProdukScreen = ({ navigation }) => {
       </View>
       <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
        <FlatList
-          style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}
           data={daftarproduk}
-          renderItem={({ item }) => <ListProduk data={item} navigation={navigation} />}
+          renderItem= {ListProduk}
+          keyExtractor={ daftarproduk => daftarproduk.id}
+          ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
        />
       </View>
       </View>

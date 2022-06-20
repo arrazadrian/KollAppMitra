@@ -5,16 +5,15 @@ import { IkanMujaer, Tomato } from '../assets/Images/Index'
 import { Edit } from '../assets/Icons/Index'
 
 
-
-const ListProduk = (props) => {
+const ListProduk = ({item}) => {
   return (
-    <View>
+    <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
        <View style={styles.container}>
-          <Image source={Tomato} style={styles.gambar} />
+          <Image source={item.image} style={styles.gambar} />
           <View>
-              <Text style={{fontSize:18, fontWeight:'bold'}}>Rp25.000</Text> 
-              <Text>Ikan Mujaer</Text> 
-              <Text>250g</Text> 
+              <Text style={{fontSize:18, fontWeight:'bold'}}>Rp{item.harga}</Text> 
+              <Text>{item.nama}</Text> 
+              <Text>{item.kuantitas}{item.satuan}</Text> 
           </View>
           <Edit style={{left: 30}}/>
        </View> 
