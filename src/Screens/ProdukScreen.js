@@ -18,8 +18,9 @@ const ProdukScreen = ({ navigation }) => {
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
       </View>
-      <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
+      <View style={{marginBottom:80}}>
        <FlatList
+          numColumns={3}
           data={daftarproduk}
           renderItem= {ListProduk}
           keyExtractor={ daftarproduk => daftarproduk.id}

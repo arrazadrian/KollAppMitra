@@ -7,15 +7,17 @@ import { Edit } from '../assets/Icons/Index'
 
 const ListProduk = ({item}) => {
   return (
-    <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
+    <View>
        <View style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
-          <View>
+          <View style={{paddingHorizontal:5}}>
               <Text style={{fontSize:18, fontWeight:'bold'}}>Rp{item.harga}</Text> 
               <Text>{item.nama}</Text> 
               <Text>{item.kuantitas}{item.satuan}</Text> 
           </View>
-          <Edit style={{left: 30}}/>
+          <View style={{flexDirection:'column-reverse'}}>
+              <Edit/>
+          </View>
        </View> 
     </View>
   )
@@ -34,11 +36,11 @@ const styles = StyleSheet.create({
         width: 120,
         marginHorizontal: 5,
         marginBottom: 10,
-        alignItems: 'center',
     },
     gambar: {
-        width: 90,
-        height: 90,
+        width: 95,
+        height: 95,
         borderRadius: 10,
+        alignSelf: 'center',
     }
 })
