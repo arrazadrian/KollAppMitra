@@ -11,11 +11,10 @@ import { daftarproduk } from '../Data/daftarproduk'
 
 const LangsungScreen = ({ navigation }) => {
   
-  const [total, setTotal] = useState(0)
   
   return (
     <View style={styles.latar}>
-          <ScrollView>
+          
             <View style={{padding: 10}}>
                 <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', }}>
                   <Image source={KollLong} style={{width: 80, height:50}} /> 
@@ -92,17 +91,19 @@ const LangsungScreen = ({ navigation }) => {
                       contentContainerStyle={{paddingBottom:80}} 
                       numColumns={3}
                       data={daftarproduk}
-                      renderItem= {ListProduk}
+                      renderItem= {JualProduk}
                       keyExtractor={ daftarproduk => daftarproduk.id}
                       ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
-                      ListFooterComponent={<View style={{height:250}}></View>}
+                      ListFooterComponent={
+                      <View>
+                        <Image source={Bawah} style={styles.bawah}/>
+                      </View>
+                      }
                   />
                 </View>
             </View>
-                <View>
-                  <Image source={Bawah} style={styles.bawah}/>
-                </View>
-          </ScrollView>
+            
+          
           <View style={{flexDirection: 'column-reverse'}}>
               <View style={styles.pesan}>
                   <View style={{flexDirection:'row'}}>
@@ -111,7 +112,7 @@ const LangsungScreen = ({ navigation }) => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>{total} </Text>
+                          <Text>0 </Text>
                           <Text>Produk</Text>
                       </Text>
                       <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>
