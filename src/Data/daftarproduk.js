@@ -39,7 +39,7 @@ export const daftarproduk =
     { 
         id: 5, 
         nama: 'Ayam Boiler',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/broiler.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -48,7 +48,7 @@ export const daftarproduk =
     { 
         id: 6, 
         nama: 'Tenderloin',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/tenderloin.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -57,7 +57,7 @@ export const daftarproduk =
     { 
         id: 7, 
         nama: 'T-Bone',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/tbone.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -66,7 +66,7 @@ export const daftarproduk =
     { 
         id: 8, 
         nama: 'Ayam filet',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/ayamfilet.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -75,7 +75,7 @@ export const daftarproduk =
     { 
         id: 9, 
         nama: 'Kerupuk',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/kerupuk.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -84,7 +84,7 @@ export const daftarproduk =
     { 
         id: 10, 
         nama: 'Sosis',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/sosis.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -93,7 +93,7 @@ export const daftarproduk =
     { 
         id: 11, 
         nama: 'Bayam',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/bayam.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -102,7 +102,7 @@ export const daftarproduk =
     { 
         id: 12, 
         nama: 'Brokoli',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/brokoli.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -111,7 +111,7 @@ export const daftarproduk =
     { 
         id: 13, 
         nama: 'Daun Pisang',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('../assets/Images/daunpisang.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
