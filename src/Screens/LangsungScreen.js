@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, Image, ScrollView, Modal } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
@@ -7,6 +7,7 @@ import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
 import PencarianBar from '../Components/PencarianBar'
 import ListProduk from '../Components/ListProduk'
 import JualProduk from '../Components/JualProduk'
+import { daftarproduk } from '../Data/daftarproduk'
 
 const LangsungScreen = ({ navigation }) => {
   
@@ -86,13 +87,16 @@ const LangsungScreen = ({ navigation }) => {
                 <View style={{marginBottom:10, marginLeft: 10}}>
                     <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
                 </View>
-                <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around'}}>
-                  <JualProduk/>
-                  <JualProduk/>
-                  <JualProduk/>
-                  <JualProduk/>
-                  <JualProduk/>
-                  <JualProduk/>
+                <View>
+                  <FlatList
+                      contentContainerStyle={{paddingBottom:80}} 
+                      numColumns={3}
+                      data={daftarproduk}
+                      renderItem= {ListProduk}
+                      keyExtractor={ daftarproduk => daftarproduk.id}
+                      ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+                      ListFooterComponent={<View style={{height:250}}></View>}
+                  />
                 </View>
             </View>
                 <View>

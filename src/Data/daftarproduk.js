@@ -3,7 +3,7 @@ export const daftarproduk =
     {
         id: 1, 
         nama: 'Apel',
-        image: require('../assets/Images/apel.jpg'),
+        image: require('./GambarData/apel.jpg'),
         harga: 900,
         kuantitas: 300,
         satuan:'g',
@@ -12,7 +12,7 @@ export const daftarproduk =
     { 
         id: 2, 
         nama: 'Jeruk',
-        image: require('../assets/Images/jeruk.jpg'),
+        image: require('./GambarData/jeruk.jpg'),
         harga: 6500,
         kuantitas: 340,
         satuan:'g',
@@ -21,7 +21,7 @@ export const daftarproduk =
     { 
         id: 3, 
         nama: 'Pisang',
-        image: require('../assets/Images/pisang.jpg'),
+        image: require('./GambarData/pisang.jpg'),
         harga: 3500,
         kuantitas: 500,
         satuan:'g',
@@ -30,7 +30,7 @@ export const daftarproduk =
     { 
         id: 4, 
         nama: 'Mangga',
-        image: require('../assets/Images/mangga.jpg'),
+        image: require('./GambarData/mangga.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -39,7 +39,7 @@ export const daftarproduk =
     { 
         id: 5, 
         nama: 'Ayam Boiler',
-        image: require('../assets/Images/broiler.jpg'),
+        image: require('./GambarData/broiler.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -48,7 +48,7 @@ export const daftarproduk =
     { 
         id: 6, 
         nama: 'Tenderloin',
-        image: require('../assets/Images/tenderloin.jpg'),
+        image: require('./GambarData/tenderloin.jpg'),
         harga: 700,
         kuantitas: 420,
         satuan:'g',
@@ -57,7 +57,7 @@ export const daftarproduk =
     { 
         id: 7, 
         nama: 'T-Bone',
-        image: require('../assets/Images/tbone.jpg'),
+        image: require('./GambarData/tbone.jpg'),
         harga: 700,
         kuantitas: 490,
         satuan:'g',
@@ -66,7 +66,7 @@ export const daftarproduk =
     { 
         id: 8, 
         nama: 'Ayam filet',
-        image: require('../assets/Images/ayamfilet.jpg'),
+        image: require('./GambarData/ayamfilet.jpg'),
         harga: 700,
         kuantitas: 452,
         satuan:'g',
@@ -75,7 +75,7 @@ export const daftarproduk =
     { 
         id: 9, 
         nama: 'Kerupuk',
-        image: require('../assets/Images/kerupuk.jpg'),
+        image: require('./GambarData/kerupuk.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -84,7 +84,7 @@ export const daftarproduk =
     { 
         id: 10, 
         nama: 'Sosis',
-        image: require('../assets/Images/sosis.jpg'),
+        image: require('./GambarData/sosis.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -93,7 +93,7 @@ export const daftarproduk =
     { 
         id: 11, 
         nama: 'Bayam',
-        image: require('../assets/Images/bayam.jpg'),
+        image: require('./GambarData/bayam.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
@@ -102,7 +102,7 @@ export const daftarproduk =
     { 
         id: 12, 
         nama: 'Brokoli',
-        image: require('../assets/Images/brokoli.jpg'),
+        image: require('./GambarData/brokoli.jpg'),
         harga: 790,
         kuantitas: 476,
         satuan:'g',
@@ -111,7 +111,7 @@ export const daftarproduk =
     { 
         id: 13, 
         nama: 'Daun Pisang',
-        image: require('../assets/Images/daunpisang.jpg'),
+        image: require('./GambarData/daunpisang.jpg'),
         harga: 700,
         kuantitas: 400,
         satuan:'g',
