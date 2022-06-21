@@ -18,13 +18,15 @@ const ProdukScreen = ({ navigation }) => {
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
       </View>
-      <View style={{marginBottom:80}}>
+      <View>
        <FlatList
+          contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
           data={daftarproduk}
           renderItem= {ListProduk}
           keyExtractor={ daftarproduk => daftarproduk.id}
           ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+          ListFooterComponent={<View style={{height:250}}></View>}
        />
       </View>
       </View>

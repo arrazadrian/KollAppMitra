@@ -11,11 +11,17 @@ const ListProduk = ({item}) => {
        <View style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
           <View style={{paddingHorizontal:5}}>
-              <Text style={{fontSize:18, fontWeight:'bold'}}>Rp{item.harga}</Text> 
-              <Text>{item.nama}</Text> 
+              <Text 
+              style={{fontSize:18, fontWeight:'bold'}}
+              numberOfLines={1}
+              >Rp{item.harga}</Text> 
+              <Text 
+              style={{fontSize:16}}
+              numberOfLines={1}
+              >{item.nama}</Text> 
               <Text>{item.kuantitas}{item.satuan}</Text> 
           </View>
-          <View style={{flexDirection:'column-reverse'}}>
+          <View style={{position:'absolute', right:10, bottom:10}}>
               <Edit/>
           </View>
        </View> 
@@ -42,5 +48,5 @@ const styles = StyleSheet.create({
         height: 95,
         borderRadius: 10,
         alignSelf: 'center',
-    }
+    },
 })
