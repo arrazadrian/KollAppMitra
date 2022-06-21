@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import { IkanMujaer, Tomato } from '../assets/Images/Index'
 import { Edit } from '../assets/Icons/Index'
 
 
-const ListProduk = ({item}) => {
+const ListProduk = ({item, navigation}) => {
   return (
     <View>
        <View style={styles.container}>
@@ -22,7 +22,10 @@ const ListProduk = ({item}) => {
               <Text>{item.kuantitas}{item.satuan}</Text> 
           </View>
           <View style={{position:'absolute', right:10, bottom:10}}>
+            <Pressable 
+            onPress={() => navigation.navigate('EditProdukScreen')}>
               <Edit/>
+            </Pressable>
           </View>
        </View> 
     </View>

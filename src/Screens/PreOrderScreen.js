@@ -1,32 +1,36 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, FlatList, Image } from 'react-native'
 import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import { KollLong } from '../assets/Images/Index'
+import { daftarproduk } from '../Data/daftarproduk'
 
 
 const PreOrderScreen = ({navigation}) => {
   return (
     <View style={styles.latar}>
-    <ScrollView>
+     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
         <Image source={KollLong} style={styles.logopojok} />
         <PencarianBar />
       </View>
       <View style={{marginBottom: 10}}>
-          <Text style={styles.judul}>Produk Pre-Order</Text>
-          <Text style={styles.deskripsi}>Produk yang siap diantar bila dipesan satu hari sebelumnnya.</Text>
+        <Text style={styles.judul}>Produk Pre-Order</Text>
+        <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>
       </View>
-      <View style={{flexDirection:'row', flexWrap:'wrap', marginBottom:80}}>
-      <ListProduk />
-      <ListProduk />
-      <ListProduk />
-      <ListProduk />
-      <ListProduk />
-      <ListProduk />
+      <View>
+       <FlatList
+          contentContainerStyle={{paddingBottom:80}} 
+          numColumns={3}
+          data={daftarproduk}
+          renderItem= {ListProduk}
+          keyExtractor={ daftarproduk => daftarproduk.id}
+          ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+          ListFooterComponent={<View style={{height:250}}></View>}
+       />
       </View>
-    </ScrollView>
+      </View>
     <Pressable style={styles.tambah}
           onPress={() => navigation.navigate('TambahPreScreen')}
           >

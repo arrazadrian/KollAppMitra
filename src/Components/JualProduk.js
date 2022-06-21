@@ -5,22 +5,27 @@ import { Ijo, Putih } from '../Utils/Warna'
 import { Tomato } from '../assets/Images/Index'
 import QuantitySelector from './QuantitySelector'
 
+
 const JualProduk = ({item}) => {
-
   const [quantity, setQuantity] = useState(0)
-
   return (
     <View>
        <View style={styles.container}>
         <View style={{alignItems:'center'}}>
-            <Image source={item.image} style={styles.gambar} />
+            <Image source={item.image} style={styles.gambar} /> 
             <View>
-                <Text style={{fontSize:18, fontWeight:'bold'}}>Rp{item.harga}</Text> 
-                <Text>{item.nama}</Text> 
+                <Text 
+                style={{fontSize:18, fontWeight:'bold'}}
+                numberOfLines={1}
+                >Rp{item.harga}</Text> 
+                <Text
+                style={{fontSize:16}}
+                numberOfLines={1}
+                >{item.nama}</Text> 
                 <Text>{item.kuantitas}{item.satuan}</Text> 
             </View>
         </View>
-          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/>
+          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 
        </View> 
     </View>
   )
