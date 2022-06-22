@@ -7,25 +7,25 @@ import QuantitySelector from './QuantitySelector'
 
 
 const JualProduk = ({item}) => {
-  const [quantity, setQuantity] = useState(0)
+ // const [quantity, setQuantity] = useState(0)
   return (
     <View>
        <View style={styles.container}>
         <View style={{alignItems:'center'}}>
             <Image source={item.image} style={styles.gambar} /> 
-            <View>
-                <Text 
-                style={{fontSize:18, fontWeight:'bold'}}
-                numberOfLines={1}
-                >Rp{item.harga}</Text> 
-                <Text
-                style={{fontSize:16}}
-                numberOfLines={1}
-                >{item.nama}</Text> 
-                <Text>{item.kuantitas}{item.satuan}</Text> 
-            </View>
         </View>
-          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 
+        <View style={{paddingHorizontal: 5}}>
+            <Text 
+            style={{fontSize:18, fontWeight:'bold'}}
+            numberOfLines={1}
+            >Rp{item.harga}</Text> 
+            <Text
+            style={{fontSize:16}}
+            numberOfLines={1}
+            >{item.nama}</Text> 
+            <Text>{item.kuantitas}{item.satuan}</Text> 
+        </View>
+         {/* <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> */}
        </View> 
     </View>
   )
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     gambar: {
-        width: 90,
-        height: 90,
+        width: 95,
+        height: 95,
         borderRadius: 10,
     }
 })
