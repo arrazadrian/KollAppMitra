@@ -8,7 +8,9 @@ import { Edit } from '../assets/Icons/Index'
 const ListProduk = ({item, navigation}) => {
   return (
     <View>
-       <View style={styles.container}>
+       <Pressable 
+       
+       style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
           <View style={{paddingHorizontal:5}}>
               <Text 
@@ -27,7 +29,7 @@ const ListProduk = ({item, navigation}) => {
               <Edit/>
             </Pressable>
           </View>
-       </View> 
+       </Pressable> 
     </View>
   )
 }

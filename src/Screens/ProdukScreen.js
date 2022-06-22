@@ -11,7 +11,9 @@ const ProdukScreen = ({ navigation }) => {
     <View style={styles.latar}>
       <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
-        <Image source={KollLong} style={styles.logopojok} />
+        <Pressable onPress={() => navigation.navigate('DetailScreen')}>
+        <Image source={KollLong} style={styles.logopojok}/>
+        </Pressable>
         <PencarianBar />
       </View>
       <View style={{marginBottom: 10}}>
