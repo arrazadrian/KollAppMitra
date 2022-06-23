@@ -98,13 +98,13 @@ export default EditProdukScreen
 
 const styles = StyleSheet.create({
     latar:{
-        backgroundColor: Kuning,
+        backgroundColor: IjoMint,
         flex: 1,
         padding: 10,
     },
     container: {
         paddingHorizontal: 20,
-        backgroundColor: IjoMint,
+        backgroundColor: Kuning,
         borderRadius: 20,
         marginBottom: 20,
     },
