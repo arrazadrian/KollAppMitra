@@ -14,7 +14,7 @@ const DetailScreen = ({ navigation, route }) => {
         <Text style={styles.deskripsi}>Ikan Mujaer asal kepulauan arafuru yang nikmat kalo dimakan sore hari di bawah senja di ua adga</Text>
       </View>
       <View>
-        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{route.params.harga} | {route.params.kuantitas}{route.params.satuan}</Text>     
+        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{route.params?.harga} | {route.params.kuantitas}{route.params.satuan}</Text>     
       </View>
       <Pressable style={styles.tombol}
         onPress={() => navigation.goBack()}>

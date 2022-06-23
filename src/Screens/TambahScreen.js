@@ -7,6 +7,7 @@ import {Picker} from '@react-native-picker/picker';
 
 const TambahScreen = () => {
 
+  const [satuan, setSatuan] = useState('Pilih Satuan');
   const [kategori, setKategori] = useState('Pilih Kategori');
 
   return (
@@ -50,9 +51,9 @@ const TambahScreen = () => {
                     <Picker
                       mode='dropdown'
                       style={{backgroundColor: Putih, width: 140}}
-                      selectedValue={kategori}
+                      selectedValue={satuan}
                       onValueChange={(itemValue, itemIndex) =>
-                        setKategori(itemValue)
+                        setSatuan(itemValue)
                       }>
                       <Picker.Item label="gram" value="g" />
                       <Picker.Item label="kilogram" value="kg" />

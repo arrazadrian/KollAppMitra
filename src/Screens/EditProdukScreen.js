@@ -5,6 +5,10 @@ import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 
 const EditProdukScreen = () => {
+
+  const [satuan, setSatuan] = useState('Pilih Satuan');
+  const [kategori, setKategori] = useState('Pilih Kategori');
+
   return (
 <ScrollView style={styles.latar}>
           <View style={styles.container}>
@@ -46,9 +50,9 @@ const EditProdukScreen = () => {
                     <Picker
                       mode='dropdown'
                       style={{backgroundColor: Putih, width: 140}}
-                      selectedValue={kategori}
+                      selectedValue={satuan}
                       onValueChange={(itemValue, itemIndex) =>
-                        setKategori(itemValue)
+                        setSatuan(itemValue)
                       }>
                       <Picker.Item label="gram" value="g" />
                       <Picker.Item label="kilogram" value="kg" />
@@ -83,7 +87,7 @@ const EditProdukScreen = () => {
                 fontWeight: 'bold',
                 textAlign: 'center'
               }}
-              >Tambahkan Produk Pre-Order</Text>
+              >Perbarui Produk</Text>
             </Pressable>
           </View> 
     </ScrollView>

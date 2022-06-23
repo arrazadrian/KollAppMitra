@@ -14,6 +14,9 @@ const ListProduk = ({item}) => {
     navigation.navigate('DetailScreen', { id: item.id })
   }
 
+  const pindahEdit = () => {
+    navigation.navigate('EditProdukScreen', { id: item.id })
+  }
 
   return (
     <View>
@@ -34,7 +37,7 @@ const ListProduk = ({item}) => {
           </View>
           <View style={{position:'absolute', right:10, bottom:10}}>
             <Pressable 
-            onPress={() => navigation.navigate('EditProdukScreen')}>
+            onPress={pindahEdit}>
               <Edit/>
             </Pressable>
           </View>

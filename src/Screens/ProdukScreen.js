@@ -10,9 +10,7 @@ headerList = () => {
   return(
     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
-        <Pressable onPress={() => navigation.navigate('DetailScreen')}>
         <Image source={KollLong} style={styles.logopojok}/>
-        </Pressable>
         <PencarianBar />
       </View>
       <View style={{marginBottom: 10}}>
