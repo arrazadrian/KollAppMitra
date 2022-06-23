@@ -11,11 +11,24 @@ const ListProduk = ({item}) => {
   const navigation = useNavigation();
 
   const pindahDetail = () => {
-    navigation.navigate('DetailScreen', { id: item.id })
+    navigation.navigate('DetailScreen', { 
+      nama: item.nama,
+      image: item.image,
+      harga: item.harga,
+      satuan: item.satuan,
+      kuantitas: item.kuantitas,
+    })
   }
 
   const pindahEdit = () => {
-    navigation.navigate('EditProdukScreen', { id: item.id })
+    navigation.navigate('EditProdukScreen', { 
+      nama: item.nama,
+      image: item.image,
+      harga: item.harga,
+      satuan: item.satuan,
+      kuantitas: item.kuantitas, 
+      kategori: item.kategori, 
+    })
   }
 
   return (
