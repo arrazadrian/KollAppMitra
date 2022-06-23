@@ -3,13 +3,22 @@ import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import { IkanMujaer, Tomato } from '../assets/Images/Index'
 import { Edit } from '../assets/Icons/Index'
+import { useNavigation } from '@react-navigation/native'
 
 
-const ListProduk = ({item, navigation}) => {
+const ListProduk = ({item}) => {
+  
+  const navigation = useNavigation();
+
+  const pindahDetail = () => {
+    navigation.navigate('DetailScreen', { id: item.id })
+  }
+
+
   return (
     <View>
        <Pressable 
-       
+        onPress={pindahDetail}
        style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
           <View style={{paddingHorizontal:5}}>

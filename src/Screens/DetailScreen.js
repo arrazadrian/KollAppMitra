@@ -4,19 +4,20 @@ import { IkanMujaer } from '../assets/Images/Index'
 import { Ijo, IjoMint, IjoTua, Kuning } from '../Utils/Warna'
 
 
-const DetailScreen = ({ navigation }) => {
+const DetailScreen = ({ navigation, route }) => {
+  
   return (
     <View style={styles.latar}>
       <Image source={IkanMujaer} style={styles.gambar}/>
       <View style={{marginBottom:2}}>
-        <Text style={styles.subjudul}>Ikan Mujaer</Text>
+        <Text style={styles.subjudul}>{route.params.nama}</Text>
         <Text style={styles.deskripsi}>Ikan Mujaer asal kepulauan arafuru yang nikmat kalo dimakan sore hari di bawah senja di ua adga</Text>
       </View>
       <View>
-        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp16000 | 400g</Text>     
+        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{route.params.harga} | {route.params.kuantitas}{route.params.satuan}</Text>     
       </View>
       <Pressable style={styles.tombol}
-        onPress={() => navigation.replace('ProdukScreen')}>
+        onPress={() => navigation.goBack()}>
             <Text style={styles.tomboltext}>Kembali</Text>
       </Pressable>
     </View>

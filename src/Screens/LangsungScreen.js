@@ -88,6 +88,12 @@ headerList = () => {
 
 const LangsungScreen = ({ navigation }) => {
   
+  const hargatotal = daftarproduk.reduce(
+    (jumlahharga, daftarproduk) =>
+    jumlahharga + daftarproduk.item.price * daftarproduk.quantity,
+    0,
+  );
+
   return (
     <View style={styles.latar}>
                 <View style={{paddingHorizontal: 15}}>
@@ -115,7 +121,7 @@ const LangsungScreen = ({ navigation }) => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>0 </Text>
+                          <Text>{daftarproduk.length} </Text>
                           <Text>Produk</Text>
                       </Text>
                       <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>

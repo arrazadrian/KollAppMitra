@@ -32,7 +32,7 @@ const ProdukScreen = ({ navigation }) => {
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
           data={daftarproduk}
-          renderItem= {ListProduk}
+          renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarproduk => daftarproduk.id}
           ListHeaderComponent= {headerList}
           ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
