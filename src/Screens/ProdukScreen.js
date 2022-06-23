@@ -6,10 +6,9 @@ import PencarianBar from '../Components/PencarianBar'
 import { KollLong } from '../assets/Images/Index'
 import { daftarproduk } from '../Data/daftarproduk'
 
-const ProdukScreen = ({ navigation }) => {
-  return (
-    <View style={styles.latar}>
-      <View>
+headerList = () => {
+  return(
+    <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
         <Pressable onPress={() => navigation.navigate('DetailScreen')}>
         <Image source={KollLong} style={styles.logopojok}/>
@@ -20,6 +19,14 @@ const ProdukScreen = ({ navigation }) => {
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
       </View>
+    </View>
+  )
+}
+
+const ProdukScreen = ({ navigation }) => {
+  return (
+    <View style={styles.latar}>
+      <View>
       <View>
        <FlatList
           contentContainerStyle={{paddingBottom:80}} 
@@ -27,8 +34,9 @@ const ProdukScreen = ({ navigation }) => {
           data={daftarproduk}
           renderItem= {ListProduk}
           keyExtractor={ daftarproduk => daftarproduk.id}
+          ListHeaderComponent= {headerList}
           ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
-          ListFooterComponent={<View style={{height:250}}></View>}
+          ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>
       </View>

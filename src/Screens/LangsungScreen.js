@@ -90,7 +90,7 @@ const LangsungScreen = ({ navigation }) => {
   
   return (
     <View style={styles.latar}>
-                <View>
+                <View style={{paddingHorizontal: 15}}>
                   <FlatList
                       numColumns={3}
                       data={daftarproduk}
