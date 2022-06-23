@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
@@ -13,14 +13,15 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   return (
-    <View style={styles.latar}>
+    <ScrollView style={styles.latar}>
       <View style={{
         paddingTop: 20,
         flexDirection:'row', 
+        justifyContent:'space-between',
         alignItems:'center',
         marginBottom: 20,
         }}>
-        <View style={{marginRight: 50}}>
+        <View>
           <Text style={{
             fontSize: 20,
             color: Ijo,
@@ -30,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
             fontSize: 30,
             fontWeight: 'bold',
             color: IjoTua,
+            width: 200,
           }}>Sayur Aa Anri</Text>
         </View>
         <View>
@@ -73,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
             <Image source={TemuLangsung} style={styles.gambartemu}/>
           </Pressable>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
