@@ -1,22 +1,26 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image} from 'react-native'
-import React, { useState } from 'react'
-import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
+import { StyleSheet, Text, View, Switch, Pressable, Image} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
+import moment from 'moment';
+import localization from 'moment/locale/id';
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  moment.updateLocale('id', localization)
+  let tanggal = moment().locale('id');
 
   return (
     <View style={styles.latar}>
       <View style={{
         paddingTop: 20,
         flexDirection:'row', 
-        justifyContent:'space-between', 
         alignItems:'center',
         marginBottom: 20,
         }}>
-        <View>
+        <View style={{marginRight: 50}}>
           <Text style={{
             fontSize: 20,
             color: Ijo,
@@ -30,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View>
           <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
-          <Text style={{color: Ijo, fontWeight:'bold'}}>Senin, 20 Feb 2022</Text>
+          <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMMM YYYY')}</Text>
         </View>
       </View>
       <View style={styles.status}>
