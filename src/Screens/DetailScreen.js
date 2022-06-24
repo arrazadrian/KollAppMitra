@@ -6,14 +6,14 @@ import { Ijo, IjoMint, IjoTua, Kuning } from '../Utils/Warna'
 
 const DetailScreen = ({ navigation, route }) => {
 
-  const { nama, image, harga, satuan, kuantitas } = route.params;
+  const { nama, deskripsi, image, harga, satuan, kuantitas } = route.params;
 
   return (
     <View style={styles.latar}>
       <Image source={image} style={styles.gambar}/>
       <View style={{marginBottom:2}}>
         <Text style={styles.subjudul}>{nama}</Text>
-        <Text style={styles.deskripsi}>Ikan Mujaer asal kepulauan arafuru yang nikmat kalo dimakan sore hari di bawah senja di ua adga</Text>
+        <Text style={styles.deskripsi}>{deskripsi}</Text>
       </View>
       <View>
         <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{harga} | {kuantitas}{satuan}</Text>     

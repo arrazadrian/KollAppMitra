@@ -4,10 +4,12 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 
-const EditProdukScreen = () => {
+const EditProdukScreen = ({ navigation, route }) => {
 
-  const [satuan, setSatuan] = useState('Pilih Satuan');
-  const [kategori, setKategori] = useState('Pilih Kategori');
+  const [pilsatuan, setPilsatuan] = useState('Pilih Satuan');
+  const [pilkategori, setPilkategori] = useState('Pilih Kategori');
+  
+  const { nama, deskripsi, image, harga, satuan, kuantitas, kategori } = route.params;
 
   return (
 <ScrollView style={styles.latar}>
@@ -19,23 +21,35 @@ const EditProdukScreen = () => {
             <Text style={styles.subjudul}>Nama Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
+              value={nama}
             />
             <Text style={styles.subjudul}>Deskripsi Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis deskripsi produk dengan jelas"
               multiline={true}
-              maxLength={150}
+              maxLength={100}
+              value={deskripsi}
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={DPdefault} style={styles.foto} />
+                <Image source={image} style={styles.foto} />
+                <View style={{alignItems:'flex-start'}}>
                 <Text style={styles.deskripsi} 
-                >Foto produk harus jelas</Text>
+                >Foto produk harus sesuai</Text>
+                <Text 
+                style={{
+                  fontWeight:'bold', 
+                  textDecorationLine:'underline',
+                  color:Ijo,
+                  fontSize: 18,}} 
+                >Ganti Foto</Text>
+                </View>
             </View>
             <Text style={styles.subjudul}>Harga produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis harga produk"
               keyboardType='numeric'
+              value={harga}
             />
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <View>
@@ -43,6 +57,7 @@ const EditProdukScreen = () => {
                     <TextInput style={styles.input}
                       placeholder="Banyaknya produk"
                       keyboardType='numeric'
+                      value={kuantitas}
                     />
               </View>
               <View>
@@ -52,7 +67,7 @@ const EditProdukScreen = () => {
                       style={{backgroundColor: Putih, width: 140}}
                       selectedValue={satuan}
                       onValueChange={(itemValue, itemIndex) =>
-                        setSatuan(itemValue)
+                        setPilsatuan(itemValue)
                       }>
                       <Picker.Item label="gram" value="g" />
                       <Picker.Item label="kilogram" value="kg" />
@@ -67,7 +82,7 @@ const EditProdukScreen = () => {
               style={{backgroundColor: Putih}}
               selectedValue={kategori}
               onValueChange={(itemValue, itemIndex) =>
-                setKategori(itemValue)
+                setPilkategori(itemValue)
               }>
               <Picker.Item label="Sayuran" value="Sayuran" />
               <Picker.Item label="Produk Laut" value="Produk Laut" />

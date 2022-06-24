@@ -59,6 +59,7 @@ const TambahScreen = () => {
                       <Picker.Item label="kilogram" value="kg" />
                       <Picker.Item label="ons" value="ons" />
                       <Picker.Item label="ikat" value="ikat" />
+                      <Picker.Item label="lembar" value="lembar" />
                     </Picker>
               </View>
             </View>

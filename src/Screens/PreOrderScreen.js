@@ -4,7 +4,7 @@ import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import { KollLong } from '../assets/Images/Index'
-import { daftarproduk } from '../Data/daftarproduk'
+import { daftarpreproduk } from '../Data/daftarpreproduk'
 
 headerList = () => {
   return(
@@ -29,11 +29,11 @@ const PreOrderScreen = ({navigation}) => {
        <FlatList
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
-          data={daftarproduk}
-          renderItem= {ListProduk}
-          keyExtractor={ daftarproduk => daftarproduk.id}
+          data={daftarpreproduk}
+          renderItem= {({item}) => <ListProduk item={item} />}
+          keyExtractor={ daftarpreproduk => daftarpreproduk.id}
           ListHeaderComponent={headerList}
-          ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+          ListEmptyComponent={<Text>Produk pre-order masih kosong</Text>}
           ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>

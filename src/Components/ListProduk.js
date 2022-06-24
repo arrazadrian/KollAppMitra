@@ -13,6 +13,7 @@ const ListProduk = ({item}) => {
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
       nama: item.nama,
+      deskripsi: item.deskripsi,
       image: item.image,
       harga: item.harga,
       satuan: item.satuan,
@@ -23,6 +24,7 @@ const ListProduk = ({item}) => {
   const pindahEdit = () => {
     navigation.navigate('EditProdukScreen', { 
       nama: item.nama,
+      deskripsi: item.deskripsi,
       image: item.image,
       harga: item.harga,
       satuan: item.satuan,

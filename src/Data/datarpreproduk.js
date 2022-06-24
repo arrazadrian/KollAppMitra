@@ -1,4 +1,4 @@
-export const daftarproduk = 
+export const daftarpreproduk = 
 [
     {
         id: '1', 
@@ -136,18 +136,6 @@ export const daftarproduk =
         harga: '22000',
         kuantitas: '800',
         satuan:'g',
-        kategori:'Sayuran',
-        quantity: 0,
-
-    },
-    { 
-        id: '13', 
-        nama: 'Daun Pisang',
-        deskripsi: 'Produk ini dibawa dengan penuh perhatian dan dijaga kesegarannya.',
-        image: require('./GambarData/daunpisang.jpg'),
-        harga: '8000',
-        kuantitas: '10',
-        satuan:'lembar',
         kategori:'Sayuran',
         quantity: 0,
 
