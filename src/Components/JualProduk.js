@@ -7,7 +7,7 @@ import QuantitySelector from './QuantitySelector'
 
 
 const JualProduk = ({item}) => {
- // const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(0)
   return (
     <View>
        <View style={styles.container}>
@@ -25,7 +25,7 @@ const JualProduk = ({item}) => {
             >{item.nama}</Text> 
             <Text>{item.kuantitas}{item.satuan}</Text> 
         </View>
-         {/* <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> */}
+          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 
        </View> 
     </View>
   )

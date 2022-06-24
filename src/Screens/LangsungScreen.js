@@ -88,11 +88,11 @@ headerList = () => {
 
 const LangsungScreen = ({ navigation }) => {
   
-  const hargatotal = daftarproduk.reduce(
-    (jumlahharga, daftarproduk) =>
-    jumlahharga + daftarproduk.item.price * daftarproduk.quantity,
-    0,
-  );
+  // const hargatotal = daftarproduk.reduce(
+  //   (jumlahharga, daftarproduk) =>
+  //   jumlahharga + daftarproduk.item.price * daftarproduk.quantity,
+  //   0,
+  // );
 
   return (
     <View style={styles.latar}>
@@ -100,7 +100,7 @@ const LangsungScreen = ({ navigation }) => {
                   <FlatList
                       numColumns={3}
                       data={daftarproduk}
-                      renderItem= {JualProduk}
+                      renderItem= {({item}) => <JualProduk item={item} />}
                       keyExtractor={ daftarproduk => daftarproduk.id}
                       ListHeaderComponent={headerList}
                       ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
@@ -121,7 +121,8 @@ const LangsungScreen = ({ navigation }) => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>{daftarproduk.length} </Text>
+                          <Text>0</Text>
+                          <Text>  </Text>
                           <Text>Produk</Text>
                       </Text>
                       <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>
