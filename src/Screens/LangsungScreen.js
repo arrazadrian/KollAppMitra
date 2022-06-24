@@ -9,6 +9,7 @@ import JualProduk from '../Components/JualProduk'
 import { daftarproduk } from '../Data/daftarproduk'
 
 headerList = () => {
+ 
   return(
     <View style={{padding: 10}}>
     <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', }}>
@@ -93,10 +94,11 @@ const LangsungScreen = ({ navigation }) => {
   //   jumlahharga + daftarproduk.item.price * daftarproduk.quantity,
   //   0,
   // );
+  const [total, setTotal] = useState(0)
 
   return (
     <View style={styles.latar}>
-                <View style={{paddingHorizontal: 15}}>
+                <View style={{paddingHorizontal:10}}>
                   <FlatList
                       numColumns={3}
                       data={daftarproduk}
@@ -121,7 +123,7 @@ const LangsungScreen = ({ navigation }) => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>0</Text>
+                          <Text>{total}</Text>
                           <Text>  </Text>
                           <Text>Produk</Text>
                       </Text>

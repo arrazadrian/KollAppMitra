@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import {  DPdefault } from '../assets/Images/Index.js'
+import {  DPdefault, Delete } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 
 const EditProdukScreen = ({ navigation, route }) => {
@@ -94,6 +94,10 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
+            <Pressable style={styles.hapus}>
+                <Image source={Delete} />
+                <Text style={{color:'red', fontSize: 18}}>Hapus Produk</Text>
+            </Pressable>
             <Pressable style={styles.tombol}>
               <Text
               style={{
@@ -155,10 +159,19 @@ const styles = StyleSheet.create({
     },
     input:{
       backgroundColor: Putih,
-      //borderRadius: 10,
       fontSize: 16,
       padding: 10,
       marginBottom: 10,
+    },
+    hapus:{
+      width: 170,
+      height: 50,
+      backgroundColor: Putih,
+      marginVertical: 10,
+      borderRadius: 10,
+      flexDirection: 'row',
+      justifyContent:'center',
+      alignItems:'center',
     },
     tombol:{
         borderColor: Ijo,
@@ -171,5 +184,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',   
         marginTop: 10,
         marginBottom: 20,
-    }
+    },
 })

@@ -7,12 +7,12 @@ const QuantitySelector = ({quantity,setQuantity,total,setTotal}) => {
     
     const onMinus = () => {
         setQuantity(Math.max(0, quantity - 1));
-       // setTotal(Math.max(0, total - 1));
+    //    setTotal(Math.max(0, total - 1));
     }
   
     const onPlus = () => {
         setQuantity(quantity + 1);
-       // setTotal(total + 1);
+    //    setTotal(total + 1);
     }
 
     return (
