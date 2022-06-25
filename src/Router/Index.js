@@ -18,6 +18,7 @@ import {
     ProdukScreen,
     PreOrderScreen,
     LangsungScreen,
+    KategoriScreen,
     CheckoutLangScreen,
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
@@ -62,6 +63,7 @@ const AppUtama = () => {
       <HomeStack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown: false }}/>
       <HomeStack.Screen name="EditProdukScreen" component={EditProdukScreen} options={{ title: "Perbarui Data Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+      <HomeStack.Screen name="KategoriScreen" component={KategoriScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
     </HomeStack.Navigator>
     );

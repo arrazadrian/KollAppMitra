@@ -16,7 +16,7 @@ export const daftarproduk =
         nama: 'Jeruk',
         deskripsi: 'Produk ini dibawa dengan penuh perhatian dan dijaga kesegarannya.',
         image: require('./GambarData/jeruk.jpg'),
-        harga: '6500',
+        harga: '4500',
         kuantitas: '390',
         satuan:'g',
         kategori:'Buah',

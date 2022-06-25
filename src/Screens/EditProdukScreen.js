@@ -94,20 +94,21 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
-            <Pressable style={styles.hapus}>
-                <Image source={Delete} />
-                <Text style={{color:'red', fontSize: 18}}>Hapus Produk</Text>
-            </Pressable>
-            <Pressable style={styles.tombol}>
-              <Text
-              style={{
-                color: Ijo,
-                fontSize: 20,
-                fontWeight: 'bold',
-                textAlign: 'center'
-              }}
-              >Perbarui Produk</Text>
-            </Pressable>
+            <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
+                <Pressable style={styles.hapus}>
+                    <Text style={{color:'red', fontSize: 18, }}>Hapus Produk</Text>
+                </Pressable>
+                <Pressable style={styles.tombol}>
+                  <Text
+                  style={{
+                    color: Putih,
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    textAlign: 'center'
+                  }}
+                  >Perbarui Produk</Text>
+                </Pressable>
+            </View>
           </View> 
     </ScrollView>
   )
@@ -164,25 +165,20 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     hapus:{
+      padding: 10,
       width: 170,
       height: 50,
-      backgroundColor: Putih,
-      marginVertical: 10,
       borderRadius: 10,
       flexDirection: 'row',
       justifyContent:'center',
       alignItems:'center',
     },
     tombol:{
-        borderColor: Ijo,
-        borderWidth: 3,
+        backgroundColor: Ijo,
         borderRadius: 20,
         padding: 10,
-        width: '100%',
+        width: '50%',
         alignItems: 'center', 
         justifyContent: 'center',
-        alignSelf: 'center',   
-        marginTop: 10,
-        marginBottom: 20,
     },
 })

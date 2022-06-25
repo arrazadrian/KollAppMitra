@@ -7,6 +7,8 @@ import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
 import { daftarproduk } from '../Data/daftarproduk'
+import { jeniskategori } from '../Data/jeniskategori'
+import LogoKategori from '../Components/LogoKategori'
 
 headerList = () => {
  
@@ -19,66 +21,14 @@ headerList = () => {
     <View style={{marginBottom:10, marginLeft: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
     </View>
-    <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between'}}>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori01} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Produk Laut</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori02} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Daging</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori03} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Buah</Text>
-    </Pressable>
-    </View>
-    <View style={{flexDirection: 'row', alignItems:'center',}}>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori04} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Sayuran</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori06} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Bahan Pokok</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori05} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Cemilan</Text>
-    </Pressable>
-    </View>
-    <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between'}}>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori07} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Lauk</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori08} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Bumbu</Text>
-    </Pressable>
-    <Pressable style={styles.kartu}>
-      <View style={styles.belakang}>
-        <Image source={Kategori09} style={styles.gambar} />
-      </View>
-      <Text style={styles.nama}>Frozen Food</Text>
-    </Pressable>
-    </View>
+
+    <FlatList
+        numColumns={3}
+        data={jeniskategori}
+        renderItem= {({item}) => <LogoKategori item={item} />}
+        keyExtractor={ jeniskategori => jeniskategori.id}
+    />
+
     <View style={{marginBottom:10, marginLeft: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
     </View>
@@ -98,7 +48,7 @@ const LangsungScreen = ({ navigation }) => {
 
   return (
     <View style={styles.latar}>
-                <View style={{paddingHorizontal:10}}>
+                <View>
                   <FlatList
                       numColumns={3}
                       data={daftarproduk}
@@ -163,29 +113,6 @@ const styles = StyleSheet.create({
     borderColor: Ijo,
     borderWidth: 3,
     margin: 10
-  },
-  gambar:{
-    width: 90,
-    height: 90,
-  },
-  belakang:{
-    padding: 10, 
-    backgroundColor: Putih, 
-    borderRadius: 10, 
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: Ijo,
-  },
-  kartu:{
-    width: '33%',
-    height: '100%',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  nama:{
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   pesan:{
     flexDirection: 'row',

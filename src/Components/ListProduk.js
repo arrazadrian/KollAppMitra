@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
-import { IkanMujaer, Tomato } from '../assets/Images/Index'
 import { Edit } from '../assets/Icons/Index'
 import { useNavigation } from '@react-navigation/native'
 
@@ -36,7 +35,7 @@ const ListProduk = ({item}) => {
   return (
     <View>
        <Pressable 
-        onPress={pindahDetail}
+       onPress={pindahDetail}
        style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
           <View style={{paddingHorizontal:5}}>

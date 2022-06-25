@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 210,
         width: 120,
-        marginHorizontal: 5,
+        justifyContent:'space-between',
         marginBottom: 10,
+        marginLeft: 13,
     },
     gambar: {
         width: 95,
