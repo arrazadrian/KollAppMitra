@@ -9,6 +9,7 @@ import JualProduk from '../Components/JualProduk'
 import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
+import Keranjang from '../Components/Keranjang'
 
 headerList = () => {
  
@@ -66,29 +67,7 @@ const LangsungScreen = ({ navigation }) => {
             
           
           <View style={{flexDirection: 'column-reverse'}}>
-              <View style={styles.pesan}>
-                  <View style={{flexDirection:'row'}}>
-                    <View style={{marginHorizontal: 10, justifyContent:'center'}}>
-                      <Image source={Bag} style={{width:40, height:40}}/>
-                    </View>
-                    <View>
-                      <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>{total}</Text>
-                          <Text>  </Text>
-                          <Text>Produk</Text>
-                      </Text>
-                      <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>
-                          <Text>Rp </Text>
-                          <Text>0</Text>
-                      </Text>
-                    </View>
-                  </View>
-                  <Pressable style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
-                    onPress={() => navigation.navigate('CheckoutLangScreen')}
-                    >
-                    <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
-                  </Pressable>
-            </View>
+              <Keranjang/>
           </View>
     </View>
   )
