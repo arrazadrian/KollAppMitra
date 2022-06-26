@@ -30,8 +30,17 @@ const TambahScreen = () => {
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
                 <Image source={DPdefault} style={styles.foto} />
-                <Text style={styles.deskripsi} 
-                >Foto produk harus jelas</Text>
+                <View>
+                    <Text style={styles.deskripsi} 
+                    >Foto produk harus jelas</Text>
+                    <Text 
+                      style={{
+                      fontWeight:'bold', 
+                      textDecorationLine:'underline',
+                      color:Ijo,
+                      fontSize: 18,}} 
+                    >Ganti Foto</Text>
+                </View>
             </View>
             <Text style={styles.subjudul}>Harga produk</Text>
             <TextInput style={styles.input}
@@ -142,7 +151,6 @@ const styles = StyleSheet.create({
     },
     input:{
       backgroundColor: Putih,
-      //borderRadius: 10,
       fontSize: 16,
       padding: 10,
       marginBottom: 10,
