@@ -1,9 +1,7 @@
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import { Bawah, Kategori01, Kategori02, Kategori03, Kategori04,
-        Kategori05, Kategori06, Kategori07, Kategori08,
-        Kategori09, KollLong, Bag} from '../assets/Images/Index'
+import { Bawah, KollLong,} from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
 import { daftarproduk } from '../Data/daftarproduk'
