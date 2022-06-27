@@ -25,6 +25,7 @@ const ProdukScreen = ({ navigation }) => {
       <View>
       <View>
        <FlatList
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
           columnWrapperStyle={{justifyContent:'space-between'}}

@@ -12,24 +12,26 @@ import Keranjang from '../Components/Keranjang'
 atasjual = () => {
  
   return(
-    <View style={{padding: 10}}>
-    <View>
+    <View style={{ paddingHorizontal: 10 }}>
+    <View style={{ paddingVertical: 10 }}>
       <PencarianBar/>
     </View>
-    <View style={{marginBottom:10 }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
-    </View>
     <View>
-    <FlatList
-        horizontal= {true}
-        data={jeniskategori}
-        renderItem= {({item}) => <LogoKategori item={item} />}
-        keyExtractor={ jeniskategori => jeniskategori.id}
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-    />
+        <View style={{marginBottom:10 }}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+        </View>
+        <View>
+        <FlatList
+            horizontal= {true}
+            data={jeniskategori}
+            renderItem= {({item}) => <LogoKategori item={item} />}
+            keyExtractor={ jeniskategori => jeniskategori.id}
+            showsHorizontalScrollIndicator={false}
+            bounces={false}
+        />
+        </View>
     </View>
-    <View style={{marginBottom:10, marginLeft: 10}}>
+    <View style={{marginBottom:10 }}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
     </View>
   </View>
@@ -50,10 +52,11 @@ const LangsungScreen = ({ navigation }) => {
     <View style={styles.latar}>
                 <View>
                   <FlatList
+                      showsVerticalScrollIndicator={false}
                       numColumns={3}
                       columnWrapperStyle={{
                         justifyContent:'space-between',
-                        paddingHorizontal: 20,
+                        paddingHorizontal: 10,
                       }}
                       data={daftarproduk}
                       renderItem= {({item}) => <JualProduk item={item} />}

@@ -71,7 +71,9 @@ const HomeScreen = ({ navigation }) => {
               <Pressable style={styles.langsung} onPress={() => navigation.push('LangsungScreen')}>
                 <View>
                   <Text style={styles.texttemu}>Temu Langsung</Text>
-                  <Text style={styles.deskripsi}>Buat transaksi baru saat bertemu</Text>
+                  <Text style={styles.deskripsi}
+                    numberOfLines={2}
+                  >Buat transaksi baru saat bertemu</Text>
                 </View>
                 <Image source={TemuLangsung} style={styles.gambartemu}/>
               </Pressable>
@@ -108,6 +110,8 @@ const styles = StyleSheet.create({
   deskripsi:{
     fontSize: 16,
     color: IjoTua,
+    flexWrap: 'wrap',
+    width: width * 0.6 ,
   },
   cardtext:{
     fontSize: 16,

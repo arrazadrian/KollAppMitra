@@ -38,8 +38,10 @@ const ListProduk = ({item}) => {
        <Pressable 
        onPress={pindahDetail}
        style={styles.container}>
-          <Image source={item.image} style={styles.gambar} />
-          <View>
+          <View style={{flex: 4}}>
+              <Image source={item.image} style={styles.gambar} />
+          </View>
+          <View style={{flex: 3}}>
               <Text 
               style={{fontSize:18, fontWeight:'bold'}}
               numberOfLines={1}
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         height: height * 0.3,
-        width: width * 0.28,
+        width: width * 0.3,
         marginBottom: 10,
     },
     gambar: {
@@ -79,5 +81,7 @@ const styles = StyleSheet.create({
         height: height * 0.13,
         borderRadius: 10,
         alignSelf: 'center',
+        resizeMode: 'cover',
+
     },
 })

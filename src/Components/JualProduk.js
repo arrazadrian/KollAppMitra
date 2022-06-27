@@ -12,10 +12,10 @@ const JualProduk = ({item}) => {
   return (
     <View>
        <View style={styles.container}>
-        <View style={{alignItems:'center'}}>
+        <View style={{flex: 4}}>
             <Image source={item.image} style={styles.gambar} /> 
         </View>
-        <View>
+        <View style={{flex: 3}}>
             <Text 
             style={{fontSize:18, fontWeight:'bold'}}
             numberOfLines={1}
@@ -42,12 +42,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         height: height * 0.3,
-        width: width * 0.28,
+        width: width * 0.3,
         marginBottom: 10,
     },
     gambar: {
         width: height * 0.13,
         height: height * 0.13,
         borderRadius: 10,
+        alignSelf: 'center',
+        resizeMode: 'cover',
     }
 })

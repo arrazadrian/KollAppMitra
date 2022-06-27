@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
-import { Ijo, IjoMint, Putih } from '../Utils/Warna'
+import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get('window')
@@ -34,22 +34,24 @@ export default LogoKategori
 
 const styles = StyleSheet.create({
     kartu:{
-        width: width*0.2,
-        height: width*0.3,
+        width: width*0.25,
+        height: width*0.25,
         alignSelf:'center',
         marginRight: 10,
-        marginBottom: 20, 
+        marginBottom: 10,
     },
     nama:{
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: IjoTua,
     },
     gambar:{
-        width: width*0.17,
-        height: width*0.17,
+        width: width*0.15,
+        height: width*0.15,
       },
       belakang:{
+        alignItems:'center',
         padding: 5, 
         backgroundColor: Putih, 
         borderRadius: 50, 
