@@ -32,10 +32,10 @@ export default LogoKategori
 
 const styles = StyleSheet.create({
     kartu:{
-        width: '33%',
-        height: '33%',
+        width: '30%',
+        height: '30%',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 12,
     },
     nama:{
         fontSize: 16,

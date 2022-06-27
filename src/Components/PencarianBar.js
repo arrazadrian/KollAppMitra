@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native'
 import React from 'react'
 import { Search } from '../assets/Icons/Index'
+import { KollLong } from '../assets/Images/Index'
 
 const PencarianBar = () => {
   return (
-    <View style={{flexDirection: 'row', alignItems:'center'}}>
-      <TextInput placeholder='Cari produk yang anda inginkan'  style={styles.container}> 
-        
-      </TextInput>
-      <Search style={{position: 'absolute', top: 10, left: 18 }} />
+    <View style={styles.root}>
+      <Image source={KollLong} style={styles.logopojok}/>
+      <TextInput placeholder='Cari produk yang anda mau'  style={styles.container}/> 
+      <Search style={{position: 'absolute', top: 10, left: 85}} />
     </View>
   )
 }
@@ -16,10 +16,16 @@ const PencarianBar = () => {
 export default PencarianBar
 
 const styles = StyleSheet.create({
+  root:{
+    flexDirection:'row',
+    alignItems: 'center',
+    width:'100%',
+    height: 40,
+  },
   container:{
+    flex: 3,
     position: 'relative',
-    height: 40, 
-    width: 290,
+    height: 40,
     backgroundColor: '#fff',
     fontSize: 15,
     borderRadius: 10,
@@ -27,8 +33,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingStart: 35,
     paddingEnd: 10,
-    marginLeft: 10,
-    marginRight: 20
-
-  }
+    marginLeft: 5,
+  },
+  logopojok:{
+    width: '25%',
+    height: 30,
+    flex: 1,
+  },
 })

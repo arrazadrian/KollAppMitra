@@ -3,14 +3,12 @@ import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
-import { KollLong } from '../assets/Images/Index'
 import { daftarproduk } from '../Data/daftarproduk'
 
-headerList = () => {
+atasproduk = () => {
   return(
     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
-        <Image source={KollLong} style={styles.logopojok}/>
         <PencarianBar />
       </View>
       <View style={{marginBottom: 10}}>
@@ -32,7 +30,7 @@ const ProdukScreen = ({ navigation }) => {
           data={daftarproduk}
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarproduk => daftarproduk.id}
-          ListHeaderComponent= {headerList}
+          ListHeaderComponent= {atasproduk}
           ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
           ListFooterComponent={<View style={{height:10}}></View>}
        />
@@ -75,9 +73,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  logopojok:{
-    width: 80,
-    height: 40,
   },
 })
