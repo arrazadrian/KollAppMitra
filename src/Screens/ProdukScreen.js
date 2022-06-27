@@ -27,6 +27,7 @@ const ProdukScreen = ({ navigation }) => {
        <FlatList
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
+          columnWrapperStyle={{justifyContent:'space-between'}}
           data={daftarproduk}
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarproduk => daftarproduk.id}

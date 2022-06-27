@@ -27,6 +27,7 @@ const PreOrderScreen = ({navigation}) => {
        <FlatList
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
+          columnWrapperStyle={{justifyContent:'space-between'}}
           data={daftarpreproduk}
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarpreproduk => daftarpreproduk.id}
