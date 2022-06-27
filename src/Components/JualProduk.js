@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { Minus, Plus } from '../assets/Icons/Index'
 import { Ijo, Putih } from '../Utils/Warna'
 import { Tomato } from '../assets/Images/Index'
 import QuantitySelector from './QuantitySelector'
 
+const { width, height } = Dimensions.get('window')
 
 const JualProduk = ({item}) => {
   const [quantity, setQuantity] = useState(0)
@@ -40,15 +41,13 @@ const styles = StyleSheet.create({
         borderColor: Ijo,
         borderWidth: 1,
         padding: 10,
-        height: 210,
-        width: 100,
-        justifyContent:'space-between',
+        height: height * 0.3,
+        width: width * 0.28,
         marginBottom: 10,
-        marginLeft: 13,
     },
     gambar: {
-        width: 80,
-        height: 80,
+        width: height * 0.13,
+        height: height * 0.13,
         borderRadius: 10,
     }
 })

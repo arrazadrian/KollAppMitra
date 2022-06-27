@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
+
+const { width, height } = Dimensions.get('window')
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     color: Ijo,
   },
   deskripsi:{
-    fontSize: 14,
+    fontSize: 16,
     color: IjoTua,
   },
   cardtext:{
@@ -114,8 +116,8 @@ const styles = StyleSheet.create({
   },
   card:{
     backgroundColor: Putih,
-    width: '48%',
-    height: 170,
+    width:  width*0.42,
+    height: width*0.42,
     padding: 15,
     marginTop: 10,
     marginBottom: 20,
@@ -133,6 +135,7 @@ const styles = StyleSheet.create({
   },
   langsung:{
     width: '100%',
+    height: height*0.16,
     backgroundColor: Putih,
     padding: 10,
     marginTop: 10,
@@ -144,12 +147,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gambartemu:{
-    width: 80,
-    height: 80,
+    width: width*0.25,
+    height: width*0.25,
     borderRadius: 10,
   },
   texttemu:{
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: IjoTua,
   },

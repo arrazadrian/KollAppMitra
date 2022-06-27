@@ -21,12 +21,12 @@ atasjual = () => {
     </View>
     <View>
     <FlatList
-        style={{marginHorizontal: 6, width:'100%'}}
-        numColumns={3}
-        columnWrapperStyle={{justifyContent:'space-between'}}
+        horizontal= {true}
         data={jeniskategori}
         renderItem= {({item}) => <LogoKategori item={item} />}
         keyExtractor={ jeniskategori => jeniskategori.id}
+        showsHorizontalScrollIndicator={false}
+        bounces={false}
     />
     </View>
     <View style={{marginBottom:10, marginLeft: 10}}>
@@ -51,7 +51,10 @@ const LangsungScreen = ({ navigation }) => {
                 <View>
                   <FlatList
                       numColumns={3}
-                      columnWrapperStyle={{justifyContent:'space-between'}}
+                      columnWrapperStyle={{
+                        justifyContent:'space-between',
+                        paddingHorizontal: 20,
+                      }}
                       data={daftarproduk}
                       renderItem= {({item}) => <JualProduk item={item} />}
                       keyExtractor={ daftarproduk => daftarproduk.id}

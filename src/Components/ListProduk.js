@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions} from 'react-native'
 import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import { Edit } from '../assets/Icons/Index'
 import { useNavigation } from '@react-navigation/native'
 
+const { width, height } = Dimensions.get('window')
 
 const ListProduk = ({item}) => {
   
   const navigation = useNavigation();
-
+  
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
       nama: item.nama,
@@ -19,7 +20,7 @@ const ListProduk = ({item}) => {
       kuantitas: item.kuantitas,
     })
   }
-
+  
   const pindahEdit = () => {
     navigation.navigate('EditProdukScreen', { 
       nama: item.nama,
@@ -31,7 +32,7 @@ const ListProduk = ({item}) => {
       kategori: item.kategori, 
     })
   }
-
+    
   return (
     <View>
        <Pressable 
@@ -69,14 +70,13 @@ const styles = StyleSheet.create({
         borderColor: Ijo,
         borderWidth: 1,
         padding: 10,
-        height: 200,
-        width: 100,
-        marginHorizontal: 5,
+        height: height * 0.3,
+        width: width * 0.28,
         marginBottom: 10,
     },
     gambar: {
-        width: 80,
-        height: 80,
+        width:  height * 0.13,
+        height: height * 0.13,
         borderRadius: 10,
         alignSelf: 'center',
     },

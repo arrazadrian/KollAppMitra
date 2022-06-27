@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
-import { Ijo, Putih } from '../Utils/Warna'
+import { Ijo, IjoMint, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
+
+const { width, height } = Dimensions.get('window')
 
 const LogoKategori = ({item}) => {
 
@@ -17,9 +19,9 @@ const LogoKategori = ({item}) => {
 
   return (
     <Pressable 
-    onPress={pindahKategori}
-    style={styles.kartu}
-    >
+        onPress={pindahKategori}
+        style={styles.kartu}
+        >
         <View style={styles.belakang}>
             <Image source={item.image} style={styles.gambar} />
         </View>
@@ -32,10 +34,11 @@ export default LogoKategori
 
 const styles = StyleSheet.create({
     kartu:{
-        width: '30%',
-        height: '30%',
-        alignItems: 'center',
-        marginBottom: 12,
+        width: width*0.2,
+        height: width*0.3,
+        alignSelf:'center',
+        marginRight: 10,
+        marginBottom: 20, 
     },
     nama:{
         fontSize: 16,
@@ -43,13 +46,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     gambar:{
-        width: 90,
-        height: 90,
+        width: width*0.17,
+        height: width*0.17,
       },
       belakang:{
         padding: 5, 
         backgroundColor: Putih, 
-        borderRadius: 10, 
+        borderRadius: 50, 
         marginBottom: 5,
         borderWidth: 1,
         borderColor: Ijo,

@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions} from 'react-native'
 import React from 'react'
 import { Search } from '../assets/Icons/Index'
 import { KollLong } from '../assets/Images/Index'
+
+const { width, height } = Dimensions.get('window')
 
 const PencarianBar = () => {
   return (
     <View style={styles.root}>
       <Image source={KollLong} style={styles.logopojok}/>
       <TextInput placeholder='Cari produk yang anda mau'  style={styles.container}/> 
-      <Search style={{position: 'absolute', top: 10, left: 85}} />
+      <Search style={{position: 'absolute', top: width*0.024, left: width*0.24}} />
     </View>
   )
 }
