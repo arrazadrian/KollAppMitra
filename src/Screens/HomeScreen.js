@@ -13,69 +13,69 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   return (
-    <ScrollView style={styles.latar}>
-      <View style={{
-        paddingTop: 20,
-        flexDirection:'row', 
-        justifyContent:'space-between',
-        alignItems:'center',
-        marginBottom: 20,
-        }}>
-        <View>
-          <Text style={{
-            fontSize: 20,
-            color: Ijo,
-            marginBottom: -7,
-          }}>Selamat Datang!</Text>
-          <Text style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            color: IjoTua,
-            width: 200,
-          }}>Sayur Aa Anri</Text>
-        </View>
-        <View>
-          <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
-          <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMMM YYYY')}</Text>
-        </View>
-      </View>
-      <View style={styles.status}>
-        <View>
-            <Text style={styles.judul}>Status Anda: 
-            <Text style={{color: IjoTua}}> Aktif</Text>
-            </Text>
-            <Text style={styles.deskripsi}>Anda aktif terlacak calon pelanggan.</Text>
-        </View>
-          <Switch
-            trackColor={{ false: '#767577', true: Ijo }}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-      </View>
-      <View>
-        <Text style={styles.judul}>Etalase Produk</Text>
-        <View style={{flexDirection:'row', justifyContent:'space-around'}}>
-            <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
-              <Image source={Gerobak} style={styles.gambar}/>
-              <Text style={styles.cardtext}>Produk Utama</Text>
-            </Pressable>
-            <Pressable style={styles.card} onPress={() => navigation.push('PreOrderScreen')}>
-              <Image source={PreOrder} style={styles.gambar}/>
-              <Text style={styles.cardtext}>Produk Pre-Order</Text>
-            </Pressable>
-        </View>
-          <Text style={styles.judul}>Bertemu di Jalan?</Text>
-          <Pressable style={styles.langsung} onPress={() => navigation.push('LangsungScreen')}>
+    <View style={styles.latar}>
+        <ScrollView>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent:'space-between',
+            alignItems:'center',
+            marginBottom: 20,
+            }}>
             <View>
-              <Text style={styles.texttemu}>Temu Langsung</Text>
-              <Text style={styles.deskripsi}>Buat transaksi baru saat bertemu</Text>
+              <Text style={{
+                fontSize: 20,
+                color: Ijo,
+                marginBottom: -7,
+              }}>Selamat Datang!</Text>
+              <Text style={{
+                fontSize: 24,
+                fontWeight: 'bold',
+                color: IjoTua,
+              }}>Toko Aa Anri</Text>
             </View>
-            <Image source={TemuLangsung} style={styles.gambartemu}/>
-          </Pressable>
-      </View>
-    </ScrollView>
+            <View>
+              <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
+              <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMMM YYYY')}</Text>
+            </View>
+          </View>
+          <View style={styles.status}>
+            <View>
+                <Text style={styles.judul}>Status Anda: 
+                <Text style={{color: IjoTua}}> Aktif</Text>
+                </Text>
+                <Text style={styles.deskripsi}>Anda aktif terlacak calon pelanggan.</Text>
+            </View>
+              <Switch
+                trackColor={{ false: '#767577', true: Ijo }}
+                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+          </View>
+          <View>
+            <Text style={styles.judul}>Etalase Produk</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
+                  <Image source={Gerobak} style={styles.gambar}/>
+                  <Text style={styles.cardtext}>Produk Utama</Text>
+                </Pressable>
+                <Pressable style={styles.card} onPress={() => navigation.push('PreOrderScreen')}>
+                  <Image source={PreOrder} style={styles.gambar}/>
+                  <Text style={styles.cardtext}>Produk Pre-Order</Text>
+                </Pressable>
+            </View>
+              <Text style={styles.judul}>Bertemu di Jalan?</Text>
+              <Pressable style={styles.langsung} onPress={() => navigation.push('LangsungScreen')}>
+                <View>
+                  <Text style={styles.texttemu}>Temu Langsung</Text>
+                  <Text style={styles.deskripsi}>Buat transaksi baru saat bertemu</Text>
+                </View>
+                <Image source={TemuLangsung} style={styles.gambartemu}/>
+              </Pressable>
+          </View>
+        </ScrollView>
+    </View>
   )
 }
 
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   latar:{
     backgroundColor: Kuning,
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
   status: {
     backgroundColor: Putih,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     color: Ijo,
   },
   deskripsi:{
-    fontSize: 16,
+    fontSize: 14,
     color: IjoTua,
   },
   cardtext:{
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
   card:{
     backgroundColor: Putih,
-    width: '45%',
+    width: '48%',
     height: 170,
     padding: 15,
     marginTop: 10,
@@ -121,7 +122,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Ijo,
     alignItems: 'center',
-    elevation: 5,
+    justifyContent:'space-between',
+    elevation: 3,
+    padding:10,
   },
   gambar:{
     width: 110,
@@ -129,12 +132,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   langsung:{
+    width: '100%',
     backgroundColor: Putih,
-    padding: 15,
+    padding: 10,
     marginTop: 10,
     marginBottom: 20,
     borderRadius: 10,
-    elevation: 5,
+    elevation: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   texttemu:{
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: IjoTua,
   },
