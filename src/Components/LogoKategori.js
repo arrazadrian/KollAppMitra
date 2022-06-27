@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
-import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
+import { Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get('window')

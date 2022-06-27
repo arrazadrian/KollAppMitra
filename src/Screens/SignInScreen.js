@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native'
 import React, {useEffect, useState} from 'react'
-import { KollLong, LatarSignIn } from '../assets/Images/Index'
+import { KollLong } from '../assets/Images/Index'
 import { Hitam, Ijo, Kuning, Putih } from '../Utils/Warna'
 import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
+import { Pasar, Awan } from '../assets/Images/Index'
 
 
 const { height, width } = Dimensions.get('window')
@@ -30,7 +31,10 @@ const SignInScreen = ({navigation}) => {
   return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.latar}>
-            <ImageBackground source={LatarSignIn}  resizeMode="stretch"  style={styles.rumah}/>
+              
+                  <Awan style={{position:'absolute', top: 10, right: 10, height: 120, width: 220}}/>
+                  <Pasar style={{position:'absolute', bottom: 2, height: height*0.5 , width: width}}/>
+              
               <View>
                 <Image source={KollLong} style={styles.pojoklogo} />
               </View>

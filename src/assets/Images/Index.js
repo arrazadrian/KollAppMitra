@@ -1,11 +1,14 @@
-import IkanMujaer from './IkanMujaer.png'
+import Awan from './awan.svg'
 import Splash from './splashKollMitra.png'
-import Tomato from './Tomato.jpg'
-import Delete from './Delete.png'
 import DPdefault from './Image.png'
 import LogoMitra from './LogoMitra.png'
 import KollLong from './KollLong.png'
 import Gerobak from './Gerobak.png'
+import gerobaksplash from './gerobaksplash.svg'
+import halaman from './halaman.svg'
+import kollsplash from './kollsplash.svg'
+import Pasar from './pasar.svg'
+import mitrasplash from './mitrasplash.svg'
 import LatarSignIn from './LatarSignIn.png'
 import DPkartu from './Dagangan.png'
 import PreOrder from './PreOrder.png'
@@ -22,12 +25,13 @@ import Kategori09 from './Kategori09.png'
 import Bag from './Bag.png'
 import Bawah from './Bawah.png'
 
-export { IkanMujaer, Splash, Tomato, 
-        Delete, DPdefault, LogoMitra,
+export { Splash, Awan, gerobaksplash,
+        DPdefault, LogoMitra, kollsplash,
         KollLong, Gerobak, LatarSignIn,
         DPkartu, PreOrder, TemuLangsung,
         Kategori01, Kategori02, Kategori03,
         Kategori04, Kategori05, Kategori06,
         Kategori07, Kategori08, Kategori09,
-        Bag, Bawah,
+        Bag, Bawah, Pasar, halaman,
+        mitrasplash,
     }

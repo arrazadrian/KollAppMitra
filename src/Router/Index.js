@@ -89,7 +89,7 @@ return(
   
 const Routernih = () => {
     return (
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="Gerbang">
           <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Gerbang" component={Gerbang} options={{ headerShown: false }}/>
           <Stack.Screen name="AppUtama" component={AppUtama} options={{ headerShown: false }}/>
