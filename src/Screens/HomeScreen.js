@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop:StatusBar.currentHeight + 5,
   },
   status: {
     backgroundColor: Putih,
