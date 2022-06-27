@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import { Bawah, KollLong,} from '../assets/Images/Index'
+import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
 import { daftarproduk } from '../Data/daftarproduk'
@@ -9,25 +9,25 @@ import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
 import Keranjang from '../Components/Keranjang'
 
-headerList = () => {
+atasjual = () => {
  
   return(
     <View style={{padding: 10}}>
-    <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', }}>
-      <Image source={KollLong} style={{width: 80, height:50}} /> 
+    <View>
       <PencarianBar/>
     </View>
-    <View style={{marginBottom:10, marginLeft: 10}}>
+    <View style={{marginBottom:10 }}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
     </View>
-
+    <View>
     <FlatList
+        style={{marginHorizontal: 6, width:'100%'}}
         numColumns={3}
         data={jeniskategori}
         renderItem= {({item}) => <LogoKategori item={item} />}
         keyExtractor={ jeniskategori => jeniskategori.id}
     />
-
+    </View>
     <View style={{marginBottom:10, marginLeft: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
     </View>
@@ -53,7 +53,7 @@ const LangsungScreen = ({ navigation }) => {
                       data={daftarproduk}
                       renderItem= {({item}) => <JualProduk item={item} />}
                       keyExtractor={ daftarproduk => daftarproduk.id}
-                      ListHeaderComponent={headerList}
+                      ListHeaderComponent={atasjual}
                       ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
                       ListFooterComponent={
                       <View>

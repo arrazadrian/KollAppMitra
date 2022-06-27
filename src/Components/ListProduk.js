@@ -38,7 +38,7 @@ const ListProduk = ({item}) => {
        onPress={pindahDetail}
        style={styles.container}>
           <Image source={item.image} style={styles.gambar} />
-          <View style={{paddingHorizontal:5}}>
+          <View>
               <Text 
               style={{fontSize:18, fontWeight:'bold'}}
               numberOfLines={1}

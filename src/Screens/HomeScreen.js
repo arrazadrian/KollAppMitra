@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   return (
-    <View style={styles.latar}>
+    <SafeAreaView style={styles.latar}>
         <ScrollView>
           <View style={{
             flexDirection: 'row',
@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
               </Pressable>
           </View>
         </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

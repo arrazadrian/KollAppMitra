@@ -3,14 +3,12 @@ import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
-import { KollLong } from '../assets/Images/Index'
 import { daftarpreproduk } from '../Data/daftarpreproduk'
 
 headerList = () => {
   return(
     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
-        <Image source={KollLong} style={styles.logopojok} />
         <PencarianBar />
       </View>
       <View style={{marginBottom: 10}}>

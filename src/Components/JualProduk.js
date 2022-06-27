@@ -14,7 +14,7 @@ const JualProduk = ({item}) => {
         <View style={{alignItems:'center'}}>
             <Image source={item.image} style={styles.gambar} /> 
         </View>
-        <View style={{paddingHorizontal: 5}}>
+        <View>
             <Text 
             style={{fontSize:18, fontWeight:'bold'}}
             numberOfLines={1}
@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         height: 210,
-        width: 120,
+        width: 100,
         justifyContent:'space-between',
         marginBottom: 10,
         marginLeft: 13,
     },
     gambar: {
-        width: 95,
-        height: 95,
+        width: 80,
+        height: 80,
         borderRadius: 10,
     }
 })

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         height: 90,
       },
       belakang:{
-        padding: 10, 
+        padding: 5, 
         backgroundColor: Putih, 
         borderRadius: 10, 
         marginBottom: 5,
