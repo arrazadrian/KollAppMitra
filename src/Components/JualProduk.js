@@ -12,10 +12,10 @@ const JualProduk = ({item}) => {
   return (
     <View>
        <View style={styles.container}>
-        <View style={{flex: 4}}>
+        <View>
             <Image source={item.image} style={styles.gambar} /> 
         </View>
-        <View style={{flex: 3}}>
+        <View>
             <Text 
             style={{fontSize:18, fontWeight:'bold'}}
             numberOfLines={1}

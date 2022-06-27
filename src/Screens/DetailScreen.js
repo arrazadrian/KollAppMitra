@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
 import { IkanMujaer } from '../assets/Images/Index'
 import { Ijo, IjoMint, IjoTua, Kuning } from '../Utils/Warna'
 
+const { width, height } = Dimensions.get('window')
 
 const DetailScreen = ({ navigation, route }) => {
 
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
         backgroundColor: Kuning,
         flex: 1,
         paddingHorizontal: 30,
-        paddingTop: 100,
+        justifyContent:'center',
     },
     gambar:{
-        height: 350,
-        width: 350,
+        height: width*0.9,
+        width: width*0.9,
         borderRadius: 20,
         borderWidth: 1,
         borderColor: Ijo,

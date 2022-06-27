@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
+
+const { width, height } = Dimensions.get('window')
 
 const EditProdukScreen = ({ navigation, route }) => {
 
@@ -96,7 +98,7 @@ const EditProdukScreen = ({ navigation, route }) => {
             </Picker>
             <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
                 <Pressable style={styles.hapus}>
-                    <Text style={{color:'red', fontSize: 18, }}>Hapus Produk</Text>
+                    <Text style={{color:Ijo, fontSize: 18, fontWeight:'bold'}}>Hapus Produk</Text>
                 </Pressable>
                 <Pressable style={styles.tombol}>
                   <Text
@@ -149,8 +151,8 @@ const styles = StyleSheet.create({
     foto:{
         backgroundColor: Putih,
         borderRadius: 20,
-        height: 100,
-        width: 100,
+        height: width*0.25,
+        width: width*0.25,
         marginRight: 10,
     },
     gantifoto:{
@@ -165,6 +167,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     hapus:{
+      flex: 1,
       padding: 10,
       width: 170,
       height: 50,
@@ -174,6 +177,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
     },
     tombol:{
+        flex: 1,
         backgroundColor: Ijo,
         borderRadius: 20,
         padding: 10,
