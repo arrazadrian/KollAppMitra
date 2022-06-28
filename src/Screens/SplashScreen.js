@@ -1,6 +1,6 @@
-import { StyleSheet, View, Dimensions, ImageBackground } from 'react-native'
+import { StyleSheet, View, Dimensions, ImageBackground, Image } from 'react-native'
 import React, {useEffect} from 'react'
-import { Splash } from '../assets/Images/Index.js'
+import { gerobaksplash, mitrasplash } from '../assets/Images/Index.js'
 import { Kuning } from '../Utils/Warna'
 
 const { height, width } = Dimensions.get('window')
@@ -13,8 +13,9 @@ const SplashScreen = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <View>
-      <ImageBackground source={Splash} resizeMode="stretch" style={styles.gambar} />
+    <View style={styles.background}>
+      <Image source={mitrasplash} resizeMode="stretch" style={styles.mitrasplash} />
+      <Image source={gerobaksplash} resizeMode="stretch" style={styles.gerobaksplash} />
     </View>
   )
 }
@@ -24,14 +25,14 @@ export default SplashScreen
 const styles = StyleSheet.create({
   background:{
     flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Kuning,
   },
-  gambar:{
-    flex:1,
-    position:`absolute`,
-    height: height,
-    width: width,
-  }
+  mitrasplash:{
+    alignSelf: 'center',
+    top: height * 0.4,
+  },
+  gerobaksplash:{
+    alignSelf: 'center',
+    bottom: -1,
+  },
 })
