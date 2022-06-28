@@ -48,6 +48,22 @@ const LangsungScreen = ({ navigation }) => {
   // );
   const [total, setTotal] = useState(0)
 
+  // const carijualproduk = (text) => {
+  //   if(text){
+  //     const newData = data.filter(item =>{
+  //       const itemData = item.nama ? item.nama.toUpperCase() 
+  //                         : ''.toUpperCase();
+  //       const textData = text.toUpperCase();
+  //       return itemData.indexOf(textData) > -1;
+  //     });
+  //     setFilterdata(newData);
+  //     setSearch(text);
+  //   } else {
+  //     setFilterdata(data);
+  //     setSearch(text);
+  //   }
+  // }
+
   return (
     <View style={styles.latar}>
                 <View>
