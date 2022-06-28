@@ -32,6 +32,10 @@ const AkunScreen = ({ navigation }) => {
             </View>
             <View style={{padding: 15}}>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
+                      <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
+                      <Text style={{color: Putih, fontSize: 20}}>Toko Sayur paling fresh abis</Text>   
+                </View>
+                <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
                       <Text style={{color: Putih, fontSize: 20}}>0909090909090</Text>   
                 </View>
