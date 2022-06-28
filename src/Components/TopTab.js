@@ -19,7 +19,7 @@ const TopTab = ({ navigation }) => {
             tabBarActiveTintColor: Putih,
             tabBarInactiveTintColor: IjoTua,
             tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
-            tabBarStyle: { backgroundColor: Ijo, paddingTop: StatusBar.currentHeight + 10 },
+            tabBarStyle: { backgroundColor: Ijo, paddingTop: StatusBar.currentHeight},
         }}
     >   
 
