@@ -31,13 +31,9 @@ const SignInScreen = ({navigation}) => {
   return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.latar}>
-              
-                  <Awan style={{position:'absolute', top: 10, right: 10, height: 120, width: 220}}/>
-                  <Pasar style={{position:'absolute', bottom: 2, height: height*0.5 , width: width}}/>
-              
-              <View>
-                <Image source={KollLong} style={styles.pojoklogo} />
-              </View>
+            <Image source={KollLong} style={styles.pojoklogo} />
+            <Image source={Awan} style={styles.awan}/>
+            <Image source={Pasar} style={styles.pasar}/>
               <View>
                   <View style={styles.wraper}>
                       <View style={{marginBottom: 10}}>
@@ -77,14 +73,14 @@ export default SignInScreen
 const styles = StyleSheet.create({
   latar: {
     backgroundColor: Kuning,
-    flex: 1,
-    
+    flex: 1,   
   },
- rumah:{
-    flex:1,
-    position:`absolute`,
-    height: height,
-    width: width,
+ awan:{
+    position:'absolute', 
+    top: 10, 
+    right: 10, 
+    height: 120, 
+    width: 220
   }, 
   pojoklogo: {
     width:  100,
@@ -93,7 +89,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     position: `absolute`,
-  
+  },
+  pasar:{
+    position:'absolute', 
+    bottom: 0, 
+    height: height*0.32, 
+    width: width,
   },
   tombol:{
     height: 50,
@@ -102,8 +103,7 @@ const styles = StyleSheet.create({
     marginVertical: 20, 
     backgroundColor: Ijo,
     borderRadius: 10,
-    alignSelf: 'center'
-   
+    alignSelf: 'center'  
   },
   judul: {
     fontSize: 30, 
@@ -121,5 +121,5 @@ const styles = StyleSheet.create({
   wraper:{
     marginTop: 130,
     marginHorizontal: 30,
-  }
+  },
 })
