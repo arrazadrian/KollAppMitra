@@ -8,6 +8,7 @@ import localization from 'moment/locale/id';
 const { width, height } = Dimensions.get('window')
 
 const HomeScreen = ({ navigation }) => {
+  const [status, setStatus] = useState('Aktif');
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -43,9 +44,10 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.status}>
             <View>
                 <Text style={styles.judul}>Status Anda: 
-                <Text style={{color: IjoTua}}> Aktif</Text>
+                <Text> </Text>
+                <Text style={{color: IjoTua}}>{status}</Text>
                 </Text>
-                <Text style={styles.deskripsi}>Anda aktif terlacak calon pelanggan.</Text>
+                <Text style={styles.deskripsi}>Anda tidak terlacak calon pelanggan.</Text>
             </View>
               <Switch
                 trackColor={{ false: '#767577', true: Ijo }}

@@ -50,7 +50,7 @@ const ListProduk = ({item}) => {
               style={{fontSize:16}}
               numberOfLines={1}
               >{item.nama}</Text> 
-              <Text>{item.kuantitas}{item.satuan}</Text> 
+              <Text>{item.kuantitas} {item.satuan}</Text> 
           </View>
           <View style={{position:'absolute', right:10, bottom:10}}>
             <Pressable 

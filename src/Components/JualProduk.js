@@ -24,7 +24,7 @@ const JualProduk = ({item}) => {
             style={{fontSize:16}}
             numberOfLines={1}
             >{item.nama}</Text> 
-            <Text>{item.kuantitas}{item.satuan}</Text> 
+            <Text>{item.kuantitas} {item.satuan}</Text> 
         </View>
           <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 
        </View> 
@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         height: height * 0.3,
-        width: width * 0.3,
+        //width: width * 0.3,
         marginBottom: 10,
+        paddingHorizontal: 10,
     },
     gambar: {
-        width: height * 0.13,
-        height: height * 0.13,
+        width: width * 0.25,
+        height: width * 0.25,
         borderRadius: 10,
         alignSelf: 'center',
         resizeMode: 'cover',
