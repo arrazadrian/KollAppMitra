@@ -13,9 +13,9 @@ atasjual = () => {
  
   return(
     <View style={{ paddingHorizontal: 10 }}>
-    <View style={{ paddingVertical: 10 }}>
-      <PencarianBar/>
-    </View>
+        <View style={{ paddingVertical: 10 }}>
+            <PencarianBar/>
+        </View>
     <View>
         <View style={{marginBottom:10 }}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
@@ -41,29 +41,6 @@ atasjual = () => {
 
 const LangsungScreen = ({ navigation }) => {
   
-  // const hargatotal = daftarproduk.reduce(
-  //   (jumlahharga, daftarproduk) =>
-  //   jumlahharga + daftarproduk.item.price * daftarproduk.quantity,
-  //   0,
-  // );
-  const [total, setTotal] = useState(0)
-
-  // const carijualproduk = (text) => {
-  //   if(text){
-  //     const newData = data.filter(item =>{
-  //       const itemData = item.nama ? item.nama.toUpperCase() 
-  //                         : ''.toUpperCase();
-  //       const textData = text.toUpperCase();
-  //       return itemData.indexOf(textData) > -1;
-  //     });
-  //     setFilterdata(newData);
-  //     setSearch(text);
-  //   } else {
-  //     setFilterdata(data);
-  //     setSearch(text);
-  //   }
-  // }
-
   return (
     <View style={styles.latar}>
                 <View>
@@ -88,7 +65,7 @@ const LangsungScreen = ({ navigation }) => {
                 </View>
             
           
-          <View style={{flexDirection: 'column-reverse'}}>
+          <View>
               <Keranjang/>
           </View>
     </View>
