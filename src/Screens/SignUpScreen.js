@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar, Dimensions, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 //import { useAuth } from '../../providers/AuthProvider';
 
+const { height, width } = Dimensions.get('window')
+
 const SignUpScreen = ({navigation}) => {
 
-  <StatusBar translucent backgroundColor="transparent" />
+ // <StatusBar translucent backgroundColor="transparent" />
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -28,14 +30,14 @@ const SignUpScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.latar}>
-         <View style={{alignItems:'center', top: 5}}>
+    <ScrollView style={styles.latar}>
+         <View style={{alignItems:'center', marginBottom: 10, paddingTop: 10}}>
            <Text style={{color: Putih, fontSize: 30, fontWeight:'bold'}}>Daftar Akun Mitra</Text>
            <Text style={{color: Putih, fontSize: 17}}>Yuk lengkapi data pribadimu!</Text>
          </View>
           <View style={styles.kotak}>
               <View style={{left: 5, marginBottom: 5}}>
-                  <Text style={{color: Putih}}>Nama Lengkap</Text>
+                  <Text style={styles.subjudul}>Nama Lengkap</Text>
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Asep Suryana"
@@ -46,7 +48,18 @@ const SignUpScreen = ({navigation}) => {
                   />
               </View>
               <View style={{left: 5, marginBottom: 5}}>
-                  <Text style={{color: Putih}}>Email</Text>
+                  <Text style={styles.subjudul}>Nama Toko</Text>
+              </View>
+              <View style={{marginBottom: 10}}>
+                  <TextInput style={styles.input} placeholder="Cth. Sayur Segar Ijo"
+                  value={username}
+                  onChangeText={setUsername}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  />
+              </View>
+              <View style={{left: 5, marginBottom: 5}}>
+                  <Text style={styles.subjudul}>Email</Text>
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. emailanda@mail.com"
@@ -57,7 +70,7 @@ const SignUpScreen = ({navigation}) => {
                   />
               </View>
               <View style={{left: 5, marginBottom: 5}}>
-                  <Text style={{color: Putih}}>No. Handphone</Text>
+                  <Text style={styles.subjudul}>No. Handphone</Text>
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="08XXXXX"
@@ -69,7 +82,7 @@ const SignUpScreen = ({navigation}) => {
                   />
               </View>
               <View style={{left: 5, marginBottom: 5}}>
-                  <Text style={{color: Putih}}>Password</Text>
+                  <Text style={styles.subjudul}>Password</Text>
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput secureTextEntry={true} style={styles.input} placeholder="Kata Sandi"
@@ -80,7 +93,7 @@ const SignUpScreen = ({navigation}) => {
                   />
               </View>
               <View style={{left: 5, marginBottom: 5}}>
-                  <Text style={{color: Putih}}>Tulis Ulang Password</Text>
+                  <Text style={styles.subjudul}>Tulis Ulang Password</Text>
               </View>
               <View style={{marginBottom: 16}}>
                 <TextInput secureTextEntry={true} style={styles.input} placeholder="Tulis Ulang Kata Sandi"
@@ -88,11 +101,10 @@ const SignUpScreen = ({navigation}) => {
                 onChangeText={setPasswordConfirmation}
                 autoCapitalize="none"
                 autoCorrect={false}
-                
                 />
               </View>
               <View style={{justifyContent: 'center'}}>
-                  <Text style={{color: Putih, textAlign: 'center'}}>
+                  <Text style={{color: Putih, textAlign: 'center', fontSize: 16}}>
                     <Text>Dengan mendaftar akun anda menyetujui </Text>
                     <Text style={{fontWeight:'bold'}}>kebijakan privasi </Text> 
                     <Text>dalam aplikasi ini</Text>
@@ -102,7 +114,7 @@ const SignUpScreen = ({navigation}) => {
           <View style={styles.tombol}>
               <Text style={{fontWeight:'bold', fontSize: 20, color: Putih}}>Daftar</Text>
           </View>
-        <View style={{alignSelf:'center'}}>
+        <View style={{alignSelf:'center', marginBottom: 20}}>
             <Text style={{color: Putih}}>
                 <Text>Sudah punya akun?</Text>   
                 <Text style={{fontWeight:'bold'}}
@@ -110,7 +122,7 @@ const SignUpScreen = ({navigation}) => {
                 > Klik ini!</Text>
             </Text>
         </View>
-    </View>
+    </ScrollView>
     </TouchableWithoutFeedback>
   )
 }
@@ -125,16 +137,18 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   kotak:{
-    top: 20,
     backgroundColor: Ijo,
-    borderRadius: 20,
-    width: 320,
-    height: 440,
+    borderRadius: 10,
+    width: width*0.85,
+    height: height*0.72,
     alignSelf: 'center',
-    opacity: 1,
-    marginBottom: 15,
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 20,
+    marginBottom:20,
+  },
+  subjudul:{
+    color: Putih,
+    fontSize: 16,
   },
   input: {
     backgroundColor: Putih,
@@ -143,13 +157,13 @@ const styles = StyleSheet.create({
     paddingStart: 10
   },
   tombol:{
-    width: 320,
-    height: 50,
+    width: width*0.84,
+    height: height*0.06,
     backgroundColor: Ijo,
     borderRadius: 10,
     alignSelf: 'center',
-    marginVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10,
   }
 })

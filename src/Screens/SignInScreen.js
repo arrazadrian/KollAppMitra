@@ -77,28 +77,27 @@ const styles = StyleSheet.create({
   },
  awan:{
     position:'absolute', 
-    top: 10, 
-    right: 10, 
-    height: 120, 
-    width: 220
+    top: height*0.03, 
+    right: width*0.02, 
+    height: width*0.3, 
+    width: width*0.5,
   }, 
   pojoklogo: {
-    width:  100,
-    height: 50,
-    top: 15,
-    marginLeft: 10,
-    marginTop: 10,
+    width:  width*0.25,
+    height: height*0.1,
+    top: height*0.03,
+    left: width*0.03,
     position: `absolute`,
   },
   pasar:{
     position:'absolute', 
-    bottom: 0, 
+    bottom: -1, 
     height: height*0.32, 
     width: width,
   },
   tombol:{
-    height: 50,
-    width: 300, 
+    height: height*0.06,
+    width:  width*0.8, 
     justifyContent: 'center', 
     marginVertical: 20, 
     backgroundColor: Ijo,
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   wraper:{
-    marginTop: 130,
+    marginTop: height*0.2,
     marginHorizontal: 30,
   },
 })
