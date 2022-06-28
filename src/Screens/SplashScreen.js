@@ -28,11 +28,17 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
   },
   mitrasplash:{
+    position: 'absolute',
     alignSelf: 'center',
-    top: height * 0.4,
+    top: height * 0.35,
+    width: width* 0.4,
+    height: width* 0.4,
   },
   gerobaksplash:{
+    position:'absolute',
     alignSelf: 'center',
     bottom: -1,
+    width: width,
+    height: height * 0.3,
   },
 })
