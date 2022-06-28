@@ -10,6 +10,7 @@ const SignUpScreen = ({navigation}) => {
  // <StatusBar translucent backgroundColor="transparent" />
 
   const [username, setUsername] = useState('');
+  const [namatoko, setNamatoko] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -52,8 +53,8 @@ const SignUpScreen = ({navigation}) => {
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Sayur Segar Ijo"
-                  value={username}
-                  onChangeText={setUsername}
+                  value={namatoko}
+                  onChangeText={setNamatoko}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
