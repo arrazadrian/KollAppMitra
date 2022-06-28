@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 const Keranjang = () => {
 
   const navigation = useNavigation();
-  
+
   return (
     <View>
       <View style={styles.pesan}>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '95%',
         borderColor: IjoTua,
-        borderWidth: 3,
+        borderWidth: 1,
         margin: 10,
         bottom: 5,
       },
