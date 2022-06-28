@@ -32,7 +32,7 @@ const SignUpScreen = ({navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ScrollView style={styles.latar}>
-         <View style={{alignItems:'center', marginBottom: 10, paddingTop: 10}}>
+         <View style={{alignItems:'center', marginBottom: 10, paddingTop: 20}}>
            <Text style={{color: Putih, fontSize: 30, fontWeight:'bold'}}>Daftar Akun Mitra</Text>
            <Text style={{color: Putih, fontSize: 17}}>Yuk lengkapi data pribadimu!</Text>
          </View>
@@ -105,7 +105,7 @@ const SignUpScreen = ({navigation}) => {
                 />
               </View>
               <View style={{justifyContent: 'center'}}>
-                  <Text style={{color: Putih, textAlign: 'center', fontSize: 16}}>
+                  <Text style={{color: Putih, textAlign: 'center', fontSize: 15}}>
                     <Text>Dengan mendaftar akun anda menyetujui </Text>
                     <Text style={{fontWeight:'bold'}}>kebijakan privasi </Text> 
                     <Text>dalam aplikasi ini</Text>
@@ -115,7 +115,7 @@ const SignUpScreen = ({navigation}) => {
           <View style={styles.tombol}>
               <Text style={{fontWeight:'bold', fontSize: 20, color: Putih}}>Daftar</Text>
           </View>
-        <View style={{alignSelf:'center', marginBottom: 20}}>
+        <View style={{alignSelf:'center', marginBottom: 50}}>
             <Text style={{color: Putih}}>
                 <Text>Sudah punya akun?</Text>   
                 <Text style={{fontWeight:'bold'}}
@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
   kotak:{
     backgroundColor: Ijo,
     borderRadius: 10,
-    width: width*0.85,
-    height: height*0.72,
+    // width: width*0.85,
+    // height: height*0.72,
     alignSelf: 'center',
     paddingHorizontal: 20,
     paddingVertical: 20,

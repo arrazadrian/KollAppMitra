@@ -14,8 +14,8 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <View style={styles.background}>
-      <Image source={mitrasplash} resizeMode="stretch" style={styles.mitrasplash} />
-      <Image source={gerobaksplash} resizeMode="stretch" style={styles.gerobaksplash} />
+      <Image source={mitrasplash}  style={styles.mitrasplash} />
+      <Image source={gerobaksplash} style={styles.gerobaksplash} />
     </View>
   )
 }
