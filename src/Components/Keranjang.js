@@ -2,8 +2,14 @@ import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
+import { useNavigation } from '@react-navigation/native'
+
+
 
 const Keranjang = () => {
+
+  const navigation = useNavigation();
+  
   return (
     <View>
       <View style={styles.pesan}>
