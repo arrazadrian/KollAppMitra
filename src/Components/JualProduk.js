@@ -1,20 +1,34 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React, { useState } from 'react'
-import { Minus, Plus } from '../assets/Icons/Index'
 import { Ijo, Putih } from '../Utils/Warna'
-import { Tomato } from '../assets/Images/Index'
 import QuantitySelector from './QuantitySelector'
+import { useNavigation } from '@react-navigation/native'
+
 
 const { width, height } = Dimensions.get('window')
 
 const JualProduk = ({item}) => {
+
+  const navigation = useNavigation();
+  
+  const pindahDetail = () => {
+    navigation.navigate('DetailScreen', { 
+      nama: item.nama,
+      deskripsi: item.deskripsi,
+      image: item.image,
+      harga: item.harga,
+      satuan: item.satuan,
+      kuantitas: item.kuantitas,
+    })
+  }
+
   const [quantity, setQuantity] = useState(0)
   return (
     <View>
        <View style={styles.container}>
-        <View>
-            <Image source={item.image} style={styles.gambar} /> 
-        </View>
+        <Pressable onPress={pindahDetail}>
+            <Image source={item.image} style={styles.gambar}/> 
+        </Pressable>
         <View>
             <Text 
             style={{fontSize:18, fontWeight:'bold'}}

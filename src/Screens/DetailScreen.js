@@ -17,7 +17,7 @@ const DetailScreen = ({ navigation, route }) => {
         <Text style={styles.deskripsi}>{deskripsi}</Text>
       </View>
       <View>
-        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{harga} | {kuantitas}{satuan}</Text>     
+        <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{harga} | {kuantitas} {satuan}</Text>     
       </View>
       <Pressable style={styles.tombol}
         onPress={() => navigation.goBack()}>

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop:StatusBar.currentHeight + 5,
+    paddingTop:StatusBar.currentHeight + 10,
   },
   status: {
     backgroundColor: Putih,

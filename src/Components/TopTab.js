@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -19,9 +19,10 @@ const TopTab = ({ navigation }) => {
             tabBarActiveTintColor: Putih,
             tabBarInactiveTintColor: IjoTua,
             tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
-            tabBarStyle: { backgroundColor: Ijo, paddingTop: 15 },
+            tabBarStyle: { backgroundColor: Ijo, paddingTop: StatusBar.currentHeight + 10 },
         }}
-    >
+    >   
+
         <Tab.Screen 
             name="ProsesScreen" 
             component={ProsesScreen} 
