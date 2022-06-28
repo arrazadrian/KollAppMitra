@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
@@ -10,7 +10,32 @@ import LogoKategori from '../Components/LogoKategori'
 import Keranjang from '../Components/Keranjang'
 
 atasjual = () => {
- 
+  const [filteredData, setfilteredData] = useState([]);
+  const [masterData, setmasterData] = useState([]);
+  const [search, setsearch] = useState('');
+  
+  useEffect(() => {
+    return () => {
+
+    }
+  }, [])
+  
+  const searchFilter = (text) =>{
+    if (text) {
+      const newData = masterData.filter((item) =>{
+        const itemData = item.nama ? item.nama.toUpperCase()
+                      : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setfilteredData(newData);
+      setsearch(text);
+    } else {
+      setfilteredData(masterData);
+      setsearch(text);
+    }
+  }
+
   return(
     <View style={{ paddingHorizontal: 10 }}>
         <View style={{ paddingVertical: 10 }}>
@@ -51,7 +76,7 @@ const LangsungScreen = ({ navigation }) => {
                         justifyContent:'space-between',
                         paddingHorizontal: 10,
                       }}
-                      data={daftarproduk}
+                      data={filteredData}
                       renderItem= {({item}) => <JualProduk item={item} />}
                       keyExtractor={ daftarproduk => daftarproduk.id}
                       ListHeaderComponent={atasjual}
