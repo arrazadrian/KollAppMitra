@@ -15,10 +15,16 @@ atasjual = () => {
   const [search, setsearch] = useState('');
   
   useEffect(() => {
-    return () => {
-
-    }
-  }, [])
+    fetch(daftarproduk)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setFilteredDataSource(responseJson);
+        setMasterDataSource(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   
   const searchFilter = (text) =>{
     if (text) {
