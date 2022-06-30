@@ -1,11 +1,29 @@
-import { StyleSheet, Text, View, Pressable, FlatList, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, FlatList, Dimensions } from 'react-native'
 import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
+import ProdukKosong from '../Components/ProdukKosong'
 import { daftarpreproduk } from '../Data/daftarpreproduk'
 
-headerList = () => {
+const { width, height } = Dimensions.get('window')
+
+const kosongpre = () => {
+  return(
+  <View style={{alignItems:'center'}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.8,
+    }}>
+      Kamu tidak punya produk pre-order. Buat produk pre-order
+      dengan ketuk tanda plus di kanan bawah.
+    </Text>
+  </View>
+  )
+}
+
+const ataspre = () => {
   return(
     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
@@ -32,8 +50,8 @@ const PreOrderScreen = ({navigation}) => {
           data={daftarpreproduk}
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarpreproduk => daftarpreproduk.id}
-          ListHeaderComponent={headerList}
-          ListEmptyComponent={<Text>Produk pre-order masih kosong</Text>}
+          ListHeaderComponent={ataspre}
+          ListEmptyComponent={kosongpre}
           ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>

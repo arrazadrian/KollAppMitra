@@ -1,11 +1,29 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, FlatList } from 'react-native'
 import React from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
+import ProdukKosong from '../Components/ProdukKosong'
 import { daftarproduk } from '../Data/daftarproduk'
 
-atasproduk = () => {
+const { width, height } = Dimensions.get('window')
+
+const kosongproduk = () => {
+  return(
+  <View style={{alignItems:'center'}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.8,
+    }}>
+      Kamu tidak punya produk utama. Buat produk utama
+      dengan ketuk tanda plus di kanan bawah.
+    </Text>
+  </View>
+  )
+}
+
+const atasproduk = () => {
   return(
     <View>
       <View style={{flexDirection:'row', marginVertical:10}}>
@@ -33,7 +51,7 @@ const ProdukScreen = ({ navigation }) => {
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ daftarproduk => daftarproduk.id}
           ListHeaderComponent= {atasproduk}
-          ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+          ListEmptyComponent={kosongproduk}
           ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>

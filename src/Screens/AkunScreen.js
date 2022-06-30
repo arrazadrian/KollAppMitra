@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from 'react-native';
+import React from 'react';
 import { Ijo, IjoTua, Kuning, Putih} from '../Utils/Warna';
-import { KollLong } from '../assets/Images/Index'
+import { KollLong } from '../assets/Images/Index';
+import { usermitra } from '../Data/usermitra'
 
-const AkunScreen = ({ navigation }) => {
+const AkunScreen = ({ navigation, item }) => {
   return (
     <SafeAreaView style={styles.latar}>
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
@@ -18,7 +19,7 @@ const AkunScreen = ({ navigation }) => {
                   <Text>Putuu</Text>
                 </View>
                 <View>
-                    <Text style={{fontSize: 30, fontWeight:'bold', color: Putih,}}>Arraz Adrian</Text>
+                    <Text style={{fontSize: 30, fontWeight:'bold', color: Putih,}}>{usermitra.nama}</Text>
                     <Text style={{fontSize: 18,color: Putih,}}>Mitra Pedagang</Text>
                     <Pressable  onPress={() => navigation.push('EditScreen')} >
                         <View style={styles.edit}>
@@ -33,7 +34,7 @@ const AkunScreen = ({ navigation }) => {
             <View style={{padding: 15}}>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
-                      <Text style={{color: Putih, fontSize: 20}}>Toko Sayur paling fresh abis</Text>   
+                      <Text style={{color: Putih, fontSize: 20}}>{usermitra.namatoko}</Text>   
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 

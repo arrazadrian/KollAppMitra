@@ -8,10 +8,27 @@ import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
 import Keranjang from '../Components/Keranjang'
+import ProdukKosong from '../Components/ProdukKosong'
+
 
 const { width, height } = Dimensions.get('window')
 
-atasjual = () => {
+const kosongproduk = () => {
+  return(
+  <View style={{alignItems:'center', paddingBottom:40}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.8,
+    }}>
+      Kamu tidak punya produk utama. Kembali ke beranda dan 
+      ketuk bagian produk utama unuk membuatnya.
+    </Text>
+  </View>
+  )
+}
+
+const atasjual = () => {
   
   // useEffect(() => {
   //   fetch(daftarproduk)
@@ -90,7 +107,7 @@ const LangsungScreen = ({ navigation }) => {
                 renderItem= {({item}) => <JualProduk item={item} />}
                 keyExtractor={ daftarproduk => daftarproduk.id}
                 ListHeaderComponent={atasjual}
-                ListEmptyComponent={<Text>Produk utama masih kosong</Text>}
+                ListEmptyComponent={kosongproduk}
                 ListFooterComponent={
                 <View>
                   <Image source={Bawah} style={styles.bawah}/>
