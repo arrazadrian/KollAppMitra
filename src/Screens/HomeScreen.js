@@ -8,9 +8,19 @@ import localization from 'moment/locale/id';
 const { width, height } = Dimensions.get('window')
 
 const HomeScreen = ({ navigation }) => {
-  const [status, setStatus] = useState('Aktif');
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [status, setStatus] = useState('Tidak Aktif');
+  const [penjelasan, setPenjelasan] = useState('tidak');
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => {
+  if(isEnabled){
+    setStatus('Aktif')
+    setPenjelasan('aktif')
+  } else {
+    setStatus('Tidak Aktif')
+    setPenjelasan('tidak')
+  }
+    setIsEnabled(previousState => !previousState)
+  }
 
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
@@ -47,14 +57,14 @@ const HomeScreen = ({ navigation }) => {
                 <Text> </Text>
                 <Text style={{color: IjoTua}}>{status}</Text>
                 </Text>
-                <Text style={styles.deskripsi}>Anda tidak terlacak calon pelanggan.</Text>
+                <Text style={styles.deskripsi}>Anda {penjelasan} terlacak calon pelanggan.</Text>
             </View>
               <Switch
                 trackColor={{ false: '#767577', true: Ijo }}
-                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                thumbColor={isEnabled ? '#f4f3f4' : '#f5dd4b'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
-                value={isEnabled}
+                value={!isEnabled}
               />
           </View>
           <View>
