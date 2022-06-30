@@ -7,6 +7,8 @@ const { width, height } = Dimensions.get('window')
 
 const PencarianBar = () => {
   const [inputan,setInputan] = useState("")
+  
+
 
   return (
     <View style={styles.root}>
@@ -15,8 +17,8 @@ const PencarianBar = () => {
           style={styles.container}
           placeholder='Cari produk yang anda mau'  
           value={inputan}
-          onChangeText={(newText)=>{
-            setInputan(newText);
+          onChangeText={(inputan)=>{
+            setInputan(inputan);
           }}
           /> 
       <Search style={{position: 'absolute', top: width*0.024, left: width*0.24}} />
