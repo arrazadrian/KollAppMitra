@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const MenujuScreen = () => {
+const OtwScreen = () => {
   return (
     <View>
-      <Text>MenujuScreen</Text>
+      <Text>OtwScreen</Text>
     </View>
   )
 }
 
-export default MenujuScreen
+export default OtwScreen
 
 const styles = StyleSheet.create({})
