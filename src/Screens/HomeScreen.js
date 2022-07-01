@@ -75,7 +75,8 @@ const HomeScreen = ({ navigation }) => {
                   <Image source={Gerobak} style={styles.gambar}/>
                   <Text style={styles.cardtext}>Produk Utama</Text>
                 </Pressable>
-                <Pressable style={styles.card} onPress={() => navigation.push('PreOrderScreen')}>
+                <Pressable style={styles.card} 
+                onPress={() => navigation.push('PreOrderScreen')}>
                   <Image source={PreOrder} style={styles.gambar}/>
                   <Text style={styles.cardtext}>Produk Pre-Order</Text>
                 </Pressable>

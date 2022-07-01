@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
 import { Ijo, IjoMint, Putih } from '../Utils/Warna'
+import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get('window')
 
 const PopupMasukPanggilan = () => {
+
+    const navigation = useNavigation();
+  
+    const clickTerima = () => {
+      navigation.navigate('Panggilan')
+    }
+
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -40,7 +48,9 @@ const PopupMasukPanggilan = () => {
                     <Text style={styles.tolak}>Tolak</Text>
                 </View>
                 <View style={styles.tombol}>
-                     <Text style={styles.terima}>Terima</Text>
+                     <Text style={styles.terima}
+                     onPress={clickTerima}
+                     >Terima</Text>
                 </View>
             </View>
         </View>

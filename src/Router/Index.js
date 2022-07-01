@@ -7,6 +7,7 @@ import {
     HomeScreen, 
     TambahScreen,
     TambahPreScreen,
+    OtwScreen,
     DetailScreen,
     EditProdukScreen,
     RiwayatScreen, 
@@ -60,6 +61,7 @@ const AppUtama = () => {
       <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="TambahPreScreen" component={TambahPreScreen} options={{ title: "Tambah Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+      <HomeStack.Screen name="Panggilan" component={Panggilan} options={{ title: "Manuju Lokasi", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown: false }}/>
       <HomeStack.Screen name="EditProdukScreen" component={EditProdukScreen} options={{ title: "Perbarui Data Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
@@ -77,6 +79,14 @@ const RiwayatStackScreen = () => {
     </RiwayatStack.Navigator>
     );
   };
+
+const Panggilan = () => {
+  return(
+  <RiwayatStack.Navigator>
+    <RiwayatStack.Screen name="OtwScreen" component={OtwScreen} options={{ headerShown: false }}/>
+  </RiwayatStack.Navigator>
+  );
+};
 
 const AkunStackScreen = () => {
 return(

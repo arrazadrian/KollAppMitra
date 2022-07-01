@@ -1857,6 +1857,11 @@
   "resolved" "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
   "version" "0.2.0"
 
+"@types/geojson@^7946.0.7":
+  "integrity" "sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA=="
+  "resolved" "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.8.tgz"
+  "version" "7946.0.8"
+
 "@types/graceful-fs@^4.1.2":
   "integrity" "sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw=="
   "resolved" "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.5.tgz"
@@ -5816,6 +5821,14 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.6.tgz"
   "version" "0.0.6"
 
+"react-native-maps@^0.30.2":
+  "integrity" "sha512-WVv5e7aWdnNJugqNSG/87U+12Pg4RFWU7x/UigTPG1FEUZx2TbYKChL6xZCMGPOv5m5b4Z7bMeKJnZosg+yPyQ=="
+  "resolved" "https://registry.npmjs.org/react-native-maps/-/react-native-maps-0.30.2.tgz"
+  "version" "0.30.2"
+  dependencies:
+    "@types/geojson" "^7946.0.7"
+    "deprecated-react-native-prop-types" "^2.3.0"
+
 "react-native-pager-view@*", "react-native-pager-view@^5.4.15", "react-native-pager-view@>= 4.0.0":
   "integrity" "sha512-5NssD840wFCuOL4B1ZRiRADvt+Vx2Dgify4SmAUqHXCx03yiGPnRWmFjYXyQeK6gq/8VY+gPGE4bTy9ahzBbDw=="
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.15.tgz"
@@ -5856,7 +5869,7 @@
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz"
   "version" "3.1.1"
 
-"react-native-web@0.17.7":
+"react-native-web@>= 0.11", "react-native-web@0.17.7":
   "integrity" "sha512-4OOU/QjyRySOXyHfTvljEMS4VXKn42Qs3y9uHDPMwaCUFjwg0oasR/j706OaVgan9kF4Ipa2vJ3F6Z/Xqy8KeQ=="
   "resolved" "https://registry.npmjs.org/react-native-web/-/react-native-web-0.17.7.tgz"
   "version" "0.17.7"
@@ -5869,7 +5882,7 @@
     "normalize-css-color" "^1.0.2"
     "prop-types" "^15.6.0"
 
-"react-native@*", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59.0", "react-native@0.68.2":
+"react-native@*", "react-native@>= 0.51", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59.0", "react-native@0.68.2":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"
@@ -5920,7 +5933,7 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.2":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@>= 16.0 || < 18.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
