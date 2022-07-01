@@ -37,7 +37,7 @@ const HomeStackScreen = () =>{
     return(
         <Tab.Navigator tabBar={props => <TabNavigasi {...props}/>}>
             <Tab.Screen name="Beranda" component={HomeScreen} options={{ headerShown: false }}/>
-            <Tab.Screen name="Riwayat" component={TopTab} options={{ headerShown: false }}/>
+            <Tab.Screen name="Pesanan" component={TopTab} options={{ headerShown: false }}/>
             <Tab.Screen name="Akun" component={AkunStackScreen} options={{ headerShown: false }}/>
         </Tab.Navigator>
     );

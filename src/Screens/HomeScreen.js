@@ -4,6 +4,7 @@ import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
+import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 
 const { width, height } = Dimensions.get('window')
 
@@ -26,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   return (
-    <SafeAreaView style={styles.latar}>
+    <View style={styles.latar}>
         <ScrollView>
           <View style={{
             flexDirection: 'row',
@@ -91,7 +92,8 @@ const HomeScreen = ({ navigation }) => {
               </Pressable>
           </View>
         </ScrollView>
-    </SafeAreaView>
+          {/* <PopupMasukPanggilan/> */}
+    </View>
   )
 }
 
