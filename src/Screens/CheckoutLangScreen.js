@@ -6,12 +6,16 @@ import ListReceipt from '../Components/ListReceipt'
 const CheckoutLangScreen = () => {
   return (
     <ScrollView style={styles.latar}>
-      <Text style={styles.judul}>QR Code Trsansaksi</Text>
-      <Text style={styles.deskripsi}>Tunjukan QR Code ini kepada pelanggan bila sudah melunaskan transaksi.</Text>
-      <View style={styles.qrcode}>
-
-      </View>
+      <Text style={styles.judulbesar}>DETAIL PEMESANAN</Text>
       <View style={styles.perbagian}>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>Nama Pelanggan</Text>
+            <Text style={styles.deskripsi}>Andrea Subaesi</Text>
+          </View>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>ID Pelanggan</Text>
+            <Text style={styles.deskripsi}>216178261862</Text>
+          </View>
           <View style={{flexDirection:'row', justifyContent:'space-between'}}>
             <Text style={styles.deskripsi}>ID Pemensanan</Text>
             <Text style={styles.deskripsi}>28138732893717</Text>
@@ -64,6 +68,13 @@ const styles = StyleSheet.create({
         backgroundColor: Kuning,
         padding: 10,
     },
+    judulbesar:{
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: IjoTua,
+        textAlign:'center',
+        marginBottom: 10,
+    }, 
     judul:{
         fontSize: 20,
         fontWeight: 'bold',
