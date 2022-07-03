@@ -11,32 +11,42 @@ const CheckoutLangScreen = () => {
       <View style={styles.qrcode}>
 
       </View>
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Text>ID: 28138732893717</Text>
-        <Text>12/02/2022, 08.02</Text>
+      <View style={styles.perbagian}>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>ID Pemensanan</Text>
+            <Text style={styles.deskripsi}>28138732893717</Text>
+          </View>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>Waktu Pemenansan</Text>
+            <Text style={styles.deskripsi}>12/02/2022, 08.02</Text>
+          </View>
       </View>
-      <Text style={styles.judul}>Jenis Layanan</Text>
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Text style={styles.deskripsi}>Temu Langsung</Text>
-        <Text style={styles.harga}>
-            <Text>Rp</Text>
-            <Text>0</Text>
-        </Text>
+      <View style={styles.perbagian}>
+          <Text style={styles.judul}>Jenis Layanan</Text>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>Temu Langsung</Text>
+            <Text style={styles.harga}>
+                <Text>Rp</Text>
+                <Text>0</Text>
+            </Text>
+          </View>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Text style={styles.deskripsi}>Jasa Aplikasi</Text>
+            <Text style={styles.harga}>
+                <Text>Rp</Text>
+                <Text>1000</Text>
+            </Text>
+          </View>
       </View>
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Text style={styles.deskripsi}>Jasa Aplikasi</Text>
-        <Text style={styles.harga}>
-            <Text>Rp</Text>
-            <Text>1000</Text>
-        </Text>
+      <View style={styles.perbagian}>
+          <Text style={styles.judul}>Deskripsi Pesanan</Text>
+          <ListReceipt/>
       </View>
-      <Text style={styles.judul}>Deskripsi Pesanan</Text>
-      <ListReceipt/>
       <View style={styles.total}>
             <Text style={styles.judul}>Total Harga:</Text>
             <Text style={styles.judul}>
                 <Text>Rp</Text>
-                <Text>26000</Text>
+                <Text>25000</Text>
             </Text>
       </View>
       <Pressable style={styles.pesan}>
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
       justifyContent:'space-between',
       marginTop: 10,
       borderTopColor: IjoTua,
-      borderTopWidth: 3,
+      borderTopWidth: 1,
   },
   pesan:{
       marginVertical: 20,
@@ -97,10 +107,17 @@ const styles = StyleSheet.create({
     color: IjoTua,
     fontWeight: 'bold',
     marginBottom: 5,
-},
-deskripsi:{
-    fontSize: 18,
-    color: IjoTua,
-},
+  },
+  deskripsi:{
+      fontSize: 18,
+      color: IjoTua,
+  },
+  perbagian:{
+    marginBottom: 10,
+    padding: 10,
+    borderColor: Ijo,
+    borderWidth:1,
+    borderRadius: 10,
+  }
 
 })
