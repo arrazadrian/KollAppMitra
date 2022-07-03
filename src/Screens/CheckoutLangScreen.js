@@ -53,6 +53,12 @@ const CheckoutLangScreen = () => {
                 <Text>25000</Text>
             </Text>
       </View>
+      <View>
+        <Text style={styles.deskripsi}>Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai 
+          dan pelanggan sudah melunasi belanjaan. Untuk mengubah belanjaan, anda bisa
+          kembali ke halaman sebelumnnya.
+        </Text>
+      </View>
       <Pressable style={styles.pesan}>
           <Text style={{color:Ijo, fontSize:20, fontWeight:'bold', textAlign:'center'}}>Selesai Transaksi</Text>
       </Pressable>
