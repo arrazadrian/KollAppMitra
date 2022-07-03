@@ -1,9 +1,25 @@
-import { StyleSheet, Text, ScrollView, View, Pressable } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { IjoTua, Kuning, Putih, Ijo } from '../Utils/Warna'
 import ListReceipt from '../Components/ListReceipt'
 
 const CheckoutLangScreen = () => {
+
+  const selesaiTransaksi =()=> {
+    Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
+          [
+            {
+              text: 'Batal',
+              onPress: () => {console.log('Batal dipencet');}
+            },
+            {
+              text: 'Sudah',
+              onPress: () => {console.log('Sudah dipencet');}
+            }
+          ]
+          )
+  }
+
   return (
     <ScrollView style={styles.latar}>
       <Text style={styles.judulbesar}>DETAIL PEMESANAN</Text>
@@ -34,16 +50,17 @@ const CheckoutLangScreen = () => {
                 <Text>0</Text>
             </Text>
           </View>
-          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+          <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom: 20}}>
             <Text style={styles.deskripsi}>Jasa Aplikasi</Text>
             <Text style={styles.harga}>
                 <Text>Rp</Text>
                 <Text>1000</Text>
             </Text>
           </View>
-      </View>
-      <View style={styles.perbagian}>
+          <View style={{justifyContent:'space-between', flexDirection:'row'}}>
           <Text style={styles.judul}>Deskripsi Pesanan</Text>
+          <Text style={styles.ubah}>Ubah</Text>
+          </View>
           <ListReceipt/>
       </View>
       <View style={styles.total}>
@@ -53,13 +70,9 @@ const CheckoutLangScreen = () => {
                 <Text>25000</Text>
             </Text>
       </View>
-      <View>
-        <Text style={styles.deskripsi}>Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai 
-          dan pelanggan sudah melunasi belanjaan. Untuk mengubah belanjaan, anda bisa
-          kembali ke halaman sebelumnnya.
-        </Text>
-      </View>
-      <Pressable style={styles.pesan}>
+      <Pressable style={styles.pesan}
+      onPress = {selesaiTransaksi}
+      >
           <Text style={{color:Ijo, fontSize:20, fontWeight:'bold', textAlign:'center'}}>Selesai Transaksi</Text>
       </Pressable>
     </ScrollView>
@@ -90,6 +103,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: IjoTua,
     },
+    ubah:{
+        color: Ijo,
+        fontSize: 18,
+        fontWeight:'bold',
+        textDecorationLine:'underline'
+    },
     qrcode:{
         backgroundColor: Putih,
         borderRadius: 10,
@@ -106,35 +125,35 @@ const styles = StyleSheet.create({
       marginTop: 10,
       borderTopColor: IjoTua,
       borderTopWidth: 1,
-  },
-  pesan:{
-      marginVertical: 20,
-      borderWidth: 3,
-      borderColor: Ijo,
-      borderRadius: 20,
-      padding: 10,
-  },
-  harga:{
-    fontSize: 18,
-    color: IjoTua,
-    fontWeight: 'bold',
-  },
-  judul:{
-    fontSize: 20,
-    color: IjoTua,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  deskripsi:{
+    },
+    pesan:{
+        marginVertical: 20,
+        borderWidth: 3,
+        borderColor: Ijo,
+        borderRadius: 20,
+        padding: 10,
+    },
+    harga:{
       fontSize: 18,
       color: IjoTua,
-  },
-  perbagian:{
-    marginBottom: 10,
-    padding: 10,
-    borderColor: Ijo,
-    borderWidth:1,
-    borderRadius: 10,
-  }
+      fontWeight: 'bold',
+    },
+    judul:{
+      fontSize: 20,
+      color: IjoTua,
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    deskripsi:{
+        fontSize: 18,
+        color: IjoTua,
+    },
+    perbagian:{
+      marginBottom: 10,
+      padding: 10,
+      borderColor: Ijo,
+      borderWidth:1,
+      borderRadius: 10,
+    }
 
 })
