@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
       flex: 1,
    },
    judul:{
-      fontSize: 18,
+      fontSize: 20,
       color: Ijo,
       fontWeight: 'bold',
    }
