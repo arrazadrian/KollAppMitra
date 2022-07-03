@@ -16,6 +16,7 @@ import KategoriScreen from "./KategoriScreen";
 import CheckoutLangScreen from "./CheckoutLangScreen";
 import EditProdukScreen from "./EditProdukScreen";
 import OtwScreen from "./OtwScreen";
+import LanjutBelanjaScreen from "./LanjutBelanjaScreen";
 
 export {
      SplashScreen, HomeScreen, 
@@ -24,5 +25,5 @@ export {
      EditScreen, TambahScreen, PreOrderScreen,
      ProdukScreen, LangsungScreen, TambahPreScreen,
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
-     KategoriScreen, OtwScreen,
+     KategoriScreen, OtwScreen, LanjutBelanjaScreen,
     };
