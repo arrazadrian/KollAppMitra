@@ -19,7 +19,7 @@ const AkunScreen = ({ navigation, item }) => {
                   <Text>Putuu</Text>
                 </View>
                 <View>
-                    <Text style={{fontSize: 30, fontWeight:'bold', color: Putih,}}>{usermitra.nama}</Text>
+                    <Text style={{fontSize: 30, fontWeight:'bold', color: Putih,}}>Anri Suroyo</Text>
                     <Text style={{fontSize: 18,color: Putih,}}>Mitra Pedagang</Text>
                     <Pressable  onPress={() => navigation.push('EditScreen')} >
                         <View style={styles.edit}>
@@ -34,7 +34,7 @@ const AkunScreen = ({ navigation, item }) => {
             <View style={{padding: 15}}>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
-                      <Text style={{color: Putih, fontSize: 20}}>{usermitra.namatoko}</Text>   
+                      <Text style={{color: Putih, fontSize: 20}}>Segar Sayur Pagi</Text>   
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
