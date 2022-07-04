@@ -1,28 +1,22 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
-import React from 'react'
-import { Ijo, IjoTua, Putih } from '../Utils/Warna'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
+import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 
 const { width, height } = Dimensions.get('window')
 
 const LogoKategori = ({item}) => {
-
-    const navigation = useNavigation();
-
-    const pindahKategori = () => {
-      navigation.navigate('KategoriScreen', { 
-        id: item.id,
-        nama: item.nama,
-        image: item.image,
-      })
+    const [kategori, setKategori]= useState('Semua Produk')
+    const saringKategori = kategori =>{
+      setKategori(kategori)
     }
+
 
   return (
     <Pressable 
-        onPress={pindahKategori}
+        onPress={() => saringKategori(item.nama)}
         style={styles.kartu}
         >
-        <View style={styles.belakang}>
+        <View style={[styles.belakang, kategori === item.nama && styles.belakangAktif ]}>
             <Image source={item.image} style={styles.gambar} />
         </View>
         <Text style={styles.nama}>{item.nama}</Text>
@@ -50,13 +44,16 @@ const styles = StyleSheet.create({
         width: width*0.15,
         height: width*0.15,
       },
-      belakang:{
-        alignItems:'center',
-        padding: 5, 
-        backgroundColor: Putih, 
-        borderRadius: 50, 
-        marginBottom: 5,
-        borderWidth: 1,
-        borderColor: Ijo,
-      },
+    belakang:{
+      alignItems:'center',
+      padding: 5, 
+      backgroundColor: Putih, 
+      borderRadius: 50, 
+      marginBottom: 5,
+      borderWidth: 1,
+      borderColor: Ijo,
+    },
+    belakangAktif:{
+      backgroundColor: IjoMint, 
+    },
 })

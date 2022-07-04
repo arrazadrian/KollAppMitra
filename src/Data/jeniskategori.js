@@ -1,6 +1,3 @@
-import { Kategori01, Kategori02, Kategori03, Kategori04,
-    Kategori05, Kategori06, Kategori07, Kategori08,
-    Kategori09, } from '../assets/Images/Index'
 export const jeniskategori = 
 [
     {
