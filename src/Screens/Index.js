@@ -12,7 +12,6 @@ import SignUpScreen from "./SignUpScreen";
 import ProdukScreen from "./ProdukScreen";
 import PreOrderScreen from "./PreOrderScreen";
 import LangsungScreen from "./LangsungScreen";
-import KategoriScreen from "./KategoriScreen";
 import CheckoutLangScreen from "./CheckoutLangScreen";
 import EditProdukScreen from "./EditProdukScreen";
 import OtwScreen from "./OtwScreen";
@@ -25,5 +24,5 @@ export {
      EditScreen, TambahScreen, PreOrderScreen,
      ProdukScreen, LangsungScreen, TambahPreScreen,
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
-     KategoriScreen, OtwScreen, LanjutBelanjaScreen,
+     OtwScreen, LanjutBelanjaScreen,
     };
