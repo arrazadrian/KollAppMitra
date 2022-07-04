@@ -5,7 +5,7 @@ import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 const { width, height } = Dimensions.get('window')
 
 const LogoKategori = ({item}) => {
-  const [kategori, setKategori]= useState("Semua Produk")
+  const [kategori, setKategori]= useState('Semua Produk')
 
   return (
     <Pressable 
