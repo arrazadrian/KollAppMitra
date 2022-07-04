@@ -5,7 +5,7 @@ import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 const { width, height } = Dimensions.get('window')
 
 const LogoKategori = ({item}) => {
-  const [ketegori, setKategori]= useState('Semua Produk')
+  const [kategori, setKategori]= useState('Semua Produk')
 
   return (
     <Pressable 
@@ -19,7 +19,7 @@ const LogoKategori = ({item}) => {
             marginBottom: 5,
             borderWidth: 1,
             borderColor: Ijo,
-            backgroundColor: ketegori === item.nama ? IjoMint : Putih, 
+            backgroundColor: kategori == item.nama ? IjoMint : Putih, 
         }}>
             <Image source={item.image} style={styles.gambar} />
         </View>
