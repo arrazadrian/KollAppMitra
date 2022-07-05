@@ -21,7 +21,7 @@ const CheckoutLangScreen = () => {
             {
               text: 'Sudah',
               onPress: () => {
-                navigation.navigate('HomeScreen')
+                navigation.navigate('TQScreen')
               }
             }
           ]

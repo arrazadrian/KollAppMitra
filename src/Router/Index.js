@@ -21,6 +21,7 @@ import {
     PreOrderScreen,
     LangsungScreen,
     CheckoutLangScreen,
+    TQScreen,
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
@@ -66,6 +67,7 @@ const AppUtama = () => {
       <HomeStack.Screen name="EditProdukScreen" component={EditProdukScreen} options={{ title: "Perbarui Data Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+      <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
     </HomeStack.Navigator>
     );
   };

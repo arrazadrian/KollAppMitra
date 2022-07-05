@@ -10,6 +10,7 @@ import IconMessage from './Message.svg'
 import Search from './Search.svg'
 import Plus from './Plus.svg'
 import Minus from './Minus.svg'
+import Check from './Check.svg'
 import Call from './Call.png'
 import Chat from './Chat.png'
 
@@ -18,5 +19,5 @@ export {
     IconRiwayatPutih, IconRiwayatIjo, 
     IconAkunPutih, IconAkunIjo, Edit,
     IconLock, IconMessage, Search, Plus, 
-    Minus, Call, Chat,
+    Minus, Call, Chat, Check
 }
