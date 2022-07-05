@@ -24,7 +24,7 @@ export const jeniskategori =
     },
     {
         id: 5, 
-        nama: 'Sayur',
+        nama: 'Sayuran',
         image: require('../assets/Images/Kategori04.png'),
     },
     {
