@@ -5,7 +5,7 @@ import { Hitam, Ijo, Kuning, Putih } from '../Utils/Warna'
 import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
 import { Pasar, Awan } from '../assets/Images/Index'
-import { auth } from '../../Firebase/firebase'
+import { auth } from '../../Firebase/config'
 import { useNavigation } from '@react-navigation/native'
 
 const { height, width } = Dimensions.get('window')

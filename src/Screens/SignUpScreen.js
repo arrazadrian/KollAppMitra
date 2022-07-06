@@ -2,8 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, 
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../../Firebase/firebase'
-import { useNavigation } from '@react-navigation/native'
+import { auth, db } from '../../Firebase/config';
 
 const { height, width } = Dimensions.get('window')
 
@@ -27,6 +26,21 @@ const SignUpScreen = () => {
     })
     .catch(error => alert(error.message))
   }
+
+  // const handleSignUp = async () =>{
+  //   try{
+  //     await auth.createUserWithEmailAndPassword(email,password);
+  //     const currentUser = auth.currentUser;
+      
+  //     db.collction("users").doc(currentUser.uid).set({
+  //       email: currentUser.email, username, namatoko,phone,
+  //     });
+  //     navigation.navigate('AkunJadiScreen');
+  //   } catch (err){
+  //     console.log(err)
+  //       alert("Ada error!!!", err.message)
+  //   }
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
