@@ -3,8 +3,21 @@ import React from 'react';
 import { Ijo, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong } from '../assets/Images/Index';
 import { usermitra } from '../Data/usermitra'
+import { useNavigation } from '@react-navigation/native'
 
-const AkunScreen = ({ navigation, item }) => {
+const AkunScreen = ({ item }) => {
+
+  const navigation = useNavigation();
+  
+  const handleSignOut = () => {
+    auth
+    .signOut()
+    .then( ()=>{
+      navigation.replace('SignInScreen')
+    })
+    .catch(error => alert(error.message))
+  }
+
   return (
     <SafeAreaView style={styles.latar}>
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
@@ -46,7 +59,10 @@ const AkunScreen = ({ navigation, item }) => {
                 </View>
             </View>
             <View style={styles.logout}>
-              <Text style={{fontSize: 20, color: Ijo, fontWeight: 'bold'}}>Keluar Akun</Text>
+              <Text 
+              style={{fontSize: 20, color: Ijo, fontWeight: 'bold'}}
+              onPress={handleSignOut}
+              >Keluar Akun</Text>
             </View>
       </View>
     </SafeAreaView>

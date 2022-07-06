@@ -1,32 +1,52 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { KollLong } from '../assets/Images/Index'
 import { Hitam, Ijo, Kuning, Putih } from '../Utils/Warna'
 import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
 import { Pasar, Awan } from '../assets/Images/Index'
-
+import { auth } from '../../Firebase/firebase'
+import { useNavigation } from '@react-navigation/native'
 
 const { height, width } = Dimensions.get('window')
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = () => {
+
+  const navigation = useNavigation();
 
   <StatusBar translucent backgroundColor="transparent" />
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onPressSignIn = async () => {
-    console.log("Trying sign in with user: " + email);
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      const errorMessage = `Failed to sign in: ${error.message}`;
-      console.error(errorMessage);
-      Alert.alert(errorMessage);
-    }
-  };
+  useEffect(() => {
+    const unsubcribe = auth.onAuthStateChanged(user => {
+      if(user){
+        navigation.replace('HomeScreen')
+      }
+    })
+    return unsubcribe
+  },[])
 
+  // const onPressSignIn = async () => {
+  //   console.log("Trying sign in with user: " + email);
+  //   try {
+  //     await signIn(email, password);
+  //   } catch (error) {
+  //     const errorMessage = `Failed to sign in: ${error.message}`;
+  //     console.error(errorMessage);
+  //     Alert.alert(errorMessage);
+  //   }
+  // };
 
+  const handleSignIn = () => {
+    auth
+    .signInWithEmailAndPassword(email, password)
+    .then(userCredentials =>{
+      const user = userCredentials; 
+      console.log(user.email);
+    })
+    .catch(error => alert(error.message))
+  }
   
   return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -41,17 +61,31 @@ const SignInScreen = ({navigation}) => {
                           <Text style={{fontSize: 16}}>Lengkapi email dan kata sandi</Text>
                       </View>
                       <View style={{ marginBottom: 10}}>
-                          <TextInput style={styles.input} placeholder="Email akun anda" />
+                          <TextInput 
+                          style={styles.input} 
+                          placeholder="Email akun anda" 
+                          value={email}
+                          onChangeText={text => setEmail(text)}
+                          />
                           <IconMessage style={{position:'absolute', top: 14, left: 8}} />
                       </View>
                       <View style={{ marginBottom: 10}}>
-                          <TextInput secureTextEntry={true} style={styles.input} placeholder="Kata sandi akun anda"/>
+                          <TextInput 
+                          style={styles.input} 
+                          placeholder="Kata sandi akun anda"
+                          value={password}
+                          onChangeText={text => setPassword(text)}
+                          secureTextEntry={true} 
+                          />
                           <IconLock style={{position:'absolute', top: 14, left: 8}}/>
                       </View>
 
-                      <View style={styles.tombol}>
+                      <TouchableOpacity 
+                      style={styles.tombol}
+                      onPress={handleSignIn}
+                      >
                         <Text style={{color: Putih, fontWeight: 'bold', textAlign:'center', fontSize: 20 }}>Masuk</Text>
-                      </View>
+                      </TouchableOpacity>
                       <View style={{alignItems: 'center'}}>
                           <Text style={{color: Ijo, fontSize: 16}}>  
                               <Text>Belum punya akun? </Text>   

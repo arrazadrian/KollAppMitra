@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
-//import { useAuth } from '../../providers/AuthProvider';
+import { useNavigation } from '@react-navigation/native'
 
 const { height, width } = Dimensions.get('window')
 
 const SignUpScreen = ({navigation}) => {
 
+  const navigation = useNavigation();
  // <StatusBar translucent backgroundColor="transparent" />
 
   const [username, setUsername] = useState('');
@@ -16,18 +17,27 @@ const SignUpScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const onPressSignUp = async () => {
-    console.log("Trying Sign Up with user: " + email);
-    try {
-      await signUp(username, email, phone, password, passwordConfirmation);
-      signIn(email, password);
-    } catch (error) {
-      const errorMessage = `Failed to sign up: ${error.message}`;
-      console.error(errorMessage);
-      Alert.alert(errorMessage);
-    }
-  };
+  // const onPressSignUp = async () => {
+  //   console.log("Trying Sign Up with user: " + email);
+  //   try {
+  //     await signUp(username, email, phone, password, passwordConfirmation);
+  //     signIn(email, password);
+  //   } catch (error) {
+  //     const errorMessage = `Failed to sign up: ${error.message}`;
+  //     console.error(errorMessage);
+  //     Alert.alert(errorMessage);
+  //   }
+  // };
 
+  const handleSignUp = () => {
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredentials =>{
+      const user = userCredentials; 
+      console.log(user.email);
+    })
+    .catch(error => alert(error.message))
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -112,9 +122,12 @@ const SignUpScreen = ({navigation}) => {
                   </Text>
               </View>
           </View>
-          <View style={styles.tombol}>
+          <TouchableOpacity 
+          style={styles.tombol}
+          onPress={handleSignUp}
+          >
               <Text style={{fontWeight:'bold', fontSize: 20, color: Putih}}>Daftar</Text>
-          </View>
+          </TouchableOpacity>
         <View style={{alignSelf:'center', marginBottom: 50}}>
             <Text style={{color: Putih}}>
                 <Text>Sudah punya akun?</Text>   
