@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
@@ -17,30 +17,34 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleSignUp = () => {
-    auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredentials =>{
-      const user = userCredentials; 
-      console.log(user.email);
-    })
-    .catch(error => alert(error.message))
-  }
-
-  // const handleSignUp = async () =>{
-  //   try{
-  //     await auth.createUserWithEmailAndPassword(email,password);
-  //     const currentUser = auth.currentUser;
-      
-  //     db.collction("users").doc(currentUser.uid).set({
-  //       email: currentUser.email, username, namatoko,phone,
-  //     });
-  //     navigation.navigate('AkunJadiScreen');
-  //   } catch (err){
-  //     console.log(err)
-  //       alert("Ada error!!!", err.message)
-  //   }
+  // const handleSignUp = () => {
+  //   auth
+  //   .createUserWithEmailAndPassword(email, password)
+  //   .then(userCredentials =>{
+  //     const user = userCredentials; 
+  //     console.log(user.email);
+  //   })
+  //   .catch(error => alert(error.message))
   // }
+
+  const handleSignUp = async () =>{
+    if(password == passwordConfirmation){
+      try{
+        await auth.createUserWithEmailAndPassword(email,password);
+        const currentUser = auth.currentUser;
+        
+        db.collction("users").doc(currentUser.uid).set({
+          email: currentUser.email, username, namatoko,phone,
+        });
+        navigation.navigate('AkunJadiScreen');
+      } catch (err){
+        console.log(err)
+          alert("Ada error!!!", err.message)
+        }
+    } else{
+      Alert.alert("Kesalahan", "Penulisan ulang password berbeda")
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
