@@ -131,7 +131,7 @@ const SignUpScreen = () => {
           >
               <Text style={{fontWeight:'bold', fontSize: 20, color: Putih}}>Daftar</Text>
           </TouchableOpacity>
-        <View style={{alignSelf:'center', marginBottom: 50}}>
+        <View style={{alignSelf:'center', marginBottom: 70}}>
             <Text style={{color: Putih}}>
                 <Text>Sudah punya akun?</Text>   
                 <Text style={{fontWeight:'bold'}}
@@ -181,6 +181,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
   }
 })
