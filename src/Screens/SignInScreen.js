@@ -5,8 +5,9 @@ import { Hitam, Ijo, Kuning, Putih } from '../Utils/Warna'
 import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
 import { Pasar, Awan } from '../assets/Images/Index'
-// import { auth } from '../../Firebase/config'
 import { useNavigation } from '@react-navigation/native'
+import { signIn } from '../../API/firebasemethod';
+
 
 const { height, width } = Dimensions.get('window')
 
@@ -18,24 +19,19 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // useEffect(() => {
-  //   const unsubcribe = auth.onAuthStateChanged(user => {
-  //     if(user){
-  //       navigation.replace('HomeScreen')
-  //     }
-  //   })
-  //   return unsubcribe
-  // },[])
-
   const handleSignIn = () => {
-    auth
-    .signInWithEmailAndPassword(email, password)
-    .then(userCredentials =>{
-      const user = userCredentials; 
-      console.log(user.email);
-    })
-    .catch(error => alert(error.message))
-  }
+    if (!email) {
+      Alert.alert('Tulis email anda.');
+    }
+
+    if (!password) {
+      Alert.alert('Tulis kata sandi akun anda.');
+    }
+
+    signIn(email, password);
+    setEmail('');
+    setPassword('');
+  };
   
   return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

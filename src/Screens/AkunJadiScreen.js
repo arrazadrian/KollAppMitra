@@ -9,7 +9,7 @@ const AkunJadiScreen = ({navigation}) => {
 
     useEffect(() => {
         setTimeout( () =>{
-          navigation.replace('SignInScreen');
+          navigation.replace('AppUtama');
         }, 3000)
     }, [navigation]);
 
@@ -17,7 +17,7 @@ const AkunJadiScreen = ({navigation}) => {
     <View style={styles.latar}>
       <Akun/>
       <Text style={styles.teks}>
-        Akun anda telah terdaftar
+        Anda berhasil mendaftarkan akun mitra
       </Text>
     </View>
   )

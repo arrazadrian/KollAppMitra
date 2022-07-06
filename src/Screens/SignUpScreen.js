@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, 
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
-import { auth, db } from '../../Firebase/config';
+import { registration } from '../../API/firebasemethod';
 
 const { height, width } = Dimensions.get('window')
 
@@ -10,41 +10,41 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
+  const [namalengkap, setNamalengkap] = useState('');
   const [namatoko, setNamatoko] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  // const handleSignUp = () => {
-  //   auth
-  //   .createUserWithEmailAndPassword(email, password)
-  //   .then(userCredentials =>{
-  //     const user = userCredentials; 
-  //     console.log(user.email);
-  //   })
-  //   .catch(error => alert(error.message))
-  // }
-
   const handleSignUp = async () =>{
-    if(password == passwordConfirmation){
-      try{
-        await auth.createUserWithEmailAndPassword(email,password);
-        const currentUser = auth.currentUser;
-        
-        db.collction("users").doc(currentUser.uid).set({
-          email: currentUser.email, username, namatoko,phone,
-        });
-        navigation.navigate('AkunJadiScreen');
-      } catch (err){
-        console.log(err)
-          alert("Ada error!!!", err.message)
-        }
-    } else{
-      Alert.alert("Kesalahan", "Penulisan ulang password berbeda")
+    if (!namalengkap) {
+      Alert.alert('Isi nama lengkap dengan benar.');
+    } else if (!namatoko) {
+      Alert.alert('Isi nama toko dengan benar.');
+    } else if (!email) {
+      Alert.alert('Isi email dengan benar.');
+    } else if (!phone) {
+      Alert.alert('Isi nomor handphone dengan benar.');
+    } else if (!password) {
+      Alert.alert('Tulis kata sandi.');
+    } else if (!confirmPassword) {
+      setPassword('');
+      Alert.alert('Tulis ulang kata sandi.');
+    } else if (password !== confirmPassword) {
+      Alert.alert('Kata sandi tidak sama.');
+    } else {
+      registration(
+        email,
+        password,
+        namalengkap,
+        namatoko,
+        phone,
+      );
+      navigation.navigate('AkunJadiScreen');
+      emptyState();
     }
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,8 +59,8 @@ const SignUpScreen = () => {
               </View>
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Asep Suryana"
-                  value={username}
-                  onChangeText={text => setUsername(text)}
+                  value={namalengkap}
+                  onChangeText={namalengkap => setNamalengkap(namalengkap)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -71,7 +71,7 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Sayur Segar Ijo"
                   value={namatoko}
-                  onChangeText={text => setNamatoko(text)}
+                  onChangeText={namatoko => setNamatoko(namatoko)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -82,7 +82,7 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. emailanda@mail.com"
                   value={email}
-                  onChangeText={text => setEmail(text)}
+                  onChangeText={email => setEmail(email)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -93,7 +93,7 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="08XXXXX"
                   value={phone}
-                  onChangeText={text => setPhone(text)}
+                  onChangeText={phone => setPhone(phone)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType='numeric'
@@ -105,7 +105,7 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 10}}>
                   <TextInput secureTextEntry={true} style={styles.input} placeholder="Kata Sandi"
                   value={password}
-                  onChangeText={text => setPassword(text)}
+                  onChangeText={password => setPassword(password)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -116,7 +116,7 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 16}}>
                 <TextInput secureTextEntry={true} style={styles.input} placeholder="Tulis Ulang Kata Sandi"
                 value={passwordConfirmation}
-                onChangeText={text => setPasswordConfirmation(text)}
+                onChangeText={passwordConfirmation => setPasswordConfirmation(passwordConfirmation)}
                 autoCapitalize="none"
                 autoCorrect={false}
                 />
