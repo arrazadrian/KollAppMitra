@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
+import { useNavigation } from '@react-navigation/native';
+import { auth } from '../../Firebase/firebase'
 import { useNavigation } from '@react-navigation/native'
 
 const { height, width } = Dimensions.get('window')
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = () => {
 
   const navigation = useNavigation();
- // <StatusBar translucent backgroundColor="transparent" />
 
   const [username, setUsername] = useState('');
   const [namatoko, setNamatoko] = useState('');
@@ -16,18 +17,6 @@ const SignUpScreen = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
-  // const onPressSignUp = async () => {
-  //   console.log("Trying Sign Up with user: " + email);
-  //   try {
-  //     await signUp(username, email, phone, password, passwordConfirmation);
-  //     signIn(email, password);
-  //   } catch (error) {
-  //     const errorMessage = `Failed to sign up: ${error.message}`;
-  //     console.error(errorMessage);
-  //     Alert.alert(errorMessage);
-  //   }
-  // };
 
   const handleSignUp = () => {
     auth
@@ -53,7 +42,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Asep Suryana"
                   value={username}
-                  onChangeText={setUsername}
+                  onChangeText={text => setUsername(text)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -64,7 +53,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. Sayur Segar Ijo"
                   value={namatoko}
-                  onChangeText={setNamatoko}
+                  onChangeText={text => setNamatoko(text)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -75,7 +64,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="Cth. emailanda@mail.com"
                   value={email}
-                  onChangeText={setEmail}
+                  onChangeText={text => setEmail(text)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -86,7 +75,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 10}}>
                   <TextInput style={styles.input} placeholder="08XXXXX"
                   value={phone}
-                  onChangeText={setPhone}
+                  onChangeText={text => setPhone(text)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType='numeric'
@@ -98,7 +87,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 10}}>
                   <TextInput secureTextEntry={true} style={styles.input} placeholder="Kata Sandi"
                   value={password}
-                  onChangeText={setPassword}
+                  onChangeText={text => setPassword(text)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
@@ -109,7 +98,7 @@ const SignUpScreen = ({navigation}) => {
               <View style={{marginBottom: 16}}>
                 <TextInput secureTextEntry={true} style={styles.input} placeholder="Tulis Ulang Kata Sandi"
                 value={passwordConfirmation}
-                onChangeText={setPasswordConfirmation}
+                onChangeText={text => setPasswordConfirmation(text)}
                 autoCapitalize="none"
                 autoCorrect={false}
                 />

@@ -17,7 +17,7 @@ const AkunJadiScreen = ({navigation}) => {
     <View style={styles.latar}>
       <Akun/>
       <Text style={styles.teks}>
-        Terima kasih banyak! Transaksi sudah selesai
+        Akun anda telah terdaftar
       </Text>
     </View>
   )
