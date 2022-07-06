@@ -27,17 +27,6 @@ const SignInScreen = () => {
     return unsubcribe
   },[])
 
-  // const onPressSignIn = async () => {
-  //   console.log("Trying sign in with user: " + email);
-  //   try {
-  //     await signIn(email, password);
-  //   } catch (error) {
-  //     const errorMessage = `Failed to sign in: ${error.message}`;
-  //     console.error(errorMessage);
-  //     Alert.alert(errorMessage);
-  //   }
-  // };
-
   const handleSignIn = () => {
     auth
     .signInWithEmailAndPassword(email, password)
