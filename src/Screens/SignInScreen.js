@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, StatusBar, Alert } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { KollLong } from '../assets/Images/Index'
 import { Hitam, Ijo, Kuning, Putih } from '../Utils/Warna'
@@ -6,7 +6,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
 import { Pasar, Awan } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
-import { signIn } from '../../API/firebasemethod';
+//import { signIn } from '../../API/firebasemethod';
+
+
+const signIn = () => {
+  console.log('Coba masuk')
+}
 
 
 const { height, width } = Dimensions.get('window')

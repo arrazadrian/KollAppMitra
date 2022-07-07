@@ -2,7 +2,11 @@ import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, 
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
-import { registration } from '../../API/firebasemethod';
+//import { registration } from '../../API/firebasemethod';
+
+const registration = () => {
+  console.log('Coba Daftar')
+}
 
 const { height, width } = Dimensions.get('window')
 
