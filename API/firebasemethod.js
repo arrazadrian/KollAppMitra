@@ -1,5 +1,6 @@
-import * as firebase from "firebase";
-import "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {Alert} from "react-native";
 
 export async function registration(email, password, namalengkap, namatoko, phone) {
