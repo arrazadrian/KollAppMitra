@@ -10,6 +10,8 @@ import {Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+
 export async function registration(email, password, namalengkap, namatoko, phone) {
     const auth = getAuth();
     const db = getFirestore(app);
@@ -30,13 +32,13 @@ export async function registration(email, password, namalengkap, namatoko, phone
 }
 
 export async function signIn(email, password) {
-    const auth = getAuth();
-    try { 
+  const auth = getAuth();
+  try { 
         await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            // ...
+            
         })
     } catch (err) {
     Alert.alert("User tidak ditemukan!", err.message);
