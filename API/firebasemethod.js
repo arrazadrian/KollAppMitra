@@ -1,40 +1,54 @@
 import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { 
+    getAuth, 
+    onAuthStateChanged, 
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword, } from "firebase/auth";
+import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
+import { app } from "../Firebase/config";
 import {Alert} from "react-native";
+import { useNavigation } from '@react-navigation/native'
+
 
 export async function registration(email, password, namalengkap, namatoko, phone) {
+    const auth = getAuth();
+    const db = getFirestore(app);
   try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
-    const currentUser = firebase.auth().currentUser;
-
-    const db = firebase.firestore();
-    db.collection("users")
-      .doc(currentUser.uid)
-      .set({
-        email: currentUser.email,
-        namalengkap: namalengkap,
-        namatoko: namatoko,
-        phone: phone,
-      });
+    await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const currentUser = userCredential.currentUser;
+            addDoc(collection(db, "users"),{
+                email: currentUser.email,
+                namalengkap: namalengkap,
+                namatoko: namatoko,
+                phone: phone,
+            })
+        })
   } catch (err) {
     Alert.alert("Ada error membuat akun mitra!", err.message);
   }
 }
 
 export async function signIn(email, password) {
-  try {
-   await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-  } catch (err) {
+    const auth = getAuth();
+    try { 
+        await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+    } catch (err) {
     Alert.alert("Ada error untuk masuk!", err.message);
   }
 }
 
-export async function loggingOut() {
+export async function handleSignOut() {
+    const navigation = useNavigation();
+    const auth = getAuth();
   try {
-    await firebase.auth().signOut();
+    await auth.signOut();
+    navigation.replace('SignInScreen');
   } catch (err) {
     Alert.alert('Ada error untuk keluar!', err.message);
   }

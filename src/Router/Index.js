@@ -22,6 +22,7 @@ import {
     LangsungScreen,
     CheckoutLangScreen,
     TQScreen,
+    AkunJadiScreen,
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
@@ -50,6 +51,7 @@ return(
     <Stack.Navigator>
       <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
 );
 };

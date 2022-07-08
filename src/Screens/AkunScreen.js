@@ -4,19 +4,20 @@ import { Ijo, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong } from '../assets/Images/Index';
 import { usermitra } from '../Data/usermitra'
 import { useNavigation } from '@react-navigation/native'
+import { handleSignOut } from '../../API/firebasemethod'
 
 const AkunScreen = ({ item }) => {
 
   const navigation = useNavigation();
   
-  const handleSignOut = () => {
-    auth
-    .signOut()
-    .then( ()=>{
-      navigation.replace('SignInScreen')
-    })
-    .catch(error => alert(error.message))
-  }
+  // const handleSignOut = () => {
+  //   auth
+  //   .signOut()
+  //   .then( ()=>{
+  //     navigation.replace('SignInScreen')
+  //   })
+  //   .catch(error => alert(error.message))
+  // }
 
   return (
     <SafeAreaView style={styles.latar}>

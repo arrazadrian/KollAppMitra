@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, 
 import React, { useState } from 'react';
 import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
-//import { registration } from '../../API/firebasemethod';
+import { registration } from '../../API/firebasemethod';
 
-const registration = () => {
-  console.log('Coba Daftar')
-}
-
+// const registration = () => {
+//   console.log('Coba Daftar')
+// }
+ 
 const { height, width } = Dimensions.get('window')
 
 const SignUpScreen = () => {
@@ -21,6 +21,15 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+  const emptyState = () => {
+    setNamalengkap('');
+    setNamatoko('');
+    setEmail('');
+    setPhone('');
+    setPassword('');
+    setPasswordConfirmation('');
+  };
+
   const handleSignUp = async () =>{
     if (!namalengkap) {
       Alert.alert('Isi nama lengkap dengan benar.');
@@ -32,10 +41,10 @@ const SignUpScreen = () => {
       Alert.alert('Isi nomor handphone dengan benar.');
     } else if (!password) {
       Alert.alert('Tulis kata sandi.');
-    } else if (!confirmPassword) {
+    } else if (!passwordConfirmation) {
       setPassword('');
       Alert.alert('Tulis ulang kata sandi.');
-    } else if (password !== confirmPassword) {
+    } else if (password !== passwordConfirmation) {
       Alert.alert('Kata sandi tidak sama.');
     } else {
       registration(
