@@ -6,12 +6,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { IconLock, IconMessage } from '../assets/Icons/Index'
 import { Pasar, Awan } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
-//import { signIn } from '../../API/firebasemethod';
+import { signIn } from '../../API/firebasemethod';
 
 
-const signIn = () => {
-  console.log('Coba masuk')
-}
+// const signIn = () => {
+//   console.log('Coba masuk')
+// }
 
 
 const { height, width } = Dimensions.get('window')
@@ -34,6 +34,7 @@ const SignInScreen = () => {
     }
 
     signIn(email, password);
+    navigation.replace("AppUtama")
     setEmail('');
     setPassword('');
   };

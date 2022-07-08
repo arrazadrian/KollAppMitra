@@ -7,8 +7,8 @@ import {
 import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
-import { useNavigation } from '@react-navigation/native'
-
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function registration(email, password, namalengkap, namatoko, phone) {
     const auth = getAuth();
@@ -39,7 +39,7 @@ export async function signIn(email, password) {
             // ...
         })
     } catch (err) {
-    Alert.alert("Ada error untuk masuk!", err.message);
+    Alert.alert("User tidak ditemukan!", err.message);
   }
 }
 
