@@ -20,7 +20,7 @@ export async function registration(email, password, namalengkap, namatoko, phone
         .then((userCredential) => {
             const currentUser = userCredential.currentUser;
             addDoc(collection(db, "users"),{
-                email: currentUser.email,
+                email: email,
                 namalengkap: namalengkap,
                 namatoko: namatoko,
                 phone: phone,

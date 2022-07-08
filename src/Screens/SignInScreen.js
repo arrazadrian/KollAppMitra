@@ -21,13 +21,13 @@ const SignInScreen = () => {
   const handleSignIn = () => {
     if (!email) {
       Alert.alert('Tulis email anda.');
-    }
-
+    } 
+    
     if (!password) {
       Alert.alert('Tulis kata sandi akun anda.');
     }
     signIn(email, password);
-    navigation.replace("AppUtama")
+    navigation.replace("AppUtama");
     setEmail('');
     setPassword('');
   };
