@@ -9,15 +9,6 @@ import { handleSignOut } from '../../API/firebasemethod'
 const AkunScreen = ({ item }) => {
 
   const navigation = useNavigation();
-  
-  // const handleSignOut = () => {
-  //   auth
-  //   .signOut()
-  //   .then( ()=>{
-  //     navigation.replace('SignInScreen')
-  //   })
-  //   .catch(error => alert(error.message))
-  // }
 
   return (
     <SafeAreaView style={styles.latar}>

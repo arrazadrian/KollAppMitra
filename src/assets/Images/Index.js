@@ -22,6 +22,7 @@ import Kategori06 from './Kategori06.png'
 import Kategori07 from './Kategori07.png'
 import Kategori08 from './Kategori08.png'
 import Kategori09 from './Kategori09.png'
+import DefaultFoto from './DefaultFoto.png'
 import Kosong from './kosong.png'
 import Bag from './Bag.png'
 import Bawah from './Bawah.png'
@@ -34,5 +35,5 @@ export { Splash, Awan, gerobaksplash,
         Kategori04, Kategori05, Kategori06,
         Kategori07, Kategori08, Kategori09,
         Bag, Bawah, Pasar, halaman,
-        mitrasplash, Kosong,
+        mitrasplash, Kosong, DefaultFoto,
     }

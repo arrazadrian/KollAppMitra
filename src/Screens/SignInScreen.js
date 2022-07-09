@@ -18,18 +18,17 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!email) {
       Alert.alert('Tulis email anda.');
-    } 
-    
-    if (!password) {
+    } else if (!password) {
       Alert.alert('Tulis kata sandi akun anda.');
-    }
+    } else {
     signIn(email, password);
-    navigation.replace("AppUtama");
+    navigation.navigate('AppUtama');
     setEmail('');
     setPassword('');
+    }
   };
   
   return (

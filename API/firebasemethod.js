@@ -3,11 +3,14 @@ import {
     getAuth, 
     onAuthStateChanged, 
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword, } from "firebase/auth";
+    signInWithEmailAndPassword,
+    signOut,
+   } from "firebase/auth";
 import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { DefaultFoto } from "../src/assets/Images/Index";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -24,6 +27,7 @@ export async function registration(email, password, namalengkap, namatoko, phone
                 namalengkap: namalengkap,
                 namatoko: namatoko,
                 phone: phone,
+                fototoko: DefaultFoto,
             })
         })
   } catch (err) {
@@ -49,7 +53,7 @@ export async function handleSignOut() {
     const navigation = useNavigation();
     const auth = getAuth();
   try {
-    await auth.signOut();
+    await signOut(auth);
     navigation.replace('SignInScreen');
   } catch (err) {
     Alert.alert('Ada error untuk keluar!', err.message);
