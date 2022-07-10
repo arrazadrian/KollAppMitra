@@ -33,14 +33,13 @@ export async function registration(email, password, namalengkap, namatoko, phone
   }
 }
 
-export async function signIn(email, password, navigation) {
+export async function signIn(email, password) {
   const auth = getAuth();
   try { 
         await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            navigation.replace('AppUtama');
         })
   } catch (err) {
     Alert.alert("User tidak ditemukan!", "Salah menulis email/kata sandi.");
@@ -61,11 +60,10 @@ export function adaOrang({navigation}) {
     });
 }
 
-export async function handleSignOut(navigation) {
+export async function handleSignOut() {
     const auth = getAuth();
   try {
     await signOut(auth);
-    navigation.replace('SignInScreen');
   } catch (err) {
     Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
   }
