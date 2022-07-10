@@ -24,8 +24,7 @@ const SignInScreen = () => {
     } else if (!password) {
       Alert.alert('Tulis kata sandi akun anda.');
     } else {
-    signIn(email, password);
-    navigation.navigate('AppUtama');
+    signIn(email, password, navigation);
     setEmail('');
     setPassword('');
     }

@@ -39,8 +39,8 @@ const SignUpScreen = () => {
       Alert.alert('Isi email dengan benar.');
     } else if (!phone) {
       Alert.alert('Isi nomor handphone dengan benar.');
-    } else if (!password) {
-      Alert.alert('Tulis kata sandi.');
+    } else if (!password && password.length > 7) {
+      Alert.alert('Kata sandi kurang kuat','Kata sandi minimal 8 karakter.');
     } else if (!passwordConfirmation) {
       setPassword('');
       Alert.alert('Tulis ulang kata sandi.');
@@ -54,7 +54,7 @@ const SignUpScreen = () => {
         namatoko,
         phone,
       );
-      navigation.navigate('AkunJadiScreen');
+      navigation.replace('AkunJadiScreen');
       emptyState();
     }
   };
