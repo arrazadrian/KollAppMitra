@@ -102,11 +102,17 @@ return(
 };
   
 const Routernih = () => {
+  const user = false;
     return (
-      <Stack.Navigator initialRouteName="SplashScreen">
-          <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Gerbang" component={Gerbang} options={{ headerShown: false }}/>
-          <Stack.Screen name="AppUtama" component={AppUtama} options={{ headerShown: false }}/>
+      <Stack.Navigator>
+        {user ? 
+          (
+              // <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="AppUtama" component={AppUtama} options={{ headerShown: false }}/>
+          ):(
+            <Stack.Screen name="Gerbang" component={Gerbang} options={{ headerShown: false }}/>
+          )
+        }
       </Stack.Navigator>
     );
   };
