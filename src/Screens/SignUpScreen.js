@@ -4,10 +4,6 @@ import { Ijo, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
 
-// const registration = () => {
-//   console.log('Coba Daftar')
-// }
- 
 const { height, width } = Dimensions.get('window')
 
 const SignUpScreen = () => {
@@ -54,7 +50,7 @@ const SignUpScreen = () => {
         namatoko,
         phone,
       );
-      navigation.replace('AkunJadiScreen');
+      // navigation.replace('AkunJadiScreen');
       emptyState();
     }
   };
