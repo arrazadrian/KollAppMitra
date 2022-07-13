@@ -27,6 +27,7 @@ import {
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
 import TopTab from '../Components/TopTab.js';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const Stack = createNativeStackNavigator();
@@ -46,31 +47,35 @@ const HomeStackScreen = () =>{
     );
   };
 
-const Gerbang = () => {
+export const Gerbang = () => {
 return(
+  <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
+  </NavigationContainer>
 );
 };
 
-const AppUtama = () => {
+export const AppUtama = () => {
     return(
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeScreen" component={HomeStackScreen} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="TambahPreScreen" component={TambahPreScreen} options={{ title: "Tambah Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="Panggilan" component={Panggilan} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="EditProdukScreen" component={EditProdukScreen} options={{ title: "Perbarui Data Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
-    </HomeStack.Navigator>
+    <NavigationContainer>
+        <HomeStack.Navigator>
+          <HomeStack.Screen name="HomeScreen" component={HomeStackScreen} options={{ headerShown: false }}/>
+          <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="TambahScreen" component={TambahScreen} options={{ title: "Tambah Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="TambahPreScreen" component={TambahPreScreen} options={{ title: "Tambah Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="Panggilan" component={Panggilan} options={{ headerShown: false }}/>
+          <HomeStack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown: false }}/>
+          <HomeStack.Screen name="EditProdukScreen" component={EditProdukScreen} options={{ title: "Perbarui Data Produk", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
+        </HomeStack.Navigator>
+    </NavigationContainer>
     );
   };
 
@@ -101,22 +106,3 @@ return(
 );
 };
   
-const Routernih = () => {
-  const user = false;
-    return (
-      <Stack.Navigator>
-        {user ? 
-          (
-              // <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="AppUtama" component={AppUtama} options={{ headerShown: false }}/>
-          ):(
-            <Stack.Screen name="Gerbang" component={Gerbang} options={{ headerShown: false }}/>
-          )
-        }
-      </Stack.Navigator>
-    );
-  };
-  
-  export default Routernih
-  
-  const styles = StyleSheet.create({})

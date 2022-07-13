@@ -20,9 +20,9 @@ const SignInScreen = () => {
 
   const handleSignIn = async () => {
     if (!email) {
-      Alert.alert('Tulis email anda.');
+      Alert.alert('Kamu belum tulis email','Yuk isi email akun kamu.');
     } else if (!password) {
-      Alert.alert('Tulis kata sandi akun anda.');
+      Alert.alert('Kata sandi belum ditulis','Isi dulu yuk kata sandinya.');
     } else {
     signIn(email, password, navigation);
     setEmail('');

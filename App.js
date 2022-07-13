@@ -1,14 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import Routernih from './src/Router/Index.js';
+import AuthNavigation from './src/AuthNavigation.js';
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Routernih />
-    </NavigationContainer>
-  );
+  return <AuthNavigation/>
 }
 
 export default App

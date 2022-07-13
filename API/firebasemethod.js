@@ -46,20 +46,6 @@ export async function signIn(email, password) {
     }
 }
 
-export function adaOrang({navigation}) {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        navigation.navigate("AppUtama")
-      } else {
-        navigation.navigate("SignInScreen")
-      }
-    });
-}
-
 export async function handleSignOut() {
     const auth = getAuth();
   try {
