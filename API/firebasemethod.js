@@ -17,8 +17,7 @@ export async function registration(email, password, namalengkap, namatoko, phone
     const db = getFirestore(app);
   try {
     await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const currentUser = userCredential.currentUser;
+        .then(() => {
             addDoc(collection(db, "mitra"),{
                 id_mitra: auth.currentUser.uid,
                 email: email,
