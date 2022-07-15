@@ -38,14 +38,16 @@ const HomeScreen = ({ navigation }) => {
     async function getUserInfo(){
       try {
         let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
-        console.log(q)
-        if (!q.exists){
-          Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
-        } else {
-          console.log(q)
-          let dataObj = q.data();
-          setNamalengkap(dataObj.namalengkap)
-        }
+        getDoc(q).then((hasil)=>{console.log(hasil.data(), hasil.namalengkap)
+        })
+        // console.log(q)
+        // if (!q.exists){
+        //   Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
+        // } else {
+        //   console.log(q)
+        //   let dataObj = q.data();
+        //   setNamalengkap(dataObj.namalengkap)
+        // }
       } catch (err){
       Alert.alert('There is an error.', err.message)
       }
