@@ -38,13 +38,12 @@ const HomeScreen = ({ navigation }) => {
     async function getUserInfo(){
       try {
         let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
-        
-        
-        if (!doc.exists){
+        console.log(q)
+        if (!q.exists){
           Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
         } else {
-          console.log(doc)
-          let dataObj = doc.data();
+          console.log(q)
+          let dataObj = q.data();
           setNamalengkap(dataObj.namalengkap)
         }
       } catch (err){
