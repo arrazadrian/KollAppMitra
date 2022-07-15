@@ -5,6 +5,10 @@ import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
+import { 
+  getAuth, 
+ } from "firebase/auth";
+ import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
 
 const { width, height } = Dimensions.get('window')
 
@@ -26,6 +30,32 @@ const HomeScreen = ({ navigation }) => {
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
 
+  // //const mitraCollectionRef = collection(db, "mitra");
+  // const [namalengkap, setNamalengkap] = useState('');
+  // const auth = getAuth();
+  // let idMitra = auth.currentUser.uid;
+
+  // useEffect(() => {
+  //   async function getUserInfo(){
+  //     try {
+  //       let doc = await getFirestore
+  //         .collection('mitra')
+  //         .doc(idMitra)
+  //         .get();
+
+  //       if (!doc.exists){
+  //         Alert.alert('Ada datanya','Data ga kebaca/ga punya.')
+  //       } else {
+  //         let dataObj = doc.data();
+  //         setNamalengkap(dataObj.namalengkap)
+  //       }
+  //     } catch (err){
+  //     Alert.alert('There is an error.', err.message)
+  //     }
+  //   }
+  //   getUserInfo();
+  // })
+
   return (
     <View style={styles.latar}>
         <ScrollView>
@@ -45,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
                 fontSize: 24,
                 fontWeight: 'bold',
                 color: IjoTua,
-              }}>Toko Aa Anri</Text>
+              }}>Masih Dummy</Text>
             </View>
             <View>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
