@@ -7,8 +7,8 @@
     "icon": "./src/assets/Images/LogoMitra.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/Images/splashKollMitra.png",
-      "resizeMode": "cover",
+      "image": "./src/assets/Images/Gerobak.png",
+      "resizeMode": "contain",
       "backgroundColor": "#FFF3C8"
     },
     "updates": {
