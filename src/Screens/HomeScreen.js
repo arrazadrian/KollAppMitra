@@ -37,9 +37,10 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     async function getUserInfo(){
       try {
-        let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
-        getDoc(q).then((hasil)=>{console.log(hasil.data(), hasil.namalengkap)
-        })
+        //let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
+        let docRef = doc(db, "mitra", "MHXG5gNsewz73Hlt35bS");
+        const docSnap = await getDoc(docRef);
+        setNamalengkap(docSnap.data().namalengkap)
         // console.log(q)
         // if (!q.exists){
         //   Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
