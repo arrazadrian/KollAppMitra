@@ -8,7 +8,7 @@ import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { 
   getAuth, 
  } from "firebase/auth";
- import { getFirestore, query, collection, where, doc, getDoc } from 'firebase/firestore/lite';
+ import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { app } from '../../Firebase/config';
 
 const { width, height } = Dimensions.get('window')
@@ -34,26 +34,18 @@ const HomeScreen = ({ navigation }) => {
   const [namalengkap, setNamalengkap] = useState('');
   const auth = getAuth();
   const db = getFirestore(app)
+
   useEffect(() => {
-    async function getUserInfo(){
+    async function getusername(){
       try {
-        //let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
         let docRef = doc(db, "mitra", "MHXG5gNsewz73Hlt35bS");
         const docSnap = await getDoc(docRef);
         setNamalengkap(docSnap.data().namalengkap)
-        // console.log(q)
-        // if (!q.exists){
-        //   Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
-        // } else {
-        //   console.log(q)
-        //   let dataObj = q.data();
-        //   setNamalengkap(dataObj.namalengkap)
-        // }
       } catch (err){
       Alert.alert('There is an error.', err.message)
       }
     }
-    getUserInfo();
+    getusername();
   })
 
   return (
