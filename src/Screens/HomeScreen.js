@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
@@ -8,7 +8,8 @@ import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { 
   getAuth, 
  } from "firebase/auth";
- import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
+ import { getFirestore, query, collection, where } from 'firebase/firestore/lite';
+import { app } from '../../Firebase/config';
 
 const { width, height } = Dimensions.get('window')
 
@@ -30,31 +31,27 @@ const HomeScreen = ({ navigation }) => {
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
 
-  // //const mitraCollectionRef = collection(db, "mitra");
-  // const [namalengkap, setNamalengkap] = useState('');
-  // const auth = getAuth();
-  // let idMitra = auth.currentUser.uid;
-
-  // useEffect(() => {
-  //   async function getUserInfo(){
-  //     try {
-  //       let doc = await getFirestore
-  //         .collection('mitra')
-  //         .doc(idMitra)
-  //         .get();
-
-  //       if (!doc.exists){
-  //         Alert.alert('Ada datanya','Data ga kebaca/ga punya.')
-  //       } else {
-  //         let dataObj = doc.data();
-  //         setNamalengkap(dataObj.namalengkap)
-  //       }
-  //     } catch (err){
-  //     Alert.alert('There is an error.', err.message)
-  //     }
-  //   }
-  //   getUserInfo();
-  // })
+  const [namalengkap, setNamalengkap] = useState('');
+  const auth = getAuth();
+  const db = getFirestore(app)
+  useEffect(() => {
+    async function getUserInfo(){
+      try {
+        let doc = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
+        console.log(auth.currentUser.uid)
+        if (!doc.exists){
+          Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
+        } else {
+          console.log(doc)
+          let dataObj = doc.data();
+          setNamalengkap(dataObj.namalengkap)
+        }
+      } catch (err){
+      Alert.alert('There is an error.', err.message)
+      }
+    }
+    getUserInfo();
+  })
 
   return (
     <View style={styles.latar}>
@@ -75,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
                 fontSize: 24,
                 fontWeight: 'bold',
                 color: IjoTua,
-              }}>Masih Dummy</Text>
+              }}>{namalengkap}</Text>
             </View>
             <View>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
