@@ -8,7 +8,7 @@ import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { 
   getAuth, 
  } from "firebase/auth";
- import { getFirestore, query, collection, where } from 'firebase/firestore/lite';
+ import { getFirestore, query, collection, where, doc, getDoc } from 'firebase/firestore/lite';
 import { app } from '../../Firebase/config';
 
 const { width, height } = Dimensions.get('window')
@@ -37,8 +37,9 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     async function getUserInfo(){
       try {
-        let doc = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
-        console.log(auth.currentUser.uid)
+        let q = query(collection(db, "mitra"), where("id_mitra", "==", auth.currentUser.uid));
+        
+        
         if (!doc.exists){
           Alert.alert('Tidak ada datanya','Data ga kebaca/ga punya.')
         } else {
