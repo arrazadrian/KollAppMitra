@@ -28,20 +28,20 @@ const SignUpScreen = () => {
 
   const handleSignUp = async () =>{
     if (!namalengkap) {
-      Alert.alert('Nama Lengkap masih kosong','Isi nama lengkap dengan benar.');
+      Alert.alert('Isi nama lengkap dengan benar.');
     } else if (!namatoko) {
-      Alert.alert('Nama Toko masih kosong','Isi nama toko dengan benar.');
+      Alert.alert('Isi nama toko dengan benar.');
     } else if (!email) {
-      Alert.alert('Email masih kosong','Isi email dengan benar.');
+      Alert.alert('Isi email dengan benar.');
     } else if (!phone) {
-      Alert.alert('No. Handphone masih kosong','Isi nomor handphone dengan benar.');
+      Alert.alert('Isi nomor handphone dengan benar.');
     } else if (!password && password.length > 7) {
       Alert.alert('Kata sandi kurang kuat','Kata sandi minimal 8 karakter.');
     } else if (!passwordConfirmation) {
       setPassword('');
-      Alert.alert('Tulis ulang kata sandi','Pengulangan digunakan untuk komfirmasi.');
+      Alert.alert('Tulis ulang kata sandi.');
     } else if (password !== passwordConfirmation) {
-      Alert.alert('Kata sandi tidak sama','Lihat lagi penulisan kata sandi anda.');
+      Alert.alert('Kata sandi tidak sama.');
     } else {
       registration(
         email,
