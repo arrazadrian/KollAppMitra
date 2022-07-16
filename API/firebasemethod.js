@@ -9,8 +9,6 @@ import {
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore/lite';
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // API 1: registration
 // MEMBUAT AKUN BARU DENGAN EMAIL DAN PASSWORD, 
@@ -22,7 +20,7 @@ export async function registration(email, password, namalengkap, namatoko, phone
   try {
     await createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-            addDoc(collection(db, "mitra"),{
+            setDoc(doc(db, "mitra", auth.currentUser.uid),{
                 id_mitra: auth.currentUser.uid,
                 email: email,
                 namalengkap: namalengkap,
@@ -60,7 +58,3 @@ export async function handleSignOut() {
     Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
   }
 }
-
-//API 4: getusername
-// AMBIL NAMA BUAT DI BERANDA,
-// DARI UID DOC YG SAMA DENGAN UID USER

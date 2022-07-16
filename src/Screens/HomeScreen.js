@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     async function getusername(){
       try {
-        let docRef = doc(db, "mitra", "MHXG5gNsewz73Hlt35bS");
+        let docRef = doc(db, "mitra", auth.currentUser.uid, );
         const docSnap = await getDoc(docRef);
         setNamalengkap(docSnap.data().namalengkap)
       } catch (err){
@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getusername();
-  })
+  },[])
 
   return (
     <View style={styles.latar}>
