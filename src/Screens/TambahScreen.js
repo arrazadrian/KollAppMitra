@@ -3,12 +3,30 @@ import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
+import { ImagePicker, Permissions } from 'expo';
 
 
 const TambahScreen = () => {
 
   const [satuan, setSatuan] = useState('Pilih Satuan');
   const [kategori, setKategori] = useState('Pilih Kategori');
+  const [image, setImage] = useState('https://drive.google.com/file/d/1vkJJK86vs_4Wzd-44Q-PCB7hK-Anfo51/view?usp=sharing');
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   return (
     <ScrollView style={styles.latar}>
@@ -29,17 +47,18 @@ const TambahScreen = () => {
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={DPdefault} style={styles.foto} />
+                <Image source={{uri: image}} style={styles.foto} />
                 <View>
                     <Text style={styles.deskripsi} 
                     >Foto produk harus jelas</Text>
                     <Text 
+                      onPress={pickImage}
                       style={{
                       fontWeight:'bold', 
                       textDecorationLine:'underline',
                       color:Ijo,
                       fontSize: 18,}} 
-                    >Ganti Foto</Text>
+                    >Pilih Foto</Text>
                 </View>
             </View>
             <Text style={styles.subjudul}>Harga produk</Text>
