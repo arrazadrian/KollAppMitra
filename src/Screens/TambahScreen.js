@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
-import { ImagePicker, Permissions } from 'expo';
-
+import * as ImagePicker from 'expo-image-picker';
 
 const TambahScreen = () => {
 
