@@ -1,10 +1,15 @@
-import { View, Text } from 'react-native'
+import { LogBox } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { AppUtama, Gerbang } from './Router/Index'
+LogBox.ignoreLogs([
+  "Setting a timer",
+  "AsyncStorage has been extracted from react-native core and will be removed in a future release.",
+]);
 import { 
     getAuth, 
     onAuthStateChanged, 
    } from "firebase/auth";
+
 
 const AuthNavigation = () => {
     const [currentUser, setCurrentUser] = useState(null)
