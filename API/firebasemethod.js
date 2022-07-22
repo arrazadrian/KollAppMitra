@@ -7,6 +7,7 @@ import {
     signOut,
    } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore/lite';
+import { getStorage, ref } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
 
@@ -58,3 +59,21 @@ export async function handleSignOut() {
     Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
   }
 }
+
+// API 4: uploadProdukUtama
+// KELUAR DARI DALAM AKUN YG SEDANG LOGIN,
+// MENGUBAH AUTHSTATECHANGE DAN KELUAR
+
+export async function uploadProdukUtama(result) {
+  const storage = getStorage(app);
+  const uploadUri = result.uri;
+  let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
+  const storageRef = ref(storage, 'produk/' + filename);
+try {
+  storageRef.putfile(uploadUri)
+  Alert.alert('Produk Berhasil Dibuat','Produk masuk daftar produk utama.')
+} catch (err) {
+  Alert.alert('Ada error untuk menambahkan produk!', err);
+}
+}
+

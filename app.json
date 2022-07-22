@@ -4,7 +4,7 @@
     "slug": "KollAppMitra",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/Images/LogoMitra.png",
+    "icon": "./src/assets/Images/KollAppMitra.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./src/assets/Images/splashKollMitra.png",
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/Images/LogoMitra.png",
+        "foregroundImage": "./src/assets/Images/KollAppMitra.png",
         "backgroundColor": "#FFFFFF"
       },
       "softwareKeyboardLayoutMode": "pan"

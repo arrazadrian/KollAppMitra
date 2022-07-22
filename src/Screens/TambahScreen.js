@@ -4,6 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = () => {
 
@@ -20,11 +21,12 @@ const TambahScreen = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
+    
+    console.log(result);
+    
   };
 
   return (
@@ -110,6 +112,7 @@ const TambahScreen = () => {
             </Picker>
             <Pressable style={styles.tombol}>
               <Text
+              onPress={uploadProdukUtama}
               style={{
                 color: Ijo,
                 fontSize: 20,
