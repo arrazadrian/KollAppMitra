@@ -39,7 +39,7 @@ const SignUpScreen = () => {
       Alert.alert('Kata sandi kurang kuat','Kata sandi minimal 8 karakter.');
     } else if (!passwordConfirmation) {
       setPassword('');
-      Alert.alert('Kata masih kosong','Tulis ulang kata sandi.');
+      Alert.alert('Pengulangan kata sandi masih kosong','Tulis ulang kata sandi.');
     } else if (password !== passwordConfirmation) {
       Alert.alert('Kata sandi tidak sama','Mohon cek ulang penulisan.');
     } else {

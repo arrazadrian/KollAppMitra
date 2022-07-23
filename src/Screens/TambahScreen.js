@@ -13,8 +13,8 @@ const TambahScreen = () => {
   const [image, setImage] = useState('https://drive.google.com/file/d/1vkJJK86vs_4Wzd-44Q-PCB7hK-Anfo51/view?usp=sharing');
   const [harga, setHarga] = useState('');
   const [kuantitas, setKuantitas] = useState('');
-  const [satuan, setSatuan] = useState('Pilih Satuan');
-  const [kategori, setKategori] = useState('Pilih Kategori');
+  const [satuan, setSatuan] = useState('g');
+  const [kategori, setKategori] = useState('Sayuran');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -33,6 +33,42 @@ const TambahScreen = () => {
     
   };
 
+  const emptyState = () => {
+    setNamaproduk('');
+    setDeskproduk('');
+    setImage('');
+    setHarga('');
+    setKuantitas('');
+    setSatuan('g');
+    setKategori('Sayuran');
+  };
+
+  const handleTambahProdukUtama = async () =>{
+    if (!namaproduk) {
+      Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuian.');
+    } else if (!deskproduk) {
+      Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
+    } else if (!image) {
+      Alert.alert('Foto belum dipilih','Pilih foto produk yang jelas.');
+    } else if (!harga) {
+      Alert.alert('Harga masih kosong','Isi harga produk dengan benar.');
+    } else if (!kuantitas) {
+      Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
+    }else {
+      uploadProdukUtama(
+        namaproduk,
+        deskproduk,
+        image,
+        harga,
+        kuantitas,
+        satuan,
+        kategori,
+      );
+      // navigation.replace('AkunJadiScreen');
+      emptyState();
+    }
+  };
+
   return (
     <ScrollView style={styles.latar}>
           <View style={styles.container}>
@@ -43,10 +79,14 @@ const TambahScreen = () => {
             <Text style={styles.subjudul}>Nama Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
+              value={namaproduk}
+              onChangeText={namaproduk => setNamaproduk(namaproduk)}
             />
             <Text style={styles.subjudul}>Deskripsi Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis deskripsi produk dengan jelas"
+              value={deskproduk}
+              onChangeText={deskproduk => setDeskproduk(deskproduk)}
               multiline={true}
               maxLength={150}
             />
@@ -70,6 +110,8 @@ const TambahScreen = () => {
             <TextInput style={styles.input}
               placeholder="Tulis harga produk"
               keyboardType='numeric'
+              value={harga}
+              onChangeText={harga => setHarga(harga)}
             />
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <View>
@@ -77,6 +119,8 @@ const TambahScreen = () => {
                     <TextInput style={styles.input}
                       placeholder="Banyaknya produk"
                       keyboardType='numeric'
+                      value={kuantitas}
+                      onChangeText={kuantitas => setKuantitas(kuantitas)}
                     />
               </View>
               <View>
@@ -116,7 +160,7 @@ const TambahScreen = () => {
             </Picker>
             <Pressable style={styles.tombol}>
               <Text
-              onPress={uploadProdukUtama}
+              onPress={handleTambahProdukUtama}
               style={{
                 color: Ijo,
                 fontSize: 20,
