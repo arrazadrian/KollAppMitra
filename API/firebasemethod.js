@@ -64,16 +64,59 @@ export async function handleSignOut() {
 // KELUAR DARI DALAM AKUN YG SEDANG LOGIN,
 // MENGUBAH AUTHSTATECHANGE DAN KELUAR
 
-export async function uploadProdukUtama(result) {
+export async function pilihgambar(result) {
   const storage = getStorage(app);
   const uploadUri = result.uri;
   let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
-  const storageRef = ref(storage, 'produk/' + filename);
-try {
-  storageRef.putfile(uploadUri)
-  Alert.alert('Produk Berhasil Dibuat','Produk masuk daftar produk utama.')
-} catch (err) {
-  Alert.alert('Ada error untuk menambahkan produk!', err);
-}
+  const storageRef = ref(storage, `produk/${filename}`);
+  try {
+    storageRef.putfile(uploadUri)
+    Alert.alert('Produk Berhasil Dibuat','Produk masuk daftar produk utama.')
+  } catch (err) {
+    Alert.alert('Ada error untuk menambahkan produk!', err);
+  }
 }
 
+
+const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan) => {
+  const auth = getAuth();
+  const imageUrl = await uploadImage();
+  console.log('Image Url: ', imageUrl);
+  console.log('Post: ', post);
+
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const colRef = collection(docRef, "produk")
+  addDoc(colRef, {
+    jenis:'Produk utama',
+    namaproduk: namaproduk,
+    deskproduk: deskproduk,
+    image: image,
+    harga: harga,
+    kuantitas: kuantitas,
+    satuan: satuan,
+
+  });
+
+
+  firestore()
+  .collection('posts')
+  .add({
+    userId: user.uid,
+    post: post,
+    postImg: imageUrl,
+    postTime: firestore.Timestamp.fromDate(new Date()),
+    likes: null,
+    comments: null,
+  })
+  .then(() => {
+    console.log('Post Added!');
+    Alert.alert(
+      'Post published!',
+      'Your post has been published Successfully!',
+    );
+    setPost(null);
+  })
+  .catch((error) => {
+    console.log('Something went wrong with added post to firestore.', error);
+  });
+}

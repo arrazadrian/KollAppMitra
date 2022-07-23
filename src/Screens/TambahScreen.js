@@ -8,9 +8,13 @@ import { uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = () => {
 
+  const [namaproduk, setNamaproduk] = useState('');
+  const [deskproduk, setDeskproduk] = useState('');
+  const [image, setImage] = useState('https://drive.google.com/file/d/1vkJJK86vs_4Wzd-44Q-PCB7hK-Anfo51/view?usp=sharing');
+  const [harga, setHarga] = useState('');
+  const [kuantitas, setKuantitas] = useState('');
   const [satuan, setSatuan] = useState('Pilih Satuan');
   const [kategori, setKategori] = useState('Pilih Kategori');
-  const [image, setImage] = useState('https://drive.google.com/file/d/1vkJJK86vs_4Wzd-44Q-PCB7hK-Anfo51/view?usp=sharing');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
