@@ -8,11 +8,9 @@ import { uploadgambar, uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = () => {
 
-  const pajanganfoto = 'https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2022/02/18053252/sebenarnya-tomat-buah-atau-sayur-ketahui-faktanya-halodoc.jpg';
-
   const [namaproduk, setNamaproduk] = useState('');
   const [deskproduk, setDeskproduk] = useState('');
-  const [image, setImage] = useState(pajanganfoto);
+  const [image, setImage] = useState();
   const [harga, setHarga] = useState('');
   const [kuantitas, setKuantitas] = useState('');
   const [satuan, setSatuan] = useState('g');
@@ -29,7 +27,7 @@ const TambahScreen = () => {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      //uploadgambar(result);
+      console.log(result.uri);
     }
     
     return result.uri
@@ -40,7 +38,7 @@ const TambahScreen = () => {
   const emptyState = () => {
     setNamaproduk('');
     setDeskproduk('');
-    setImage(pajanganfoto);
+    setImage();
     setHarga('');
     setKuantitas('');
     setSatuan('g');
@@ -96,7 +94,15 @@ const TambahScreen = () => {
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={{uri: image}} style={styles.foto} />
+              {image != null ? (
+                <Image 
+                source={{uri: image}} 
+                style={styles.foto} />
+              ):(
+                <Image 
+                source={DPdefault} 
+                style={styles.fotodefault} />
+              )} 
                 <View>
                     <Text style={styles.deskripsi} 
                     >Foto produk harus jelas</Text>
@@ -215,6 +221,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: 100,
         width: 100,
+        marginRight: 10,
+    },
+    fotodefault:{
+        backgroundColor: Putih,
+        borderRadius: 10,
+        height: 50,
+        width: 50,
         marginRight: 10,
     },
     gantifoto:{

@@ -66,7 +66,7 @@ export async function handleSignOut() {
 
 export async function uploadgambar(result) {
   const storage = getStorage(app);
-  const uploadUri = result.uri;
+  const uploadUri = result;
   let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
   const storageRef = ref(storage, `produk/${filename}`);
   try {
@@ -75,7 +75,7 @@ export async function uploadgambar(result) {
 
     return urlgambar
   } catch (err) {
-    Alert.alert('Ada error untuk menambahkan produk!', err);
+    Alert.alert('Ada error pada foto produk!', err.message);
   }
 }
 
@@ -84,8 +84,8 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
   const urlgambar = await uploadgambar(image);
   
   const auth = getAuth();
-  
-  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const db = getFirestore(app);
+  const docRef = doc(db, "mitra", id_mitra);
   const colRef = collection(docRef, "produk")
   addDoc(colRef, {
     jenis:'Produk utama',
@@ -103,6 +103,6 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
     );
   })
   .catch((error) => {
-    console.log('Something went wrong with added post to firestore.', error);
+    console.log('Something went wrong with added product to firestore.', error);
   });
 }
