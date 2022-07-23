@@ -27,7 +27,7 @@ const TambahScreen = () => {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      uploadgambar(result);
+      //uploadgambar(result);
     }
     
     console.log(result);
