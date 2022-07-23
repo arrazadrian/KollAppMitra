@@ -81,7 +81,7 @@ export async function uploadgambar(result) {
 
 
 export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan) => {
-  const urlgambar = await uploadgambar();
+  const urlgambar = await uploadgambar(image);
   
   const auth = getAuth();
   

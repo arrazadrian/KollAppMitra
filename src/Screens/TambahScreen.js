@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
@@ -8,9 +8,11 @@ import { uploadgambar, uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = () => {
 
+  const pajanganfoto = 'https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2022/02/18053252/sebenarnya-tomat-buah-atau-sayur-ketahui-faktanya-halodoc.jpg';
+
   const [namaproduk, setNamaproduk] = useState('');
   const [deskproduk, setDeskproduk] = useState('');
-  const [image, setImage] = useState('https://drive.google.com/file/d/1vkJJK86vs_4Wzd-44Q-PCB7hK-Anfo51/view?usp=sharing');
+  const [image, setImage] = useState(pajanganfoto);
   const [harga, setHarga] = useState('');
   const [kuantitas, setKuantitas] = useState('');
   const [satuan, setSatuan] = useState('g');
@@ -30,14 +32,15 @@ const TambahScreen = () => {
       //uploadgambar(result);
     }
     
-    console.log(result);
+    return result.uri
+    //console.log(result);
     
   };
 
   const emptyState = () => {
     setNamaproduk('');
     setDeskproduk('');
-    setImage('');
+    setImage(pajanganfoto);
     setHarga('');
     setKuantitas('');
     setSatuan('g');
@@ -46,7 +49,7 @@ const TambahScreen = () => {
 
   const handleTambahProdukUtama = async () =>{
     if (!namaproduk) {
-      Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuian.');
+      Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuai.');
     } else if (!deskproduk) {
       Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
     } else if (!image) {
@@ -56,7 +59,7 @@ const TambahScreen = () => {
     } else if (!kuantitas) {
       Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
     }else {
-      uploadProdukUtama(
+      await uploadProdukUtama(
         namaproduk,
         deskproduk,
         image,
