@@ -4,7 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadProdukUtama } from '../../API/firebasemethod';
+import { uploadgambar, uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = () => {
 
@@ -27,6 +27,7 @@ const TambahScreen = () => {
 
     if (!result.cancelled) {
       setImage(result.uri);
+      uploadgambar(result);
     }
     
     console.log(result);

@@ -7,7 +7,7 @@ import {
     signOut,
    } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore/lite';
-import { getStorage, ref } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
 
@@ -61,37 +61,41 @@ export async function handleSignOut() {
 }
 
 // API 4: uploadProdukUtama
-// KELUAR DARI DALAM AKUN YG SEDANG LOGIN,
-// MENGUBAH AUTHSTATECHANGE DAN KELUAR
+// BUAT PRODUK UTAMA BARU
+// SEBELUMNYA UPLOAD IMAGE DULU
 
-// export async function pilihgambar(result) {
-//   const storage = getStorage(app);
-//   const uploadUri = result.uri;
-//   let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
-//   const storageRef = ref(storage, `produk/${filename}`);
-//   try {
-//     storageRef.putfile(uploadUri)
-//     Alert.alert('Produk Berhasil Dibuat','Produk masuk daftar produk utama.')
-//   } catch (err) {
-//     Alert.alert('Ada error untuk menambahkan produk!', err);
-//   }
-// }
+export async function uploadgambar(result) {
+  const storage = getStorage(app);
+  const uploadUri = result.uri;
+  let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
+  const storageRef = ref(storage, `produk/${filename}`);
+  try {
+    await storageRef.putfile(uploadUri);
+    const urlgambar = await storageRef.getDownloadURL();
+
+    return urlgambar
+  } catch (err) {
+    Alert.alert('Ada error untuk menambahkan produk!', err);
+  }
+}
 
 
-const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan) => {
+export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan) => {
+  const urlgambar = await uploadgambar();
+  
   const auth = getAuth();
-  const imageUrl = await uploadImage();
-
+  
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
   addDoc(colRef, {
     jenis:'Produk utama',
     namaproduk: namaproduk,
     deskproduk: deskproduk,
-    image: image,
+    image: urlgambar,
     harga: harga,
     kuantitas: kuantitas,
     satuan: satuan,
+    pemilik: auth.currentUser.uid,
   })
   .then(() => {
     Alert.alert(
