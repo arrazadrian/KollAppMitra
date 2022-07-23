@@ -95,18 +95,6 @@ const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas
     kuantitas: kuantitas,
     satuan: satuan,
 
-  });
-
-
-  firestore()
-  .collection('posts')
-  .add({
-    userId: user.uid,
-    post: post,
-    postImg: imageUrl,
-    postTime: firestore.Timestamp.fromDate(new Date()),
-    likes: null,
-    comments: null,
   })
   .then(() => {
     console.log('Post Added!');
