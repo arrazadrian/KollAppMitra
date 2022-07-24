@@ -7,7 +7,7 @@ import {
     signOut,
    } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore/lite';
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
 
@@ -67,11 +67,13 @@ export async function handleSignOut() {
 export async function uploadgambar(result) {
   const storage = getStorage(app);
   const uploadUri = result;
+  const img = await fetch(result);
+  const bytes = await img.blob
   let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
   const storageRef = ref(storage, `produk/${filename}`);
   try {
-    await storageRef.putfile(uploadUri);
-    const urlgambar = await storageRef.getDownloadURL();
+    await uploadBytes(storageRef, bytes);
+    const urlgambar = await getDownloadURL(storageRef);
 
     return urlgambar
   } catch (err) {
@@ -80,12 +82,12 @@ export async function uploadgambar(result) {
 }
 
 
-export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan) => {
+export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan, kategori) => {
   const urlgambar = await uploadgambar(image);
   
   const auth = getAuth();
   const db = getFirestore(app);
-  const docRef = doc(db, "mitra", id_mitra);
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
   addDoc(colRef, {
     jenis:'Produk utama',
@@ -95,6 +97,7 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
     harga: harga,
     kuantitas: kuantitas,
     satuan: satuan,
+    kategori: kategori,
     pemilik: auth.currentUser.uid,
   })
   .then(() => {
