@@ -142,11 +142,13 @@ const TambahScreen = () => {
                       onValueChange={(itemValue, itemIndex) =>
                         setSatuan(itemValue)
                       }>
-                      <Picker.Item label="gram" value="g" />
+                      <Picker.Item label="gram" value="g"  />
                       <Picker.Item label="kilogram" value="kg" />
                       <Picker.Item label="ons" value="ons" />
                       <Picker.Item label="ikat" value="ikat" />
                       <Picker.Item label="lembar" value="lembar" />
+                      <Picker.Item label="bungkus" value="bungkus" />
+                      <Picker.Item label="buah" value="buah" />
                     </Picker>
               </View>
             </View>
