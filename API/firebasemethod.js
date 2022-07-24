@@ -60,30 +60,47 @@ export async function handleSignOut() {
   }
 }
 
-// API 4: uploadProdukUtama
-// BUAT PRODUK UTAMA BARU
-// SEBELUMNYA UPLOAD IMAGE DULU
+// API 4: uploadgambarasync
+// UPLOAD IMAGE YANG DIOPER KE
+// FUNGSI FIRESTORE SELANJUTNYA
 
-export async function uploadgambar(result) {
-  const storage = getStorage(app);
-  const uploadUri = result;
-  const img = await fetch(result);
-  const bytes = await img.blob
-  let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1)
-  const storageRef = ref(storage, `produk/${filename}`);
-  try {
-    await uploadBytes(storageRef, bytes);
-    const urlgambar = await getDownloadURL(storageRef);
-
-    return urlgambar
+async function uploadgambarasync(uri) {
+  try{
+      const uploadUri = uri;
+      let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1);
+    // Why are we using XMLHttpRequest? See:
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError("Network request failed"));
+          };
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
+          xhr.send(null);
+    });
+    const fileRef = ref(getStorage(app), `produk/${filename}`);
+    const result = await uploadBytes(fileRef, blob);
+    
+    // We're done with the blob, close and release it
+    blob.close();
+    
+    return await getDownloadURL(fileRef);
   } catch (err) {
     Alert.alert('Ada error pada foto produk!', err.message);
   }
 }
 
+// API 5: uploadProdukUtama
+// BUAT PRODUK UTAMA BARU
+// SEBELUMNYA UPLOAD IMAGE DULU
 
 export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan, kategori) => {
-  const urlgambar = await uploadgambar(image);
+  const urlgambar = await uploadgambarasync(image);
   
   const auth = getAuth();
   const db = getFirestore(app);
