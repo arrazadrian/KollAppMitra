@@ -12,8 +12,8 @@ const ListProduk = ({item}) => {
   
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
-      nama: item.nama,
-      deskripsi: item.deskripsi,
+      namaproduk: item.namaproduk,
+      deskproduk: item.deskproduk,
       image: item.image,
       harga: item.harga,
       satuan: item.satuan,
@@ -23,8 +23,8 @@ const ListProduk = ({item}) => {
   
   const pindahEdit = () => {
     navigation.navigate('EditProdukScreen', { 
-      nama: item.nama,
-      deskripsi: item.deskripsi,
+      namaproduk: item.namaproduk,
+      deskproduk: item.deskproduk,
       image: item.image,
       harga: item.harga,
       satuan: item.satuan,
@@ -39,7 +39,7 @@ const ListProduk = ({item}) => {
        onPress={pindahDetail}
        style={styles.container}>
           <View>
-              <Image source={item.image} style={styles.gambar} />
+              <Image source={{uri:item.image}} style={styles.gambar} />
           </View>
           <View>
               <Text 
@@ -49,7 +49,7 @@ const ListProduk = ({item}) => {
               <Text 
               style={{fontSize:16}}
               numberOfLines={1}
-              >{item.nama}</Text> 
+              >{item.namaproduk}</Text> 
               <Text>{item.kuantitas} {item.satuan}</Text> 
           </View>
           <View style={{position:'absolute', right:10, bottom:10}}>

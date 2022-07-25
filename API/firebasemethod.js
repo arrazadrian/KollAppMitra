@@ -126,3 +126,36 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
     console.log('Something went wrong with added product to firestore.', error);
   });
 }
+
+// API 6: uploadProdukPre
+// BUAT PRODUK UTAMA BARU
+// SEBELUMNYA UPLOAD IMAGE DULU
+
+export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuantitas, satuan, kategori) => {
+  const urlgambar = await uploadgambarasync(image);
+  
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const colRef = collection(docRef, "produk")
+  addDoc(colRef, {
+    jenis:'Produk pre-order',
+    namaproduk: namaproduk,
+    deskproduk: deskproduk,
+    image: urlgambar,
+    harga: harga,
+    kuantitas: kuantitas,
+    satuan: satuan,
+    kategori: kategori,
+    pemilik: auth.currentUser.uid,
+  })
+  .then(() => {
+    Alert.alert(
+      'Produk Berhasil Dibuat','Produk masuk daftar produk utama.'
+    );
+  })
+  .catch((error) => {
+    console.log('Something went wrong with added product to firestore.', error);
+  });
+}
+

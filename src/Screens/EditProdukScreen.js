@@ -11,7 +11,7 @@ const EditProdukScreen = ({ navigation, route }) => {
   const [pilsatuan, setPilsatuan] = useState('Pilih Satuan');
   const [pilkategori, setPilkategori] = useState('Pilih Kategori');
   
-  const { nama, deskripsi, image, harga, satuan, kuantitas, kategori } = route.params;
+  const { namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
 
   return (
 <ScrollView style={styles.latar}>
@@ -23,18 +23,18 @@ const EditProdukScreen = ({ navigation, route }) => {
             <Text style={styles.subjudul}>Nama Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
-              value={nama}
+              value={namaproduk}
             />
             <Text style={styles.subjudul}>Deskripsi Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis deskripsi produk dengan jelas"
               multiline={true}
               maxLength={100}
-              value={deskripsi}
+              value={deskproduk}
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={image} style={styles.foto} />
+                <Image source={{uri:image}} style={styles.foto} />
                 <View style={{alignItems:'flex-start'}}>
                 <Text style={styles.deskripsi} 
                 >Foto produk harus sesuai</Text>
@@ -98,13 +98,13 @@ const EditProdukScreen = ({ navigation, route }) => {
             </Picker>
             <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
                 <Pressable style={styles.hapus}>
-                    <Text style={{color:Ijo, fontSize: 18, fontWeight:'bold'}}>Hapus Produk</Text>
+                    <Text style={{color:Ijo, fontSize: 16, fontWeight:'bold'}}>Hapus Produk</Text>
                 </Pressable>
                 <Pressable style={styles.tombol}>
                   <Text
                   style={{
                     color: Putih,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: 'bold',
                     textAlign: 'center'
                   }}
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     tombol:{
         flex: 1,
         backgroundColor: Ijo,
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 10,
         width: '50%',
         alignItems: 'center', 

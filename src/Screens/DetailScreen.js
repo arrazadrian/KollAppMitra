@@ -7,14 +7,14 @@ const { width, height } = Dimensions.get('window')
 
 const DetailScreen = ({ navigation, route }) => {
 
-  const { nama, deskripsi, image, harga, satuan, kuantitas } = route.params;
+  const { namaproduk, deskproduk, image, harga, satuan, kuantitas } = route.params;
 
   return (
     <View style={styles.latar}>
-      <Image source={image} style={styles.gambar}/>
+      <Image source={{uri:image}} style={styles.gambar}/>
       <View style={{marginBottom:2}}>
-        <Text style={styles.subjudul}>{nama}</Text>
-        <Text style={styles.deskripsi}>{deskripsi}</Text>
+        <Text style={styles.subjudul}>{namaproduk}</Text>
+        <Text style={styles.deskripsi}>{deskproduk}</Text>
       </View>
       <View>
         <Text style={{fontSize:20, color:IjoTua, fontWeight:'bold'}}>Rp{harga} | {kuantitas} {satuan}</Text>     

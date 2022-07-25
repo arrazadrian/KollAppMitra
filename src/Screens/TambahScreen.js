@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Alert } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
@@ -6,7 +6,7 @@ import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadgambar, uploadProdukUtama } from '../../API/firebasemethod';
 
-const TambahScreen = () => {
+const TambahScreen = ({navigation}) => {
 
   const [namaproduk, setNamaproduk] = useState('');
   const [deskproduk, setDeskproduk] = useState('');
@@ -31,7 +31,6 @@ const TambahScreen = () => {
     }
     
     return result.uri
-    //console.log(result);
     
   };
 
@@ -66,8 +65,8 @@ const TambahScreen = () => {
         satuan,
         kategori,
       );
-      // navigation.replace('AkunJadiScreen');
-      emptyState();
+      await emptyState();
+      navigation.goBack();
     }
   };
 
@@ -78,20 +77,6 @@ const TambahScreen = () => {
               <Text style={styles.judul}>Produk Utama Baru</Text>
               <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
             </View>
-            <Text style={styles.subjudul}>Nama Produk</Text>
-            <TextInput style={styles.input}
-              placeholder="Tulis nama produk"
-              value={namaproduk}
-              onChangeText={namaproduk => setNamaproduk(namaproduk)}
-            />
-            <Text style={styles.subjudul}>Deskripsi Produk</Text>
-            <TextInput style={styles.input}
-              placeholder="Tulis deskripsi produk dengan jelas"
-              value={deskproduk}
-              onChangeText={deskproduk => setDeskproduk(deskproduk)}
-              multiline={true}
-              maxLength={150}
-            />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
               {image != null ? (
@@ -116,6 +101,20 @@ const TambahScreen = () => {
                     >Pilih Foto</Text>
                 </View>
             </View>
+            <Text style={styles.subjudul}>Nama Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis nama produk"
+              value={namaproduk}
+              onChangeText={namaproduk => setNamaproduk(namaproduk)}
+            />
+            <Text style={styles.subjudul}>Deskripsi Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis deskripsi produk dengan jelas"
+              value={deskproduk}
+              onChangeText={deskproduk => setDeskproduk(deskproduk)}
+              multiline={true}
+              maxLength={150}
+            />
             <Text style={styles.subjudul}>Harga produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis harga produk"
@@ -170,7 +169,7 @@ const TambahScreen = () => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
-            <Pressable style={styles.tombol}>
+            <TouchableOpacity style={styles.tombol}>
               <Text
               onPress={handleTambahProdukUtama}
               style={{
@@ -180,7 +179,7 @@ const TambahScreen = () => {
                 textAlign: 'center'
               }}
               >Tambahkan Produk Utama</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View> 
     </ScrollView>
   )
