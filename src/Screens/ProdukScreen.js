@@ -49,7 +49,6 @@ const ProdukScreen = ({ navigation }) => {
     const fetchProdukUtama = async() => {
       try{
         const list = []; 
-
         const auth = getAuth();
         const db = getFirestore(app);
         const docRef = doc(db, "mitra", auth.currentUser.uid);
@@ -83,7 +82,7 @@ const ProdukScreen = ({ navigation }) => {
       }
     }
     fetchProdukUtama();
-  },[navigation])
+  },[produkutama])
 
   return (
     <View style={styles.latar}>
@@ -103,7 +102,7 @@ const ProdukScreen = ({ navigation }) => {
                   data={produkutama}
                   renderItem= {({item}) => <ListProduk item={item} />}
                   //KEY ADA YG SALAH
-                  keyExtractor={ daftarproduk => daftarproduk.id}
+                  keyExtractor={ item => item.id_produk}
                   ListHeaderComponent= {atasproduk}
                   ListEmptyComponent={kosongproduk}
                   ListFooterComponent={<View style={{height:10}}></View>}

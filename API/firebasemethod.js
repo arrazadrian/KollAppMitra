@@ -10,6 +10,7 @@ import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestor
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 // API 1: registration
