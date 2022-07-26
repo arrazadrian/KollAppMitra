@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, ActivityIndicator } from 'react-native'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
-import { daftarproduk } from '../Data/daftarproduk'
+//import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc } from "firebase/firestore";
 import { app } from '../../Firebase/config';
@@ -44,6 +44,7 @@ const ProdukScreen = ({ navigation }) => {
 
   const[produkutama,setProdukUtama] = useState();
   const[loading, setLoading] = useState(true);
+  const componentMounted = useRef(true);
 
   useEffect(()=>{
     const fetchProdukUtama = async() => {
@@ -71,11 +72,13 @@ const ProdukScreen = ({ navigation }) => {
           });
         });
 
-          setProdukUtama(list);
-
-          if(loading){
-          setLoading(false);
-          }
+        if (componentMounted.current){ // (5) is component still mounted?
+          setProdukUtama(list); // (1) write data to state
+          setLoading(false); // (2) write some value to state
+        }
+        return () => { // This code runs when component is unmounted
+            componentMounted.current = false; // (4) set it to false when we leave the page
+        }
 
       } catch(err){
         console.log(err);
@@ -101,7 +104,6 @@ const ProdukScreen = ({ navigation }) => {
                   columnWrapperStyle={{justifyContent:'space-around'}}
                   data={produkutama}
                   renderItem= {({item}) => <ListProduk item={item} />}
-                  //KEY ADA YG SALAH
                   keyExtractor={ item => item.id_produk}
                   ListHeaderComponent= {atasproduk}
                   ListEmptyComponent={kosongproduk}
