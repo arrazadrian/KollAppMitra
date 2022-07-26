@@ -59,9 +59,9 @@ const ProdukScreen = ({ navigation }) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          const {id_produk, image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
           list.push({
-            id_produk,
+            id: doc.id,
             namaproduk,
             deskproduk,
             image,
@@ -104,7 +104,7 @@ const ProdukScreen = ({ navigation }) => {
                   columnWrapperStyle={{justifyContent:'space-around'}}
                   data={produkutama}
                   renderItem= {({item}) => <ListProduk item={item} />}
-                  keyExtractor={ item => item.id_produk}
+                  keyExtractor={ item => item.id}
                   ListHeaderComponent= {atasproduk}
                   ListEmptyComponent={kosongproduk}
                   ListFooterComponent={<View style={{height:10}}></View>}

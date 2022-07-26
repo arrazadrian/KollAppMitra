@@ -10,8 +10,8 @@ import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestor
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
+// import 'react-native-get-random-values';
+// import { v4 as uuidv4 } from 'uuid';
 
 // API 1: registration
 // MEMBUAT AKUN BARU DENGAN EMAIL DAN PASSWORD, 
@@ -109,7 +109,7 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
   addDoc(colRef, {
-    id_produk: uuidv4(),
+    waktudibuat: serverTimestamp(),
     jenis:'Produk utama',
     namaproduk: namaproduk,
     deskproduk: deskproduk,
@@ -142,7 +142,7 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
   addDoc(colRef, {
-    id_produk: uuidv4(),
+    waktudibuat: serverTimestamp(),
     jenis:'Produk pre-order',
     namaproduk: namaproduk,
     deskproduk: deskproduk,
