@@ -109,14 +109,14 @@ const ProdukScreen = ({ navigation }) => {
               />
               </View>
         </View>
+      </View>
+      )}
         <Pressable style={styles.tambah}
               onPress={() => navigation.navigate('TambahScreen')}
               >
               <Text style={{fontSize:35, fontWeight:'bold', color: Putih}}>
               +</Text>
         </Pressable>
-      </View>
-      )}
     </View>
 
   )
