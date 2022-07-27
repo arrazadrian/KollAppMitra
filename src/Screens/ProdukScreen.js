@@ -85,7 +85,7 @@ const ProdukScreen = ({ navigation }) => {
       }
     }
     fetchProdukUtama();
-  },[produkutama])
+  },[])
 
   return (
     <View style={styles.latar}>
