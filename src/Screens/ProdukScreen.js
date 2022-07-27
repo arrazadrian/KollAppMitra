@@ -104,7 +104,7 @@ const ProdukScreen = ({ navigation }) => {
                   columnWrapperStyle={{justifyContent:'space-around'}}
                   data={produkutama}
                   renderItem= {({item}) => <ListProduk item={item} />}
-                  keyExtractor={ item => item.id}
+                  keyExtractor={(item) => item.id}
                   ListHeaderComponent= {atasproduk}
                   ListEmptyComponent={kosongproduk}
                   ListFooterComponent={<View style={{height:10}}></View>}

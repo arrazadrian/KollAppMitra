@@ -6,7 +6,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
    } from "firebase/auth";
-import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp } from 'firebase/firestore/lite';
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
