@@ -6,7 +6,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
    } from "firebase/auth";
-import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore/lite';
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
@@ -174,5 +174,6 @@ export const hapusproduk = (produkid) => {
   const colRef = collection(docRef, "produk")
 
   const docproduk = doc(db, colRef, produkid);
+  const docSnap = await getDoc(docproduk);
 
 }
