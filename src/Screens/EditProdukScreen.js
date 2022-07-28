@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
+import { hapusproduk } from '../../API/firebasemethod';
 
 const { width, height } = Dimensions.get('window')
 
@@ -13,8 +14,7 @@ const EditProdukScreen = ({ navigation, route }) => {
   
   const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
 
-  function handleDelete(produkid){
-    const dokumen = produkid;
+  const handleDelete = async () => {
     Alert.alert(
       'Anda ingin hapus produk in?',
       'Data produk akan dihapus permanen.',
@@ -26,7 +26,7 @@ const EditProdukScreen = ({ navigation, route }) => {
         },
         {
           text: 'Ya',
-          onPress: () => console.log(dokumen),
+          onPress: () => hapusproduk(produkid),
         },
       ],
 
@@ -117,11 +117,11 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
             <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
-                <Pressable style={styles.hapus}
-                onPress={handleDelete(produkid)}
-                >
-                    <Text style={{color:Ijo, fontSize: 16, fontWeight:'bold'}}>Hapus Produk</Text>
-                </Pressable>
+                <View style={styles.hapus}>
+                    <Text style={{color:Ijo, fontSize: 16, fontWeight:'bold'}}
+                     onPress={handleDelete}
+                    >Hapus Produk</Text>
+                </View>
                 <Pressable style={styles.tombol}>
                   <Text
                   style={{

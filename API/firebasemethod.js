@@ -163,3 +163,16 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
   });
 }
 
+// API 7: hapusproduk
+// HAPUS PRODUK JENIS APAPUN
+
+export const hapusproduk = (produkid) => {
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const colRef = collection(docRef, "produk")
+
+  const docproduk = doc(db, colRef, produkid);
+
+}
