@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Dimensions, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
@@ -11,7 +11,27 @@ const EditProdukScreen = ({ navigation, route }) => {
   const [pilsatuan, setPilsatuan] = useState('Pilih Satuan');
   const [pilkategori, setPilkategori] = useState('Pilih Kategori');
   
-  const { namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
+  const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
+
+  function handleDelete(produkid){
+    const dokumen = produkid;
+    Alert.alert(
+      'Anda ingin hapus produk in?',
+      'Data produk akan dihapus permanen.',
+      [
+        {
+          text: 'Tidak',
+          onPress: () => console.log('Tidak dipilih'),
+          style: 'cancel',
+        },
+        {
+          text: 'Ya',
+          onPress: () => console.log(dokumen),
+        },
+      ],
+
+    );
+  };
 
   return (
 <ScrollView style={styles.latar}>
@@ -97,7 +117,9 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
             <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
-                <Pressable style={styles.hapus}>
+                <Pressable style={styles.hapus}
+                onPress={handleDelete(produkid)}
+                >
                     <Text style={{color:Ijo, fontSize: 16, fontWeight:'bold'}}>Hapus Produk</Text>
                 </Pressable>
                 <Pressable style={styles.tombol}>

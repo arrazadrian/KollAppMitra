@@ -23,6 +23,7 @@ const ListProduk = ({item}) => {
   
   const pindahEdit = () => {
     navigation.navigate('EditProdukScreen', { 
+      produkid: item.id,
       namaproduk: item.namaproduk,
       deskproduk: item.deskproduk,
       image: item.image,
