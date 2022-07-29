@@ -1,13 +1,75 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
+import { uploadProdukPre } from '../../API/firebasemethod';
 
 
-const TambahPreScreen = () => {
+const TambahPreScreen = ({navigation}) => {
 
-  const [kategori, setKategori] = useState('Pilih Kategori');
+  const [namaproduk, setNamaproduk] = useState('');
+  const [deskproduk, setDeskproduk] = useState('');
+  const [image, setImage] = useState();
+  const [harga, setHarga] = useState('');
+  const [kuantitas, setKuantitas] = useState('');
+  const [satuan, setSatuan] = useState('g');
+  const [kategori, setKategori] = useState('Sayuran');
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      console.log(result.uri);
+    }
+    
+    return result.uri
+    
+  };
+
+  const emptyState = () => {
+    setNamaproduk('');
+    setDeskproduk('');
+    setImage();
+    setHarga('');
+    setKuantitas('');
+    setSatuan('g');
+    setKategori('Sayuran');
+  };
+
+  const handleTambahProdukPre = async () =>{
+    if (!namaproduk) {
+      Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuai.');
+    } else if (!deskproduk) {
+      Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
+    } else if (!image) {
+      Alert.alert('Foto belum dipilih','Pilih foto produk yang jelas.');
+    } else if (!harga) {
+      Alert.alert('Harga masih kosong','Isi harga produk dengan benar.');
+    } else if (!kuantitas) {
+      Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
+    }else {
+      await uploadProdukPre(
+        namaproduk,
+        deskproduk,
+        image,
+        harga,
+        kuantitas,
+        satuan,
+        kategori,
+      );
+      await emptyState();
+      navigation.goBack();
+    }
+  };
 
   return (
     <ScrollView style={styles.latar}>
@@ -16,23 +78,22 @@ const TambahPreScreen = () => {
               <Text style={styles.judul}>Produk Pre-Order Baru</Text>
               <Text style={styles.deskripsi}>Beri detail produk sebaik mungkin</Text>
             </View>
-            <Text style={styles.subjudul}>Nama Produk</Text>
-            <TextInput style={styles.input}
-              placeholder="Tulis nama produk"
-            />
-            <Text style={styles.subjudul}>Deskripsi Produk</Text>
-            <TextInput style={styles.input}
-              placeholder="Tulis deskripsi produk dengan jelas"
-              multiline={true}
-              maxLength={150}
-            />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={DPdefault} style={styles.foto} />
+            {image != null ? (
+                <Image 
+                source={{uri: image}} 
+                style={styles.foto} />
+              ):(
+                <Image 
+                source={DPdefault} 
+                style={styles.fotodefault} />
+              )} 
                 <View>
                     <Text style={styles.deskripsi} 
                     >Foto produk harus jelas</Text>
                     <Text 
+                      onPress={pickImage}
                       style={{
                       fontWeight:'bold', 
                       textDecorationLine:'underline',
@@ -41,10 +102,26 @@ const TambahPreScreen = () => {
                     >Ganti Foto</Text>
                 </View>
             </View>
+            <Text style={styles.subjudul}>Nama Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis nama produk"
+              value={namaproduk}
+              onChangeText={namaproduk => setNamaproduk(namaproduk)}
+            />
+            <Text style={styles.subjudul}>Deskripsi Produk</Text>
+            <TextInput style={styles.input}
+              placeholder="Tulis deskripsi produk dengan jelas"
+              value={deskproduk}
+              onChangeText={deskproduk => setDeskproduk(deskproduk)}
+              multiline={true}
+              maxLength={150}
+            />
             <Text style={styles.subjudul}>Harga produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis harga produk"
               keyboardType='numeric'
+              value={harga}
+              onChangeText={harga => setHarga(harga)}
             />
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <View>
@@ -52,6 +129,8 @@ const TambahPreScreen = () => {
                     <TextInput style={styles.input}
                       placeholder="Banyaknya produk"
                       keyboardType='numeric'
+                      value={kuantitas}
+                      onChangeText={kuantitas => setKuantitas(kuantitas)}
                     />
               </View>
               <View>
@@ -59,15 +138,18 @@ const TambahPreScreen = () => {
                     <Picker
                       mode='dropdown'
                       style={{backgroundColor: Putih, width: 140}}
-                      selectedValue={kategori}
+                      selectedValue={satuan}
                       onValueChange={(itemValue, itemIndex) =>
-                        setKategori(itemValue)
+                      setSatuan(itemValue)
                       }>
                       <Picker.Item label="gram" value="g" />
                       <Picker.Item label="kilogram" value="kg" />
                       <Picker.Item label="ons" value="ons" />
                       <Picker.Item label="ikat" value="ikat" />
                       <Picker.Item label="lembar" value="lembar" />
+                      <Picker.Item label="bungkus" value="bungkus" />
+                      <Picker.Item label="buah" value="buah" />
+                      <Picker.Item label="liter" value="liter" />
                     </Picker>
               </View>
             </View>
@@ -77,7 +159,7 @@ const TambahPreScreen = () => {
               style={{backgroundColor: Putih}}
               selectedValue={kategori}
               onValueChange={(itemValue, itemIndex) =>
-                setKategori(itemValue)
+              setKategori(itemValue)
               }>
               <Picker.Item label="Sayuran" value="Sayuran" />
               <Picker.Item label="Produk Laut" value="Produk Laut" />
@@ -89,7 +171,8 @@ const TambahPreScreen = () => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
-            <Pressable style={styles.tombol}>
+            <TouchableOpacity style={styles.tombol}
+              onPress={handleTambahProdukPre}>
               <Text
               style={{
                 color: Ijo,
@@ -98,7 +181,7 @@ const TambahPreScreen = () => {
                 textAlign: 'center'
               }}
               >Tambahkan Produk Pre-Order</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View> 
     </ScrollView>
   )
@@ -143,6 +226,13 @@ const styles = StyleSheet.create({
         width: 100,
         marginRight: 10,
     },
+    fotodefault:{
+      backgroundColor: Putih,
+      borderRadius: 10,
+      height: 50,
+      width: 50,
+      marginRight: 10,
+  },
     gantifoto:{
       marginBottom: 10, 
       flexDirection:'row',
@@ -150,7 +240,6 @@ const styles = StyleSheet.create({
     },
     input:{
       backgroundColor: Putih,
-      //borderRadius: 10,
       fontSize: 16,
       padding: 10,
       marginBottom: 10,

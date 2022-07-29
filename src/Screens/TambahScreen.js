@@ -4,7 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadgambar, uploadProdukUtama } from '../../API/firebasemethod';
+import { uploadProdukUtama } from '../../API/firebasemethod';
 
 const TambahScreen = ({navigation}) => {
 
@@ -139,7 +139,7 @@ const TambahScreen = ({navigation}) => {
                       style={{backgroundColor: Putih, width: 140}}
                       selectedValue={satuan}
                       onValueChange={(itemValue, itemIndex) =>
-                        setSatuan(itemValue)
+                      setSatuan(itemValue)
                       }>
                       <Picker.Item label="gram" value="g"  />
                       <Picker.Item label="kilogram" value="kg" />
@@ -148,6 +148,7 @@ const TambahScreen = ({navigation}) => {
                       <Picker.Item label="lembar" value="lembar" />
                       <Picker.Item label="bungkus" value="bungkus" />
                       <Picker.Item label="buah" value="buah" />
+                      <Picker.Item label="liter" value="liter" />
                     </Picker>
               </View>
             </View>
@@ -157,7 +158,7 @@ const TambahScreen = ({navigation}) => {
               style={{backgroundColor: Putih}}
               selectedValue={kategori}
               onValueChange={(itemValue, itemIndex) =>
-                setKategori(itemValue)
+              setKategori(itemValue)
               }>
               <Picker.Item label="Sayuran" value="Sayuran" />
               <Picker.Item label="Produk Laut" value="Produk Laut" />
@@ -169,9 +170,9 @@ const TambahScreen = ({navigation}) => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
-            <TouchableOpacity style={styles.tombol}>
+            <TouchableOpacity style={styles.tombol}
+              onPress={handleTambahProdukUtama}>
               <Text
-              onPress={handleTambahProdukUtama}
               style={{
                 color: Ijo,
                 fontSize: 20,

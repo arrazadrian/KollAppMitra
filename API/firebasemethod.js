@@ -6,12 +6,20 @@ import {
     signInWithEmailAndPassword,
     signOut,
    } from "firebase/auth";
-import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore/lite';
-import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
+import { 
+  getFirestore, collection, 
+  addDoc, setDoc, doc, 
+  serverTimestamp, 
+  deleteDoc, getDoc,
+  } from 'firebase/firestore/lite';
+import { 
+  getStorage, ref, 
+  getDownloadURL, uploadBytes, 
+  deleteObject
+  } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
-// import 'react-native-get-random-values';
-// import { v4 as uuidv4 } from 'uuid';
+
 
 // API 1: registration
 // MEMBUAT AKUN BARU DENGAN EMAIL DAN PASSWORD, 
@@ -155,25 +163,45 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
   })
   .then(() => {
     Alert.alert(
-      'Produk Berhasil Dibuat','Produk masuk daftar produk utama.'
+      'Produk Berhasil Dibuat','Produk masuk daftar produk pre-order.'
     );
   })
   .catch((error) => {
-    console.log('Something went wrong with added product to firestore.', error);
+    console.log('Ada yg salah saat menambahkan produk di firestore.', error);
   });
 }
 
 // API 7: hapusproduk
-// HAPUS PRODUK JENIS APAPUN
+// HAPUS PRODUK JENIS APAPUN 
+// DI FIRESTORE BESERTA FOTO DI STORAGE
 
-export const hapusproduk = (produkid) => {
+export async function hapusproduk (produkid){
 
   const auth = getAuth();
   const db = getFirestore(app);
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
-
-  const docproduk = doc(db, colRef, produkid);
-  const docSnap = await getDoc(docproduk);
-
+  const storage = getStorage();
+  
+  const docrefproduk = doc(colRef, produkid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      const imgURL =  docSnap.data().image;
+      const storageRef = ref(storage, imgURL);
+      try{
+        deleteObject(storageRef);
+        deleteDoc(docrefproduk);
+        Alert.alert(
+          'Produk Berhasil Dihapus','Produk sudah tidak masuk daftar produk.'
+        );
+      } catch (err) {
+        Alert.alert('Ada error untuk menghapus produk!', err.message);
+      }
+      navigation.goBack();
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+  
 }

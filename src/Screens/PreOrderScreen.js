@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View, Pressable, FlatList, Dimensions } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Pressable, FlatList, Dimensions, ActivityIndicator } from 'react-native'
+import React, {useEffect, useState, useRef} from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
 import { daftarpreproduk } from '../Data/daftarpreproduk'
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
+import { app } from '../../Firebase/config';
 
 const { width, height } = Dimensions.get('window')
 
@@ -38,24 +41,77 @@ const ataspre = () => {
 }
 
 const PreOrderScreen = ({navigation}) => {
+
+  const[produkpreorder,setProdukpreorder] = useState();
+  const[loading, setLoading] = useState(true);
+  const componentMounted = useRef(true);
+
+  useEffect(()=>{
+    const fetchProdukPreOrder = async() => {
+      try{
+        const list = []; 
+        const auth = getAuth();
+        const db = getFirestore(app);
+        const docRef = doc(db, "mitra", auth.currentUser.uid);
+        const colRef = collection(docRef, "produk")
+
+        const q = query(colRef, where("jenis", "==", "Produk pre-order"), orderBy("waktudibuat","desc"));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+          list.push({
+            id: doc.id,
+            namaproduk,
+            deskproduk,
+            image,
+            harga,
+            kuantitas,
+            satuan,
+            kategori,
+          });
+        });
+
+        if (componentMounted.current){ // (5) is component still mounted?
+          setProdukpreorder(list); // (1) write data to state
+          setLoading(false); // (2) write some value to state
+        }
+        return () => { // This code runs when component is unmounted
+            componentMounted.current = false; // (4) set it to false when we leave the page
+        }
+
+      } catch(err){
+        console.log(err);
+      }
+    }
+    fetchProdukPreOrder();
+  },[])
+
+
   return (
     <View style={styles.latar}>
+      {loading ? (
+        <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
+          <ActivityIndicator size="large" color={IjoTua}/>
+        </View>
+      ):(
      <View>
       <View>
        <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom:80}} 
           numColumns={3}
-          columnWrapperStyle={{justifyContent:'space-between'}}
-          data={daftarpreproduk}
+          columnWrapperStyle={{justifyContent:'space-around'}}
+          data={produkpreorder}
           renderItem= {({item}) => <ListProduk item={item} />}
-          keyExtractor={ daftarpreproduk => daftarpreproduk.id}
+          keyExtractor={ item => item.id}
           ListHeaderComponent={ataspre}
           ListEmptyComponent={kosongpre}
           ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>
       </View>
+      )}
     <Pressable style={styles.tambah}
           onPress={() => navigation.navigate('TambahPreScreen')}
           >

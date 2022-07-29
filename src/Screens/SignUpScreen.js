@@ -50,7 +50,6 @@ const SignUpScreen = () => {
         namatoko,
         phone,
       );
-      // navigation.replace('AkunJadiScreen');
       emptyState();
     }
   };
