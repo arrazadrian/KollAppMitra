@@ -11,7 +11,7 @@ import {
   getFirestore, collection, 
   addDoc, setDoc, doc, 
   serverTimestamp, 
-  deleteDoc, getDoc,
+  deleteDoc, getDoc, updateDoc,
   } from 'firebase/firestore/lite';
 import { 
   getStorage, ref, 
