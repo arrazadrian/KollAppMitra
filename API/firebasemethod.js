@@ -209,7 +209,8 @@ export async function hapusproduk (produkid){
 // PERBARUI DATA PRODUK
 // DI FIRESTORE BESERTA FOTO DI STORAGE
 
-export async function updateproduk (produkid){
+export async function updateproduk (produkid, namaprodukbaru, deskprodukbaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
+  //const urlgambarbaru = await uploadgambarasync(imagebaru);
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -223,16 +224,14 @@ export async function updateproduk (produkid){
       const imgURL =  docSnap.data().image;
       const storageRef = ref(storage, imgURL);
       try{
-        //deleteObject(storageRef);
-        await updateDoc(docrefproduk, {
+        updateDoc(docrefproduk, {
           waktudibuat: serverTimestamp(),
-          namaproduk: namaproduk,
-          deskproduk: deskproduk,
-          image: urlgambar,
-          harga: harga,
-          kuantitas: kuantitas,
-          satuan: satuan,
-          kategori: kategori,
+          namaproduk: namaprodukbaru,
+          deskproduk: deskprodukbaru,
+          harga: hargabaru,
+          kuantitas: kuantitasbaru,
+          satuan: satuanbaru,
+          kategori: kategoribaru,
           pemilik: auth.currentUser.uid,
         });
         Alert.alert(

@@ -99,7 +99,7 @@ const TambahPreScreen = ({navigation}) => {
                       textDecorationLine:'underline',
                       color:Ijo,
                       fontSize: 18,}} 
-                    >Ganti Foto</Text>
+                    >Pilih Foto</Text>
                 </View>
             </View>
             <Text style={styles.subjudul}>Nama Produk</Text>
