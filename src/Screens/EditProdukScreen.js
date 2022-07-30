@@ -2,21 +2,16 @@ import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Dimens
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
-import { useNavigation } from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 import { hapusproduk } from '../../API/firebasemethod';
+import { async } from '@firebase/util';
 
 const { width, height } = Dimensions.get('window')
 
-const EditProdukScreen = ({ route }) => {
-
-  const navigation = useNavigation();
-
-  const [pilsatuan, setPilsatuan] = useState('Pilih Satuan');
-  const [pilkategori, setPilkategori] = useState('Pilih Kategori');
+const EditProdukScreen = ({ navigation, route }) => {
   
   const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
-
+  
   const handleDelete = async () => {
     Alert.alert(
       'Anda ingin hapus produk in?',
@@ -30,21 +25,20 @@ const EditProdukScreen = ({ route }) => {
         {
           text: 'Ya',
           // onPress: () => console.log(produkid),
-          onPress: handleHapusProduk,
+          onPress: () => {
+            hapusproduk(produkid);
+            navigation.goBack();
+          },
         },
       ],
 
     );
   };
 
-  const handleHapusProduk = async ({navigation}) =>{
-    try{
-    await hapusproduk(produkid);
-    navigation.goBack();    
-    } catch (err) {
-      Alert.alert('Ada error pada awal menghapus produk!', err.message);
-    }
-  }
+  // const handleHapusProduk = async ({navigation}) => {
+  //   hapusproduk(produkid);
+  //   navigation.goBack();    
+  // }
 
   return (
 <ScrollView style={styles.latar}>
@@ -104,10 +98,14 @@ const EditProdukScreen = ({ route }) => {
                       onValueChange={(itemValue, itemIndex) =>
                         setPilsatuan(itemValue)
                       }>
-                      <Picker.Item label="gram" value="g" />
+                      <Picker.Item label="gram" value="g"  />
                       <Picker.Item label="kilogram" value="kg" />
                       <Picker.Item label="ons" value="ons" />
                       <Picker.Item label="ikat" value="ikat" />
+                      <Picker.Item label="lembar" value="lembar" />
+                      <Picker.Item label="bungkus" value="bungkus" />
+                      <Picker.Item label="buah" value="buah" />
+                      <Picker.Item label="liter" value="liter" />
                     </Picker>
               </View>
             </View>

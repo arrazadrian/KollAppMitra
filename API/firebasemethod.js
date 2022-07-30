@@ -1,4 +1,5 @@
 import firebase from "firebase/compat/app";
+import { useNavigation } from '@react-navigation/native';
 import { 
     getAuth, 
     onAuthStateChanged, 
@@ -197,7 +198,6 @@ export async function hapusproduk (produkid){
       } catch (err) {
         Alert.alert('Ada error untuk menghapus produk!', err.message);
       }
-      navigation.goBack();
     } else {
       // doc.data() will be undefined in this case
       console.log("Tidak ada dokumen tersebut!");
