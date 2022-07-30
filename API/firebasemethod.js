@@ -43,7 +43,7 @@ export async function registration(email, password, namalengkap, namatoko, phone
   } catch (err) {
     Alert.alert("Ada error membuat akun mitra!", err.message);
   }
-}
+};
 
 // API 2: signIn
 // MELAKUKAN LOGIN DENGAN EMAIL DAN PASSWORD,
@@ -56,7 +56,7 @@ export async function signIn(email, password) {
   } catch (err) {
     Alert.alert("User tidak ditemukan!", "Salah menulis email/kata sandi.");
     }
-}
+};
 
 // API 3: handleSignOut
 // KELUAR DARI DALAM AKUN YG SEDANG LOGIN,
@@ -69,7 +69,7 @@ export async function handleSignOut() {
   } catch (err) {
     Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
   }
-}
+};
 
 // API 4: uploadgambarasync
 // UPLOAD IMAGE YANG DIOPER KE
@@ -104,7 +104,7 @@ async function uploadgambarasync(uri) {
   } catch (err) {
     Alert.alert('Ada error pada foto produk!', err.message);
   }
-}
+};
 
 // API 5: uploadProdukUtama
 // BUAT PRODUK UTAMA BARU
@@ -137,7 +137,7 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
   .catch((error) => {
     console.log('Something went wrong with added product to firestore.', error);
   });
-}
+};
 
 // API 6: uploadProdukPre
 // BUAT PRODUK UTAMA BARU
@@ -170,7 +170,7 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
   .catch((error) => {
     console.log('Ada yg salah saat menambahkan produk di firestore.', error);
   });
-}
+};
 
 // API 7: hapusproduk
 // HAPUS PRODUK JENIS APAPUN 
@@ -203,5 +203,47 @@ export async function hapusproduk (produkid){
       console.log("Tidak ada dokumen tersebut!");
     }
   })
+};
+
+// API 8: updateproduk
+// PERBARUI DATA PRODUK
+// DI FIRESTORE BESERTA FOTO DI STORAGE
+
+export async function updateproduk (produkid){
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const colRef = collection(docRef, "produk")
+  const storage = getStorage();
   
-}
+  const docrefproduk = doc(colRef, produkid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      const imgURL =  docSnap.data().image;
+      const storageRef = ref(storage, imgURL);
+      try{
+        //deleteObject(storageRef);
+        await updateDoc(docrefproduk, {
+          waktudibuat: serverTimestamp(),
+          namaproduk: namaproduk,
+          deskproduk: deskproduk,
+          image: urlgambar,
+          harga: harga,
+          kuantitas: kuantitas,
+          satuan: satuan,
+          kategori: kategori,
+          pemilik: auth.currentUser.uid,
+        });
+        Alert.alert(
+          'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'
+        );
+      } catch (err) {
+        Alert.alert('Ada error untuk memperbarui produk!', err.message);
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+};

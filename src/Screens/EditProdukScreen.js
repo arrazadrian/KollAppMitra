@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Pressable, Dimensions, Alert } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Dimensions, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
@@ -46,13 +46,15 @@ const EditProdukScreen = ({ navigation, route }) => {
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
               value={namaproduk}
+              onChangeText={namaproduk => setNamaproduk(namaproduk)}
             />
             <Text style={styles.subjudul}>Deskripsi Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis deskripsi produk dengan jelas"
               multiline={true}
-              maxLength={100}
+              maxLength={150}
               value={deskproduk}
+              onChangeText={deskproduk => setDeskproduk(deskproduk)}
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
@@ -74,6 +76,7 @@ const EditProdukScreen = ({ navigation, route }) => {
               placeholder="Tulis harga produk"
               keyboardType='numeric'
               value={harga}
+              onChangeText={harga => setHarga(harga)}
             />
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <View>
@@ -82,6 +85,7 @@ const EditProdukScreen = ({ navigation, route }) => {
                       placeholder="Banyaknya produk"
                       keyboardType='numeric'
                       value={kuantitas}
+                      onChangeText={kuantitas => setKuantitas(kuantitas)}
                     />
               </View>
               <View>
@@ -128,7 +132,7 @@ const EditProdukScreen = ({ navigation, route }) => {
                      onPress={handleDelete}
                     >Hapus Produk</Text>
                 </View>
-                <Pressable style={styles.tombol}>
+                <TouchableOpacity style={styles.tombol}>
                   <Text
                   style={{
                     color: Putih,
@@ -137,7 +141,7 @@ const EditProdukScreen = ({ navigation, route }) => {
                     textAlign: 'center'
                   }}
                   >Perbarui Produk</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
           </View> 
     </ScrollView>
