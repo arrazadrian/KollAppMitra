@@ -35,11 +35,6 @@ const EditProdukScreen = ({ navigation, route }) => {
     );
   };
 
-  // const handleHapusProduk = async ({navigation}) => {
-  //   hapusproduk(produkid);
-  //   navigation.goBack();    
-  // }
-
   return (
 <ScrollView style={styles.latar}>
           <View style={styles.container}>
