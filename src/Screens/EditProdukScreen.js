@@ -11,7 +11,33 @@ const { width, height } = Dimensions.get('window')
 const EditProdukScreen = ({ navigation, route }) => {
   
   const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
+
+  const [namaprodukbaru, setNamaprodukbaru] = useState(namaproduk);
+  const [deskprodukbaru, setDeskprodukbaru] = useState(deskproduk);
+  const [imagebaru, setImagebaru] = useState(image);
+  const [hargabaru, setHargabaru] = useState(harga);
+  const [kuantitasbaru, setKuantitasbaru] = useState(satuan);
+  const [satuanbaru, setSatuanbaru] = useState(kuantitas);
+  const [kategoribaru, setKategoribaru] = useState(kategori);
   
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImagebaru(result.uri);
+      console.log(result.uri);
+    }
+    
+    return result.uri
+    
+  };
+
   const handleDelete = async () => {
     Alert.alert(
       'Anda ingin hapus produk in?',
@@ -45,29 +71,30 @@ const EditProdukScreen = ({ navigation, route }) => {
             <Text style={styles.subjudul}>Nama Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis nama produk"
-              value={namaproduk}
-              onChangeText={namaproduk => setNamaproduk(namaproduk)}
+              value={namaprodukbaru}
+              onChangeText={namaprodukbaru => setNamaprodukbaru(namaprodukbaru)}
             />
             <Text style={styles.subjudul}>Deskripsi Produk</Text>
             <TextInput style={styles.input}
               placeholder="Tulis deskripsi produk dengan jelas"
               multiline={true}
               maxLength={150}
-              value={deskproduk}
-              onChangeText={deskproduk => setDeskproduk(deskproduk)}
+              value={deskprodukbaru}
+              onChangeText={deskprodukbaru => setDeskprodukbaru(deskprodukbaru)}
             />
             <Text style={styles.subjudul}>Foto Produk</Text>
             <View style={styles.gantifoto}>
-                <Image source={{uri:image}} style={styles.foto} />
+                <Image source={{uri:imagebaru}} style={styles.foto} />
                 <View style={{alignItems:'flex-start'}}>
                 <Text style={styles.deskripsi} 
                 >Foto produk harus sesuai</Text>
                 <Text 
+                onPress={pickImage}
                 style={{
                   fontWeight:'bold', 
                   textDecorationLine:'underline',
                   color:Ijo,
-                  fontSize: 18,}} 
+                  fontSize: 18}} 
                 >Ganti Foto</Text>
                 </View>
             </View>
@@ -75,8 +102,8 @@ const EditProdukScreen = ({ navigation, route }) => {
             <TextInput style={styles.input}
               placeholder="Tulis harga produk"
               keyboardType='numeric'
-              value={harga}
-              onChangeText={harga => setHarga(harga)}
+              value={hargabaru}
+              onChangeText={hargabaru => setHargabaru(hargabaru)}
             />
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <View>
@@ -84,8 +111,8 @@ const EditProdukScreen = ({ navigation, route }) => {
                     <TextInput style={styles.input}
                       placeholder="Banyaknya produk"
                       keyboardType='numeric'
-                      value={kuantitas}
-                      onChangeText={kuantitas => setKuantitas(kuantitas)}
+                      value={kuantitasbaru}
+                      onChangeText={kuantitasbaru => setKuantitasbaru(kuantitasbaru)}
                     />
               </View>
               <View>
@@ -93,9 +120,9 @@ const EditProdukScreen = ({ navigation, route }) => {
                     <Picker
                       mode='dropdown'
                       style={{backgroundColor: Putih, width: 140}}
-                      selectedValue={satuan}
+                      selectedValue={satuanbaru}
                       onValueChange={(itemValue, itemIndex) =>
-                        setPilsatuan(itemValue)
+                        setSatuanbaru(itemValue)
                       }>
                       <Picker.Item label="gram" value="g"  />
                       <Picker.Item label="kilogram" value="kg" />
@@ -112,9 +139,9 @@ const EditProdukScreen = ({ navigation, route }) => {
             <Picker
               mode='dropdown'
               style={{backgroundColor: Putih}}
-              selectedValue={kategori}
+              selectedValue={kategoribaru}
               onValueChange={(itemValue, itemIndex) =>
-                setPilkategori(itemValue)
+                setKategoribaru(itemValue)
               }>
               <Picker.Item label="Sayuran" value="Sayuran" />
               <Picker.Item label="Produk Laut" value="Produk Laut" />

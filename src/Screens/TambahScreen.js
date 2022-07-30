@@ -97,7 +97,7 @@ const TambahScreen = ({navigation}) => {
                       fontWeight:'bold', 
                       textDecorationLine:'underline',
                       color:Ijo,
-                      fontSize: 18,}} 
+                      fontSize: 18}} 
                     >Pilih Foto</Text>
                 </View>
             </View>
