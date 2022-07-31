@@ -12,11 +12,11 @@ const RiwayatCard = ({ navigation }) => {
       <Image source={DPkartu} style={styles.foto} />
       <View>
         <Text
-        style={{fontSize:20, fontWeight:'bold', color:IjoTua}}
+        style={{fontSize:18, fontWeight:'bold', color:IjoTua}}
         >
             Sayur Aa Anri
         </Text>
-        <Text style={{fontSize:18, color:Ijo}}>
+        <Text style={{fontSize:16, color:Ijo}}>
             <Text>Rp</Text>
             <Text>34.000</Text>
             <Text> | </Text>
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     foto:{
-        width: 100,
-        height: 100,
-        borderRadius: 20,
+        width: 80,
+        height: 80,
+        borderRadius: 10,
         margin: 10,
     }
 })

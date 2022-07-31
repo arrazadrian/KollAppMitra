@@ -4,7 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { hapusproduk, updateproduk } from '../../API/firebasemethod';
+import { hapusproduk, updateprodukTanpafoto, updateprodukDenganfoto } from '../../API/firebasemethod';
 
 
 const { width, height } = Dimensions.get('window')
@@ -21,6 +21,7 @@ const EditProdukScreen = ({ navigation, route }) => {
   const [satuanbaru, setSatuanbaru] = useState(satuan);
   const [kategoribaru, setKategoribaru] = useState(kategori);
   
+  const imagelama = image;
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -41,25 +42,49 @@ const EditProdukScreen = ({ navigation, route }) => {
   };
 
   const handleperbaruiproduk = async () =>{
-    if (!namaprodukbaru) {
-      Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuai.');
-    } else if (!deskprodukbaru) {
-      Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
-    } else if (!hargabaru) {
-      Alert.alert('Harga masih kosong','Isi harga produk dengan benar.');
-    } else if (!kuantitasbaru) {
-      Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
-    }else {
-      await updateproduk(
-        produkid,
-        namaprodukbaru,
-        deskprodukbaru,
-        hargabaru,
-        kuantitasbaru,
-        satuanbaru,
-        kategoribaru,
-      );
-      navigation.goBack();
+    if (imagebaru == imagelama){
+        if (!namaprodukbaru) {
+          Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuai.');
+        } else if (!deskprodukbaru) {
+          Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
+        } else if (!hargabaru) {
+          Alert.alert('Harga masih kosong','Isi harga produk dengan benar.');
+        } else if (!kuantitasbaru) {
+          Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
+        }else {
+          await updateprodukTanpafoto(
+            produkid,
+            namaprodukbaru,
+            deskprodukbaru,
+            hargabaru,
+            kuantitasbaru,
+            satuanbaru,
+            kategoribaru,
+          );
+          navigation.goBack();
+        };
+    } else {
+      if (!namaprodukbaru) {
+        Alert.alert('Nama produk masih kosong','Isi nama produk yang sesuai.');
+      } else if (!deskprodukbaru) {
+        Alert.alert('Deskripsi masih kosong','Isi deskripsi produk yang sesuai.');
+      } else if (!hargabaru) {
+        Alert.alert('Harga masih kosong','Isi harga produk dengan benar.');
+      } else if (!kuantitasbaru) {
+        Alert.alert('Kuantitas masih kosong','Isi kuantitas produk dengan benar.');
+      }else {
+        await updateprodukDenganfoto(
+          produkid,
+          namaprodukbaru,
+          deskprodukbaru,
+          imagebaru,
+          hargabaru,
+          kuantitasbaru,
+          satuanbaru,
+          kategoribaru,
+        );
+        navigation.goBack();
+      };
     }
   };
 

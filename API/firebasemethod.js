@@ -20,6 +20,7 @@ import {
   } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
+import { ImageBackground } from "react-native-web";
 
 
 // API 1: registration
@@ -205,12 +206,51 @@ export async function hapusproduk (produkid){
   })
 };
 
-// API 8: updateproduk
+// API 8: updateprodukTanpafoto
+// PERBARUI DATA PRODUK
+// DI FIRESTORE TANPA FOTO DI STORAGE
+
+export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodukbaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const colRef = collection(docRef, "produk")
+  const storage = getStorage();
+  
+  const docrefproduk = doc(colRef, produkid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try{
+        updateDoc(docrefproduk, {
+          waktudibuat: serverTimestamp(),
+          namaproduk: namaprodukbaru,
+          deskproduk: deskprodukbaru,
+          harga: hargabaru,
+          kuantitas: kuantitasbaru,
+          satuan: satuanbaru,
+          kategori: kategoribaru,
+          pemilik: auth.currentUser.uid,
+        });
+        Alert.alert(
+          'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'
+        );
+      } catch (err) {
+        Alert.alert('Ada error untuk memperbarui produk!', err.message);
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+};
+
+// API 9: updateprodukDenganfoto
 // PERBARUI DATA PRODUK
 // DI FIRESTORE BESERTA FOTO DI STORAGE
 
-export async function updateproduk (produkid, namaprodukbaru, deskprodukbaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
-  //const urlgambarbaru = await uploadgambarasync(imagebaru);
+export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprodukbaru, imagebaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
+  const urlgambarbaru = await uploadgambarasync(imagebaru);
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -224,10 +264,12 @@ export async function updateproduk (produkid, namaprodukbaru, deskprodukbaru, ha
       const imgURL =  docSnap.data().image;
       const storageRef = ref(storage, imgURL);
       try{
+        deleteObject(storageRef);
         updateDoc(docrefproduk, {
           waktudibuat: serverTimestamp(),
           namaproduk: namaprodukbaru,
           deskproduk: deskprodukbaru,
+          image: urlgambarbaru,
           harga: hargabaru,
           kuantitas: kuantitasbaru,
           satuan: satuanbaru,

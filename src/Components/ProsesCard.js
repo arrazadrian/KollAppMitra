@@ -9,17 +9,17 @@ const ProsesCard = () => {
       <Image source={DPkartu} style={styles.foto} />
       <View>
         <Text
-        style={{fontSize:20, fontWeight:'bold', color:IjoTua}}
+        style={{fontSize:18, fontWeight:'bold', color:IjoTua}}
         >
             Sayur Aa Anri
         </Text>
         <Text
-        style={{fontSize:18, fontWeight:'bold', color:Ijo}}
+        style={{fontSize:16, color:Ijo}}
         >
             Sedang menuju lokasi
         </Text>
         <Text
-        style={{fontSize:18, fontWeight:'bold', color:Ijo}}
+        style={{fontSize:16, color:Ijo}}
         >
             Jl. Merderka Selatan no.19
         </Text>
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     foto:{
-        width: 100,
-        height: 100,
-        borderRadius: 20,
+        width: 80,
+        height: 80,
+        borderRadius: 10,
         margin: 10,
     }
 })

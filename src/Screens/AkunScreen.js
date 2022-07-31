@@ -17,15 +17,15 @@ const AkunScreen = ({ item }) => {
       </View>
       <View style={styles.bungkus}>
             <View style={{borderBottomColor: Ijo, borderBottomWidth: 1, marginBottom: 10 }}>
-              <Text style={{color: Putih, fontSize: 30, fontWeight: 'bold'}}>Profil</Text>
+              <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Profil</Text>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', marginBottom: 10}}>
                 <View style={styles.foto}>
                   <Text>Putuu</Text>
                 </View>
                 <View>
-                    <Text style={{fontSize: 30, fontWeight:'bold', color: Putih,}}>Anri Suroyo</Text>
-                    <Text style={{fontSize: 18,color: Putih,}}>Mitra Pedagang</Text>
+                    <Text style={{fontSize: 20, fontWeight:'bold', color: Putih,}}>Anri Suroyo</Text>
+                    <Text style={{fontSize: 16,color: Putih,}}>Mitra Pedagang</Text>
                     <Pressable  onPress={() => navigation.push('EditScreen')} >
                         <View style={styles.edit}>
                           <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Atur Profil</Text>
@@ -34,20 +34,20 @@ const AkunScreen = ({ item }) => {
                 </View>
             </View>
             <View style={{borderBottomColor: Ijo, borderBottomWidth: 1}}>
-              <Text style={{color: Putih, fontSize: 30, fontWeight: 'bold'}}>Info</Text>
+              <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Info</Text>
             </View>
             <View style={{padding: 15}}>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
-                      <Text style={{color: Putih, fontSize: 20}}>Segar Sayur Pagi</Text>   
+                      <Text style={{color: Putih, fontSize: 18}}>Segar Sayur Pagi</Text>   
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
-                      <Text style={{color: Putih, fontSize: 20}}>0909090909090</Text>   
+                      <Text style={{color: Putih, fontSize: 18}}>0909090909090</Text>   
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10}}>     
                       <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Email</Text> 
-                      <Text style={{color: Putih, fontSize: 20}}>contoh@gmail.com</Text>   
+                      <Text style={{color: Putih, fontSize: 18}}>contoh@gmail.com</Text>   
                 </View>
             </View>
             <View style={styles.logout}>
@@ -77,13 +77,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: Putih,
-    borderRadius: 50,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 30,
+    marginRight: 15,
   },
   tulisan:{
-    fontSize: 18,
+    fontSize: 16,
     color: Putih,
   },
   edit:{
