@@ -39,7 +39,6 @@ export async function registration(email, password, namalengkap, namatoko, phone
                 namalengkap: namalengkap,
                 namatoko: namatoko,
                 phone: phone,
-                fotoprofil: "https://firebasestorage.googleapis.com/v0/b/koll-app.appspot.com/o/mitra%2FDefaultFoto.png?alt=media&token=2d6bbe5a-e073-49d3-9844-4fd29029734f",
                 status_sekarang: "Tidak Aktif",
             })
         })
