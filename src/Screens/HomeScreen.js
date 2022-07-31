@@ -5,9 +5,7 @@ import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
-import { 
-  getAuth, 
- } from "firebase/auth";
+import { getAuth } from "firebase/auth";
  import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { app } from '../../Firebase/config';
 
@@ -36,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
   const db = getFirestore(app)
 
   useEffect(() => {
-    async function getuser(){
+    async function getuserHome(){
       try {
         let docRef = doc(db, "mitra", auth.currentUser.uid, );
         const docSnap = await getDoc(docRef);
@@ -46,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
       Alert.alert('There is an error.', err.message)
       }
     }
-    getuser();
+    getuserHome();
   },[])
 
   return (
