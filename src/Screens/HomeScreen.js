@@ -36,16 +36,17 @@ const HomeScreen = ({ navigation }) => {
   const db = getFirestore(app)
 
   useEffect(() => {
-    async function getusername(){
+    async function getuser(){
       try {
         let docRef = doc(db, "mitra", auth.currentUser.uid, );
         const docSnap = await getDoc(docRef);
-        setNamalengkap(docSnap.data().namalengkap)
+        setNamalengkap(docSnap.data().namalengkap);
+
       } catch (err){
       Alert.alert('There is an error.', err.message)
       }
     }
-    getusername();
+    getuser();
   },[])
 
   return (
