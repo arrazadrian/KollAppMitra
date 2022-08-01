@@ -1,10 +1,11 @@
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { DefaultFoto } from '../assets/Images/Index';
 import { Ijo, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
+import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
 
 const { width, height } = Dimensions.get('window')
 
@@ -19,7 +20,7 @@ const EditScreen = ({navigation, route}) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  const imagelama = foto;
+  const fotolama = foto;
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -41,22 +42,18 @@ const EditScreen = ({navigation, route}) => {
 
 
   const handleperbaruiakun = async () =>{
-    if (imagebaru == imagelama){
+    if ( !fotoakun || fotoakun == fotolama){
         if (!namaakun) {
           Alert.alert('Nama lengkap masih kosong','Isi nama lengkap anda.');
         } else if (!tokoakun) {
           Alert.alert('Nama toko masih kosong','Isi nama toko anda.');
         } else if (!phoneakun && 9 < phoneakun.length < 14) {
           Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
-        } else {
+        } else { 
           await updateakunTanpafoto(
-            akunid,
-            namaprodukbaru,
-            deskprodukbaru,
-            hargabaru,
-            kuantitasbaru,
-            satuanbaru,
-            kategoribaru,
+            namaakun,
+            tokoakun,
+            phoneakun,
           );
           navigation.goBack();
         };
@@ -68,14 +65,11 @@ const EditScreen = ({navigation, route}) => {
       } else if (!phoneakun && 9 < phoneakun.length < 14) {
         Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
       } else {
-        await updateakunTanpafoto(
-          akunid,
-          namaprodukbaru,
-          deskprodukbaru,
-          hargabaru,
-          kuantitasbaru,
-          satuanbaru,
-          kategoribaru,
+        await updateakunDenganfoto(
+            fotoakun,
+            namaakun,
+            tokoakun,
+            phoneakun,
         );
         navigation.goBack();
       };
@@ -121,7 +115,9 @@ const EditScreen = ({navigation, route}) => {
                   onChangeText={phoneakun => setPhoneakun(phoneakun)}
                   />
             </View>
-            <TouchableOpacity style={styles.tombol}>
+            <TouchableOpacity 
+              onPress={handleperbaruiakun}
+              style={styles.tombol}>
               <Text style={styles.simpan}>Simpan</Text>
             </TouchableOpacity>
     </View>

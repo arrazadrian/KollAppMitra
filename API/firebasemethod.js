@@ -222,7 +222,6 @@ export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodu
   const db = getFirestore(app);
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const colRef = collection(docRef, "produk")
-  const storage = getStorage();
   
   const docrefproduk = doc(colRef, produkid);
   getDoc(docrefproduk).then(docSnap => {
@@ -288,6 +287,96 @@ export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprod
       } catch (err) {
         Alert.alert('Ada error untuk memperbarui produk!', err.message);
       }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+};
+
+// API 10: updateakunTanpafoto
+// PERBARUI DATA AKUN
+// DI FIRESTORE TANPA FOTO DI STORAGE
+
+export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+  // const docRef = doc(db, "mitra", auth.currentUser.uid);
+  // const colRef = collection(docRef, "produk")
+  // const storage = getStorage();
+  
+  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try{
+        updateDoc(docrefproduk, {
+          namalengkap: namaakun,
+          namatoko: tokoakun,
+          phone: phoneakun,
+        });
+        Alert.alert(
+          'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'
+        );
+      } catch (err) {
+        Alert.alert('Ada error untuk memperbarui produk!', err.message);
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+};
+
+// API 11: updateakunDenganfoto
+// PERBARUI DATA AKUN
+// DI FIRESTORE DENGAN FOTO DI STORAGE
+
+export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun){
+  const urlgambarbaru = await uploadgambarasync(fotoakun);
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+  // const docRef = doc(db, "mitra", auth.currentUser.uid);
+  // const colRef = collection(docRef, "produk")
+  const storage = getStorage();
+  
+  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      if(docSnap.data().foto_akun) {
+        const imgURL =  docSnap.data().foto_akun;
+        const storageRef = ref(storage, imgURL);
+        try{
+          deleteObject(storageRef);
+          updateDoc(docrefproduk, {
+            foto_akun: urlgambarbaru,
+            namalengkap: namaakun,
+            namatoko: tokoakun,
+            phone: phoneakun,
+          });
+          Alert.alert(
+            'Data Akun Berhasil Diperbarui','Foto lama kamu juga sudah yang terbaru.'
+          );
+        } catch (err) {
+          Alert.alert('Ada error untuk memperbarui data akun!', err.message);
+        };
+      } else{
+        try{
+          updateDoc(docrefproduk, {
+            foto_akun: urlgambarbaru,
+            namalengkap: namaakun,
+            namatoko: tokoakun,
+            phone: phoneakun,
+          });
+          Alert.alert(
+            'Data Akun Berhasil Diperbarui','Data akunmu sudah terbarui.'
+          );
+        } catch (err) {
+          Alert.alert('Ada error untuk memperbarui data akun!', err.message);
+        };
+      }
+      
     } else {
       // doc.data() will be undefined in this case
       console.log("Tidak ada dokumen tersebut!");
