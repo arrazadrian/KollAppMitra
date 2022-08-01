@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Image, Pressable, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { DefaultFoto } from '../assets/Images/Index';
 import { Ijo, IjoTua, Kuning, Putih } from '../Utils/Warna'
@@ -6,32 +6,81 @@ import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 
+const { width, height } = Dimensions.get('window')
 
-const EditScreen = () => {
+const EditScreen = ({navigation, route}) => {
 
-  const [namaakun, setNamaakun] = useState('')
-  const [fotoakun, setFotoakun] = useState('')
-  const [tokoakun, setTokoakun] = useState('')
-  const [phoneakun, setPhoneakun] = useState('')
+  const { nama, foto, toko, phone } = route.params;
+
+  const [namaakun, setNamaakun] = useState(nama)
+  const [fotoakun, setFotoakun] = useState(foto)
+  const [tokoakun, setTokoakun] = useState(toko)
+  const [phoneakun, setPhoneakun] = useState(phone)
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() => {
-    async function getuserEditakun(){
-      try {
-        let docRef = doc(db, "mitra", auth.currentUser.uid, );
-        const docSnap = await getDoc(docRef);
-        setNamaakun(docSnap.data().namalengkap);
-        setFotoakun(docSnap.data().foto);
-        setTokoakun(docSnap.data().namatoko);
-        setPhoneakun(docSnap.data().phone);
+  const imagelama = foto;
 
-      } catch (err){
-      Alert.alert('There is an error.', err.message)
-      }
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setFotoakun(result.uri);
+      console.log(result.uri);
     }
-    getuserEditakun();
-  },[])
+    
+    return result.uri
+    
+  };
+
+
+  const handleperbaruiakun = async () =>{
+    if (imagebaru == imagelama){
+        if (!namaakun) {
+          Alert.alert('Nama lengkap masih kosong','Isi nama lengkap anda.');
+        } else if (!tokoakun) {
+          Alert.alert('Nama toko masih kosong','Isi nama toko anda.');
+        } else if (!phoneakun && 9 < phoneakun.length < 14) {
+          Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
+        } else {
+          await updateakunTanpafoto(
+            akunid,
+            namaprodukbaru,
+            deskprodukbaru,
+            hargabaru,
+            kuantitasbaru,
+            satuanbaru,
+            kategoribaru,
+          );
+          navigation.goBack();
+        };
+    } else {
+      if (!namaakun) {
+        Alert.alert('Nama lengkap masih kosong','Isi nama lengkap anda.');
+      } else if (!tokoakun) {
+        Alert.alert('Nama toko masih kosong','Isi nama toko anda.');
+      } else if (!phoneakun && 9 < phoneakun.length < 14) {
+        Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
+      } else {
+        await updateakunTanpafoto(
+          akunid,
+          namaprodukbaru,
+          deskprodukbaru,
+          hargabaru,
+          kuantitasbaru,
+          satuanbaru,
+          kategoribaru,
+        );
+        navigation.goBack();
+      };
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -43,22 +92,38 @@ const EditScreen = () => {
                 <Image source={DefaultFoto} style={styles.gambar}/>
             )}
             <Text style={{color: Putih, fontStyle:'italic', fontSize: 16}}>Gunakan foto terbaik dagangan anda</Text>
-            <Text style={{color: Ijo, fontWeight: 'bold', textDecorationLine:'underline' ,fontSize: 18}}>Ganti Foto </Text>
+            <Text 
+            onPress={pickImage}
+            style={{color: Ijo, fontWeight: 'bold', textDecorationLine:'underline' ,fontSize: 18}}
+            >Ganti Foto </Text>
             </View>
             <View style={{padding:10}}>
                 <Text style={styles.judulisi}>Nama Lengkap</Text>
-                <TextInput style={styles.input} value={namaakun}/>
+                <TextInput 
+                  placeholder="Nama anda tidak bisa kosong"
+                  style={styles.input} 
+                  value={namaakun}
+                  onChangeText={namaakun => setNamaakun(namaakun)}
+                />
                 <Text style={styles.judulisi}>Nama Toko</Text>
-                <TextInput style={styles.input} value={tokoakun}/>
+                <TextInput 
+                  placeholder="Nama toko tidak bisa kosong"
+                  style={styles.input} 
+                  value={tokoakun}
+                  onChangeText={tokoakun => setTokoakun(tokoakun)}
+                />
                 <Text style={styles.judulisi}>No.Handphone</Text>
-                <TextInput style={styles.input} 
+                <TextInput 
+                  placeholder="Nomor handphon tidak bisa kosong"
+                  style={styles.input} 
                   keyboardType='numeric'
                   value={phoneakun}
+                  onChangeText={phoneakun => setPhoneakun(phoneakun)}
                   />
             </View>
-            <Pressable style={styles.tombol}>
+            <TouchableOpacity style={styles.tombol}>
               <Text style={styles.simpan}>Simpan</Text>
-            </Pressable>
+            </TouchableOpacity>
     </View>
     </TouchableWithoutFeedback>
   )
@@ -91,20 +156,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: Ijo,
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 18,
     color: Putih,
   },
   judulisi:{
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Putih,
   },
   tombol:{
     backgroundColor: Ijo,
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: 120,
-    borderRadius: 10,
+    paddingVertical: 8,
+    width: width*0.8,
+    borderRadius: 20,
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: 20,
@@ -112,6 +177,6 @@ const styles = StyleSheet.create({
   simpan:{
     color: Putih, 
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
   },
 })

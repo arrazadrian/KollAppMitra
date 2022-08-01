@@ -33,8 +33,8 @@ const SignUpScreen = () => {
       Alert.alert('Nama toko masih kosong','Isi nama toko dengan benar.');
     } else if (!email) {
       Alert.alert('Email masih kosong','Isi email dengan benar.');
-    } else if (!phone) {
-      Alert.alert('Nomor handphone masih kosong','Isi nomor handphone dengan benar.');
+    } else if (!phone && 9 < phone.length < 14) {
+      Alert.alert('Nomor handphone tidak benar','Isi nomor handphone dengan benar.');
     } else if (!password && password.length > 7) {
       Alert.alert('Kata sandi kurang kuat','Kata sandi minimal 8 karakter.');
     } else if (!passwordConfirmation) {

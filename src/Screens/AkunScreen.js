@@ -9,7 +9,18 @@ import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 
-const AkunScreen = ({ item }) => {
+const AkunScreen = () => {
+  
+  const navigation = useNavigation();
+
+  const pindahEdit = () => {
+    navigation.navigate('EditScreen', { 
+      nama: namaakun,
+      foto: fotoakun,
+      toko: tokoakun,
+      phone: phoneakun,
+    })
+  }
 
   const [namaakun, setNamaakun] = useState('')
   const [fotoakun, setFotoakun] = useState('')
@@ -19,7 +30,6 @@ const AkunScreen = ({ item }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  const navigation = useNavigation();
 
   useEffect(() => {
     async function getuserAkun(){
@@ -57,7 +67,7 @@ const AkunScreen = ({ item }) => {
                 <View>
                     <Text style={{fontSize: 20, fontWeight:'bold', color: Putih,}}>{namaakun}</Text>
                     <Text style={{fontSize: 16,color: Putih,}}>Mitra Pedagang</Text>
-                    <Pressable  onPress={() => navigation.push('EditScreen')} >
+                    <Pressable  onPress={pindahEdit} >
                         <View style={styles.edit}>
                           <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Atur Profil</Text>
                         </View>

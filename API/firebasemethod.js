@@ -20,7 +20,8 @@ import {
   } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
-import { ImageBackground } from "react-native-web";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 
 // API 1: registration
@@ -79,8 +80,12 @@ export async function handleSignOut() {
 
 async function uploadgambarasync(uri) {
   try{
-      const uploadUri = uri;
-      let filename = uploadUri.substring(uploadUri.lastIndexOf('/')+1);
+    const uploadUri = uri;
+    let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
+
+    // Add uuid to File Name
+    filename = uuidv4() + '.' + extension;
+
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
     const blob = await new Promise((resolve, reject) => {
