@@ -326,7 +326,7 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
       console.log("Tidak ada dokumen tersebut!");
     }
   })
-};
+}; 
 
 // API 11: updateakunDenganfoto
 // PERBARUI DATA AKUN
@@ -337,8 +337,7 @@ export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneak
 
   const auth = getAuth();
   const db = getFirestore(app);
-  // const docRef = doc(db, "mitra", auth.currentUser.uid);
-  // const colRef = collection(docRef, "produk")
+
   const storage = getStorage();
   
   const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
@@ -422,3 +421,41 @@ async function uploadgambarakun(uri) {
     Alert.alert('Ada error pada foto produk!', err.message);
   }
 };
+
+// API 13: updatestatus
+// UPDATE STATUS PEDAGANG
+// MENJADI AKTIF/TIDAK AKTIF
+
+export async function updatestatus(status_sekarang){
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+
+  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try{
+        if(status_sekarang == "Aktif"){
+           updateDoc(docrefproduk, {
+            status_sekarang:"Aktif",     
+          });
+          Alert.alert(
+            'Status berhasil diperbarui','Anda sekarang tidak terlacak calon pelanggan.'          
+          );
+        } else {
+          updateDoc(docrefproduk, {
+            status_sekarang:"Tidak Aktif",     
+          });
+          Alert.alert(
+            'Status berhasil diperbarui','Anda sekarang tidak terlacak calon pelanggan.'          
+          );
+        }   
+      } catch (err) {
+        Alert.alert('Ada error untuk memperbarui status!', err.message);
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+}; 

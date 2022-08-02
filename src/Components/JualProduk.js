@@ -13,8 +13,8 @@ const JualProduk = ({item}) => {
   
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
-      nama: item.nama,
-      deskripsi: item.deskripsi,
+      namaproduk: item.namaproduk,
+      deskproduk: item.deskproduk,
       image: item.image,
       harga: item.harga,
       satuan: item.satuan,
@@ -27,7 +27,7 @@ const JualProduk = ({item}) => {
     <View>
        <View style={styles.container}>
         <Pressable onPress={pindahDetail}>
-            <Image source={item.image} style={styles.gambar}/> 
+            <Image source={{uri: item.image}} style={styles.gambar}/> 
         </Pressable>
         <View>
             <Text 
@@ -37,7 +37,7 @@ const JualProduk = ({item}) => {
             <Text
             style={{fontSize:16}}
             numberOfLines={1}
-            >{item.nama}</Text> 
+            >{item.namaproduk}</Text> 
             <Text>{item.kuantitas} {item.satuan}</Text> 
         </View>
           <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 

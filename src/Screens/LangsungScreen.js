@@ -1,14 +1,17 @@
-import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
-import { daftarproduk } from '../Data/daftarproduk'
+//import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
 import Keranjang from '../Components/Keranjang'
 import ProdukKosong from '../Components/ProdukKosong'
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
+import { app } from '../../Firebase/config';
 
 
 const { width, height } = Dimensions.get('window')
@@ -29,19 +32,6 @@ const kosongproduk = () => {
 }
 
 const atasjual = () => {
-  
-  // useEffect(() => {
-  //   fetch(daftarproduk)
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {
-  //       setFilteredDataSource(responseJson);
-  //       setMasterDataSource(responseJson);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
   return(
     <View style={{ paddingHorizontal: 10 }}>
 
@@ -69,32 +59,61 @@ const atasjual = () => {
 
 
 const LangsungScreen = ({ navigation }) => {
-  
-  const [filteredData, setfilteredData] = useState([]);
-  const [masterData, setmasterData] = useState([]);
-  const [search, setsearch] = useState('');
 
-  const searchFilter = (text) =>{
-    if (text) {
-      const newData = masterData.filter((item) =>{
-        const itemData = item.nama ? item.nama.toUpperCase()
-                      : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setfilteredData(newData);
-      setsearch(text);
-    } else {
-      setfilteredData(masterData);
-      setsearch(text);
+  const[produkutama,setProdukUtama] = useState();
+  const[loading, setLoading] = useState(true);
+  const componentMounted = useRef(true);
+
+  useEffect(()=>{
+    const fetchProdukUtama = async() => {
+      try{
+        const list = []; 
+        const auth = getAuth();
+        const db = getFirestore(app);
+        const docRef = doc(db, "mitra", auth.currentUser.uid);
+        const colRef = collection(docRef, "produk")
+
+        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+          list.push({
+            id: doc.id,
+            namaproduk,
+            deskproduk,
+            image,
+            harga,
+            kuantitas,
+            satuan,
+            kategori,
+          });
+        });
+
+        if (componentMounted.current){ // (5) is component still mounted?
+          setProdukUtama(list); // (1) write data to state
+          setLoading(false); // (2) write some value to state
+        }
+        return () => { // This code runs when component is unmounted
+            componentMounted.current = false; // (4) set it to false when we leave the page
+        }
+
+      } catch(err){
+        console.log(err);
+      }
     }
-  }
+    fetchProdukUtama();
+  },[])
 
-  // // Cara ngefilter
-  // let filter = daftarproduk.filter((item) => item.kategori === 'Frozen Food')
-
+  
   return (
     <View style={styles.latar}>
+      {loading ? (
+        <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
+          <ActivityIndicator size="large" color={IjoTua}/>
+        </View>
+      ):(
+        <View>
             <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
                 <PencarianBar/>
             </View>
@@ -105,9 +124,9 @@ const LangsungScreen = ({ navigation }) => {
                   justifyContent:'space-between',
                   paddingHorizontal: 10,
                 }}
-                data={daftarproduk}
+                data={produkutama}
                 renderItem= {({item}) => <JualProduk item={item} />}
-                keyExtractor={ daftarproduk => daftarproduk.id}
+                keyExtractor={ item => item.id}
                 ListHeaderComponent={atasjual}
                 ListEmptyComponent={kosongproduk}
                 ListFooterComponent={
@@ -117,6 +136,8 @@ const LangsungScreen = ({ navigation }) => {
                 }
             />
             <Keranjang/>
+        </View>
+      )}
     </View>
   )
 }

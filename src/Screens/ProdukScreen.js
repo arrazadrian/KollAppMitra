@@ -8,7 +8,7 @@ import ProdukKosong from '../Components/ProdukKosong'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
-
+ 
 const { width, height } = Dimensions.get('window')
 
 const kosongproduk = () => {

@@ -8,22 +8,26 @@ import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { getAuth } from "firebase/auth";
  import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { app } from '../../Firebase/config';
+import { updatestatus } from '../../API/firebasemethod';
 
 const { width, height } = Dimensions.get('window')
 
 const HomeScreen = ({ navigation }) => {
-  const [status, setStatus] = useState('Tidak Aktif');
+  const [status, setStatus] = useState("Tidak Aktif");
   const [penjelasan, setPenjelasan] = useState('tidak');
   const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => {
-  if(isEnabled){
-    setStatus('Aktif')
-    setPenjelasan('aktif')
-  } else {
-    setStatus('Tidak Aktif')
-    setPenjelasan('tidak')
-  }
+  
+  function toggleSwitch() {
     setIsEnabled(previousState => !previousState)
+    if(isEnabled){
+      setStatus('Aktif')
+      setPenjelasan('aktif')
+      updatestatus(status)
+    } else {
+      setStatus('Tidak Aktif')
+      setPenjelasan('tidak')
+      updatestatus(status)
+    }
   }
 
   moment.updateLocale('id', localization)
@@ -45,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getuserHome();
-  },[])
+  },[namalengkap])
 
   return (
     <View style={styles.latar}>
@@ -83,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
               <Switch
                 trackColor={{ false: '#767577', true: Ijo }}
-                thumbColor={isEnabled ? '#f4f3f4' : '#f5dd4b'}
+                thumbColor={isEnabled ? '#f4f3f4':'#f5dd4b'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={!isEnabled}
