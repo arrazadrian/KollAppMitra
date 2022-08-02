@@ -37,11 +37,11 @@ const AkunScreen = () => {
         let docRef = doc(db, "mitra", auth.currentUser.uid, );
         const docSnap = await getDoc(docRef);
         setNamaakun(docSnap.data().namalengkap);
-        setFotoakun(docSnap.data().foto);
+        setFotoakun(docSnap.data().foto_akun);
         setTokoakun(docSnap.data().namatoko);
         setPhoneakun(docSnap.data().phone);
         setEmailakun(docSnap.data().email);
-
+        console.log('getuserAkun jalan (Akun Screen)')
       } catch (err){
       Alert.alert('There is an error.', err.message)
       }
@@ -60,7 +60,7 @@ const AkunScreen = () => {
             </View>
             <View style={{flexDirection:'row', alignItems:'center', marginBottom: 10}}>
               { fotoakun ? (
-                <Image source={{uri: {fotoakun}}} style={styles.foto}/>
+                <Image source={{uri: fotoakun}} style={styles.foto}/>
                 ):(
                 <Image source={DefaultFoto} style={styles.foto}/>
               )}

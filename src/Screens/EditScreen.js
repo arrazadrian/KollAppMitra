@@ -6,6 +6,8 @@ import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -21,6 +23,23 @@ const EditScreen = ({navigation, route}) => {
   const db = getFirestore(app)
 
   const fotolama = foto;
+
+  // useEffect(() => {
+  //   async function getuserAkun(){
+  //     try {
+  //       let docRef = doc(db, "mitra", auth.currentUser.uid, );
+  //       const docSnap = await getDoc(docRef);
+  //       setNamaakun(docSnap.data().namalengkap);
+  //       setFotoakun(docSnap.data().foto_akun);
+  //       setTokoakun(docSnap.data().namatoko);
+  //       setPhoneakun(docSnap.data().phone);
+  //       console.log('getuserAkun jalan (Akun Screen)')
+  //     } catch (err){
+  //     Alert.alert('There is an error.', err.message)
+  //     }
+  //   }
+  //   getuserAkun();
+  // },[])
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -81,7 +100,7 @@ const EditScreen = ({navigation, route}) => {
     <View style={styles.latar}>
             <View style={styles.atas}>
             { fotoakun ? (
-                <Image source={{uri: {fotoakun}}} style={styles.gambar}/>
+                <Image source={{uri: fotoakun}} style={styles.gambar}/>
                 ):(
                 <Image source={DefaultFoto} style={styles.gambar}/>
             )}

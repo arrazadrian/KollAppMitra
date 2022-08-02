@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
         let docRef = doc(db, "mitra", auth.currentUser.uid, );
         const docSnap = await getDoc(docRef);
         setNamalengkap(docSnap.data().namalengkap);
-
+        console.log('getuserHome jalan (Home Screen)')
       } catch (err){
       Alert.alert('There is an error.', err.message)
       }
@@ -53,10 +53,10 @@ const HomeScreen = ({ navigation }) => {
           <View style={{
             flexDirection: 'row',
             justifyContent:'space-between',
-            alignItems:'center',
+            alignItems:'baseline',
             marginBottom: 20,
             }}>
-            <View>
+            <View style={{flex: 1}}>
               <Text style={{
                 fontSize: 20,
                 color: Ijo,
@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
                 color: IjoTua,
               }}>{namalengkap}</Text>
             </View>
-            <View>
+            <View style={{flex: 1}}>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMMM YYYY')}</Text>
             </View>

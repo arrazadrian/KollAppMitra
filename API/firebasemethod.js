@@ -74,11 +74,11 @@ export async function handleSignOut() {
   }
 };
 
-// API 4: uploadgambarasync
-// UPLOAD IMAGE YANG DIOPER KE
+// API 4: uploadgambarproduk
+// UPLOAD GAMBAR PRODUK YANG DIOPER KE
 // FUNGSI FIRESTORE SELANJUTNYA
 
-async function uploadgambarasync(uri) {
+async function uploadgambarproduk(uri) {
   try{
     const uploadUri = uri;
     let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
@@ -118,7 +118,7 @@ async function uploadgambarasync(uri) {
 // SEBELUMNYA UPLOAD IMAGE DULU
 
 export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, kuantitas, satuan, kategori) => {
-  const urlgambar = await uploadgambarasync(image);
+  const urlgambar = await uploadgambarproduk(image);
   
   const auth = getAuth();
   const db = getFirestore(app);
@@ -151,7 +151,7 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
 // SEBELUMNYA UPLOAD IMAGE DULU
 
 export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuantitas, satuan, kategori) => {
-  const urlgambar = await uploadgambarasync(image);
+  const urlgambar = await uploadgambarproduk(image);
   
   const auth = getAuth();
   const db = getFirestore(app);
@@ -255,7 +255,7 @@ export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodu
 // DI FIRESTORE BESERTA FOTO DI STORAGE
 
 export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprodukbaru, imagebaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
-  const urlgambarbaru = await uploadgambarasync(imagebaru);
+  const urlgambarbaru = await uploadgambarproduk(imagebaru);
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -333,7 +333,7 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
 // DI FIRESTORE DENGAN FOTO DI STORAGE
 
 export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun){
-  const urlgambarbaru = await uploadgambarasync(fotoakun);
+  const urlgambarbaru = await uploadgambarakun(fotoakun);
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -382,4 +382,43 @@ export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneak
       console.log("Tidak ada dokumen tersebut!");
     }
   })
+};
+
+// API 12: uploadgambarakun
+// UPLOAD FOTO AKUN YANG DIOPER KE
+// FUNGSI FIRESTORE SELANJUTNYA
+
+async function uploadgambarakun(uri) {
+  try{
+    const uploadUri = uri;
+    let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
+
+    // Add uuid to File Name
+    filename = uuidv4() + '.' + extension;
+
+    // Why are we using XMLHttpRequest? See:
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError("Network request failed"));
+          };
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
+          xhr.send(null);
+    });
+    const fileRef = ref(getStorage(app), `mitra/${filename}`);
+    const result = await uploadBytes(fileRef, blob);
+    
+    // We're done with the blob, close and release it
+    blob.close();
+    
+    return await getDownloadURL(fileRef);
+  } catch (err) {
+    Alert.alert('Ada error pada foto produk!', err.message);
+  }
 };
