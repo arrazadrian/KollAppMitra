@@ -10,13 +10,13 @@ import {
 import { 
   getFirestore, collection, 
   addDoc, setDoc, doc, 
-  serverTimestamp, 
+  serverTimestamp, onSnapshot,
   deleteDoc, getDoc, updateDoc,
   } from 'firebase/firestore/lite';
 import { 
   getStorage, ref, 
   getDownloadURL, uploadBytes, 
-  deleteObject
+  deleteObject,
   } from "firebase/storage";
 import { app } from "../Firebase/config";
 import {Alert} from "react-native";
