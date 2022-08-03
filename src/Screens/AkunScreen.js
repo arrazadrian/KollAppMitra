@@ -30,7 +30,6 @@ const AkunScreen = () => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-
   useEffect(() => {
     async function getuserAkun(){
       try {

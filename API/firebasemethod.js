@@ -328,10 +328,10 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
           phone: phoneakun,
         });
         Alert.alert(
-          'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'
+          'Data akun berhasil diperbarui','Data akunmu sudah terbarui.'
         );
       } catch (err) {
-        Alert.alert('Ada error untuk memperbarui produk!', err.message);
+        Alert.alert('Ada error untuk memperbarui data akunmu!', err.message);
       }
     } else {
       // doc.data() will be undefined in this case
@@ -430,7 +430,7 @@ async function uploadgambarakun(uri) {
     
     return await getDownloadURL(fileRef);
   } catch (err) {
-    Alert.alert('Ada error pada foto produk!', err.message);
+    Alert.alert('Ada error pada foto akun!', err.message);
   }
 };
 
