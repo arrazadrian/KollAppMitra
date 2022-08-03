@@ -18,40 +18,44 @@ const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(true);
   
   function toggleSwitch() {
-    setIsEnabled(previousState => !previousState)
     if(isEnabled){
       setStatus('Aktif')
       setPenjelasan('aktif')
-      updatestatus(status)
+      //console.log(status)
+      //console.log(isEnabled)
+      updatestatus(isEnabled)
     } else {
       setStatus('Tidak Aktif')
       setPenjelasan('tidak')
-      updatestatus(status)
+      //console.log(status)
+      //console.log(isEnabled)
+      updatestatus(isEnabled)
     }
+    setIsEnabled(previousState => !previousState)
   }
 
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
 
-  const [namalengkap, setNamalengkap] = useState('');
+  const [namalengkap, setNamalengkap] = useState('TESTES');
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() => {
-    async function getuserHome(){
-      try {
-        let docRef = doc(db, "mitra", auth.currentUser.uid, );
-        const docSnap = await getDoc(docRef);
-        setNamalengkap(docSnap.data().namalengkap);
-        console.log('getuserHome jalan (Home Screen)')
-      } catch (err){
-      Alert.alert('There is an error.', err.message)
-      }
-    }
-    getuserHome();
-  },[namalengkap])
+  // useEffect(() => {
+  //   async function getuserHome(){
+  //     try {
+  //       let docRef = doc(db, "mitra", auth.currentUser.uid, );
+  //       const docSnap = await getDoc(docRef);
+  //       setNamalengkap(docSnap.data().namalengkap);
+  //       console.log('getuserHome jalan (Home Screen)')
+  //     } catch (err){
+  //     Alert.alert('There is an error.', err.message)
+  //     }
+  //   }
+  //   getuserHome();
+  // },[])
 
-  return (
+  return ( 
     <View style={styles.latar}>
         <ScrollView>
           <View style={{
@@ -87,7 +91,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
               <Switch
                 trackColor={{ false: '#767577', true: Ijo }}
-                thumbColor={isEnabled ? '#f4f3f4':'#f5dd4b'}
+                thumbColor={isEnabled ? '#f4f3f4' : '#f5dd4b'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={!isEnabled}

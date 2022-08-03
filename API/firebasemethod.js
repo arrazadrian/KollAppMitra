@@ -435,12 +435,12 @@ export async function updatestatus(status_sekarang){
   getDoc(docrefproduk).then(docSnap => {
     if (docSnap.exists()) {
       try{
-        if(status_sekarang == "Aktif"){
+        if(status_sekarang == true ){
            updateDoc(docrefproduk, {
             status_sekarang:"Aktif",     
           });
           Alert.alert(
-            'Status berhasil diperbarui','Anda sekarang tidak terlacak calon pelanggan.'          
+            'Status berhasil diperbarui','Anda sekarang aktif terlacak calon pelanggan.'          
           );
         } else {
           updateDoc(docrefproduk, {
