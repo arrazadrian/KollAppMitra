@@ -66,12 +66,24 @@ export async function signIn(email, password) {
 // MENGUBAH AUTHSTATECHANGE DAN KELUAR
 
 export async function handleSignOut() {
-    const auth = getAuth();
-  try {
-    await signOut(auth);
-  } catch (err) {
-    Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
-  }
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+        if(docSnap.data().status_sekarang == "Aktif"){
+          updateDoc(docrefproduk, { status_sekarang:"Tidak Aktif" });
+          signOut(auth);
+        } else {
+          signOut(auth);
+        }
+      } catch (err) {
+        Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
+      }
+    }
+
+  })
 };
 
 // API 4: uploadgambarproduk
