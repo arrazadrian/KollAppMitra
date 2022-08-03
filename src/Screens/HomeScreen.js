@@ -6,7 +6,7 @@ import moment from 'moment';
 import localization from 'moment/locale/id';
 import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
+import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { app } from '../../Firebase/config';
 import { updatestatus } from '../../API/firebasemethod';
 
@@ -41,19 +41,38 @@ const HomeScreen = ({ navigation }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   async function getuserHome(){
+  //     try {
+  //       let docRef = doc(db, "mitra", auth.currentUser.uid, );
+  //       const docSnap = await getDoc(docRef);
+  //       setNamalengkap(docSnap.data().namalengkap);
+  //       console.log('getuserHome jalan (Home Screen)')
+  //     } catch (err){
+  //     Alert.alert('There is an error.', err.message)
+  //     }
+  //   }
+  //   getuserHome();
+  // },[])
+
+  useEffect(() =>{
     async function getuserHome(){
-      try {
-        let docRef = doc(db, "mitra", auth.currentUser.uid, );
-        const docSnap = await getDoc(docRef);
-        setNamalengkap(docSnap.data().namalengkap);
+      try{
+        const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+        setNamalengkap(doc.data().namalengkap);
+
         console.log('getuserHome jalan (Home Screen)')
+          // Respond to data
+          // ...
+        });
+        //unsubscribe();
       } catch (err){
-      Alert.alert('There is an error.', err.message)
+        Alert.alert('There is an error.', err.message)
       }
     }
     getuserHome();
   },[])
+
 
   return ( 
     <View style={styles.latar}>

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { handleSignOut } from '../../API/firebasemethod'
 import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
+import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 const AkunScreen = () => {
   
@@ -30,19 +30,40 @@ const AkunScreen = () => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   async function getuserAkun(){
+  //     try {
+  //       let docRef = doc(db, "mitra", auth.currentUser.uid);
+  //       const docSnap = await getDoc(docRef);
+  //       setNamaakun(docSnap.data().namalengkap);
+  //       setFotoakun(docSnap.data().foto_akun);
+  //       setTokoakun(docSnap.data().namatoko);
+  //       setPhoneakun(docSnap.data().phone);
+  //       setEmailakun(docSnap.data().email);
+  //       console.log('getuserAkun jalan (Akun Screen)')
+  //     } catch (err){
+  //     Alert.alert('There is an error.', err.message)
+  //     }
+  //   }
+  //   getuserAkun();
+  // },[])
+
+  useEffect(() =>{
     async function getuserAkun(){
-      try {
-        let docRef = doc(db, "mitra", auth.currentUser.uid, );
-        const docSnap = await getDoc(docRef);
-        setNamaakun(docSnap.data().namalengkap);
-        setFotoakun(docSnap.data().foto_akun);
-        setTokoakun(docSnap.data().namatoko);
-        setPhoneakun(docSnap.data().phone);
-        setEmailakun(docSnap.data().email);
+      try{
+        const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+        setNamaakun(doc.data().namalengkap);
+        setFotoakun(doc.data().foto_akun);
+        setTokoakun(doc.data().namatoko);
+        setPhoneakun(doc.data().phone);
+        setEmailakun(doc.data().email);
         console.log('getuserAkun jalan (Akun Screen)')
+          // Respond to data
+          // ...
+        });
+        //unsubscribe();
       } catch (err){
-      Alert.alert('There is an error.', err.message)
+        Alert.alert('There is an error.', err.message)
       }
     }
     getuserAkun();
