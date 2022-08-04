@@ -2,6 +2,7 @@ export const dataRiwayat =
 [
     {
         id: '1', 
+        namaPelanggan: 'Nurjani Jani',
         produk: [
             {
                 jumlah : 2,
@@ -25,6 +26,6 @@ export const dataRiwayat =
         id_transaksi: '41794y2g1d9141',
         sub_total: '20000',
         biaya_layanan: '2000',
-        hagatotal: '2200',
+        hargatotal: '22000',
     },
 ]

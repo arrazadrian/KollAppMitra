@@ -10,7 +10,7 @@ const ListProduk = ({item}) => {
   
   const navigation = useNavigation();
   
-  const pindahDetail = () => {
+  const pindahReceipt = () => {
     navigation.navigate('DetailScreen', { 
       namaproduk: item.namaproduk,
       deskproduk: item.deskproduk,

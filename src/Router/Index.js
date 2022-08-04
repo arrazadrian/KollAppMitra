@@ -12,6 +12,7 @@ import {
     DetailScreen,
     EditProdukScreen,
     RiwayatScreen, 
+    ReceiptScreen,
     ProsesScreen,
     AkunScreen, 
     EditScreen,
@@ -77,6 +78,7 @@ export const AppUtama = () => {
           <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
+          <HomeStack.Screen name="ReceiptScreen" component={ReceiptScreen} options={{  title: "Bukti Transaksi", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}    }}/>
         </HomeStack.Navigator>
       </Provider>
     </NavigationContainer>

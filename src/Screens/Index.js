@@ -4,6 +4,7 @@ import TambahScreen from "./TambahScreen";
 import TambahPreScreen from "./TambahPreScreen";
 import DetailScreen from "./DetailScreen";
 import RiwayatScreen from "./RiwayatScreen";
+import ReceiptScreen from "./ReceiptScreen";
 import ProsesScreen from "./ProsesScreen";
 import AkunScreen from "./AkunScreen";
 import EditScreen from "./EditScreen";
@@ -27,4 +28,5 @@ export {
      ProdukScreen, LangsungScreen, TambahPreScreen,
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
      OtwScreen, LanjutBelanjaScreen, TQScreen, AkunJadiScreen,
+     ReceiptScreen,
     };
