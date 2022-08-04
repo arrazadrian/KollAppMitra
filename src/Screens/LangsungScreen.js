@@ -77,7 +77,7 @@ const LangsungScreen = ({ navigation }) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+          const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
           list.push({
             id: doc.id,
             namaproduk,

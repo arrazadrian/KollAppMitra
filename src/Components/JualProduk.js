@@ -1,13 +1,23 @@
-import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import QuantitySelector from './QuantitySelector'
 import { useNavigation } from '@react-navigation/native'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { Minus, Plus } from '../assets/Icons/Index'
+import { masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../features/keranjangSlice'
 
 const { width, height } = Dimensions.get('window')
 
-const JualProduk = ({item}) => {
+const JualProduk = ({item , id}) => {
+  const items = useSelector((state) => pilihprodukID(state, item));
+  const dispatch = useDispatch();
+  
+  const tambahProduk = () => {
+    dispatch(masukKeranjang({item, id}))
+  };
+
+  // console.log(items);
 
   const navigation = useNavigation();
   
@@ -21,6 +31,7 @@ const JualProduk = ({item}) => {
       kuantitas: item.kuantitas,
     })
   }
+
 
   const [quantity, setQuantity] = useState(0)
   return (
@@ -40,7 +51,18 @@ const JualProduk = ({item}) => {
             >{item.namaproduk}</Text> 
             <Text>{item.kuantitas} {item.satuan}</Text> 
         </View>
-          <QuantitySelector quantity={quantity} setQuantity={setQuantity}/> 
+        <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
+        <TouchableOpacity
+        > 
+            <Minus/>
+        </TouchableOpacity>
+        <Text style={{fontSize: 20}}>{items.length}</Text>
+        <TouchableOpacity
+          onPress={tambahProduk}
+        >
+            <Plus/>
+        </TouchableOpacity>
+    </View>
        </View> 
     </View>
   )

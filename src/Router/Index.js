@@ -28,6 +28,8 @@ import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
 import TopTab from '../Components/TopTab.js';
 import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
+import { store } from '../../store.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -62,6 +64,7 @@ return(
 export const AppUtama = () => {
     return(
     <NavigationContainer>
+      <Provider store={store}>
         <HomeStack.Navigator>
           <HomeStack.Screen name="HomeScreen" component={HomeStackScreen} options={{ headerShown: false }}/>
           <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
@@ -75,6 +78,7 @@ export const AppUtama = () => {
           <HomeStack.Screen name="CheckoutLangScreen" component={CheckoutLangScreen} options={{ title: "Checkout", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
         </HomeStack.Navigator>
+      </Provider>
     </NavigationContainer>
     );
   };
