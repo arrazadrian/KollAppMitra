@@ -8,7 +8,7 @@ const ProsesScreen = () => {
   return (
     <View style={styles.latar}>
       <ProsesCard />
-    </View>
+    </View> 
   )
 }
 
