@@ -10,7 +10,7 @@ const ListProduk = ({item}) => {
   
   const navigation = useNavigation();
   
-  const pindahReceipt = () => {
+  const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
       namaproduk: item.namaproduk,
       deskproduk: item.deskproduk,
@@ -36,12 +36,11 @@ const ListProduk = ({item}) => {
     
   return (
     <View>
-       <Pressable 
-       onPress={pindahDetail}
+       <View
        style={styles.container}>
-          <View>
+          <Pressable onPress={pindahDetail}>
               <Image source={{uri:item.image}} style={styles.gambar} />
-          </View>
+          </Pressable>
           <View>
               <Text 
               style={{fontSize:18, fontWeight:'bold'}}
@@ -59,7 +58,7 @@ const ListProduk = ({item}) => {
               <Edit/>
             </Pressable>
           </View>
-       </Pressable> 
+       </View> 
     </View>
   )
 }
