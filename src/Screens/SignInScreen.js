@@ -48,6 +48,7 @@ const SignInScreen = () => {
                           placeholder="Email akun anda" 
                           value={email}
                           onChangeText={text => setEmail(text)}
+                          autoCapitalize="none"
                           />
                           <IconMessage style={{position:'absolute', top: 14, left: 8}} />
                       </View>
