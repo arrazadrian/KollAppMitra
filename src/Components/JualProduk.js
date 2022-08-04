@@ -10,14 +10,14 @@ import { masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../feature
 const { width, height } = Dimensions.get('window')
 
 const JualProduk = ({item}) => {
-  const items = useSelector((state) => pilihprodukID(state, item));
+  const items = useSelector((state) => pilihprodukID(state, item.id));
   const dispatch = useDispatch();
   
   const tambahProduk = () => {
     dispatch(masukKeranjang({item}))
   };
 
- // console.log(items);
+  console.log(items);
 
   const navigation = useNavigation();
   

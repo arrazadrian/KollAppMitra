@@ -121,7 +121,7 @@ const LangsungScreen = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 numColumns={3}
                 columnWrapperStyle={{
-                  justifyContent:'space-between',
+                  justifyContent:'space-around',
                   paddingHorizontal: 10,
                 }}
                 data={produkutama}
