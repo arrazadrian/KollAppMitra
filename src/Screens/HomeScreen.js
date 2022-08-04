@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
 
-  const [namalengkap, setNamalengkap] = useState('TESTES');
+  const [namalengkap, setNamalengkap] = useState('Loading...');
   const auth = getAuth();
   const db = getFirestore(app)
 
