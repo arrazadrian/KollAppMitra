@@ -51,7 +51,7 @@ const JualProduk = ({item}) => {
             >{item.namaproduk}</Text> 
             <Text>{item.kuantitas} {item.satuan}</Text> 
         </View>
-        <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
+      <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
         <TouchableOpacity
         > 
             <Minus/>
