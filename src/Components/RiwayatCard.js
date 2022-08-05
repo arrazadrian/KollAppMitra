@@ -50,7 +50,10 @@ const RiwayatCard = ({ item }) => {
           <Text>  </Text>
           <Text>{item.pukul}</Text>
         </View>
+        <View style={{flexDirection:'row'}}>
+          <Text style={{fontSize: 12}}>Layanan: </Text>
           <Text style={{color:Ijo, fontSize: 12}}>{item.layanan}</Text>
+        </View>
       </View>
     </Pressable>
   )
