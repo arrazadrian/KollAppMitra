@@ -2,8 +2,9 @@ export const dataRiwayat =
 [
     {
         id: '1', 
-        namaPelanggan: 'Nurjani Jani',
-        produk: [
+        namaPelanggan: 'Azriel Khairi',
+        layanan: 'Datang ke Lokasi',
+        daftar_produk: [
             {
                 jumlah : 2,
                 namaproduk: 'Bayam',
@@ -21,7 +22,8 @@ export const dataRiwayat =
             },
         ],
         jml_produk: 4,
-        waktu: '10.15  Rabu, 10 Agustus 2022',
+        pukul: '10.15 WIB',
+        tanggal: 'Rabu, 10/08/2022',
         namatoko: 'Toko segar hijau',
         id_transaksi: '41794y2g1d9141',
         sub_total: '20000',

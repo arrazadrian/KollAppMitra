@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
-import { Ijo, IjoTua, Putih } from '../Utils/Warna'
+import { Abu, Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 import { DPkartu } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 
@@ -13,12 +13,17 @@ const RiwayatCard = ({ item }) => {
 
   const pindahDetail = () => {
     navigation.navigate('ReceiptScreen', { 
-      namaproduk: item.namaproduk,
-      deskproduk: item.deskproduk,
-      image: item.image,
-      harga: item.harga,
-      satuan: item.satuan,
-      kuantitas: item.kuantitas,
+      layanan: item.layanan,
+      pukul: item.pukul,
+      tanggal: item.tanggal,
+      daftar_produk: item.daftar_produk,
+      namaPelanggan: item.namaPelanggan,
+      jml_produk: item.jml_produk,
+      namatoko: item.namatoko,
+      id_transaksi: item.id_transaksi,
+      sub_total: item.sub_total,
+      biaya_layanan: item.biaya_layanan,
+      hargatotal: item.hargatotal,
     })
   }
 
@@ -40,8 +45,12 @@ const RiwayatCard = ({ item }) => {
             <Text>{item.jml_produk} </Text>
             <Text>Produk</Text>
         </Text>
-      <Text>{item.waktu}</Text>
-      <Text>ID: {item.id_transaksi}</Text>
+        <View style={{flexDirection:'row'}}>
+          <Text>{item.tanggal}</Text>
+          <Text>  </Text>
+          <Text>{item.pukul}</Text>
+        </View>
+          <Text style={{color:Ijo, fontSize: 12}}>{item.layanan}</Text>
       </View>
     </Pressable>
   )
