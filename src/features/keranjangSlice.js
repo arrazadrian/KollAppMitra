@@ -23,7 +23,6 @@ export const { masukKeranjang, keluarKeranjang } = keranjangSlice.actions
 export const pilihProdukKeranjang = (state) => state.keranjang.items;
 
 export const pilihprodukID = (state, id) => 
-    state.keranjang.items.filter((item) => item.id === id );
-    
+  state.keranjang.items.filter((item) => item.id === id );
 
 export default keranjangSlice.reducer
