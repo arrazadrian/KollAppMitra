@@ -41,20 +41,6 @@ const HomeScreen = ({ navigation }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  // useEffect(() => {
-  //   async function getuserHome(){
-  //     try {
-  //       let docRef = doc(db, "mitra", auth.currentUser.uid, );
-  //       const docSnap = await getDoc(docRef);
-  //       setNamalengkap(docSnap.data().namalengkap);
-  //       console.log('getuserHome jalan (Home Screen)')
-  //     } catch (err){
-  //     Alert.alert('There is an error.', err.message)
-  //     }
-  //   }
-  //   getuserHome();
-  // },[])
-
   useEffect(() =>{
     async function getuserHome(){
       try{
@@ -97,7 +83,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={{flex: 1}}>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
-              <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMMM YYYY')}</Text>
+              <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
           </View>
           <View style={styles.status}>

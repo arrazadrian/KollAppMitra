@@ -11,6 +11,7 @@ const ListProduk = ({item}) => {
   const navigation = useNavigation();
   
   const pindahDetail = () => {
+    //console.log(item.id)
     navigation.navigate('DetailScreen', { 
       namaproduk: item.namaproduk,
       deskproduk: item.deskproduk,
