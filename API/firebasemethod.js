@@ -1,5 +1,3 @@
-import firebase from "firebase/compat/app";
-import { useNavigation } from '@react-navigation/native';
 import { 
     getAuth, 
     onAuthStateChanged, 
