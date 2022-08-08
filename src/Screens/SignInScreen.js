@@ -81,7 +81,6 @@ const SignInScreen = () => {
               </View>
           </View>
           </TouchableWithoutFeedback>
-     
   )
 }
 
