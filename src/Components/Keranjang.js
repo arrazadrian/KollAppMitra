@@ -3,12 +3,15 @@ import React from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from "react-redux";
+import { keranjangTotalSelector } from "../Redux/selectors";
 
 
 
 const Keranjang = () => {
 
   const navigation = useNavigation();
+  const total = useSelector(keranjangTotalSelector);
 
   return (
     <View>
@@ -19,7 +22,7 @@ const Keranjang = () => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>0</Text>
+                          <Text>{total}</Text>
                           <Text>  </Text>
                           <Text>Produk</Text>
                       </Text>
@@ -47,13 +50,13 @@ const styles = StyleSheet.create({
         backgroundColor: Ijo,
         alignItems:'center',
         justifyContent:'space-between',
+        alignSelf:'center',
         padding: 10,
         borderRadius: 10,
         position: 'absolute',
         width: '95%',
         borderColor: IjoTua,
         borderWidth: 1,
-        margin: 10,
-        bottom: 5,
+        bottom:20,
       },
 })

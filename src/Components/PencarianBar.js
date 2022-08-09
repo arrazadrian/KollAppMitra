@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, Image, Dimensions} from 'react-nativ
 import React, { useState } from 'react'
 import { Search } from '../assets/Icons/Index'
 import { KollLong } from '../assets/Images/Index'
+import { Kuning } from '../Utils/Warna'
 
 const { width, height } = Dimensions.get('window')
 
@@ -21,7 +22,7 @@ const PencarianBar = () => {
             setInputan(inputan);
           }}
           /> 
-      <Search style={{position: 'absolute', top: width*0.024, left: width*0.24}} />
+      <Search style={{position: 'absolute', top: height*0.03, left: width*0.26}} />
     </View>
   )
 }
@@ -33,7 +34,11 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: 'center',
     width:'100%',
-    height: 40,
+    height: '10%',
+    position:'absolute',
+    top:0,
+    padding:10,
+    backgroundColor:Kuning,
   },
   container:{
     flex: 3,
