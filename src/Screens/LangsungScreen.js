@@ -33,27 +33,26 @@ const kosongproduk = () => {
 
 const atasjual = () => {
   return(
-    <View style={{ paddingHorizontal: 10 }}>
-
-    <View>
-        <View style={{marginBottom:10 }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
-        </View>
-        <View>
-        <FlatList
-            horizontal= {true}
-            data={jeniskategori}
-            renderItem= {({item}) => <LogoKategori item={item} />}
-            keyExtractor={ jeniskategori => jeniskategori.id}
-            showsHorizontalScrollIndicator={false}
-            bounces={false}
-        />
-        </View>
+    <View style={{ paddingHorizontal: 10, paddingTop:'18%' }}>
+      <View>
+          <View style={{marginBottom:10 }}>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+          </View>
+          <View>
+              <FlatList
+                  horizontal= {true}
+                  data={jeniskategori}
+                  renderItem= {({item}) => <LogoKategori item={item} />}
+                  keyExtractor={ jeniskategori => jeniskategori.id}
+                  showsHorizontalScrollIndicator={false}
+                  bounces={false}
+              />
+          </View>
+      </View>
+      <View style={{marginBottom:10 }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
+      </View>
     </View>
-    <View style={{marginBottom:10 }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
-    </View>
-  </View>
   )
 }
 
@@ -114,9 +113,6 @@ const LangsungScreen = ({ navigation }) => {
         </View>
       ):(
         <View>
-            <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
-                <PencarianBar/>
-            </View>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 numColumns={3}
@@ -135,6 +131,7 @@ const LangsungScreen = ({ navigation }) => {
                 </View>
                 }
             />
+            <PencarianBar/>
             <Keranjang/>
         </View>
       )}
@@ -150,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
   },
   bawah:{
-    marginTop: 80,
+    marginTop: '10%',
     flex: 1,
     width: '100%',
     height: height*0.15,

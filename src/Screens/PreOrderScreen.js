@@ -28,10 +28,7 @@ const kosongpre = () => {
 
 const ataspre = () => {
   return(
-    <View>
-      <View style={{flexDirection:'row', marginVertical:10}}>
-        <PencarianBar />
-      </View>
+    <View style={{paddingTop:'20%'}}>
       <View style={{marginBottom: 10}}>
         <Text style={styles.judul}>Produk Pre-Order</Text>
         <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>
@@ -112,6 +109,7 @@ const PreOrderScreen = ({navigation}) => {
       </View>
       </View>
       )}
+    <PencarianBar />
     <Pressable style={styles.tambah}
           onPress={() => navigation.navigate('TambahPreScreen')}
           >
@@ -141,8 +139,8 @@ const styles = StyleSheet.create({
   },
   tambah:{
     position: 'absolute',
-    bottom: 15,
-    right: 20,
+    bottom: 20,
+    right: 10,
     height: 70,
     width: 70,
     backgroundColor: Ijo,

@@ -4,14 +4,10 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from "react-redux";
-import { keranjangTotalSelector } from "../Redux/selectors";
-
-
 
 const Keranjang = () => {
 
   const navigation = useNavigation();
-  const total = useSelector(keranjangTotalSelector);
 
   return (
     <View>
@@ -22,7 +18,7 @@ const Keranjang = () => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>{total}</Text>
+                          <Text>0</Text>
                           <Text>  </Text>
                           <Text>Produk</Text>
                       </Text>
