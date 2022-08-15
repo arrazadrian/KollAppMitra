@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
   },
   bawah:{
-    marginTop: '10%',
+    marginTop: '30%',
     flex: 1,
     width: '100%',
     height: height*0.15,
