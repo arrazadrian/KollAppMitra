@@ -5,17 +5,24 @@ import QuantitySelector from './QuantitySelector'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { Minus, Plus } from '../assets/Icons/Index'
-import { masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../features/keranjangSlice'
+import { keluarKeranjang, masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../features/keranjangSlice'
 
 const { width, height } = Dimensions.get('window')
 
 const JualProduk = ({item}) => {
-  const items = useSelector((state) => pilihprodukID(state, item.id));
+  const items = useSelector((state) => pilihprodukID(state, item));
+
   const dispatch = useDispatch();
   
   const tambahProduk = () => {
     dispatch(masukKeranjang({item}))
   };
+
+  const buangProduk = () => {
+    if(!items.length > 0) return;
+    
+    dispatch(keluarKeranjang({item}))
+  }
 
   console.log(items);
 
@@ -23,12 +30,12 @@ const JualProduk = ({item}) => {
   
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
-      namaproduk: item.namaproduk,
-      deskproduk: item.deskproduk,
-      image: item.image,
-      harga: item.harga,
-      satuan: item.satuan,
-      kuantitas: item.kuantitas,
+      namaproduk: namaproduk,
+      deskproduk: deskproduk,
+      image: image,
+      harga: harga,
+      satuan: satuan,
+      kuantitas:kuantitas,
     })
   }
 
@@ -53,6 +60,8 @@ const JualProduk = ({item}) => {
         </View>
       <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
         <TouchableOpacity
+          disabled={!items.length}
+          onPress={buangProduk}
         > 
             <Minus/>
         </TouchableOpacity>

@@ -12,7 +12,19 @@ export const keranjangSlice = createSlice({
       state.items = [...state.items, action.payload] 
     },
     keluarKeranjang: (state, action) => {
-      state.value -= 1
+      const index = state.items.findIndex((item) => item.item.id === action.payload.item.id);
+
+      let keranjangBaru = [...state.items];
+
+      if(index >= 0){
+        keranjangBaru.splice(index,1);
+      } else {
+        console.warn(
+          'Tidak bisa dibuang, karena tidak ada di keranjang'
+        );
+      }
+
+      state.items = keranjangBaru;
     },
   },
 })
@@ -22,8 +34,11 @@ export const { masukKeranjang, keluarKeranjang } = keranjangSlice.actions
 
 export const pilihProdukKeranjang = (state) => state.keranjang.items;
 
-export const pilihprodukID = (state, id) => 
-  state.keranjang.items.filter((item) => item.id === id   );
+export const pilihprodukID = (state, produk) => 
+  state.keranjang.items.filter((item) => item.item.id === produk.id);
   
+
+export const totalHarga = (state) => state.keranjang.items.reduce((total, item) => 
+total += Number(item.item.harga), 0)
 
 export default keranjangSlice.reducer

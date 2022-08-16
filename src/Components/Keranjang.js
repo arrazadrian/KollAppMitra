@@ -4,10 +4,12 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from "react-redux";
+import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
 
 const Keranjang = () => {
-
+  const items = useSelector(pilihProdukKeranjang)
   const navigation = useNavigation();
+  const totalhargaKeranjang = useSelector(totalHarga)
 
   return (
     <View>
@@ -18,13 +20,13 @@ const Keranjang = () => {
                     </View>
                     <View>
                       <Text style={{color:Putih, fontWeight:'bold'}}>
-                          <Text>0</Text>
+                          <Text>{items.length}</Text>
                           <Text>  </Text>
                           <Text>Produk</Text>
                       </Text>
                       <Text style={{color:Putih, fontWeight:'bold', fontSize: 20}}>
                           <Text>Rp </Text>
-                          <Text>0</Text>
+                          <Text>{totalhargaKeranjang}</Text>
                       </Text>
                     </View>
                   </View>
