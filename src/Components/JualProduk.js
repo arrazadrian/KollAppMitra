@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { Ijo, Putih } from '../Utils/Warna'
-import QuantitySelector from './QuantitySelector'
+import { Abu, Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Minus, Plus } from '../assets/Icons/Index'
 import { keluarKeranjang, masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../features/keranjangSlice'
 
 const { width, height } = Dimensions.get('window')
@@ -24,18 +22,18 @@ const JualProduk = ({item}) => {
     dispatch(keluarKeranjang({item}))
   }
 
-  console.log(items);
+  //console.log(items);
 
   const navigation = useNavigation();
   
   const pindahDetail = () => {
     navigation.navigate('DetailScreen', { 
-      namaproduk: namaproduk,
-      deskproduk: deskproduk,
-      image: image,
-      harga: harga,
-      satuan: satuan,
-      kuantitas:kuantitas,
+      namaproduk: item.namaproduk,
+      deskproduk: item.deskproduk,
+      image: item.image,
+      harga: item.harga,
+      satuan: item.satuan,
+      kuantitas: item.kuantitas,
     })
   }
 
@@ -60,16 +58,32 @@ const JualProduk = ({item}) => {
         </View>
       <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
         <TouchableOpacity
+          style={{        
+            height: width * 0.07,
+            width: width * 0.07,
+            borderRadius: 20,
+            backgroundColor: !items.length ? (Abu) : (IjoTua),
+            alignItems:'center',
+            justifyContent:'center',
+          }}
           disabled={!items.length}
           onPress={buangProduk}
         > 
-            <Minus/>
+          <Text style={styles.logoTombol}>-</Text>
         </TouchableOpacity>
         <Text style={{fontSize: 20}}>{items.length}</Text>
         <TouchableOpacity
+          style={{
+            height: width * 0.07,
+            width: width * 0.07,
+            borderRadius: 20,
+            backgroundColor: IjoTua,
+            alignItems:'center',
+            justifyContent:'center',
+          }}
           onPress={tambahProduk}
         >
-            <Plus/>
+          <Text style={styles.logoTombol}>+</Text>
         </TouchableOpacity>
     </View>
        </View> 
@@ -97,5 +111,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: 'center',
         resizeMode: 'cover',
+    },
+    logoTombol:{
+        color: Putih,
+        fontWeight: 'bold',
+        fontSize: 16,
     }
 })
