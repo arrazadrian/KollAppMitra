@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'rea
 import React from 'react'
 import { Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { DPdefault } from '../assets/Images/Index'
-import { Minus, Plus } from '../assets/Icons/Index'
 
 
 const { width, height } = Dimensions.get('window')
@@ -18,12 +17,30 @@ const ProdukKeranjang = () => {
             </View>
         </View>
         <View style={{flexDirection:'row', marginTop: 5, alignItems:'center'}}>
-            <TouchableOpacity> 
-                <Minus/>
+            <TouchableOpacity
+                style={{
+                    height: width * 0.07,
+                    width: width * 0.07,
+                    borderRadius: 20,
+                    backgroundColor: IjoTua,
+                    alignItems:'center',
+                    justifyContent:'center',
+                }}
+            >
+                <Text style={styles.logoTombol}>-</Text>
             </TouchableOpacity>
             <Text style={{fontSize: 20, marginHorizontal: 15}}>4</Text>
-            <TouchableOpacity>
-                <Plus/>
+            <TouchableOpacity
+                style={{
+                    height: width * 0.07,
+                    width: width * 0.07,
+                    borderRadius: 20,
+                    backgroundColor: IjoTua,
+                    alignItems:'center',
+                    justifyContent:'center',
+                }}
+            >
+                <Text style={styles.logoTombol}>+</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -56,4 +73,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight:'bold',
     },
+    logoTombol:{
+        color: Putih,
+        fontWeight: 'bold',
+        fontSize: 16,
+    }
 })
