@@ -1,15 +1,20 @@
-import { StyleSheet, Text, ScrollView, View, Pressable, Alert, Dimensions, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, ScrollView, View, Pressable, Alert, Dimensions, TouchableOpacity, FlatList } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { IjoTua, Kuning, Putih, Ijo, IjoMint } from '../Utils/Warna'
 import ListReceipt from '../Components/ListReceipt'
 import { useNavigation } from '@react-navigation/native'
 import ProdukKeranjang from '../Components/ProdukKeranjang'
+import { useDispatch, useSelector } from 'react-redux'
+import { pilihProdukKeranjang } from '../features/keranjangSlice'
 
 const { width, height } = Dimensions.get('window')
 
-const CheckoutLangScreen = ({item}) => {
+const CheckoutLangScreen = () => {
 
   const navigation = useNavigation();
+  const items = useSelector(pilihProdukKeranjang)
+  const dispatch = useDispatch();
+  const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -31,13 +36,26 @@ const CheckoutLangScreen = ({item}) => {
           )
   }
 
+  useEffect(() => {
+    const kelompok = items.reduce((results, item) => {
+      (results[item.item.id] = results[item.item.id] || []).push(item);
+      return results;
+    }, {});
+
+    setKelompokProduk(kelompok);
+  }, [items]);
+
+  console.log(kelompokProduk);
+
   return (
     <View style={styles.latar}>
       <View style={styles.atas}>
-        <ProdukKeranjang/>
-        <ProdukKeranjang/>
-        <ProdukKeranjang/>
-        <ProdukKeranjang/>
+      <FlatList
+                showsVerticalScrollIndicator={false}
+                data={kelompokProduk}
+                renderItem= {({items}) => <ProdukKeranjang items={items} />}
+                keyExtractor={ items => items.item.id}
+      />
       </View>
       <View style={styles.simpulan}>
           <View style={styles.desk}>

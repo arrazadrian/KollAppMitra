@@ -6,14 +6,14 @@ import { DPdefault } from '../assets/Images/Index'
 
 const { width, height } = Dimensions.get('window')
 
-const ProdukKeranjang = () => {
+const ProdukKeranjang = ({items}) => {
   return (
     <View style={styles.card}>
         <View style={{flexDirection:'row', alignItems:'center', marginRight:25}}>
-            <Image source={DPdefault} style={styles.foto}/>
+            <Image source={{uri: items[0]?.image}} style={styles.foto}/>
             <View>
-                <Text style={styles.produk} numberOfLines={1}>Bawang Merah</Text>
-                <Text style={styles.harga}>Rp43000</Text>
+                <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
+                <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
             </View>
         </View>
         <View style={{flexDirection:'row', marginTop: 5, alignItems:'center'}}>
@@ -29,7 +29,7 @@ const ProdukKeranjang = () => {
             >
                 <Text style={styles.logoTombol}>-</Text>
             </TouchableOpacity>
-            <Text style={{fontSize: 20, marginHorizontal: 15}}>4</Text>
+            <Text style={{fontSize: 20, marginHorizontal: 15}}>{items.length}</Text>
             <TouchableOpacity
                 style={{
                     height: width * 0.07,
