@@ -5,7 +5,7 @@ import ListReceipt from '../Components/ListReceipt'
 import { useNavigation } from '@react-navigation/native'
 import ProdukKeranjang from '../Components/ProdukKeranjang'
 import { useDispatch, useSelector } from 'react-redux'
-import { pilihProdukKeranjang } from '../features/keranjangSlice'
+import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
 
 const { width, height } = Dimensions.get('window')
 
@@ -38,7 +38,7 @@ const CheckoutLangScreen = () => {
 
   useEffect(() => {
     const kelompok = items.reduce((results, item) => {
-      (results[item.item.id] = results[item.item.id] || []).push(item);
+      (results[item.item.id] = results[item.item.id] || []).push(item.item);
       return results;
     }, {});
 
@@ -47,24 +47,27 @@ const CheckoutLangScreen = () => {
 
   console.log(kelompokProduk);
 
+  const totalhargaKeranjang = useSelector(totalHarga)
+
   return (
     <View style={styles.latar}>
       <View style={styles.atas}>
       <FlatList
                 showsVerticalScrollIndicator={false}
                 data={kelompokProduk}
-                renderItem= {({items}) => <ProdukKeranjang items={items} />}
-                keyExtractor={ items => items.item.id}
+                //renderItem= {({item}) => <JualProduk item={item} />}
+                renderItem= {({items}) => <ProdukKeranjang item={items.item} />}
+                keyExtractor={ item => item.item.id}
       />
       </View>
       <View style={styles.simpulan}>
           <View style={styles.desk}>
             <Text>Subtotal</Text>
-            <Text>Rp21000</Text>
+            <Text>Rp{totalhargaKeranjang}</Text>
           </View>
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
-            <Text>Rp4000</Text>
+            <Text>Rp1000</Text>
           </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
@@ -72,7 +75,7 @@ const CheckoutLangScreen = () => {
           <View style={styles.desk}>
             <View>
               <Text>Harga Total</Text>
-              <Text style={styles.harga}>Rp25000</Text>
+              <Text style={styles.harga}>Rp{totalhargaKeranjang + 1000}</Text>
             </View>
             <TouchableOpacity style={styles.tombol}>
               <Text style={{color:Putih, fontWeight:'bold'}}>Selesaikan Pesanan</Text>
