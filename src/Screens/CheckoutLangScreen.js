@@ -91,7 +91,7 @@ const CheckoutLangScreen = () => {
                     alignItems:'center',
                     justifyContent:'center',
                 }}
-                onPress={buangProduk}
+                onPress={() => dispatch(keluarKeranjang({id:key}))}
             >
                 <Text style={styles.logoTombol}>-</Text>
             </TouchableOpacity>
