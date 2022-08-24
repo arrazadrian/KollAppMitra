@@ -37,8 +37,6 @@ const JualProduk = ({item}) => {
     })
   }
 
-
-  const [quantity, setQuantity] = useState(0)
   return (
     <View>
        <View style={styles.container}>

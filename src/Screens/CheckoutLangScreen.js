@@ -1,14 +1,16 @@
-import { StyleSheet, Text, ScrollView, View, Pressable, Alert, Dimensions, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, ScrollView, Image, View, Pressable, Alert, Dimensions, TouchableOpacity, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { IjoTua, Kuning, Putih, Ijo, IjoMint } from '../Utils/Warna'
-import ListReceipt from '../Components/ListReceipt'
+//import ListReceipt from '../Components/ListReceipt'
 import { useNavigation } from '@react-navigation/native'
-import ProdukKeranjang from '../Components/ProdukKeranjang'
+//import ProdukKeranjang from '../Components/ProdukKeranjang'
 import { useDispatch, useSelector } from 'react-redux'
 import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
+import { keluarKeranjang, masukKeranjang, pilihprodukID } from '../features/keranjangSlice'
+
 
 const { width, height } = Dimensions.get('window')
-
+ 
 const CheckoutLangScreen = () => {
 
   const navigation = useNavigation();
@@ -49,16 +51,68 @@ const CheckoutLangScreen = () => {
 
   const totalhargaKeranjang = useSelector(totalHarga)
 
+  const tambahProduk = () => {
+    dispatch(masukKeranjang({item}))
+  };
+
+  const buangProduk = () => {
+    if(!items.length > 0) return;
+    
+    dispatch(keluarKeranjang({item}))
+  }
+
   return (
     <View style={styles.latar}>
       <View style={styles.atas}>
-      <FlatList
+      {/* <FlatList
                 showsVerticalScrollIndicator={false}
                 data={kelompokProduk}
                 //renderItem= {({item}) => <JualProduk item={item} />}
                 renderItem= {({items}) => <ProdukKeranjang item={items.item} />}
                 keyExtractor={ item => item.item.id}
-      />
+      /> */}
+      {Object.entries(kelompokProduk).map(([key, items]) => (
+        <View key={key}>
+             <View style={styles.card}>
+        <View style={{flexDirection:'row', alignItems:'center', marginRight:25}}>
+            <Image source={{uri: items[0]?.image}} style={styles.foto}/>
+            <View>
+                <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
+                <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
+            </View>
+        </View>
+        <View style={{flexDirection:'row', marginTop: 5, alignItems:'center'}}>
+            <TouchableOpacity
+                style={{
+                    height: width * 0.07,
+                    width: width * 0.07,
+                    borderRadius: 20,
+                    backgroundColor: IjoTua,
+                    alignItems:'center',
+                    justifyContent:'center',
+                }}
+                onPress={buangProduk}
+            >
+                <Text style={styles.logoTombol}>-</Text>
+            </TouchableOpacity>
+            <Text style={{fontSize: 20, marginHorizontal: 15}}>{items.length}</Text>
+            <TouchableOpacity
+                style={{
+                    height: width * 0.07,
+                    width: width * 0.07,
+                    borderRadius: 20,
+                    backgroundColor: IjoTua,
+                    alignItems:'center',
+                    justifyContent:'center',
+                }}
+                onPress={tambahProduk}
+            >
+                <Text style={styles.logoTombol}>+</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
+        </View>
+      ))}
       </View>
       <View style={styles.simpulan}>
           <View style={styles.desk}>
@@ -95,7 +149,35 @@ const styles = StyleSheet.create({
     },
     atas:{
       paddingHorizontal:10
-  },
+    },
+    card:{
+      backgroundColor: Putih,
+      padding: 10,
+      flexDirection: 'row',
+      borderRadius: 10,
+      marginVertical: 4,
+    },
+    foto:{
+      width: width * 0.2,
+      height: width * 0.2,
+      borderColor: Ijo,
+      borderWidth: 1,
+      borderRadius: 10,
+      marginRight: 10,
+    },
+    produk:{
+        fontSize: 16,
+        width: width * 0.3,
+    },
+    harga:{
+        fontSize: 18,
+        fontWeight:'bold',
+    },
+    logoTombol:{
+        color: Putih,
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
     simpulan:{
       position:'absolute',
       padding: 20,
@@ -118,5 +200,5 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
       backgroundColor: Ijo,
-    }
+    },
 })

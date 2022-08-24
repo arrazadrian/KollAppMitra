@@ -112,7 +112,7 @@ const LangsungScreen = ({ navigation }) => {
           <ActivityIndicator size="large" color={IjoTua}/>
         </View>
       ):(
-        <View>
+        <View> 
             <FlatList
                 showsVerticalScrollIndicator={false}
                 numColumns={3}

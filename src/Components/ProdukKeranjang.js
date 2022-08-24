@@ -10,10 +10,10 @@ const ProdukKeranjang = ({items}) => {
   return (
     <View style={styles.card}>
         <View style={{flexDirection:'row', alignItems:'center', marginRight:25}}>
-            <Image source={{uri: items[0]?.image}} style={styles.foto}/>
+            <Image source={{uri: image}} style={styles.foto}/>
             <View>
-                <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
-                <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
+                <Text style={styles.produk} numberOfLines={1}>{namaproduk}</Text>
+                <Text style={styles.harga}>Rp{harga}</Text>
             </View>
         </View>
         <View style={{flexDirection:'row', marginTop: 5, alignItems:'center'}}>

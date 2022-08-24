@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
             alignItems:'baseline',
             marginBottom: 20,
             }}>
-            <View style={{flex: 1}}>
+            <View>
               <Text style={{
                 fontSize: 20,
                 color: Ijo,
@@ -81,7 +81,7 @@ const HomeScreen = ({ navigation }) => {
                 color: IjoTua,
               }}>{namalengkap}</Text>
             </View>
-            <View style={{flex: 1}}>
+            <View>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
