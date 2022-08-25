@@ -72,16 +72,16 @@ const CheckoutLangScreen = () => {
                 keyExtractor={ item => item.item.id}
       /> */}
       {Object.entries(kelompokProduk).map(([key, items]) => (
-        <View key={key}>
-             <View style={styles.card}>
-        <View style={{flexDirection:'row', alignItems:'center', marginRight:25}}>
+      <View key={key}>
+      <View style={styles.card}>
+        <View style={{flexDirection:'row', alignItems:'center'}}>
             <Image source={{uri: items[0]?.image}} style={styles.foto}/>
             <View>
                 <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
                 <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
             </View>
         </View>
-        <View style={{flexDirection:'row', marginTop: 5, alignItems:'center'}}>
+        <View style={{flexDirection:'row', marginTop: 5, alignItems:'center', paddingRight: 10}}>
             <TouchableOpacity
                 style={{
                     height: width * 0.07,
@@ -111,7 +111,7 @@ const CheckoutLangScreen = () => {
             </TouchableOpacity>
         </View>
     </View>
-        </View>
+    </View>
       ))}
       </View>
       <View style={styles.simpulan}>
@@ -156,10 +156,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       borderRadius: 10,
       marginVertical: 4,
+      justifyContent:'space-between',
     },
     foto:{
-      width: width * 0.2,
-      height: width * 0.2,
+      width: width * 0.15,
+      height: width * 0.15,
       borderColor: Ijo,
       borderWidth: 1,
       borderRadius: 10,
