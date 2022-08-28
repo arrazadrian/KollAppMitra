@@ -62,11 +62,17 @@ const CheckoutLangScreen = () => {
   const buangProduk = () => {
     if(!items.length > 0) return;
     
-    dispatch(keluarKeranjang({kelompokProduk}))
+    dispatch(keluarKeranjang({items}))
   }
 
   return (
     <View style={styles.latar}>
+      <View style={styles.pelanggan}>
+        <Text>Scan QR Code pelanggan bila pelanggan membutuhkan struk belanjaan</Text>
+        <TouchableOpacity style={styles.scan}>
+          <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView style={styles.atas}>
       {/* <FlatList
                 showsVerticalScrollIndicator={false}
@@ -150,6 +156,20 @@ const styles = StyleSheet.create({
     latar:{
       backgroundColor: Kuning,
       flex: 1,
+    },
+    pelanggan:{
+      backgroundColor: Putih,
+      marginBottom: 5,
+      padding: 10,
+      flexDirection:'row',
+      justifyContent:'space-between',
+    },
+    scan:{
+      backgroundColor: IjoMint,
+      borderRadius: 5,
+      alignItems:'center',
+      justifyContent:'center',
+      padding: 10,
     },
     atas:{
       paddingHorizontal:10
