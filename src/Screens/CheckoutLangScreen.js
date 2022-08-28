@@ -69,7 +69,9 @@ const CheckoutLangScreen = () => {
     <View style={styles.latar}>
       <View style={styles.pelanggan}>
         <Text>Scan QR Code pelanggan bila pelanggan membutuhkan struk belanjaan</Text>
-        <TouchableOpacity style={styles.scan}>
+        <TouchableOpacity style={styles.scan}
+          onPress={() => navigation.push('ScanScreen')}
+        >
           <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
         </TouchableOpacity>
       </View>
