@@ -5,8 +5,12 @@ import { IjoTua, Kuning, Putih, Ijo, IjoMint } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 //import ProdukKeranjang from '../Components/ProdukKeranjang'
 import { useDispatch, useSelector } from 'react-redux'
-import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
-import { keluarKeranjang, masukKeranjang, pilihprodukID } from '../features/keranjangSlice'
+import { 
+  pilihProdukKeranjang, 
+  totalHarga, 
+  keluarKeranjang, 
+  masukKeranjang
+ } from '../features/keranjangSlice'
 
 
 const { width, height } = Dimensions.get('window')
@@ -58,12 +62,12 @@ const CheckoutLangScreen = () => {
   const buangProduk = () => {
     if(!items.length > 0) return;
     
-    dispatch(keluarKeranjang({item}))
+    dispatch(keluarKeranjang({kelompokProduk}))
   }
 
   return (
     <View style={styles.latar}>
-      <View style={styles.atas}>
+      <ScrollView style={styles.atas}>
       {/* <FlatList
                 showsVerticalScrollIndicator={false}
                 data={kelompokProduk}
@@ -91,7 +95,7 @@ const CheckoutLangScreen = () => {
                     alignItems:'center',
                     justifyContent:'center',
                 }}
-                onPress={() => dispatch(keluarKeranjang({id:key}))}
+                onPress={buangProduk}
             >
                 <Text style={styles.logoTombol}>-</Text>
             </TouchableOpacity>
@@ -113,7 +117,7 @@ const CheckoutLangScreen = () => {
     </View>
     </View>
       ))}
-      </View>
+      </ScrollView>
       <View style={styles.simpulan}>
           <View style={styles.desk}>
             <Text>Subtotal</Text>
@@ -144,8 +148,8 @@ export default CheckoutLangScreen
 
 const styles = StyleSheet.create({
     latar:{
-        backgroundColor: Kuning,
-        flex: 1,
+      backgroundColor: Kuning,
+      flex: 1,
     },
     atas:{
       paddingHorizontal:10
