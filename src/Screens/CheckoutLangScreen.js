@@ -15,12 +15,13 @@ import {
 
 const { width, height } = Dimensions.get('window')
  
-const CheckoutLangScreen = () => {
+const CheckoutLangScreen = ({route}) => {
 
   const navigation = useNavigation();
   const items = useSelector(pilihProdukKeranjang)
   const dispatch = useDispatch();
   const [kelompokProduk, setKelompokProduk] = useState([]);
+  const [pelanggan, setPelanggan] = useState();
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -65,16 +66,36 @@ const CheckoutLangScreen = () => {
     dispatch(keluarKeranjang({items}))
   }
 
+  useEffect(() => {
+    if (route.params?.pelanggan) {
+      // Post updated, do something with `route.params.post`
+      // For example, send the post to the server
+      setPelanggan(route.params?.pelanggan)
+      console.log(route.params?.pelanggan)
+    } else {
+      console.log('Ga masuk gan')
+    }
+  }, [route.params?.pelanggan]);
+
+  
+
   return (
     <View style={styles.latar}>
-      <View style={styles.pelanggan}>
-        <Text>Scan QR Code pelanggan bila pelanggan membutuhkan struk belanjaan</Text>
-        <TouchableOpacity style={styles.scan}
-          onPress={() => navigation.push('ScanScreen')}
-        >
-          <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
-        </TouchableOpacity>
-      </View>
+      {pelanggan?(
+        <View>
+          <Text>Nama Pelanggan:{pelanggan}</Text>  
+        </View>
+      ):(
+        <View style={styles.pelanggan}>
+          <Text>Scan QR Code pelanggan bila pelanggan membutuhkan struk belanjaan</Text>
+          <TouchableOpacity style={styles.scan}
+            onPress={() => navigation.push('ScanScreen')}
+          >
+            <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <ScrollView style={styles.atas}>
       {/* <FlatList
                 showsVerticalScrollIndicator={false}

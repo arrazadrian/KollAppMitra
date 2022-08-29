@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Pressable, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Ijo, IjoTua, Kuning } from '../Utils/Warna';
+import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
+import { useNavigation } from '@react-navigation/native'
+
 
 const { width, height } = Dimensions.get('window')
 
-const ScanScreen = () => {
+const ScanScreen = ({route}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+
+    const navigation = useNavigation();
 
 
     const getBarCodeScannerPermissions = async () => {
@@ -23,7 +27,12 @@ const ScanScreen = () => {
 
       const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        console.log(data)
+        //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        navigation.navigate('CheckoutLangScreen',{
+          params: { pelanggan: data },
+          merge: true,
+        })
       };
     
       if (hasPermission === null) {
@@ -55,6 +64,18 @@ const ScanScreen = () => {
         <Text style={styles.perintah}>
             Arahkan kamera ke QR Code milik pelanggan
         </Text>
+        <TouchableOpacity style={styles.kembali}
+          onPress={()=>navigation.goBack()}
+        >
+          <Text style={{
+            color: Putih,
+            fontSize: 20,
+            fontWeight:'bold',
+            textAlign:'center'
+          }}>
+            Kembali
+          </Text>
+        </TouchableOpacity>
     </View>
   )
 }
@@ -70,7 +91,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Kuning,
-        justifyContent:'center',
+        paddingTop: height * 0.1,
       },
     scanner:{
         width: 300,
@@ -87,5 +108,14 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color: Ijo,
         textAlign:'center',
-    }
+    },
+    kembali:{
+        backgroundColor: Ijo,
+        borderRadius: 20,
+        width: width * 0.8,
+        height: height * 0.06,
+        alignSelf: 'center',
+        justifyContent:'center',
+        marginTop: height * 0.1,
+    },
 })
