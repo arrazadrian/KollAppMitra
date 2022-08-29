@@ -10,9 +10,9 @@ const { width, height } = Dimensions.get('window')
 const ScanScreen = ({route}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [hasilscan, setHasilscan] = useState();
 
     const navigation = useNavigation();
-
 
     const getBarCodeScannerPermissions = async () => {
       (async () => {
@@ -27,10 +27,12 @@ const ScanScreen = ({route}) => {
 
       const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        console.log(data)
+        console.log(data + ' di tempat SCAN')
+        setHasilscan(data)
         //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        navigation.navigate('CheckoutLangScreen',{
-          params: { pelanggan: data },
+        navigation.navigate({
+          name: 'CheckoutLangScreen',
+          params: { kode: hasilscan },
           merge: true,
         })
       };

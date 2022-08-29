@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
 
         console.log('getuserHome jalan (Home Screen)')
           // Respond to data
-          // ...
+
         });
         //unsubscribe();
       } catch (err){

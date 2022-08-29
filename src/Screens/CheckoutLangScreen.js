@@ -15,9 +15,9 @@ import {
 
 const { width, height } = Dimensions.get('window')
  
-const CheckoutLangScreen = ({route}) => {
+const CheckoutLangScreen = ({navigation, route}) => {
 
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const items = useSelector(pilihProdukKeranjang)
   const dispatch = useDispatch();
   const [kelompokProduk, setKelompokProduk] = useState([]);
@@ -52,8 +52,8 @@ const CheckoutLangScreen = ({route}) => {
     setKelompokProduk(kelompok);
   }, [items]);
 
-  console.log(kelompokProduk);
-
+  //console.log(kelompokProduk);
+ 
   const totalhargaKeranjang = useSelector(totalHarga)
 
   const tambahProduk = () => {
@@ -67,23 +67,30 @@ const CheckoutLangScreen = ({route}) => {
   }
 
   useEffect(() => {
-    if (route.params?.pelanggan) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-      setPelanggan(route.params?.pelanggan)
-      console.log(route.params?.pelanggan)
-    } else {
-      console.log('Ga masuk gan')
+    async function getKodePelanggan(){
+      try{
+        if (route.params?.kode) {
+          // Post updated, do something with `route.params.post`
+          // For example, send the post to the server
+          console.log(route.params?.kode + ' di ceklang')
+          setPelanggan(route.params?.kode)
+        } else {
+          console.log('Ga masuk gan')
+        }
+      } catch (err){
+        Alert.alert('Ada error dapetin nama.', err.message)
+      } 
     }
-  }, [route.params?.pelanggan]);
+    getKodePelanggan();
+  }, [route.params?.kode]);
 
   
 
   return (
     <View style={styles.latar}>
-      {pelanggan?(
+      {route.params.kode ?(
         <View>
-          <Text>Nama Pelanggan:{pelanggan}</Text>  
+          <Text>Nama Pelanggan:{route.params?.kode}</Text>  
         </View>
       ):(
         <View style={styles.pelanggan}>
