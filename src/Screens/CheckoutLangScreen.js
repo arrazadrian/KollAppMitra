@@ -18,10 +18,12 @@ const { width, height } = Dimensions.get('window')
 const CheckoutLangScreen = ({navigation, route}) => {
 
   //const navigation = useNavigation();
-  const items = useSelector(pilihProdukKeranjang)
   const dispatch = useDispatch();
+  const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
   const [pelanggan, setPelanggan] = useState();
+
+  const { kodeUID } = useSelector(state => state.pelanggan);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -66,31 +68,31 @@ const CheckoutLangScreen = ({navigation, route}) => {
     dispatch(keluarKeranjang({items}))
   }
 
-  useEffect(() => {
-    async function getKodePelanggan(){
-      try{
-        if (route.params?.kode) {
-          // Post updated, do something with `route.params.post`
-          // For example, send the post to the server
-          console.log(route.params?.kode + ' di ceklang')
-          setPelanggan(route.params?.kode)
-        } else {
-          console.log('Ga masuk gan')
-        }
-      } catch (err){
-        Alert.alert('Ada error dapetin nama.', err.message)
-      } 
-    }
-    getKodePelanggan();
-  }, [route.params?.kode]);
-
+  // useEffect(() => {
+  //   async function getKodePelanggan(){
+  //     try{
+  //       if (route.params?.kode) {
+  //         // Post updated, do something with `route.params.post`
+  //         // For example, send the post to the server
+  //         console.log(route.params?.kode + ' di ceklang')
+  //         setPelanggan(route.params?.kode)
+  //       } else {
+  //         console.log('Ga masuk gan')
+  //       }
+  //     } catch (err){
+  //       Alert.alert('Ada error dapetin nama.', err.message)
+  //     } 
+  //   }
+  //   getKodePelanggan();
+  // }, [route.params?.kode]);
+ 
   
 
   return (
     <View style={styles.latar}>
-      {route.params.kode ?(
+      {kodeUID == "" ? (
         <View>
-          <Text>Nama Pelanggan:{route.params?.kode}</Text>  
+          <Text>Nama Pelanggan: {kodeUID}</Text>  
         </View>
       ):(
         <View style={styles.pelanggan}>

@@ -3,14 +3,17 @@ import { Text, View, StyleSheet, Button, TouchableOpacity, Dimensions } from 're
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux';
+import { update } from '../features/pelangganSlice';
 
 
 const { width, height } = Dimensions.get('window')
 
-const ScanScreen = ({route}) => {
+const ScanScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [hasilscan, setHasilscan] = useState();
+    const dispatch = useDispatch();
 
     const navigation = useNavigation();
 
@@ -29,12 +32,14 @@ const ScanScreen = ({route}) => {
         setScanned(true);
         console.log(data + ' di tempat SCAN')
         setHasilscan(data)
+        if(hasilscan != null){
+          dispatch(update({hasilscan}));
+          console.log(hasilscan + 'ini masuk if')
+          navigation.goBack();
+        } else {
+          console.log('Gagal nih ga masuk redux')
+        }
         //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        navigation.navigate({
-          name: 'CheckoutLangScreen',
-          params: { kode: hasilscan },
-          merge: true,
-        })
       };
     
       if (hasPermission === null) {
