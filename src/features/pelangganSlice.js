@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const pelangganSlice = createSlice({
     name: "pelanggan",
     initialState:{
-        kodeUID:""
+        kodeUID:"",
     },
     reducers:{
-        update: (state, action) => {
+        updateUID: (state, action) => {
             state.kodeUID = action.payload.kodeUID;
         }
     }
 });
 
-export const { update } = pelangganSlice.actions;
+export const { updateUID } = pelangganSlice.actions;
 export default pelangganSlice.reducer;

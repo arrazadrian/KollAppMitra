@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux';
-import { update } from '../features/pelangganSlice';
+import { updateUID } from '../features/pelangganSlice';
 
 
 const { width, height } = Dimensions.get('window')
@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get('window')
 const ScanScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [hasilscan, setHasilscan] = useState();
+    const [kodeUID, setKodeUID] = useState();
     const dispatch = useDispatch();
 
     const navigation = useNavigation();
@@ -29,23 +29,24 @@ const ScanScreen = () => {
     }, []);
 
       const handleBarCodeScanned = ({ data }) => {
-        let UID = data;
         setScanned(true);
-        console.log(data + ' di tempat SCAN');
-        setHasilscan(UID)
-        console.log(hasilscan)
-        console.log(UID)
-        if(hasilscan != null){
-          dispatch(update(hasilscan));
-          console.log(hasilscan + 'ini masuk if')
+        setKodeUID(data);
+      };
+
+    useEffect(() => {
+        masukredux();
+    }, [kodeUID]);
+
+      const masukredux = () =>{
+        if(kodeUID){
+          dispatch(updateUID({kodeUID}));
+          //navigation.navigate('CheckoutLangScreen');
           navigation.goBack();
+          console.log('Sukses masuk redux')
         } else {
           console.log('Gagal nih ga masuk redux')
         }
-        //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-      };
-
-      
+      };  
     
       if (hasPermission === null) {
         return <Text>Requesting for camera permission</Text>;
