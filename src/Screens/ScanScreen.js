@@ -28,12 +28,15 @@ const ScanScreen = () => {
         getBarCodeScannerPermissions();
     }, []);
 
-      const handleBarCodeScanned = ({ type, data }) => {
+      const handleBarCodeScanned = ({ data }) => {
+        let UID = data;
         setScanned(true);
-        console.log(data + ' di tempat SCAN')
-        setHasilscan(data)
+        console.log(data + ' di tempat SCAN');
+        setHasilscan(UID)
+        console.log(hasilscan)
+        console.log(UID)
         if(hasilscan != null){
-          dispatch(update({hasilscan}));
+          dispatch(update(hasilscan));
           console.log(hasilscan + 'ini masuk if')
           navigation.goBack();
         } else {
@@ -41,6 +44,8 @@ const ScanScreen = () => {
         }
         //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
       };
+
+      
     
       if (hasPermission === null) {
         return <Text>Requesting for camera permission</Text>;

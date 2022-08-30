@@ -90,7 +90,7 @@ const CheckoutLangScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.latar}>
-      {kodeUID == "" ? (
+      {kodeUID != "" ? (
         <View>
           <Text>Nama Pelanggan: {kodeUID}</Text>  
         </View>
