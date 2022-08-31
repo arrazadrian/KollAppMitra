@@ -4,10 +4,12 @@ const pelangganSlice = createSlice({
     name: "pelanggan",
     initialState:{
         kodeUID:"",
+        namapelanggan:"",
     },
     reducers:{
         updateUID: (state, action) => {
             state.kodeUID = action.payload.kodeUID;
+            state.namapelanggan = action.payload.namapelanggan;
         }
     }
 });

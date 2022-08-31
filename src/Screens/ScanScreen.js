@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, Dimensions, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux';
 import { updateUID } from '../features/pelangganSlice';
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { app } from '../../Firebase/config';
+
 
 
 const { width, height } = Dimensions.get('window')
@@ -13,6 +16,7 @@ const ScanScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [kodeUID, setKodeUID] = useState();
+    const [namapelanggan, setNamapelanggan] = useState();
     const dispatch = useDispatch();
 
     const navigation = useNavigation();
@@ -28,9 +32,23 @@ const ScanScreen = () => {
         getBarCodeScannerPermissions();
     }, []);
 
-      const handleBarCodeScanned = ({ data }) => {
+      const handleBarCodeScanned = async ({ data }) => {
         setScanned(true);
         setKodeUID(data);
+        try {
+          const db = getFirestore(app)
+          const docRef = doc(db, "pelanggan", kodeUID);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setNamapelanggan(docSnap.data().namalengkap);
+          } else {
+            Alert.alert('QR Code tidak dikenal','Pastikan QR Code berasal dari pengguna aplikasi Koll.');
+            console.log('Gagal masuk redux')
+            navigation.goBack();
+          }
+        } catch {
+          console.log('Ada yg salah bung di asycn ini')
+        }
       };
 
     useEffect(() => {
@@ -39,10 +57,9 @@ const ScanScreen = () => {
 
       const masukredux = () =>{
         if(kodeUID){
-          dispatch(updateUID({kodeUID}));
-          //navigation.navigate('CheckoutLangScreen');
-          navigation.goBack();
+          dispatch(updateUID({kodeUID, namapelanggan}));
           console.log('Sukses masuk redux')
+          navigation.goBack();
         } else {
           console.log('Gagal nih ga masuk redux')
         }

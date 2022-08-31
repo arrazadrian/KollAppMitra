@@ -15,14 +15,14 @@ import {
 
 const { width, height } = Dimensions.get('window')
  
-const CheckoutLangScreen = ({navigation, route}) => {
+const CheckoutLangScreen = () => {
 
-  //const navigation = useNavigation();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
-  const { kodeUID } = useSelector(state => state.pelanggan);
+  const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -55,6 +55,7 @@ const CheckoutLangScreen = ({navigation, route}) => {
 
   //console.log(kelompokProduk);
   console.log(kodeUID);
+  console.log(namapelanggan);
  
   const totalhargaKeranjang = useSelector(totalHarga)
 
@@ -71,12 +72,15 @@ const CheckoutLangScreen = ({navigation, route}) => {
   return (
     <View style={styles.latar}>
       {kodeUID ? (
-        <View>
-          <Text>Nama Pelanggan:{kodeUID}</Text>  
+        <View style={styles.pelanggan}>
+          <View style={{width: width * 0.6}}> 
+            <Text>Nama Pelanggan</Text>  
+            <Text style={styles.nama}>{kodeUID}</Text>  
+          </View>
           <TouchableOpacity style={styles.scan}
             onPress={() => navigation.push('ScanScreen')}
           >
-            <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
+            <Text style={{color:Ijo, fontWeight:'bold'}}>Scan Ulang</Text>
           </TouchableOpacity>
         </View>
       ):(
@@ -181,12 +185,15 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
     },
+    nama:{
+      color: IjoTua,
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
     scan:{
-      backgroundColor: IjoMint,
-      borderRadius: 5,
       alignItems:'center',
       justifyContent:'center',
-      padding: 10,
+      paddingVertical: 2,
     },
     atas:{
       paddingHorizontal:10
