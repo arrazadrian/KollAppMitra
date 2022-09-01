@@ -469,3 +469,31 @@ export async function updatestatus(status_sekarang){
     }
   })
 }; 
+
+// API 14: buatTransaksi
+// MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
+
+export const buatTransaksi = async ( namamitra, id_pelanggan, namapelanggan, produk, hargatotal, jumlah_kuantitas) => {  
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const colRef = doc(db, "transaksi");
+  addDoc(colRef, {
+    id_mitra: auth.currentUser.uid, 
+    namamitra: namamitra,
+    id_pelanggan: id_pelanggan,
+    namapelanggan: namapelanggan,
+    waktu: serverTimestamp(),
+    jenislayanan: 'Temu Langsung',
+    produk: produk,
+    hargatotal: hargatotal,
+    jumlah_kuantitas: jumlah_kuantitas,
+  })
+  .then(() => {
+    Alert.alert(
+      'Transaksi Berhasil Dibuat','Transaksi temu langsung masuk daftar transaksi.'
+    );
+  })
+  .catch((error) => {
+    console.log('Ada Error Membuat Tranksaksi.', error);
+  });
+};
