@@ -11,7 +11,7 @@ import {
   keluarKeranjang, 
   masukKeranjang
  } from '../features/keranjangSlice'
-
+ 
 
 const { width, height } = Dimensions.get('window')
  
@@ -54,8 +54,8 @@ const CheckoutLangScreen = () => {
   }, [items]);
 
   //console.log(kelompokProduk);
-  console.log(kodeUID);
-  console.log(namapelanggan);
+  // console.log(kodeUID);
+  // console.log(namapelanggan);
  
   const totalhargaKeranjang = useSelector(totalHarga)
 
@@ -75,7 +75,7 @@ const CheckoutLangScreen = () => {
         <View style={styles.pelanggan}>
           <View style={{width: width * 0.6}}> 
             <Text>Nama Pelanggan</Text>  
-            <Text style={styles.nama}>{kodeUID}</Text>  
+            <Text style={styles.nama}>{namapelanggan}</Text>  
           </View>
           <TouchableOpacity style={styles.scan}
             onPress={() => navigation.push('ScanScreen')}

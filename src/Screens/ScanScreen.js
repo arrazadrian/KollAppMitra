@@ -34,18 +34,19 @@ const ScanScreen = () => {
 
       const handleBarCodeScanned = async ({ data }) => {
         setScanned(true);
-        setKodeUID(data);
         try {
           const db = getFirestore(app)
-          const docRef = doc(db, "pelanggan", kodeUID);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            setNamapelanggan(docSnap.data().namalengkap);
-          } else {
-            Alert.alert('QR Code tidak dikenal','Pastikan QR Code berasal dari pengguna aplikasi Koll.');
-            console.log('Gagal masuk redux')
-            navigation.goBack();
-          }
+          const docRef = doc(db, "pelanggan", data);
+          await getDoc(docRef).then(docSnap => {
+            if (docSnap.exists()) {
+              setNamapelanggan(docSnap.data().namalengkap);
+              setKodeUID(data);
+            } else {
+              Alert.alert('QR Code tidak dikenal','Pastikan QR Code berasal dari pengguna aplikasi Koll.');
+              console.log('Gagal masuk redux')
+              navigation.goBack();
+            }
+          });
         } catch {
           console.log('Ada yg salah bung di asycn ini')
         }
