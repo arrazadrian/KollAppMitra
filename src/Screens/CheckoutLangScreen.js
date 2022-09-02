@@ -11,6 +11,10 @@ import {
   keluarKeranjang, 
   masukKeranjang
  } from '../features/keranjangSlice'
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { app } from '../../Firebase/config';
+import { buatTransaksi } from '../../API/firebasemethod'
+ 
  
 
 const { width, height } = Dimensions.get('window')
@@ -21,6 +25,9 @@ const CheckoutLangScreen = () => {
   const dispatch = useDispatch();
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
+  
+
+  const [namamitra, setNamamitra] = useState("");
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
 
@@ -36,13 +43,43 @@ const CheckoutLangScreen = () => {
             },
             {
               text: 'Sudah',
-              onPress: () => {
-                navigation.navigate('TQScreen')
-              }
+              onPress: {uploadtransaksiTemuLangsung}
             }
           ]
           )
   }
+
+  const uploadtransaksiTemuLangsung = () =>{
+
+    const db = getFirestore(app)
+    const docRef = doc(db, "mitra", kodeUID);
+    await getDoc(docRef).then(docSnap => {
+      if (docSnap.exists()) {
+        setNamamitra(docSnap.data().namalengkap);
+      } else {
+        Alert.alert('Mitra tidak dikenal','Wayoloo kenapa loo.');
+      }
+    });
+
+    if (!namapelanggan) {
+      Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
+    } else if (!namamitra) {
+      Alert.alert('Nama mitra kosong','Kamu siapa???.');
+    } else if (!items) {
+      Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
+    } else {
+      buatTransaksi(
+        namamitra,
+        kodeUID,
+        namapelanggan,
+        kelompokProduk,
+        totalhargaKeranjang,
+        items.length,
+      );
+      navigation.navigate("TQScreen")
+      //emptyState();
+    }
+  };
 
   useEffect(() => {
     const kelompok = items.reduce((results, item) => {
@@ -162,7 +199,9 @@ const CheckoutLangScreen = () => {
               <Text>Harga Total</Text>
               <Text style={styles.harga}>Rp{totalhargaKeranjang + 1000}</Text>
             </View>
-            <TouchableOpacity style={styles.tombol}>
+            <TouchableOpacity style={styles.tombol}
+              onPress={selesaiTransaksi}
+            >
               <Text style={{color:Putih, fontWeight:'bold'}}>Selesaikan Pesanan</Text>
             </TouchableOpacity>
           </View>
