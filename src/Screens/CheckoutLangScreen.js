@@ -9,7 +9,8 @@ import {
   pilihProdukKeranjang, 
   totalHarga, 
   keluarKeranjang, 
-  masukKeranjang
+  masukKeranjang,
+  kosongkanKeranjang,
  } from '../features/keranjangSlice'
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { app } from '../../Firebase/config';
@@ -27,7 +28,7 @@ const CheckoutLangScreen = () => {
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
-  const { id_mitra, namamitra } = useSelector(state => state.mitra);
+  const { namamitra } = useSelector(state => state.mitra);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -58,7 +59,6 @@ const CheckoutLangScreen = () => {
     } else {
       buatTransaksi(
         namamitra,
-        id_mitra,
         namapelanggan,
         kodeUID,
         kelompokProduk,
@@ -66,7 +66,7 @@ const CheckoutLangScreen = () => {
         jumlah_kuantitas,
       );
       navigation.navigate("TQScreen")
-      //emptyState();
+      dispatch(kosongkanKeranjang({}))
     }
   };
 

@@ -473,14 +473,13 @@ export async function updatestatus(status_sekarang){
 // API 14: buatTransaksi
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
-export const buatTransaksi = async ( namamitra, id_mitra, namapelanggan, kodeUID, kelompokProduk, totalhargaKeranjang, jumlah_kuantitas) => {  
+export const buatTransaksi = async ( namamitra, namapelanggan, kodeUID, kelompokProduk, totalhargaKeranjang, jumlah_kuantitas) => {  
   const auth = getAuth();
   const db = getFirestore(app);
   try{
     addDoc(collection(db, "transaksi"), {
       id_mitra: auth.currentUser.uid, 
       namamitra: namamitra,
-      id_mitra: id_mitra,
       namapelanggan: namapelanggan,
       id_pelanggan: kodeUID,
       waktu: serverTimestamp(),

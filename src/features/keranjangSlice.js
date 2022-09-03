@@ -26,6 +26,9 @@ export const keranjangSlice = createSlice({
 
       state.items = keranjangBaru;
     },
+    kosongkanKeranjang: (state) => {
+      state.items = []
+    },
   },
 })
 
