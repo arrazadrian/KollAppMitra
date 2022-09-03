@@ -10,7 +10,7 @@ const TQScreen = ({navigation}) => {
     useEffect(() => {
         setTimeout( () =>{
           navigation.replace('HomeScreen');
-        }, 5000)
+        }, 4000)
     }, [navigation]);
 
   return (

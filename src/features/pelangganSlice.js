@@ -10,9 +10,13 @@ const pelangganSlice = createSlice({
         updateUID: (state, action) => {
             state.kodeUID = action.payload.kodeUID;
             state.namapelanggan = action.payload.namapelanggan;
+        },
+        resetPelanggan: (state) => {
+            state.kodeUID = null;
+            state.namapelanggan = null;
         }
     }
 });
 
-export const { updateUID } = pelangganSlice.actions;
+export const { updateUID, resetPelanggan } = pelangganSlice.actions;
 export default pelangganSlice.reducer;

@@ -12,8 +12,7 @@ import {
   masukKeranjang,
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
-import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { app } from '../../Firebase/config';
+import { resetPelanggan } from '../features/pelangganSlice';
 import { buatTransaksi } from '../../API/firebasemethod'
  
  
@@ -67,6 +66,7 @@ const CheckoutLangScreen = () => {
       );
       navigation.navigate("TQScreen")
       dispatch(kosongkanKeranjang())
+      dispatch(resetPelanggan())
     }
   };
 
@@ -76,7 +76,15 @@ const CheckoutLangScreen = () => {
       return results;
     }, {});
 
+    const jikakosong = () => {
+      if(!items.length){
+        navigation.goBack();
+      }
+    };
+    
     setKelompokProduk(kelompok);
+    jikakosong();
+
   }, [items]);
 
   //console.log(kelompokProduk);
