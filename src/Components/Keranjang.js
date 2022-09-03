@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
-import { Abu, Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
+import { AbuTua, Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from "react-redux";
@@ -30,13 +30,24 @@ const Keranjang = () => {
                       </Text>
                     </View>
                   </View>
-                  <Pressable 
-                  disabled={!items.length}
-                  style={{backgroundColor: !items.length ? (Abu) : (IjoTua), padding: 10, borderRadius: 10}} 
-                    onPress={() => navigation.navigate('CheckoutLangScreen')}
-                    >
-                    <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
-                  </Pressable>
+                  { !items.length ?
+                    (
+                      <View style={{width: 85}}>
+                        <Text style={{fontStyle:'italic', color: Putih}}>
+                          Pilih produk pelangan
+                        </Text>
+                      </View>
+                    ):(
+                      <Pressable 
+                        disabled={!items.length}
+                        style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
+                        onPress={() => navigation.navigate('CheckoutLangScreen')}
+                        >
+                        <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
+                      </Pressable>
+                    )
+                  }
+                  
             </View>
     </View>
   )

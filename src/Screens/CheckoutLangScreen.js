@@ -25,11 +25,9 @@ const CheckoutLangScreen = () => {
   const dispatch = useDispatch();
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
-  
-
-  const [namamitra, setNamamitra] = useState("");
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
+  const { id_mitra, namamitra } = useSelector(state => state.mitra);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -43,24 +41,14 @@ const CheckoutLangScreen = () => {
             },
             {
               text: 'Sudah',
-              onPress: {uploadtransaksiTemuLangsung}
+              onPress: uploadtransaksiTemuLangsung,
             }
           ]
           )
   }
 
-  const uploadtransaksiTemuLangsung = () =>{
-
-    const db = getFirestore(app)
-    const docRef = doc(db, "mitra", kodeUID);
-    getDoc(docRef).then(docSnap => {
-      if (docSnap.exists()) {
-        setNamamitra(docSnap.data().namalengkap);
-      } else {
-        Alert.alert('Mitra tidak dikenal','Wayoloo kenapa loo.');
-      }
-    });
-
+  function uploadtransaksiTemuLangsung(){
+    let jumlah_kuantitas = items.length;
     if (!namapelanggan) {
       Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
     } else if (!namamitra) {
@@ -70,11 +58,12 @@ const CheckoutLangScreen = () => {
     } else {
       buatTransaksi(
         namamitra,
-        kodeUID,
+        id_mitra,
         namapelanggan,
+        kodeUID,
         kelompokProduk,
         totalhargaKeranjang,
-        items.length,
+        jumlah_kuantitas,
       );
       navigation.navigate("TQScreen")
       //emptyState();

@@ -10,15 +10,22 @@ const TQScreen = ({navigation}) => {
     useEffect(() => {
         setTimeout( () =>{
           navigation.replace('HomeScreen');
-        }, 3000)
+        }, 5000)
     }, [navigation]);
 
   return (
     <View style={styles.latar}>
-      <Check/>
-      <Text style={styles.teks}>
-        Terima kasih banyak! Transaksi sudah selesai
-      </Text>
+      <View style={{marginBottom: 10}}>
+        <Check/>
+      </View>
+      <View>
+        <Text style={styles.teks}>
+          Terima kasih banyak!
+        </Text>
+        <Text style={styles.teks}>
+          Transaksi sudah selesai
+        </Text>
+      </View>
     </View>
   )
 }
@@ -31,13 +38,13 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
+        paddingHorizontal: 20,
     },
     teks:{
         color: Ijo,
-        fontSize: 24,
+        fontSize: 20,
         fontWeight:'bold',
         textAlign:'center',
-        marginVertical: 10,
     }
 
 })

@@ -9,6 +9,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { app } from '../../Firebase/config';
 import { updatestatus } from '../../API/firebasemethod';
+import { useDispatch, useSelector } from 'react-redux'
+import { setMitra } from '../features/mitraSlice';
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,6 +19,9 @@ const HomeScreen = ({ navigation }) => {
   const [penjelasan, setPenjelasan] = useState('tidak');
   const [isEnabled, setIsEnabled] = useState(true);
   
+  const dispatch = useDispatch();
+  
+
   function toggleSwitch() {
     if(isEnabled){
       setStatus('Aktif')
@@ -37,7 +42,8 @@ const HomeScreen = ({ navigation }) => {
   moment.updateLocale('id', localization)
   let tanggal = moment().locale('id');
 
-  const [namalengkap, setNamalengkap] = useState('Loading...');
+  const [namamitra, setNamamitra] = useState("Loading...");
+  const [id_mitra, setId_mitra] = useState("");
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -45,19 +51,23 @@ const HomeScreen = ({ navigation }) => {
     async function getuserHome(){
       try{
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-        setNamalengkap(doc.data().namalengkap);
+        setNamamitra(doc.data().namalengkap);
+        setId_mitra(auth.currentUser.uid);
 
         console.log('getuserHome jalan (Home Screen)')
           // Respond to data
 
         });
+        dispatch(setMitra({id_mitra, namamitra}));
+        console.log('Masuk Redux namamitra');
+
         //unsubscribe();
       } catch (err){
         Alert.alert('There is an error.', err.message)
       }
     }
     getuserHome();
-  },[])
+  },[namamitra])
 
 
   return ( 
@@ -79,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
                 fontSize: 24,
                 fontWeight: 'bold',
                 color: IjoTua,
-              }}>{namalengkap}</Text>
+              }}>{namamitra}</Text>
             </View>
             <View>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
