@@ -53,7 +53,7 @@ const CheckoutLangScreen = () => {
 
     const db = getFirestore(app)
     const docRef = doc(db, "mitra", kodeUID);
-    await getDoc(docRef).then(docSnap => {
+    getDoc(docRef).then(docSnap => {
       if (docSnap.exists()) {
         setNamamitra(docSnap.data().namalengkap);
       } else {
