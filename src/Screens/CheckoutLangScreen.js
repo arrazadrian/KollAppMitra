@@ -66,7 +66,7 @@ const CheckoutLangScreen = () => {
         jumlah_kuantitas,
       );
       navigation.navigate("TQScreen")
-      dispatch(kosongkanKeranjang({}))
+      dispatch(kosongkanKeranjang())
     }
   };
 

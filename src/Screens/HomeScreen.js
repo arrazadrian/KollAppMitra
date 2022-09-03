@@ -47,7 +47,7 @@ const HomeScreen = ({ navigation }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() =>{
+  useEffect(() =>{ 
     async function getuserHome(){
       try{
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {

@@ -33,7 +33,7 @@ export const keranjangSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { masukKeranjang, keluarKeranjang } = keranjangSlice.actions
+export const { masukKeranjang, keluarKeranjang, kosongkanKeranjang } = keranjangSlice.actions
 
 export const pilihProdukKeranjang = (state) => state.keranjang.items;
 
