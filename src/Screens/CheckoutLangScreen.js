@@ -37,7 +37,6 @@ const CheckoutLangScreen = () => {
               onPress: () => {
                 console.log('Batal dipencet')
               }
-              
             },
             {
               text: 'Sudah',
@@ -47,27 +46,31 @@ const CheckoutLangScreen = () => {
           )
   }
 
-  function uploadtransaksiTemuLangsung(){
-    let jumlah_kuantitas = items.length;
-    if (!namapelanggan) {
-      Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
-    } else if (!namamitra) {
-      Alert.alert('Nama mitra kosong','Kamu siapa???.');
-    } else if (!items) {
-      Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-    } else {
-      buatTransaksi(
-        namamitra,
-        namapelanggan,
-        kodeUID,
-        kelompokProduk,
-        totalhargaKeranjang,
-        jumlah_kuantitas,
-      );
-      navigation.navigate("TQScreen")
-      dispatch(kosongkanKeranjang())
-      dispatch(resetPelanggan())
-    }
+  async function uploadtransaksiTemuLangsung(){
+    try{
+      let jumlah_kuantitas = items.length;
+      if (!namapelanggan) {
+        Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
+      } else if (!namamitra) {
+        Alert.alert('Nama mitra kosong','Kamu siapa???.');
+      } else if (!items) {
+        Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
+      } else {
+        buatTransaksi(
+          namamitra,
+          namapelanggan,
+          kodeUID,
+          kelompokProduk,
+          totalhargaKeranjang,
+          jumlah_kuantitas,
+        );
+        dispatch(kosongkanKeranjang());
+        dispatch(resetPelanggan());
+        navigation.navigate("TQScreen");
+      }
+    } catch (err){
+      Alert.alert('Ada error buat transaksi temu langsung!', err.message);
+    }  
   };
 
   useEffect(() => {

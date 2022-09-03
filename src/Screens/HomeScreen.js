@@ -59,7 +59,6 @@ const HomeScreen = ({ navigation }) => {
         });
         dispatch(setMitra({ namamitra }));
         console.log('Masuk Redux namamitra');
-
         //unsubscribe();
       } catch (err){
         Alert.alert('There is an error.', err.message)
