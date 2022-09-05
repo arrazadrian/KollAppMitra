@@ -43,6 +43,7 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   const [namamitra, setNamamitra] = useState("Loading...");
+  const [namatoko, setNamatoko] = useState("");
 
   const auth = getAuth();
   const db = getFirestore(app)
@@ -52,12 +53,13 @@ const HomeScreen = ({ navigation }) => {
       try{
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
         setNamamitra(doc.data().namalengkap);
+        setNamatoko(doc.data().namatoko);
 
         console.log('getuserHome jalan (Home Screen)')
           // Respond to data
 
         });
-        dispatch(setMitra({ namamitra }));
+        dispatch(setMitra({ namamitra, namatoko }));
         console.log('Masuk Redux namamitra');
         //unsubscribe();
       } catch (err){
@@ -65,7 +67,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getuserHome();
-  },[namamitra])
+  },[namamitra, namatoko])
 
 
   return ( 

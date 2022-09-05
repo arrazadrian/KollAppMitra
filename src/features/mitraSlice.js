@@ -4,10 +4,12 @@ export const mitraSlice = createSlice({
   name: 'mitra',
   initialState:{
       namamitra:"",
+      namatoko:"",
   },
   reducers: {
     setMitra: (state, action) => {
       state.namamitra = action.payload.namamitra;
+      state.namatoko = action.payload.namatoko;
     }
   },
 })

@@ -13,7 +13,7 @@ import {
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
 import { resetPelanggan } from '../features/pelangganSlice';
-import { buatTransaksi } from '../../API/firebasemethod'
+import { buatTransaksiTL } from '../../API/firebasemethod'
  
  
 
@@ -27,7 +27,7 @@ const CheckoutLangScreen = () => {
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
-  const { namamitra } = useSelector(state => state.mitra);
+  const { namamitra, namatoko } = useSelector(state => state.mitra);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -52,16 +52,21 @@ const CheckoutLangScreen = () => {
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
       } else if (!namamitra) {
-        Alert.alert('Nama mitra kosong','Kamu siapa???.');
+        Alert.alert('Nama mitra kosong','Silahkan tutup dan buka kembali aplikasi ini.');
+      } else if (!namatoko) {
+        Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
       } else {
-        buatTransaksi(
+        buatTransaksiTL(
           namamitra,
+          namatoko,
           namapelanggan,
           kodeUID,
           kelompokProduk,
-          totalhargaKeranjang,
+          subtotalhargaKeranjang,
+          hargalayanan,
+          hargatotalsemua,
           jumlah_kuantitas,
         );
         dispatch(kosongkanKeranjang());
@@ -94,7 +99,9 @@ const CheckoutLangScreen = () => {
   // console.log(kodeUID);
   // console.log(namapelanggan);
  
-  const totalhargaKeranjang = useSelector(totalHarga)
+  const subtotalhargaKeranjang = useSelector(totalHarga)
+  const hargalayanan =  1000
+  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
 
   const tambahProduk = () => {
     dispatch(masukKeranjang({item}))
@@ -132,64 +139,64 @@ const CheckoutLangScreen = () => {
       )}
 
       <ScrollView style={styles.atas}>
-      {/* <FlatList
-                showsVerticalScrollIndicator={false}
-                data={kelompokProduk}
-                //renderItem= {({item}) => <JualProduk item={item} />}
-                renderItem= {({items}) => <ProdukKeranjang item={items.item} />}
-                keyExtractor={ item => item.item.id}
-      /> */}
-      {Object.entries(kelompokProduk).map(([key, items]) => (
-      <View key={key}>
-      <View style={styles.card}>
-        <View style={{flexDirection:'row', alignItems:'center'}}>
-            <Image source={{uri: items[0]?.image}} style={styles.foto}/>
-            <View>
-                <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
-                <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
-            </View>
-        </View>
-        <View style={{flexDirection:'row', marginTop: 5, alignItems:'center', paddingRight: 10}}>
-            <TouchableOpacity
-                style={{
-                    height: width * 0.07,
-                    width: width * 0.07,
-                    borderRadius: 20,
-                    backgroundColor: IjoTua,
-                    alignItems:'center',
-                    justifyContent:'center',
-                }}
-                onPress={buangProduk}
-            >
-                <Text style={styles.logoTombol}>-</Text>
-            </TouchableOpacity>
-            <Text style={{fontSize: 20, marginHorizontal: 15}}>{items.length}</Text>
-            <TouchableOpacity
-                style={{
-                    height: width * 0.07,
-                    width: width * 0.07,
-                    borderRadius: 20,
-                    backgroundColor: IjoTua,
-                    alignItems:'center',
-                    justifyContent:'center',
-                }}
-                onPress={tambahProduk}
-            >
-                <Text style={styles.logoTombol}>+</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-    </View>
-      ))}
+            {/* <FlatList
+                      showsVerticalScrollIndicator={false}
+                      data={kelompokProduk}
+                      //renderItem= {({item}) => <JualProduk item={item} />}
+                      renderItem= {({items}) => <ProdukKeranjang item={items.item} />}
+                      keyExtractor={ item => item.item.id}
+            /> */}
+            {Object.entries(kelompokProduk).map(([key, items]) => (
+            <View key={key}>
+            <View style={styles.card}>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                  <Image source={{uri: items[0]?.image}} style={styles.foto}/>
+                  <View>
+                      <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
+                      <Text style={styles.harga}>Rp{items[0]?.harga}</Text>
+                  </View>
+              </View>
+              <View style={{flexDirection:'row', marginTop: 5, alignItems:'center', paddingRight: 10}}>
+                  <TouchableOpacity
+                      style={{
+                          height: width * 0.07,
+                          width: width * 0.07,
+                          borderRadius: 20,
+                          backgroundColor: IjoTua,
+                          alignItems:'center',
+                          justifyContent:'center',
+                      }}
+                      onPress={buangProduk}
+                  >
+                      <Text style={styles.logoTombol}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={{fontSize: 20, marginHorizontal: 15}}>{items.length}</Text>
+                  <TouchableOpacity
+                      style={{
+                          height: width * 0.07,
+                          width: width * 0.07,
+                          borderRadius: 20,
+                          backgroundColor: IjoTua,
+                          alignItems:'center',
+                          justifyContent:'center',
+                      }}
+                      onPress={tambahProduk}
+                  >
+                      <Text style={styles.logoTombol}>+</Text>
+                  </TouchableOpacity>
+              </View>
+          </View>
+          </View>
+            ))}
       </ScrollView>
       <View style={styles.simpulan}>
           <View style={styles.desk}>
             <Text>Subtotal</Text>
-            <Text>Rp{totalhargaKeranjang}</Text>
+            <Text>Rp{subtotalhargaKeranjang}</Text>
           </View>
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
-            <Text>Rp1000</Text>
+            <Text>{hargalayanan}</Text>
           </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
@@ -197,7 +204,7 @@ const CheckoutLangScreen = () => {
           <View style={styles.desk}>
             <View>
               <Text>Harga Total</Text>
-              <Text style={styles.harga}>Rp{totalhargaKeranjang + 1000}</Text>
+              <Text style={styles.harga}>Rp{hargatotalsemua}</Text>
             </View>
             <TouchableOpacity style={styles.tombol}
               onPress={selesaiTransaksi}
