@@ -2,92 +2,105 @@ import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollV
 import React, {useEffect, useState, useRef} from 'react'
 import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import { KollLong } from '../assets/Images/Index';
-import ListReceipt from '../Components/ListReceipt'
+import ListReceipt from '../Components/ListReceipt';
+import moment from 'moment';
+import localization from 'moment/locale/id';
 
 
 const { width, height } = Dimensions.get('window')
 
 const ReceiptScreen = ({route}) => {
 
-  const { 
-       layanan, tanggal, pukul, id_transaksi, daftar_produk,
-       namaPelanggan, sub_total, biaya_layanan, hargatotal,
-     } = route.params;
+  moment.updateLocale('id', localization)
 
-     const atasReceipt = () => {
-      return(
-        <View>
-            <Image source={KollLong} style={styles.logo}/>
-              <View style={{ flexDirection:'row', marginBottom: 10 }}>
-                    <View style={{flex:1, alignItems:'center'}}>
-                      <Text style={styles.subjudul}>Jenis Layanan</Text>
-                      <Text>{layanan}</Text>
-                    </View>
-                    <View style={{flex:1,  alignItems:'center'}}>
-                      <Text style={styles.subjudul}>ID Transaksi</Text>
-                      <Text>{id_transaksi}</Text>
-                    </View>
-              </View >
-    
-              <View style={{borderBottomWidth:1, borderColor: Ijo}}/>
-    
-              <View style={{ marginVertical: 10 }}>
-                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <Text style={styles.subjudul}>Nama Pelanggan</Text>
-                        <Text>{namaPelanggan}</Text>
-                    </View>
-                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <Text style={styles.subjudul}>Tanggal</Text>
-                        <Text>{tanggal}</Text>
-                    </View>
-                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <Text style={styles.subjudul}>Pukul</Text>
-                        <Text>{pukul}</Text>
-                    </View>
-              </View>
-    
-              <View style={{borderBottomWidth:1, borderColor: Ijo, marginBottom:10}}/>
-              <Text  style={styles.subjudul}>Daftar Produk</Text>
-        </View>
-      )
-    }
-    
-    const bawahReceipt = () => {
-      return(
-        <View>
-        <View style={{borderBottomWidth:1, borderColor: Ijo, marginTop: 10}}/>
-    
-        <View style={{ marginVertical: 10 }}>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Sub Total</Text>
-                  <Text>{sub_total}</Text>
-              </View>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Biaya Layanan</Text>
-                  <Text>{biaya_layanan}</Text>
-              </View>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Total Harga</Text>
-                  <Text style={styles.subjudul}>{hargatotal}</Text>
-              </View>
-        </View>
-        </View>
-      )
-    }
+  const { 
+    hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
+    jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu, 
+     } = route.params;
 
   return (
     <View style={styles.latar}>
       <View style={styles.kertas}>
-          <View style={{ marginVertical: 10 }}>
-                <FlatList
-                  data={daftar_produk}
-                  renderItem= {({item}) => <ListReceipt item={item} />}
-                  keyExtractor={(item) => item.id}
-                  ListHeaderComponent= {atasReceipt}
-                  ListFooterComponent={bawahReceipt}
-                  showsVerticalScrollIndicator={false}
-                />
+      <View>
+        <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'center', marginBottom: 10}}>
+          <View>
+              <Image source={KollLong} style={styles.logo}/>
           </View>
+          <View>
+              <Text style={{color: IjoTua, fontSize: 16, fontWeight: 'bold', marginBottom: -5}}>
+                Nama Toko
+              </Text>
+              <Text style={{color: Ijo, fontSize: 18, fontWeight: 'bold'}}>
+                {namatoko}
+              </Text>
+          </View>
+        </View>
+        <View style={{marginBottom: 10}}>
+            <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+                <Text style={styles.subjudul}>Jenis Layanan</Text>
+                <Text>{jenislayanan}</Text>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+                <Text style={styles.subjudul}>ID Transaksi</Text>
+                <Text>{id_transaksi}</Text>
+            </View>
+        </View>
+
+        <View style={{borderBottomWidth:1, borderColor: Ijo}}/>
+    
+        <View style={{ marginVertical: 10 }}>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Nama Mitra</Text>
+                  <Text>{namamitra}</Text>
+              </View>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Waktu Transaksi</Text>
+                  <Text>{moment(waktu.toDate()).calendar()}</Text>
+              </View>
+        </View>
+    
+        <View style={{borderBottomWidth:1, borderColor: Ijo, marginBottom:10}}/>
+        </View>
+        <Text  style={styles.subjudul}>Daftar Produk</Text>
+        <ScrollView>
+          {Object.entries(produk).map(([key, items]) => (
+              <View key={key}>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style={styles.deskripsi}>
+                        <Text>{items.length}x   </Text>
+                        <Text>{items[0]?.namaproduk}</Text>
+                    </Text>
+                    <Text style={styles.harga}>
+                        <Text>Rp</Text>
+                        <Text>{items[0]?.harga}</Text>
+                    </Text>
+                </View>
+              </View>
+          ))}
+        </ScrollView>
+        <View style={{borderBottomWidth:1, borderColor: Ijo, marginBottom: 10}}/>
+        <View>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Sub Total</Text>
+                  <Text>{hargasubtotal}</Text>
+              </View>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Biaya Layanan</Text>
+                  <Text>{hargalayanan}</Text>
+              </View>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Total Harga</Text>
+                  <Text style={styles.subjudul}>{hargatotalsemua}</Text>
+              </View>
+        </View>
+      </View>
+      <View style={{flex: 1, justifyContent:'center'}}>
+        <Text style={{color: Putih, textAlign: 'center', fontSize: 16, fontStyle:'italic'}}>
+          Terima Kasih sudah berbelanja.
+        </Text>
+        <Text style={{color: Putih, textAlign: 'center', fontSize: 16, fontStyle:'italic'}}>
+          Butuh sayur? Koll aja!
+        </Text>
       </View>
     </View>
   )
@@ -102,19 +115,30 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   kertas:{
+    flex: 7,
     backgroundColor: Kuning,
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingBottom: 20,
+    paddingTop: 10,
   },
   logo:{
-     width: width*0.3,
-     height: height*0.1,
-    alignSelf:'center'
+     width: width*0.29,
+     height: height*0.06,
+     marginRight: 10,
   },
   subjudul:{
     fontSize: 16,
     color: IjoTua,
     fontWeight:'bold',
-  }
+  },
+  deskripsi:{
+    fontSize: 16,
+    color: IjoTua,
+},
+  harga:{
+    fontSize: 16,
+    color: IjoTua,
+    fontWeight: 'bold',
+},
 }) 
