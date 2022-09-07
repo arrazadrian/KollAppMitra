@@ -78,6 +78,7 @@ const RiwayatScreen = () => {
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={{height:10}}></View>}
           ListHeaderComponent={<View style={{height:10}}></View>}
+          ListEmptyComponent={ <Text>Anda belum pernah membuat transaksi</Text> }
       />
       )}
     </View>
