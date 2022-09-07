@@ -50,15 +50,14 @@ const ReceiptScreen = ({route}) => {
     
         <View style={{ marginVertical: 10 }}>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Nama Mitra</Text>
-                  <Text>{namamitra}</Text>
+                  <Text style={styles.subjudul}>Nama Pelanggan</Text>
+                  <Text>{namapelanggan}</Text>
               </View>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={styles.subjudul}>Waktu Transaksi</Text>
                   <Text>{moment(waktu.toDate()).calendar()}</Text>
               </View>
         </View>
-    
         <View style={{borderBottomWidth:1, borderColor: Ijo, marginBottom:10}}/>
         </View>
         <Text  style={styles.subjudul}>Daftar Produk</Text>
@@ -96,10 +95,10 @@ const ReceiptScreen = ({route}) => {
       </View>
       <View style={{flex: 1, justifyContent:'center'}}>
         <Text style={{color: Putih, textAlign: 'center', fontSize: 16, fontStyle:'italic'}}>
-          Terima Kasih sudah berbelanja.
+          Terima Kasih Sudah Membantu Pelanggan.
         </Text>
         <Text style={{color: Putih, textAlign: 'center', fontSize: 16, fontStyle:'italic'}}>
-          Butuh sayur? Koll aja!
+          - Butuh sayur? Koll aja! -
         </Text>
       </View>
     </View>

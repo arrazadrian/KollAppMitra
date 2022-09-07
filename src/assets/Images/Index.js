@@ -12,6 +12,7 @@ import mitrasplash from './mitrasplash.png'
 import LatarSignIn from './LatarSignIn.png'
 import DPkartu from './Dagangan.png'
 import PreOrder from './PreOrder.png'
+import PanggilMitra from './PanggilMitra.png'
 import TemuLangsung from './TemuLangsung.png'
 import Kategori01 from './Kategori01.png'
 import Kategori02 from './Kategori02.png'
@@ -36,4 +37,5 @@ export { Splash, Awan, gerobaksplash,
         Kategori07, Kategori08, Kategori09,
         Bag, Bawah, Pasar, halaman,
         mitrasplash, Kosong, DefaultFoto,
+        PanggilMitra,
     }

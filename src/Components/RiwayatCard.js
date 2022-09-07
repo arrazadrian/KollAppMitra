@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import React from 'react'
 import { Abu, Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
-import { DPkartu } from '../assets/Images/Index'
+import { TemuLangsung, PanggilMitra, PreOrder } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import localization from 'moment/locale/id';
@@ -36,13 +36,20 @@ const RiwayatCard = ({ item }) => {
   return (
     <Pressable style={styles.card}
        onPress={pindahDetail}
-    >
-      <Image source={DPkartu} style={styles.foto} />
+      >
+    { item.jenislayanan == 'Temu Langsung' ? (
+      <Image source={TemuLangsung} style={styles.foto} />      
+      ): item.jenislayanan == 'Panggil Mitra' ? (
+        <Image source={PanggilMitra} style={styles.foto} />      
+      ) : (
+        <Image source={PreOrder} style={styles.foto} />
+      )
+    }
       <View>
         <Text
         style={{fontSize:18, fontWeight:'bold', color:IjoTua}}
         >
-            {item.namatoko}
+            {item.namapelanggan}
         </Text>
         <Text style={{fontSize:16, color:Ijo}}>
             <Text>Rp</Text>
@@ -53,10 +60,6 @@ const RiwayatCard = ({ item }) => {
         </Text>
         <View style={{flexDirection:'row'}}>
           <Text>{moment(item.waktu.toDate()).calendar()}</Text>
-        </View>
-        <View style={{flexDirection:'row'}}>
-          <Text style={{fontSize: 12}}>Layanan: </Text>
-          <Text style={{color:Ijo, fontSize: 12}}>{item.jenislayanan}</Text>
         </View>
       </View>
     </Pressable>
@@ -74,11 +77,15 @@ const styles = StyleSheet.create({
         elevation: 5,
         flexDirection: 'row',
         alignItems:'center',
+        padding: 10,
     },
     foto:{
-        width: height * 0.12,
-        height: height * 0.12,
+        width: height * 0.1,
+        height: height * 0.1,
         borderRadius: 10,
-        margin: 10,
+        marginRight: 12,
+        backgroundColor: IjoMint,
+        alignItems:'center',
+        justifyContent:'center',
     }
 })
