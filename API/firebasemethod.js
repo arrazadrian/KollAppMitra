@@ -70,8 +70,11 @@ export async function handleSignOut() {
   getDoc(docrefproduk).then(docSnap => {
     if (docSnap.exists()) {
       try {
-        if(docSnap.data().status_sekarang == "Aktif"){
-          updateDoc(docrefproduk, { status_sekarang:"Tidak Aktif" });
+        if(docSnap.data().status_sekarang == "Aktif" && docSnap.data().mangkal == true ){
+          updateDoc(docrefproduk, { status_sekarang: "Tidak Aktif", mangkal: false });
+          signOut(auth);
+        } else if (docSnap.data().status_sekarang == "Aktif"){
+          updateDoc(docrefproduk, { status_sekarang: "Tidak Aktif" });
           signOut(auth);
         } else {
           signOut(auth);
@@ -470,7 +473,43 @@ export async function updatestatus(status_sekarang){
   })
 }; 
 
-// API 14: buatTransaksi
+// API 14: updatemangkal
+// UPDATE STATUS MANGKAL PEDAGANG
+// MENJADI YA/TIDAK 
+
+export async function updatemangkal(mangkal){
+
+  const auth = getAuth();
+  const db = getFirestore(app);
+
+  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try{
+        if(mangkal == true ){
+          updateDoc(docrefproduk, {
+          mangkal: true,     
+          });
+          Alert.alert(
+            'Status mangkal sudah aktif','Anda sekarang tidak bisa dipanggil oleh pelanggan via aplikasi dan pastikan anda ada di posisi mangkal.'          
+          );
+        } else {
+          updateDoc(docrefproduk, {
+          mangkal: false,     
+          });
+        }   
+      } catch (err) {
+        Alert.alert('Ada error untuk memperbarui status!', err.message);
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("Tidak ada dokumen tersebut!");
+    }
+  })
+}; 
+
+
+// API 15: buatTransaksi
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
 export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeUID, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas) => {  

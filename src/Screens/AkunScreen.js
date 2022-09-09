@@ -30,24 +30,6 @@ const AkunScreen = () => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  // useEffect(() => {
-  //   async function getuserAkun(){
-  //     try {
-  //       let docRef = doc(db, "mitra", auth.currentUser.uid);
-  //       const docSnap = await getDoc(docRef);
-  //       setNamaakun(docSnap.data().namalengkap);
-  //       setFotoakun(docSnap.data().foto_akun);
-  //       setTokoakun(docSnap.data().namatoko);
-  //       setPhoneakun(docSnap.data().phone);
-  //       setEmailakun(docSnap.data().email);
-  //       console.log('getuserAkun jalan (Akun Screen)')
-  //     } catch (err){
-  //     Alert.alert('There is an error.', err.message)
-  //     }
-  //   }
-  //   getuserAkun();
-  // },[])
-
   useEffect(() =>{
     async function getuserAkun(){
       try{
