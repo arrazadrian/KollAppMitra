@@ -140,7 +140,7 @@ const HomeScreen = ({ navigation }) => {
                 thumbColor={isStatusEnabled ? '#f4f3f4' : '#f5dd4b'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchStatus}
-                value={!setIsStatusEnabled}
+                value={!isStatusEnabled}
               />
           </View>
           { status == "Aktif" ? (
@@ -157,7 +157,7 @@ const HomeScreen = ({ navigation }) => {
                     thumbColor={isMangkalEnabled ? '#f4f3f4' : '#f5dd4b'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleSwitchMangkal}
-                    value={!setIsMangkalEnabled}
+                    value={!isMangkalEnabled}
                   />
               </View>
             ):(

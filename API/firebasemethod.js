@@ -491,7 +491,7 @@ export async function updatemangkal(mangkal){
           mangkal: true,     
           });
           Alert.alert(
-            'Status mangkal sudah aktif','Anda sekarang tidak bisa dipanggil oleh pelanggan via aplikasi dan pastikan anda ada di posisi mangkal.'          
+            'Status mangkal sudah aktif','Anda sekarang tidak bisa dipanggil oleh pelanggan via aplikasi dan pastikan anda berada di posisi mangkal.'          
           );
         } else {
           updateDoc(docrefproduk, {
