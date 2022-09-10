@@ -31,20 +31,22 @@ const HomeScreen = ({ navigation }) => {
       //console.log(status)
       //console.log(isEnabled)
       updatestatus(isStatusEnabled)
+      setIsStatusEnabled(false)
     } else {
       setStatus('Tidak Aktif')
       setPenjelasan('tidak')
       if(mangkal == "Ya"){
         setMangkal('Tidak')
         setYatidak('bisa')
-        setIsMangkalEnabled(previousState => !previousState)
         updatemangkal(isMangkalEnabled)
+        setIsMangkalEnabled(true)
       } 
       //console.log(status)
       //console.log(isEnabled)
       updatestatus(isStatusEnabled)
+      setIsStatusEnabled(true)
     }
-    setIsStatusEnabled(previousState => !previousState)
+    //setIsStatusEnabled(previousState => !previousState)
   }
 
   function toggleSwitchMangkal() {
@@ -54,14 +56,16 @@ const HomeScreen = ({ navigation }) => {
       //console.log(status)
       //console.log(isEnabled)
       updatemangkal(isMangkalEnabled)
+      setIsMangkalEnabled(false)
     } else {
       setMangkal('Tidak')
       setYatidak('bisa')
       //console.log(status)
       //console.log(isEnabled)
       updatemangkal(isMangkalEnabled)
+      setIsMangkalEnabled(true)
     }
-    setIsMangkalEnabled(previousState => !previousState)
+    //setIsMangkalEnabled(previousState => !previousState)
   }
 
   moment.updateLocale('id', localization)
