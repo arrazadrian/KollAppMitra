@@ -24,7 +24,7 @@ const kosongproduk = () => {
       fontSize: 16, color: IjoTua, textAlign:'center',
       width: width*0.8,
     }}>
-      Kamu tidak punya produk utama. Kembali ke beranda dan 
+      Kamu tidak punya produk kategori ini. Kembali ke beranda dan 
       ketuk bagian produk utama unuk membuatnya.
     </Text>
   </View>
@@ -32,7 +32,7 @@ const kosongproduk = () => {
 }
 
 const atasjual = () => {
-  const[kategori, setKategori]= useState(1)
+  const[kategori, setKategori]= useState(0)
 
   return(
     <View style={{ paddingTop:'18%' }}>
@@ -41,19 +41,17 @@ const atasjual = () => {
               <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
           </View>
           <ScrollView
-            horizontal
+            horizontal={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.kartuKategori}>
+            contentContainerStyle={{paddingStart: 10, paddingEnd: 10}}>
               {jeniskategori.map((item, index) => (
                 <TouchableOpacity key={index}
+                  style={{backgroundColor: kategori == index ? Ijo : IjoMint, ...styles.kartuKategori}}
                   onPress={()=> setKategori(index)}>
-                  <View style={{
-                      backgroundColor: kategori == index ? IjoMint : Putih, 
-                      ...styles.kategoripilihan,
-                  }}>
+                  <View style={ styles.kategoripilihan}>
                       <Image source={item.image} style={styles.gambar} />
                   </View>
-                  <Text style={styles.nama}>{item.nama}</Text>
+                  <Text style={{color: kategori == index ? Putih : IjoTua,...styles.nama}}>{item.nama}</Text>
                 </TouchableOpacity>
               ))}
               {/* <FlatList
@@ -168,34 +166,35 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
   },
   bawah:{
-    marginTop: '30%',
+    marginTop: '40%',
     flex: 1,
     width: '100%',
     height: height*0.15,
   }, 
-  kartuKategori:{
-    width: width,
-    height: width*0.3,
-    alignSelf:'center',
-    marginRight: 15,
-    marginBottom: 10,
-  },
   nama:{
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
-    textAlign: 'center',
-    color: IjoTua,
+    width: 60,
   },  
   gambar:{
-    width: width*0.15,
-    height: width*0.15,
+    width: width*0.1,
+    height: width*0.1,
+  },
+  kartuKategori:{
+    flexDirection: 'row',
+    alignSelf:'center',
+    marginRight: 10,
+    marginBottom: 10,
+    padding: 5,
+    borderRadius: 50,
+    justifyContent:'flex-start',
+    alignItems:'center',
   },
   kategoripilihan:{
     alignItems:'center',
     padding: 5, 
     borderRadius: 50, 
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: Ijo,
+    marginRight: 10,
+    backgroundColor: Putih,
   },
 })
