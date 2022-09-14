@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
         width: width*0.20,
         height: width*0.3,
         alignSelf:'center',
-        marginRight: 10,
+        marginRight: 15,
         marginBottom: 10,
     },
     nama:{
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'center',
         color: IjoTua,

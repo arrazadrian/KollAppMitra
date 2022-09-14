@@ -33,13 +33,14 @@ const kosongproduk = () => {
 
 const atasjual = () => {
   return(
-    <View style={{ paddingHorizontal: 10, paddingTop:'18%' }}>
+    <View style={{ paddingTop:'18%' }}>
       <View>
-          <View style={{marginBottom:10 }}>
+          <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
               <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
           </View>
           <View>
               <FlatList
+                  style={{paddingStart: 10, paddingEnd: 20}}
                   horizontal= {true}
                   data={jeniskategori}
                   renderItem= {({item}) => <LogoKategori item={item} />}
@@ -49,7 +50,7 @@ const atasjual = () => {
               />
           </View>
       </View>
-      <View style={{marginBottom:10 }}>
+      <View style={{paddingHorizontal: 10, marginBottom:10 }}>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
       </View>
     </View>
@@ -143,7 +144,7 @@ export default LangsungScreen
 
 const styles = StyleSheet.create({
   latar:{
-    flex: 5,
+    flex: 1,
     backgroundColor: Kuning,
   },
   bawah:{
