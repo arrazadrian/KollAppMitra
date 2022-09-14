@@ -5,21 +5,16 @@ import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
 const { width, height } = Dimensions.get('window')
 
 const LogoKategori = ({item}) => {
-  const [kategori, setKategori]= useState('Semua Produk')
+  const [kategori, setKategori]= useState(1)
 
   return (
     <Pressable 
-        onPress={() => setKategori(item.nama)}
+        onPress={() => setKategori(item.id)}
         style={styles.kartu}
         >
         <View style={{
-            alignItems:'center',
-            padding: 5, 
-            borderRadius: 50, 
-            marginBottom: 5,
-            borderWidth: 1,
-            borderColor: Ijo,
-            backgroundColor: kategori == item.nama ? IjoMint : Putih, 
+            backgroundColor: kategori === item.id ? IjoMint : Putih, 
+            ...styles.kategoripilihan,
         }}>
             <Image source={item.image} style={styles.gambar} />
         </View>
@@ -48,4 +43,12 @@ const styles = StyleSheet.create({
         width: width*0.15,
         height: width*0.15,
       },
+    kategoripilihan:{
+        alignItems:'center',
+        padding: 5, 
+        borderRadius: 50, 
+        marginBottom: 5,
+        borderWidth: 1,
+        borderColor: Ijo,
+    }
 })

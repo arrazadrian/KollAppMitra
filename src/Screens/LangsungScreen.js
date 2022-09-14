@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions, ActivityIndicator } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
@@ -32,14 +32,31 @@ const kosongproduk = () => {
 }
 
 const atasjual = () => {
+  const[kategori, setKategori]= useState(1)
+
   return(
     <View style={{ paddingTop:'18%' }}>
       <View>
           <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
               <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
           </View>
-          <View>
-              <FlatList
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.kartuKategori}>
+              {jeniskategori.map((item, index) => (
+                <TouchableOpacity key={index}
+                  onPress={()=> setKategori(index)}>
+                  <View style={{
+                      backgroundColor: kategori == index ? IjoMint : Putih, 
+                      ...styles.kategoripilihan,
+                  }}>
+                      <Image source={item.image} style={styles.gambar} />
+                  </View>
+                  <Text style={styles.nama}>{item.nama}</Text>
+                </TouchableOpacity>
+              ))}
+              {/* <FlatList
                   style={{paddingStart: 10, paddingEnd: 20}}
                   horizontal= {true}
                   data={jeniskategori}
@@ -47,8 +64,10 @@ const atasjual = () => {
                   keyExtractor={ jeniskategori => jeniskategori.id}
                   showsHorizontalScrollIndicator={false}
                   bounces={false}
-              />
-          </View>
+              /> */}
+              {}
+
+          </ScrollView>
       </View>
       <View style={{paddingHorizontal: 10, marginBottom:10 }}>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
@@ -61,6 +80,7 @@ const atasjual = () => {
 const LangsungScreen = ({ navigation }) => {
 
   const[produkutama,setProdukUtama] = useState();
+  const[kategori, setKategori]= useState(1)
   const[loading, setLoading] = useState(true);
   const componentMounted = useRef(true);
 
@@ -152,5 +172,30 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: height*0.15,
+  }, 
+  kartuKategori:{
+    width: width,
+    height: width*0.3,
+    alignSelf:'center',
+    marginRight: 15,
+    marginBottom: 10,
+  },
+  nama:{
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: IjoTua,
   },  
+  gambar:{
+    width: width*0.15,
+    height: width*0.15,
+  },
+  kategoripilihan:{
+    alignItems:'center',
+    padding: 5, 
+    borderRadius: 50, 
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: Ijo,
+  },
 })
