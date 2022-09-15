@@ -125,6 +125,13 @@ const EditScreen = ({navigation, route}) => {
                   value={tokoakun}
                   onChangeText={tokoakun => setTokoakun(tokoakun)}
                 />
+                <Text style={styles.judulisi}>Waktu Keliling</Text>
+                <TextInput 
+                  placeholder="Waktu keliling tidak bisa kosong"
+                  style={styles.input} 
+                  // value={tokoakun}
+                  // onChangeText={tokoakun => setTokoakun(tokoakun)}
+                />
                 <Text style={styles.judulisi}>No.Handphone</Text>
                 <TextInput 
                   placeholder="Nomor handphon tidak bisa kosong"
