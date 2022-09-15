@@ -7,11 +7,13 @@ import JualProduk from '../Components/JualProduk'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
+import { useDispatch, useSelector } from 'react-redux';
 import Keranjang from '../Components/Keranjang'
 import ProdukKosong from '../Components/ProdukKosong'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
+import { updateKategori } from '../features/kategoriSlice'
 
 
 const { width, height } = Dimensions.get('window')
@@ -32,7 +34,17 @@ const kosongproduk = () => {
 }
 
 const atasjual = () => {
-  const[kategori, setKategori]= useState(0)
+  const[pilkategori, setPilkategori]= useState("Semua Produk")
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    pilihKategori();
+  }, [pilkategori]);
+
+  const pilihKategori = () => {
+    dispatch(updateKategori({pilkategori}));
+    console.log("Kategori yg dipilih: " + pilkategori)
+  };
 
   return(
     <View style={{ paddingTop:'18%' }}>
@@ -44,27 +56,16 @@ const atasjual = () => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{paddingStart: 10, paddingEnd: 10}}>
-              {jeniskategori.map((item, index) => (
-                <TouchableOpacity key={index}
-                  style={{backgroundColor: kategori == index ? Ijo : IjoMint, ...styles.kartuKategori}}
-                  onPress={()=> setKategori(index)}>
-                  <View style={ styles.kategoripilihan}>
-                      <Image source={item.image} style={styles.gambar} />
-                  </View>
-                  <Text style={{color: kategori == index ? Putih : IjoTua,...styles.nama}}>{item.nama}</Text>
-                </TouchableOpacity>
-              ))}
-              {/* <FlatList
-                  style={{paddingStart: 10, paddingEnd: 20}}
-                  horizontal= {true}
-                  data={jeniskategori}
-                  renderItem= {({item}) => <LogoKategori item={item} />}
-                  keyExtractor={ jeniskategori => jeniskategori.id}
-                  showsHorizontalScrollIndicator={false}
-                  bounces={false}
-              /> */}
-              {}
-
+            {jeniskategori.map((item, index) => (
+              <TouchableOpacity key={index}
+                style={{backgroundColor: pilkategori == item.nama ? IjoMint : Putih, ...styles.kartuKategori}}
+                onPress={() =>setPilkategori(item.nama)}>
+                <View style={ styles.kategoripilihan}>
+                    <Image source={item.image} style={styles.gambar} />
+                </View>
+                <Text style={{color: pilkategori == item.nama ? Ijo : IjoTua,...styles.nama}}>{item.nama}</Text>
+              </TouchableOpacity>
+            ))}
           </ScrollView>
       </View>
       <View style={{paddingHorizontal: 10, marginBottom:10 }}>
@@ -78,9 +79,10 @@ const atasjual = () => {
 const LangsungScreen = ({ navigation }) => {
 
   const[produkutama,setProdukUtama] = useState();
-  const[kategori, setKategori]= useState(1)
   const[loading, setLoading] = useState(true);
   const componentMounted = useRef(true);
+
+  const { pilkategori } = useSelector(state => state.kategori);
 
   useEffect(()=>{
     const fetchProdukUtama = async() => {
@@ -91,7 +93,8 @@ const LangsungScreen = ({ navigation }) => {
         const docRef = doc(db, "mitra", auth.currentUser.uid);
         const colRef = collection(docRef, "produk")
 
-        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
+        if ( pilkategori == "Semua Produk" ) {
+        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("namaproduk"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
@@ -107,6 +110,24 @@ const LangsungScreen = ({ navigation }) => {
             kategori,
           });
         });
+        } else {
+          const qq = query(colRef, where("jenis", "==", "Produk utama"), where("kategori", "==", pilkategori), orderBy("namaproduk"));
+          const querySnapshot = await getDocs(qq);
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+            list.push({
+              id: doc.id,
+              namaproduk,
+              deskproduk,
+              image,
+              harga,
+              kuantitas,
+              satuan,
+              kategori,
+            });
+          });
+        }
 
         if (componentMounted.current){ // (5) is component still mounted?
           setProdukUtama(list); // (1) write data to state
@@ -121,7 +142,7 @@ const LangsungScreen = ({ navigation }) => {
       }
     }
     fetchProdukUtama();
-  },[])
+  },[pilkategori])
 
   
   return (
@@ -172,7 +193,7 @@ const styles = StyleSheet.create({
     height: height*0.15,
   }, 
   nama:{
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
     width: 60,
   },  

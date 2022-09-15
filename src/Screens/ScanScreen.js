@@ -8,8 +8,6 @@ import { updateUID } from '../features/pelangganSlice';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 
-
-
 const { width, height } = Dimensions.get('window')
 
 const ScanScreen = () => {
