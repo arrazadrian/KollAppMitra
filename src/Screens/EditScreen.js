@@ -144,7 +144,7 @@ const EditScreen = ({navigation, route}) => {
                           <Text style={[styles.input, {fontSize: 25}]}>07.00</Text>
                           { show && (<DateTimePicker
                             testID='tutupkapan'
-                            value={buka}
+                            value={date}
                             mode={mode}
                             is24Hour={true}
                             display='default'
@@ -162,7 +162,7 @@ const EditScreen = ({navigation, route}) => {
                           <Text style={[styles.input, {fontSize: 25}]}>08.00</Text>
                           { show && (<DateTimePicker
                             testID='tutupkapan'
-                            value={tutup}
+                            value={date}
                             mode={mode}
                             is24Hour={true}
                             display='default'
