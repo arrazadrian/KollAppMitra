@@ -82,22 +82,22 @@ const EditScreen = ({navigation, route}) => {
   const [buka, setBuka] = useState("00:00");
   const [tutup, setTutup] = useState("00:00");
 
-  const untukBuka = ( ubah, selectedDate) => {
+  const untukBuka = ( event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = ubah;
+    let tempDate = new Date(currentDate);
     let bTime = tempDate.getHours() + ':' + tempDate.getMinutes()
     setBuka(bTime)
   };
   
-  const untukTutup = ( ubah, selectedDate) => {
+  const untukTutup = ( event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = ubah;
+    let tempDate = new Date(currentDate);
     let tTime = tempDate.getHours()  + ':' + tempDate.getMinutes()
     setTutup(tTime)
   };
@@ -148,7 +148,7 @@ const EditScreen = ({navigation, route}) => {
                             mode={mode}
                             is24Hour={true}
                             display='default'
-                            onChange={(ubah) => untukBuka(ubah)}
+                            onChange={untukBuka}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Buka</Text>
                           <Text style={styles.ubah}
@@ -166,7 +166,7 @@ const EditScreen = ({navigation, route}) => {
                             mode={mode}
                             is24Hour={true}
                             display='default'
-                            onChange={(ubah)=>untukTutup(ubah)}
+                            onChange={untukTutup}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Tutup</Text>
                           <Text style={styles.ubah}
