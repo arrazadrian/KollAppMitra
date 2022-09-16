@@ -82,23 +82,23 @@ const EditScreen = ({navigation, route}) => {
   const [buka, setBuka] = useState("00:00");
   const [tutup, setTutup] = useState("00:00");
 
-  const untukBuka = ( event, selectedDate) => {
-    const currentDate = selectedDate || date;
+  const untukBuka = ( event, BselectedDate) => {
+    const currentDate = BselectedDate;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = new Date(currentDate);
-    let bTime = tempDate.getHours() + ':' + tempDate.getMinutes()
+    let btempDate = new Date(currentDate);
+    let bTime = btempDate.getHours() + ':' + btempDate.getMinutes()
     setBuka(bTime)
   };
   
-  const untukTutup = ( event, selectedDate) => {
-    const currentDate = selectedDate || date;
+  const untukTutup = ( event, TselectedDate) => {
+    const currentDate = TselectedDate;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = new Date(currentDate);
-    let tTime = tempDate.getHours()  + ':' + tempDate.getMinutes()
+    let ttempDate = new Date(currentDate);
+    let tTime = ttempDate.getHours()  + ':' + ttempDate.getMinutes()
     setTutup(tTime)
   };
 
@@ -143,7 +143,7 @@ const EditScreen = ({navigation, route}) => {
                       <View>
                           <Text style={[styles.input, {fontSize: 20}]}>{buka}</Text>
                           { show && (<DateTimePicker
-                            testID='bukakapan'
+                            testID='123'
                             value={date}
                             mode={mode}
                             is24Hour={true}
@@ -161,7 +161,7 @@ const EditScreen = ({navigation, route}) => {
                       <View>
                           <Text style={[styles.input, {fontSize: 20}]}>{tutup}</Text>
                           { show && (<DateTimePicker
-                            testID='tutupkapan'
+                            testID='890'
                             value={date}
                             mode={mode}
                             is24Hour={true}
