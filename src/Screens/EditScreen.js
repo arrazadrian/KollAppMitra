@@ -77,34 +77,59 @@ const EditScreen = ({navigation, route}) => {
   };
 
   const [date, setDate] = useState(new Date);
-  const [mode, setMode] = useState('time');
-  const [show, setShow] = useState(false);
+  const [showBuka, setShowBuka] = useState(false);
   const [buka, setBuka] = useState("00:00");
+  const [showTutup, setShowTutup] = useState(false);
   const [tutup, setTutup] = useState("00:00");
 
   const untukBuka = ( event, BselectedDate) => {
     const currentDate = BselectedDate;
-    setShow(Platform.OS === 'ios');
+    setShowBuka(Platform.OS === 'ios');
     setDate(currentDate);
 
     let btempDate = new Date(currentDate);
-    let bTime = btempDate.getHours() + ':' + btempDate.getMinutes()
-    setBuka(bTime)
+    let jam = btempDate.getHours();
+    let menit = btempDate.getMinutes();
+
+    if(jam.length == 1 ){
+      jam = '0' + jam
+    };
+
+    if (menit.length == 1){
+      menit = '0' + menit
+    };
+    
+    let bTime = jam + ':' + menit;
+    setTutup(bTime);
   };
   
   const untukTutup = ( event, TselectedDate) => {
     const currentDate = TselectedDate;
-    setShow(Platform.OS === 'ios');
+    setShowTutup(Platform.OS === 'ios');
     setDate(currentDate);
 
     let ttempDate = new Date(currentDate);
-    let tTime = ttempDate.getHours()  + ':' + ttempDate.getMinutes()
-    setTutup(tTime)
+    let jam = ttempDate.getHours();
+    let menit = ttempDate.getMinutes();
+
+    if(jam.length == 1 ){
+      jam = '0' + jam
+    };
+
+    if (menit.length == 1 ){
+      menit = '0' + menit
+    };
+
+    let tTime = jam + ':' + menit;
+    setTutup(tTime);
   };
 
-  const showMode = () => {
-      setShow(true);
-      setMode('time');
+  const showModeBuka = () => {
+      setShowBuka(true);
+  };
+
+  const showModeTutup = () => {
+      setShowTutup(true);
   };
 
 
@@ -142,17 +167,17 @@ const EditScreen = ({navigation, route}) => {
                   <View style={styles.waktu}>
                       <View>
                           <Text style={[styles.input, {fontSize: 20}]}>{buka}</Text>
-                          { show && (<DateTimePicker
+                          { showBuka && (<DateTimePicker
                             testID='123'
                             value={date}
-                            mode={mode}
+                            mode='time'
                             is24Hour={true}
                             display='default'
                             onChange={untukBuka}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Buka</Text>
                           <Text style={styles.ubah}
-                             onPress={showMode}
+                             onPress={showModeBuka}
                           >Ubah</Text>
                       </View>
                       <View>
@@ -160,17 +185,17 @@ const EditScreen = ({navigation, route}) => {
                       </View>
                       <View>
                           <Text style={[styles.input, {fontSize: 20}]}>{tutup}</Text>
-                          { show && (<DateTimePicker
+                          { showTutup && (<DateTimePicker
                             testID='890'
                             value={date}
-                            mode={mode}
+                            mode='time'
                             is24Hour={true}
                             display='default'
                             onChange={untukTutup}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Tutup</Text>
                           <Text style={styles.ubah}
-                            onPress={showMode}
+                            onPress={showModeTutup}
                           >Ubah </Text>
                       </View>
                   </View>
