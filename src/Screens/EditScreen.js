@@ -7,6 +7,7 @@ import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
 import * as ImagePicker from 'expo-image-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 const { width, height } = Dimensions.get('window')
@@ -125,13 +126,14 @@ const EditScreen = ({navigation, route}) => {
                   value={tokoakun}
                   onChangeText={tokoakun => setTokoakun(tokoakun)}
                 />
-                <Text style={styles.judulisi}>Waktu Keliling</Text>
-                <TextInput 
-                  placeholder="Waktu keliling tidak bisa kosong"
-                  style={styles.input} 
+                <Text style={styles.judulisi}>Waktu Operasional</Text>
+                <RNDateTimePicker mode="time" />
+                {/* <TextInput 
+                  // placeholder="Waktu keliling tidak bisa kosong"
+                  // style={styles.input} 
                   // value={tokoakun}
                   // onChangeText={tokoakun => setTokoakun(tokoakun)}
-                />
+                /> */}
                 <Text style={styles.judulisi}>No.Handphone</Text>
                 <TextInput 
                   placeholder="Nomor handphon tidak bisa kosong"
