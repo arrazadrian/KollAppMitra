@@ -112,11 +112,11 @@ const EditScreen = ({navigation, route}) => {
     let tjam = ttempDate.getHours().toString();
     let tmenit = ttempDate.getMinutes().toString();
 
-    if(tjam.length != 2 ){
+    if(tjam.length == 1 ){
       tjam = '0' + tjam
     };
 
-    if (tmenit.length != 2 ){
+    if (tmenit.length == 1 ){
       tmenit = '0' + tmenit
     };
 
@@ -168,7 +168,11 @@ const EditScreen = ({navigation, route}) => {
                 <Text style={styles.judulisi}>Waktu Operasional</Text>
                   <View style={styles.waktu}>
                       <View>
-                          <Text style={[styles.input, {fontSize: 20}]}>{buka}</Text>
+                          <Text style={[styles.input, {fontSize: 26}]}
+                            onPress={showModeBuka}
+                          >
+                            {buka}
+                          </Text>
                           { showBuka && (<DateTimePicker
                             testID='123'
                             value={date}
@@ -177,16 +181,17 @@ const EditScreen = ({navigation, route}) => {
                             display='default'
                             onChange={untukBuka}
                           />)}
-                          <Text style={{color: Putih, fontSize: 16}}>Waktu Buka</Text>
-                          <Text style={styles.ubah}
-                             onPress={showModeBuka}
-                          >Ubah</Text>
+                          <Text style={{color: Putih, fontSize: 12}}>Waktu Buka</Text>
                       </View>
                       <View>
                         <Text style={{fontSize: 25, color: Putih}}>-</Text>
                       </View>
                       <View>
-                          <Text style={[styles.input, {fontSize: 20}]}>{tutup}</Text>
+                          <Text style={[styles.input, {fontSize: 26}]}
+                            onPress={showModeTutup}
+                          >
+                            {tutup}
+                          </Text>
                           { showTutup && (<DateTimePicker
                             testID='890'
                             value={date}
@@ -195,10 +200,7 @@ const EditScreen = ({navigation, route}) => {
                             display='default'
                             onChange={untukTutup}
                           />)}
-                          <Text style={{color: Putih, fontSize: 16}}>Waktu Tutup</Text>
-                          <Text style={styles.ubah}
-                            onPress={showModeTutup}
-                          >Ubah </Text>
+                          <Text style={{color: Putih, fontSize: 12}}>Waktu Tutup</Text>
                       </View>
                   </View>
                   <View style={{marginBottom: 10}}>
