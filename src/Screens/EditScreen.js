@@ -88,19 +88,19 @@ const EditScreen = ({navigation, route}) => {
     setDate(currentDate);
 
     let btempDate = new Date(currentDate);
-    let jam = btempDate.getHours();
-    let menit = btempDate.getMinutes();
+    let bjam = btempDate.getHours();
+    let bmenit = btempDate.getMinutes();
 
-    if(jam.length == 1 ){
-      jam = '0' + jam
+    if(bjam.length != 2 ){
+      bjam = '0' + bjam
     };
 
-    if (menit.length == 1){
-      menit = '0' + menit
+    if (bmenit.length != 2){
+      bmenit = '0' + bmenit
     };
     
-    let bTime = jam + ':' + menit;
-    setTutup(bTime);
+    let bTime = bjam + ':' + bmenit;
+    setBuka(bTime);
   };
   
   const untukTutup = ( event, TselectedDate) => {
@@ -109,27 +109,29 @@ const EditScreen = ({navigation, route}) => {
     setDate(currentDate);
 
     let ttempDate = new Date(currentDate);
-    let jam = ttempDate.getHours();
-    let menit = ttempDate.getMinutes();
+    let tjam = ttempDate.getHours();
+    let tmenit = ttempDate.getMinutes();
 
-    if(jam.length == 1 ){
-      jam = '0' + jam
+    if(tjam.length != 2 ){
+      tjam = '0' + tjam
     };
 
-    if (menit.length == 1 ){
-      menit = '0' + menit
+    if (tmenit.length != 2 ){
+      tmenit = '0' + tmenit
     };
 
-    let tTime = jam + ':' + menit;
+    let tTime = tjam + ':' + tmenit;
     setTutup(tTime);
   };
 
   const showModeBuka = () => {
       setShowBuka(true);
+      console.log("BUKAAAAA")
   };
 
   const showModeTutup = () => {
       setShowTutup(true);
+      console.log("TUTUUPPP")
   };
 
 
@@ -201,7 +203,7 @@ const EditScreen = ({navigation, route}) => {
                   </View>
                   <View style={{marginBottom: 10}}>
                       <Text style={{color: IjoMint, fontStyle:'italic', fontSize: 14, textAlign:'center'}}>
-                          Waktu operasional hanya digunakan sebagai informasi untuk pelanggan
+                          Sistem tidak menggunakan waktu operasional untuk menonaktifkan mitra
                       </Text>
                   </View>
                 <Text style={styles.judulisi}>No.Handphone</Text>
