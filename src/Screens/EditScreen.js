@@ -88,14 +88,14 @@ const EditScreen = ({navigation, route}) => {
     setDate(currentDate);
 
     let btempDate = new Date(currentDate);
-    let bjam = btempDate.getHours();
-    let bmenit = btempDate.getMinutes();
+    let bjam = btempDate.getHours().toString();
+    let bmenit = btempDate.getMinutes().toString();
 
-    if(bjam.length != 2 ){
+    if(bjam.length == 1 ){
       bjam = '0' + bjam
     };
 
-    if (bmenit.length != 2){
+    if (bmenit.length == 1){
       bmenit = '0' + bmenit
     };
     
@@ -109,8 +109,8 @@ const EditScreen = ({navigation, route}) => {
     setDate(currentDate);
 
     let ttempDate = new Date(currentDate);
-    let tjam = ttempDate.getHours();
-    let tmenit = ttempDate.getMinutes();
+    let tjam = ttempDate.getHours().toString();
+    let tmenit = ttempDate.getMinutes().toString();
 
     if(tjam.length != 2 ){
       tjam = '0' + tjam
