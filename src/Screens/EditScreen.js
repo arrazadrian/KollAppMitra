@@ -79,32 +79,32 @@ const EditScreen = ({navigation, route}) => {
   const [date, setDate] = useState(new Date);
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
-  const [buka, setBuka] = useState("");
-  const [tutup, setTutup] = useState("");
+  const [buka, setBuka] = useState("00:00");
+  const [tutup, setTutup] = useState("00:00");
 
-  const untukBuka = (event, selectedDate) => {
+  const untukBuka = ( ubah, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'android');
+    setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = new Date(currentDate);
-    let bTime = tempDate.getHours() + tempDate.getMinutes
+    let tempDate = ubah;
+    let bTime = tempDate.getHours() + ':' + tempDate.getMinutes()
     setBuka(bTime)
   };
   
-  const untukTutup = (event, selectedDate) => {
+  const untukTutup = ( ubah, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'android');
+    setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
-    let tempDate = new Date(currentDate);
-    let tTime = tempDate.getHours() + tempDate.getMinutes
+    let tempDate = ubah;
+    let tTime = tempDate.getHours()  + ':' + tempDate.getMinutes()
     setTutup(tTime)
   };
 
-  const showMode = (currentMode) => {
+  const showMode = () => {
       setShow(true);
-      setMode(currentMode);
+      setMode('time');
   };
 
 
@@ -141,36 +141,36 @@ const EditScreen = ({navigation, route}) => {
                 <Text style={styles.judulisi}>Waktu Operasional</Text>
                   <View style={styles.waktu}>
                       <View>
-                          <Text style={[styles.input, {fontSize: 25}]}>07.00</Text>
+                          <Text style={[styles.input, {fontSize: 20}]}>{buka}</Text>
                           { show && (<DateTimePicker
-                            testID='tutupkapan'
+                            testID='bukakapan'
                             value={date}
                             mode={mode}
                             is24Hour={true}
                             display='default'
-                            onChange={untukBuka}
+                            onChange={(ubah) => untukBuka(ubah)}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Buka</Text>
                           <Text style={styles.ubah}
-                             onPress={()=> showMode('time')}
+                             onPress={showMode}
                           >Ubah</Text>
                       </View>
                       <View>
                         <Text style={{fontSize: 25, color: Putih}}>-</Text>
                       </View>
                       <View>
-                          <Text style={[styles.input, {fontSize: 25}]}>08.00</Text>
+                          <Text style={[styles.input, {fontSize: 20}]}>{tutup}</Text>
                           { show && (<DateTimePicker
                             testID='tutupkapan'
                             value={date}
                             mode={mode}
                             is24Hour={true}
                             display='default'
-                            onChange={untukTutup}
+                            onChange={(ubah)=>untukTutup(ubah)}
                           />)}
                           <Text style={{color: Putih, fontSize: 16}}>Waktu Tutup</Text>
                           <Text style={styles.ubah}
-                            onPress={()=> showMode('time')}
+                            onPress={showMode}
                           >Ubah </Text>
                       </View>
                   </View>
