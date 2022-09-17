@@ -13,3 +13,5 @@ Firebase/
 
 # macOS
 .DS_Store
+
+.env
