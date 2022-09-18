@@ -3,10 +3,17 @@ import React from 'react'
 import { IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import MapView from 'react-native-maps'
 import Garis from '../Components/Garis'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 const FLocScreen = () => {
   return (
     <View style={styles.latar}>
+      <GooglePlacesAutocomplete
+          placeholder='Cari lokasi...'
+          nearbyPlacesAPI="GooglePlacesSearch"
+          debounce={400}
+      />
       <MapView style={styles.peta}
         initialRegion={{
           latitude: -0.803328,
