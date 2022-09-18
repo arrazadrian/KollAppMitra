@@ -7,7 +7,14 @@ import Garis from '../Components/Garis'
 const FLocScreen = () => {
   return (
     <View style={styles.latar}>
-      <MapView style={styles.peta}/>
+      <MapView style={styles.peta}
+        initialRegion={{
+          latitude: -0.803328,
+          longitude: 117.908533,
+          latitudeDelta: 45.19,
+          longitudeDelta: 45.19,
+        }}
+      />
       <View style={styles.pencarian}>
         <Text style={styles.judul}>Lokasi kamu mangkal dimana?</Text>
         <Garis/>
