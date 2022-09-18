@@ -322,8 +322,6 @@ const styles = StyleSheet.create({
   kotak:{
     backgroundColor: Ijo,
     borderRadius: 10,
-    // width: width*0.85,
-    // height: height*0.72,
     alignSelf: 'center',
     paddingHorizontal: 20,
     paddingVertical: 20,

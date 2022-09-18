@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, TextInput } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from 'react-native'
 import React from 'react'
-import { IjoTua, Kuning, Putih } from '../Utils/Warna'
+import { IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import MapView from 'react-native-maps'
 import Garis from '../Components/Garis'
 
@@ -21,6 +21,9 @@ const FLocScreen = () => {
         <TextInput 
         placeholder='Cari Lokasi...'/>
       </View>
+      <Pressable style={styles.komfirmasi}>
+        <Text style={{fontSize: 18, fontWeight:'bold', color: Putih}}>Komfirmasi</Text>
+      </Pressable>
     </View>
   )
 }
@@ -50,4 +53,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  komfirmasi:{
+    position: 'absolute',
+    bottom: 50,
+    backgroundColor: IjoTua,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    borderRadius: 20,
+    alignSelf:'center',
+  }
 })
