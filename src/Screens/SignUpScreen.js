@@ -161,7 +161,7 @@ const SignUpScreen = () => {
               <View style={{left: 5, marginBottom: 5}}>
                   <Text style={styles.subjudul}>Waktu Operasional</Text>
               </View>
-              <View style={{marginBottom: 10, padding: 10, backgroundColor: IjoMint, borderRadius: 10,}}>
+              <View style={{marginBottom: 10, padding: 10, backgroundColor: Putih, borderRadius: 10,}}>
                   <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
                     <View>
                       { buka ? (
@@ -223,13 +223,15 @@ const SignUpScreen = () => {
               </View>
               <View style={{marginBottom: 10}}>
                 {mangkal ? (
-                  <Pressable style={{ backgroundColor: IjoMint, padding: 10, borderRadius: 10, justifyContent:'center'}}>
+                  <Pressable style={{ backgroundColor: Putih, padding: 10, borderRadius: 10, justifyContent:'center'}}>
                     <Text>
                       {mangkal}
                     </Text>
                   </Pressable>
                 ):(
-                  <Pressable style={{ backgroundColor: IjoMint, padding: 10, borderRadius: 10, justifyContent:'center'}}>
+                  <Pressable style={{ backgroundColor: Putih, padding: 10, borderRadius: 10, justifyContent:'center'}}
+                    onPress={() => navigation.navigate('FLocScreen')}
+                    >
                     <Text style={{color: 'rgba(0,0,0,0.4)'}}>
                       Cari lokasi kamu biasa mangkal... 
                     </Text>

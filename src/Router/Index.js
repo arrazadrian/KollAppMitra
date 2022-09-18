@@ -18,6 +18,7 @@ import {
     EditScreen,
     SignInScreen, 
     SignUpScreen, 
+    FLocScreen,
     ProdukScreen,
     PreOrderScreen,
     LangsungScreen,
@@ -57,6 +58,7 @@ return(
     <Stack.Navigator>
       <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   </NavigationContainer>
