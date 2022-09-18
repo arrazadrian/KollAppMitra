@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { Ijo, IjoTua, Kuning, Putih} from '../Utils/Warna';
+import { Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
 import { usermitra } from '../Data/usermitra'
 import { useNavigation } from '@react-navigation/native'
@@ -79,19 +79,29 @@ const AkunScreen = () => {
             <View style={{borderBottomColor: Ijo, borderBottomWidth: 1}}>
               <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Info</Text>
             </View>
-            <View style={{padding: 15}}>
-                <View style={{justifyContent:"space-between", marginBottom: 10}}>     
-                      <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
-                      <Text style={{color: Putih, fontSize: 18}}>{tokoakun}</Text>   
+            <View style={{paddingTop: 10}}>
+                <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
+                      <View style={{flex: 1}}>
+                          <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
+                          <Text style={{color: Putih, fontSize: 18}}>{tokoakun}</Text>   
+                      </View>    
+                      <View style={{flex: 1, paddingStart: 10}}>     
+                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Waktu Operasional</Text> 
+                            <Text style={{color: Putih, fontSize: 18}}>08.00 - 12.00</Text>   
+                      </View>
                 </View>
-                <View style={{justifyContent:"space-between", marginBottom: 10}}>     
-                      <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
-                      <Text style={{color: Putih, fontSize: 18}}>{phoneakun}</Text>   
+                <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
+                      <View style={{flex: 1}}>     
+                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
+                            <Text style={{color: Putih, fontSize: 18}}>{phoneakun}</Text>   
+                      </View>
+                      <View style={{flex: 1, paddingStart: 10}}>     
+                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Email</Text> 
+                            <Text style={{color: Putih, fontSize: 18}}>{emailakun}</Text>   
+                      </View>
                 </View>
-                <View style={{justifyContent:"space-between", marginBottom: 10}}>     
-                      <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Email</Text> 
-                      <Text style={{color: Putih, fontSize: 18}}>{emailakun}</Text>   
-                </View>
+                <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Tempat Mangkal</Text>
+                <Text style={{color: Putih, fontSize: 18}} numberOfLines={2}>HIHADIDAHIADIAHDIcahahashsaoi cagasuhsaa ucagucsgia AH</Text>
             </View>
             <View style={styles.logout}>
               <Text 

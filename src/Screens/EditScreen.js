@@ -8,7 +8,6 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 const { width, height } = Dimensions.get('window')
 

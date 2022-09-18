@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import { Ijo, IjoTua, Putih } from '../Utils/Warna';
+import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const { height, width } = Dimensions.get('window')
 
@@ -12,14 +13,78 @@ const SignUpScreen = () => {
 
   const [namalengkap, setNamalengkap] = useState('');
   const [namatoko, setNamatoko] = useState('');
+  const [buka, setBuka] = useState('');
+  const [tutup, setTutup] = useState('');
+  const [mangkal, setMangkal] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+
+  const [date, setDate] = useState(new Date);
+  const [showBuka, setShowBuka] = useState(false);
+  const [showTutup, setShowTutup] = useState(false);
+
+  const untukBuka = ( event, BselectedDate) => {
+    const currentDate = BselectedDate;
+    setShowBuka(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let btempDate = new Date(currentDate);
+    let bjam = btempDate.getHours().toString();
+    let bmenit = btempDate.getMinutes().toString();
+
+    if(bjam.length == 1 ){
+      bjam = '0' + bjam
+    };
+
+    if (bmenit.length == 1){
+      bmenit = '0' + bmenit
+    };
+    
+    let bTime = bjam + ':' + bmenit;
+    setBuka(bTime);
+  };
+  
+  const untukTutup = ( event, TselectedDate) => {
+    const currentDate = TselectedDate;
+    setShowTutup(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let ttempDate = new Date(currentDate);
+    let tjam = ttempDate.getHours().toString();
+    let tmenit = ttempDate.getMinutes().toString();
+
+    if(tjam.length == 1 ){
+      tjam = '0' + tjam
+    };
+
+    if (tmenit.length == 1 ){
+      tmenit = '0' + tmenit
+    };
+
+    let tTime = tjam + ':' + tmenit;
+    setTutup(tTime);
+  };
+
+  const showModeBuka = () => {
+      setShowBuka(true);
+      console.log("BUKAAAAA")
+  };
+
+  const showModeTutup = () => {
+      setShowTutup(true);
+      console.log("TUTUUPPP")
+  };
+
+
   const emptyState = () => {
     setNamalengkap('');
     setNamatoko('');
+    setBuka('');
+    setTutup('');
+    setMangkal('');
     setEmail('');
     setPhone('');
     setPassword('');
@@ -31,6 +96,12 @@ const SignUpScreen = () => {
       Alert.alert('Nama lengkap masih kosong','Isi nama lengkap dengan benar.');
     } else if (!namatoko) {
       Alert.alert('Nama toko masih kosong','Isi nama toko dengan benar.');
+    } else if (!buka) {
+      Alert.alert('Waktu buka masih kosong','Isi waktu buka dengan benar.');
+    } else if (!tutup) {
+      Alert.alert('Waktu tutup masih kosong','Isi waktu tutup dengan benar.');
+    } else if (!mangkal) {
+      Alert.alert('Tempat mangkal masih kosong','Isi tempat mangkal dengan benar.');
     } else if (!email) {
       Alert.alert('Email masih kosong','Isi email dengan benar.');
     } else if (!phone && 9 < phone.length < 14) {
@@ -48,6 +119,9 @@ const SignUpScreen = () => {
         password,
         namalengkap,
         namatoko,
+        buka,
+        tutup,
+        mangkal,
         phone,
       );
       emptyState();
@@ -83,6 +157,84 @@ const SignUpScreen = () => {
                   autoCapitalize="none"
                   autoCorrect={false}
                   />
+              </View>
+              <View style={{left: 5, marginBottom: 5}}>
+                  <Text style={styles.subjudul}>Waktu Operasional</Text>
+              </View>
+              <View style={{marginBottom: 10, padding: 10, backgroundColor: IjoMint, borderRadius: 10,}}>
+                  <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <View>
+                      { buka ? (
+                        <Text style={{color: Ijo, fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
+                        onPress={showModeBuka}
+                        >
+                        {buka}
+                      </Text>
+                      ):(
+                        <Text style={{color: 'rgba(0,0,0,0.2)', fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
+                          onPress={showModeBuka}
+                        >
+                        00:00
+                        </Text>
+                      )
+
+                      }
+                      
+                      { showBuka && (<DateTimePicker
+                            testID='123'
+                            value={date}
+                            mode='time'
+                            is24Hour={true}
+                            display='default'
+                            onChange={untukBuka}
+                          />)}
+                      <Text style={{color: Ijo, fontSize: 12, textAlign:'center'}}>Waktu Buka</Text>
+                    </View>
+                    <View>
+                      { tutup ? (
+                        <Text style={{color: Ijo, fontSize: 20, textAlign:'center',  borderBottomWidth: 2, borderBottomColor: Ijo}}
+                            onPress={showModeTutup}
+                        >
+                          {tutup}
+                        </Text>
+                        ) : (
+                        <Text style={{color: 'rgba(0,0,0,0.2)', fontSize: 20, textAlign:'center',  borderBottomWidth: 2, borderBottomColor: Ijo}}
+                            onPress={showModeTutup}
+                        >
+                          00:00
+                        </Text>
+                        )
+                      }
+                    
+                      { showTutup && (<DateTimePicker
+                            testID='890'
+                            value={date}
+                            mode='time'
+                            is24Hour={true}
+                            display='default'
+                            onChange={untukTutup}
+                          />)}
+                      <Text style={{color: Ijo, fontSize: 12, textAlign:'center'}}>Waktu Tutup</Text>
+                    </View>
+                  </View>
+              </View>
+              <View style={{left: 5, marginBottom: 5}}>
+                  <Text style={styles.subjudul}>Tempat Mangkal</Text>
+              </View>
+              <View style={{marginBottom: 10}}>
+                {mangkal ? (
+                  <Pressable style={{ backgroundColor: IjoMint, padding: 10, borderRadius: 10, justifyContent:'center'}}>
+                    <Text>
+                      {mangkal}
+                    </Text>
+                  </Pressable>
+                ):(
+                  <Pressable style={{ backgroundColor: IjoMint, padding: 10, borderRadius: 10, justifyContent:'center'}}>
+                    <Text style={{color: 'rgba(0,0,0,0.4)'}}>
+                      Cari lokasi kamu biasa mangkal... 
+                    </Text>
+                  </Pressable>
+                )}
               </View>
               <View style={{left: 5, marginBottom: 5}}>
                   <Text style={styles.subjudul}>Email</Text>
@@ -183,7 +335,7 @@ const styles = StyleSheet.create({
     backgroundColor: Putih,
     height: 40,
     borderRadius: 10,
-    paddingStart: 10
+    paddingStart: 10,
   },
   tombol:{
     width: width*0.84,
