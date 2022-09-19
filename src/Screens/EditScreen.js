@@ -13,12 +13,13 @@ const { width, height } = Dimensions.get('window')
 
 const EditScreen = ({navigation, route}) => {
 
-  const { nama, foto, toko, phone } = route.params;
+  const { nama, foto, toko, phone, waktu_buka, waktu_tutup } = route.params;
 
   const [namaakun, setNamaakun] = useState(nama)
   const [fotoakun, setFotoakun] = useState(foto)
   const [tokoakun, setTokoakun] = useState(toko)
   const [phoneakun, setPhoneakun] = useState(phone)
+
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -77,9 +78,9 @@ const EditScreen = ({navigation, route}) => {
 
   const [date, setDate] = useState(new Date);
   const [showBuka, setShowBuka] = useState(false);
-  const [buka, setBuka] = useState("00:00");
+  const [buka, setBuka] = useState(waktu_buka);
   const [showTutup, setShowTutup] = useState(false);
-  const [tutup, setTutup] = useState("00:00");
+  const [tutup, setTutup] = useState(waktu_tutup);
 
   const untukBuka = ( event, BselectedDate) => {
     const currentDate = BselectedDate;

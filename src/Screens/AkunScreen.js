@@ -19,6 +19,8 @@ const AkunScreen = () => {
       foto: fotoakun,
       toko: tokoakun,
       phone: phoneakun,
+      waktu_buka: waktu_buka,
+      waktu_tutup: waktu_tutup
     })
   }
 
@@ -27,6 +29,8 @@ const AkunScreen = () => {
   const [tokoakun, setTokoakun] = useState('')
   const [phoneakun, setPhoneakun] = useState('')
   const [emailakun, setEmailakun] = useState('')
+  const [waktu_buka, setWaktu_buka] = useState('')
+  const [waktu_tutup, setWaktu_tutup] = useState('')
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -39,6 +43,8 @@ const AkunScreen = () => {
         setTokoakun(doc.data().namatoko);
         setPhoneakun(doc.data().phone);
         setEmailakun(doc.data().email);
+        setWaktu_buka(doc.data().waktu_buka);
+        setWaktu_tutup(doc.data().waktu_tutup);
         console.log('getuserAkun jalan (Akun Screen)')
           // Respond to data
           // ...
@@ -87,7 +93,7 @@ const AkunScreen = () => {
                       </View>    
                       <View style={{flex: 1, paddingStart: 10}}>     
                             <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Waktu Operasional</Text> 
-                            <Text style={{color: Putih, fontSize: 18}}>08.00 - 12.00</Text>   
+                            <Text style={{color: Putih, fontSize: 18}}>{waktu_buka} - {waktu_tutup}</Text>   
                       </View>
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
