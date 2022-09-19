@@ -28,7 +28,7 @@ const kosongproduk = () => {
 
 const atasproduk = () => {
   return(
-    <View style={{paddingTop:'20%'}}>
+    <View style={{paddingTop: 10}}>
       <View style={{marginBottom: 10}}>
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
@@ -110,7 +110,6 @@ const ProdukScreen = ({ navigation }) => {
         </View>
       </View>
       )}
-        <PencarianBar />
         <Pressable style={styles.tambah}
               onPress={() => navigation.navigate('TambahScreen')}
               >

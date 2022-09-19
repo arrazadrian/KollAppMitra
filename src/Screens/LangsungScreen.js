@@ -38,16 +38,15 @@ const atasjual = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const pilihKategori = () => {
+      dispatch(updateKategori({pilkategori}));
+      console.log("Kategori yg dipilih: " + pilkategori)
+    };
     pilihKategori();
   }, [pilkategori]);
 
-  const pilihKategori = () => {
-    dispatch(updateKategori({pilkategori}));
-    console.log("Kategori yg dipilih: " + pilkategori)
-  };
-
   return(
-    <View style={{ paddingTop:'18%' }}>
+    <View style={{ paddingTop: 10 }}>
       <View>
           <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
               <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
@@ -171,7 +170,6 @@ const LangsungScreen = ({ navigation }) => {
                 </View>
                 }
             />
-            <PencarianBar/>
             <Keranjang/>
         </View>
       )}
@@ -187,7 +185,7 @@ const styles = StyleSheet.create({
     backgroundColor: Kuning,
   },
   bawah:{
-    marginTop: '40%',
+    marginTop: '55%',
     flex: 1,
     width: '100%',
     height: height*0.15,

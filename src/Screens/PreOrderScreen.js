@@ -28,7 +28,7 @@ const kosongpre = () => {
 
 const ataspre = () => {
   return(
-    <View style={{paddingTop:'20%'}}>
+    <View style={{paddingTop: 10}}>
       <View style={{marginBottom: 10}}>
         <Text style={styles.judul}>Produk Pre-Order</Text>
         <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>
@@ -109,7 +109,6 @@ const PreOrderScreen = ({navigation}) => {
       </View>
       </View>
       )}
-    <PencarianBar />
     <Pressable style={styles.tambah}
           onPress={() => navigation.navigate('TambahPreScreen')}
           >
