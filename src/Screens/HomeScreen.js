@@ -96,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getuserHome();
-  },[namamitra, namatoko])
+  },[])
 
 
   return ( 
