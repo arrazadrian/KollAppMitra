@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, Pressable, FlatList, Dimensions, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, ActivityIndicator, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
-import { Ijo, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
+import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
-import { daftarpreproduk } from '../Data/daftarpreproduk'
+//import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
+import { updateKategori } from '../features/kategoriSlice'
+import { jeniskategori } from '../Data/jeniskategori'
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -19,17 +23,45 @@ const kosongpre = () => {
       fontSize: 16, color: IjoTua, textAlign:'center',
       width: width*0.8,
     }}>
-      Kamu tidak punya produk pre-order. Buat produk pre-order
-      dengan ketuk tanda plus di kanan bawah.
+      Kamu tidak punya produk pre-order kategori ini
     </Text>
   </View>
   )
 }
 
 const ataspre = () => {
+  const[pilkategori, setPilkategori]= useState("Semua Produk")
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const pilihKategori = () => {
+      dispatch(updateKategori({pilkategori}));
+      console.log("Kategori yg dipilih: " + pilkategori)
+    };
+    pilihKategori();
+  }, [pilkategori]);
+
   return(
     <View style={{paddingTop: 10}}>
-      <View style={{marginBottom: 10}}>
+      <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+      </View>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingStart: 10, paddingEnd: 10}}>
+        {jeniskategori.map((item, index) => (
+          <TouchableOpacity key={index}
+            style={{backgroundColor: pilkategori == item.nama ? IjoMint : Putih, ...styles.kartuKategori}}
+            onPress={() =>setPilkategori(item.nama)}>
+            <View style={ styles.kategoripilihan}>
+                <Image source={item.image} style={styles.gambar} />
+            </View>
+            <Text style={{color: pilkategori == item.nama ? Ijo : IjoTua,...styles.nama}}>{item.nama}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <View style={{marginBottom: 10, paddingHorizontal: 10}}>
         <Text style={styles.judul}>Produk Pre-Order</Text>
         <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>
       </View>
@@ -43,6 +75,8 @@ const PreOrderScreen = ({navigation}) => {
   const[loading, setLoading] = useState(true);
   const componentMounted = useRef(true);
 
+  const { pilkategori } = useSelector(state => state.kategori);
+
   useEffect(()=>{
     const fetchProdukPreOrder = async() => {
       try{
@@ -52,37 +86,56 @@ const PreOrderScreen = ({navigation}) => {
         const docRef = doc(db, "mitra", auth.currentUser.uid);
         const colRef = collection(docRef, "produk")
 
-        const q = query(colRef, where("jenis", "==", "Produk pre-order"), orderBy("waktudibuat","desc"));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
-          list.push({
-            id: doc.id,
-            namaproduk,
-            deskproduk,
-            image,
-            harga,
-            kuantitas,
-            satuan,
-            kategori,
+        if ( pilkategori == "Semua Produk" ) {
+          const q = query(colRef, where("jenis", "==", "Produk pre-order"), orderBy("waktudibuat","desc"));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+            list.push({
+              id: doc.id,
+              namaproduk,
+              deskproduk,
+              image,
+              harga,
+              kuantitas,
+              satuan,
+              kategori,
+            });
           });
-        });
-
-        if (componentMounted.current){ // (5) is component still mounted?
-          setProdukpreorder(list); // (1) write data to state
-          setLoading(false); // (2) write some value to state
+          } else {
+            const qq = query(colRef, where("jenis", "==", "Produk pre-order"), where("kategori", "==", pilkategori), orderBy("waktudibuat","desc"));
+            const querySnapshot = await getDocs(qq);
+            querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+              list.push({
+                id: doc.id,
+                namaproduk,
+                deskproduk,
+                image,
+                harga,
+                kuantitas,
+                satuan,
+                kategori,
+              });
+            });
+          }
+  
+          if (componentMounted.current){ // (5) is component still mounted?
+            setProdukpreorder(list); // (1) write data to state
+            setLoading(false); // (2) write some value to state
+          }
+          return () => { // This code runs when component is unmounted
+              componentMounted.current = false; // (4) set it to false when we leave the page
+          }
+  
+        } catch(err){
+          console.log(err);
         }
-        return () => { // This code runs when component is unmounted
-            componentMounted.current = false; // (4) set it to false when we leave the page
-        }
-
-      } catch(err){
-        console.log(err);
       }
-    }
-    fetchProdukPreOrder();
-  },[])
+      fetchProdukPreOrder();
+    },[pilkategori])
 
 
   return (
@@ -125,7 +178,6 @@ const styles = StyleSheet.create({
   latar: {
     backgroundColor: Kuning,
     flex: 1,
-    paddingHorizontal: 10,
   },
   judul:{
     fontSize: 20,
@@ -150,5 +202,31 @@ const styles = StyleSheet.create({
   logopojok:{
     width: 80,
     height: 40,
+  },
+  nama:{
+    fontSize: 14,
+    fontWeight: 'bold',
+    width: 60,
+  },  
+  gambar:{
+    width: width*0.1,
+    height: width*0.1,
+  },
+  kartuKategori:{
+    flexDirection: 'row',
+    alignSelf:'center',
+    marginRight: 10,
+    marginBottom: 10,
+    padding: 5,
+    borderRadius: 50,
+    justifyContent:'flex-start',
+    alignItems:'center',
+  },
+  kategoripilihan:{
+    alignItems:'center',
+    padding: 5, 
+    borderRadius: 50, 
+    marginRight: 10,
+    backgroundColor: Putih,
   },
 })
