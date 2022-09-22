@@ -4,6 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
+import Garis from '../Components/Garis'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
@@ -48,8 +49,8 @@ const atasjual = () => {
   return(
     <View style={{ paddingTop: 10 }}>
       <View>
-          <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
-              <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+          <View style={{ paddingHorizontal: 10, marginBottom:5 }}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: IjoTua}}>Kategori</Text>
           </View>
           <ScrollView
             horizontal={true}
@@ -67,6 +68,7 @@ const atasjual = () => {
             ))}
           </ScrollView>
       </View>
+      <Garis/>
       <View style={{paddingHorizontal: 10, marginBottom:10 }}>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
       </View>
