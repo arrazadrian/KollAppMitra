@@ -4,6 +4,7 @@ import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
+import Garis from '../Components/Garis'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
@@ -44,8 +45,8 @@ const atasproduk = () => {
 
   return(
     <View style={{paddingTop: 10}}>
-      <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+      <View style={{ paddingHorizontal: 10, marginBottom:5 }}>
+          <Text style={{fontSize: 16, fontWeight: 'bold', color: IjoTua}}>Kategori</Text>
       </View>
       <ScrollView
         horizontal={true}
@@ -62,6 +63,7 @@ const atasproduk = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <Garis/>
       <View style={{marginBottom: 10, paddingHorizontal: 10}}>
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
   judul:{
     fontSize: 20,
     fontWeight: 'bold',
-    color: IjoTua,
+    color: Ijo,
   },
   deskripsi:{
     fontSize: 16,

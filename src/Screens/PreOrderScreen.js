@@ -11,6 +11,7 @@ import { app } from '../../Firebase/config';
 import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
 import { useDispatch, useSelector } from 'react-redux';
+import Garis from '../Components/Garis'
 
 
 const { width, height } = Dimensions.get('window')
@@ -43,8 +44,8 @@ const ataspre = () => {
 
   return(
     <View style={{paddingTop: 10}}>
-      <View style={{ paddingHorizontal: 10, marginBottom:10 }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+      <View style={{ paddingHorizontal: 10, marginBottom:5 }}>
+          <Text style={{fontSize: 16, fontWeight: 'bold', color: IjoTua}}>Kategori</Text>
       </View>
       <ScrollView
         horizontal={true}
@@ -61,6 +62,7 @@ const ataspre = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <Garis/>
       <View style={{marginBottom: 10, paddingHorizontal: 10}}>
         <Text style={styles.judul}>Produk Pre-Order</Text>
         <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
   judul:{
     fontSize: 20,
     fontWeight: 'bold',
-    color: IjoTua,
+    color: Ijo,
   },
   deskripsi:{
     fontSize: 16,

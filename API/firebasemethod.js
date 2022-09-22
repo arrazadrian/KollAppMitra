@@ -457,14 +457,14 @@ export async function updatestatus(status_sekarang){
             status_sekarang:"Aktif",     
           });
           Alert.alert(
-            'Status berhasil diperbarui','Anda sekarang aktif terlacak calon pelanggan.'          
+            'Status berhasil diperbarui','Anda sekarang berstatus aktif berjualan.'          
           );
         } else {
           updateDoc(docrefproduk, {
             status_sekarang:"Tidak Aktif",     
           });
           Alert.alert(
-            'Status berhasil diperbarui','Anda sekarang tidak terlacak calon pelanggan.'          
+            'Status berhasil diperbarui','Anda sekarang berstatus tidak berjualan.'          
           );
         }   
       } catch (err) {

@@ -133,7 +133,7 @@ const HomeScreen = ({ navigation }) => {
                 <Text> </Text>
                 <Text style={{color: IjoTua}}>{status}</Text>
                 </Text>
-                <Text style={styles.deskripsi}>Anda {penjelasan} terlacak calon pelanggan.</Text>
+                <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
             </View>
               <Switch
                 trackColor={{ false: '#767577', true: Ijo }}

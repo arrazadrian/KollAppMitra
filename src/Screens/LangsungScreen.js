@@ -70,7 +70,7 @@ const atasjual = () => {
       </View>
       <Garis/>
       <View style={{paddingHorizontal: 10, marginBottom:10 }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk Utama</Text>
       </View>
     </View>
   )
