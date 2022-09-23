@@ -4,13 +4,15 @@ import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetMangkal } from '../features/mangkalSlice';
 
 const { height, width } = Dimensions.get('window')
 
 const SignUpScreen = () => {
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const { geo, alamat, geohash } = useSelector(state => state.mangkal);
 
@@ -127,6 +129,7 @@ const SignUpScreen = () => {
         phone,
       );
       emptyState();
+      dispatch(resetMangkal())
     }
   };
 

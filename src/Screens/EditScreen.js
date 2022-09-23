@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get('window')
 
 const EditScreen = ({navigation, route}) => {
 
-  const { nama, foto, toko, phone, waktu_buka, waktu_tutup } = route.params;
+  const { nama, foto, toko, phone, waktu_buka, waktu_tutup, alamat } = route.params;
 
   const [namaakun, setNamaakun] = useState(nama)
   const [fotoakun, setFotoakun] = useState(foto)
@@ -165,6 +165,12 @@ const EditScreen = ({navigation, route}) => {
                   value={tokoakun}
                   onChangeText={tokoakun => setTokoakun(tokoakun)}
                 />
+                <Text style={styles.judulisi}>Tempat Mangkal</Text>
+                <Text style={[styles.input,{fontSize: 14}]}
+                  onPress={() => navigation.navigate('FLocScreen')}
+                >
+                  {alamat}
+                </Text>
                 <Text style={styles.judulisi}>Waktu Operasional</Text>
                   <View style={styles.waktu}>
                       <View>
@@ -254,7 +260,7 @@ const styles = StyleSheet.create({
   input:{
     borderBottomWidth: 2,
     borderColor: Ijo,
-    marginBottom: 10,
+    marginBottom: 15,
     fontSize: 18,
     color: Putih,
   },

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
@@ -8,6 +8,8 @@ import { handleSignOut } from '../../API/firebasemethod'
 import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
+
+const { width, height } = Dimensions.get('window')
 
 const AkunScreen = () => {
   
@@ -20,7 +22,8 @@ const AkunScreen = () => {
       toko: tokoakun,
       phone: phoneakun,
       waktu_buka: waktu_buka,
-      waktu_tutup: waktu_tutup
+      waktu_tutup: waktu_tutup,
+      alamat : alamat,
     })
   }
 
@@ -110,7 +113,7 @@ const AkunScreen = () => {
                 </View>
                 <View>
                     <Text style={styles.subjudul}>Tempat Mangkal</Text>
-                    <Text style={{color: Putih, fontSize: 13}} numberOfLines={3}>{alamat}</Text>
+                    <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
                 </View>
             </View>
             <View style={styles.logout}>
@@ -168,7 +171,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    margin: 20, 
+    position:'absolute',
+    bottom: height * 0.05,
+
   },
   bungkus:{
     backgroundColor: IjoTua,

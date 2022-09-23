@@ -47,7 +47,7 @@ const HomeStackScreen = () =>{
         <Tab.Navigator tabBar={props => <TabNavigasi {...props}/>}>
             <Tab.Screen name="Beranda" component={HomeScreen} options={{ headerShown: false }}/>
             <Tab.Screen name="Pesanan" component={TopTab} options={{ headerShown: false }}/>
-            <Tab.Screen name="Akun" component={AkunStackScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Akun" component={AkunScreen} options={{ headerShown: false }}/>
         </Tab.Navigator>
     );
   };
@@ -85,6 +85,9 @@ export const AppUtama = () => {
           <HomeStack.Screen name="ScanScreen" component={ScanScreen} options={{ title: "Scan QR Code Pelanggan", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
           <HomeStack.Screen name="ReceiptScreen" component={ReceiptScreen} options={{  title: "Bukti Transaksi", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}    }}/>
+
+          <HomeStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>
+          <HomeStack.Screen name="EditScreen" component={EditScreen} options={{ title: "Atur Profil", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
         </HomeStack.Navigator>
       </Provider>
     </NavigationContainer>
@@ -110,11 +113,12 @@ const Panggilan = () => {
 };
 
 const AkunStackScreen = () => {
-return(
-<AkunStack.Navigator>
-    <AkunStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>
-    <AkunStack.Screen name="EditScreen" component={EditScreen} options={{ title: "Atur Profil", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-</AkunStack.Navigator>
-);
+  return(
+    <AkunStack.Navigator>
+        <AkunStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>
+        <AkunStack.Screen name="EditScreen" component={EditScreen} options={{ title: "Atur Profil", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+        <AkunStack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+    </AkunStack.Navigator>
+  );
 };
   
