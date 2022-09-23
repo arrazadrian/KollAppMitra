@@ -317,7 +317,7 @@ export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprod
 // PERBARUI DATA AKUN
 // DI FIRESTORE TANPA FOTO DI STORAGE
 
-export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
+export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, geo, alamat, geohash){
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -333,6 +333,9 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
           namalengkap: namaakun,
           namatoko: tokoakun,
           phone: phoneakun,
+          geo: geo,
+          alamat: alamat,
+          geohash: geohash,
         });
         Alert.alert(
           'Data akun berhasil diperbarui','Data akunmu sudah terbarui.'
@@ -351,7 +354,7 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun){
 // PERBARUI DATA AKUN
 // DI FIRESTORE DENGAN FOTO DI STORAGE
 
-export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun){
+export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun, geo, alamat, geohash){
   const urlgambarbaru = await uploadgambarakun(fotoakun);
 
   const auth = getAuth();
@@ -372,6 +375,9 @@ export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneak
             namalengkap: namaakun,
             namatoko: tokoakun,
             phone: phoneakun,
+            geo: geo,
+            alamat: alamat,
+            geohash: geohash,
           });
           Alert.alert(
             'Data Akun Berhasil Diperbarui','Foto lama kamu juga sudah yang terbaru.'

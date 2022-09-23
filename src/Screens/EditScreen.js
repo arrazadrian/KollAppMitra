@@ -8,12 +8,15 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useSelector } from 'react-redux';
 
 const { width, height } = Dimensions.get('window')
 
 const EditScreen = ({navigation, route}) => {
 
-  const { nama, foto, toko, phone, waktu_buka, waktu_tutup, alamat } = route.params;
+  const { nama, foto, toko, phone, waktu_buka, waktu_tutup, alamat_sementara } = route.params;
+
+  const { geo, alamat, geohash } = useSelector(state => state.mangkal);
 
   const [namaakun, setNamaakun] = useState(nama)
   const [fotoakun, setFotoakun] = useState(foto)
@@ -54,6 +57,9 @@ const EditScreen = ({navigation, route}) => {
             namaakun,
             tokoakun,
             phoneakun,
+            geo,
+            alamat,
+            geohash, 
           );
           navigation.goBack();
         };
@@ -70,6 +76,9 @@ const EditScreen = ({navigation, route}) => {
             namaakun,
             tokoakun,
             phoneakun,
+            geo,
+            alamat,
+            geohash,
         );
         navigation.goBack();
       };
@@ -166,15 +175,25 @@ const EditScreen = ({navigation, route}) => {
                   onChangeText={tokoakun => setTokoakun(tokoakun)}
                 />
                 <Text style={styles.judulisi}>Tempat Mangkal</Text>
-                <Text style={[styles.input,{fontSize: 14}]}
-                  onPress={() => navigation.navigate('FLocScreen')}
-                >
-                  {alamat}
-                </Text>
+                { alamat ? 
+                  (
+                    <Text style={[styles.input,{fontSize: 14}]}
+                      onPress={() => navigation.navigate('FLocScreen')}
+                    >
+                      {alamat}
+                    </Text>
+                  ):(
+                    <Text style={[styles.input,{fontSize: 14}]}
+                      onPress={() => navigation.navigate('FLocScreen')}
+                    >
+                      {alamat_sementara}
+                    </Text>
+                  )
+                }
                 <Text style={styles.judulisi}>Waktu Operasional</Text>
                   <View style={styles.waktu}>
                       <View>
-                          <Text style={[styles.input, {fontSize: 26}]}
+                          <Text style={[styles.input, {fontSize: 26, marginBottom: 5}]}
                             onPress={showModeBuka}
                           >
                             {buka}
@@ -193,7 +212,7 @@ const EditScreen = ({navigation, route}) => {
                         <Text style={{fontSize: 25, color: Putih}}>-</Text>
                       </View>
                       <View>
-                          <Text style={[styles.input, {fontSize: 26}]}
+                          <Text style={[styles.input, {fontSize: 26,  marginBottom: 5}]}
                             onPress={showModeTutup}
                           >
                             {tutup}
@@ -260,7 +279,7 @@ const styles = StyleSheet.create({
   input:{
     borderBottomWidth: 2,
     borderColor: Ijo,
-    marginBottom: 15,
+    marginBottom: 20,
     fontSize: 18,
     color: Putih,
   },

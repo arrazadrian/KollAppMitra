@@ -23,7 +23,7 @@ const AkunScreen = () => {
       phone: phoneakun,
       waktu_buka: waktu_buka,
       waktu_tutup: waktu_tutup,
-      alamat : alamat,
+      alamat_sementara : alamat,
     })
   }
 

@@ -88,18 +88,10 @@ export const AppUtama = () => {
 
           <HomeStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>
           <HomeStack.Screen name="EditScreen" component={EditScreen} options={{ title: "Atur Profil", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
         </HomeStack.Navigator>
       </Provider>
     </NavigationContainer>
-    );
-  };
-
-const RiwayatStackScreen = () => {
-    return(
-    <RiwayatStack.Navigator>
-      <RiwayatStack.Screen name="RiwayatScreen" component={RiwayatScreen} options={{ headerShown: false }}/>
-      <RiwayatStack.Screen name="ProsesScreen" component={ProsesScreen} options={{ headerShown: false }}/>
-    </RiwayatStack.Navigator>
     );
   };
 
@@ -112,13 +104,5 @@ const Panggilan = () => {
   );
 };
 
-const AkunStackScreen = () => {
-  return(
-    <AkunStack.Navigator>
-        <AkunStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>
-        <AkunStack.Screen name="EditScreen" component={EditScreen} options={{ title: "Atur Profil", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-        <AkunStack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-    </AkunStack.Navigator>
-  );
-};
+
   

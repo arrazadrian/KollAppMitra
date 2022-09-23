@@ -169,20 +169,20 @@ const SignUpScreen = () => {
               <View style={{marginBottom: 10, padding: 10, backgroundColor: Putih, borderRadius: 10,}}>
                   <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
                     <View>
-                      { buka ? (
-                        <Text style={{color: Ijo, fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
-                        onPress={showModeBuka}
-                        >
-                        {buka}
-                      </Text>
-                      ):(
-                        <Text style={{color: 'rgba(0,0,0,0.2)', fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
+                      { buka ? 
+                        (
+                          <Text style={{color: Ijo, fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
                           onPress={showModeBuka}
-                        >
-                        00:00
+                          >
+                          {buka}
                         </Text>
-                      )
-
+                        ):(
+                          <Text style={{color: 'rgba(0,0,0,0.2)', fontSize: 20, textAlign:'center', borderBottomWidth: 2, borderBottomColor: Ijo}}
+                            onPress={showModeBuka}
+                          >
+                          00:00
+                          </Text>
+                        )
                       }
                       
                       { showBuka && (<DateTimePicker
