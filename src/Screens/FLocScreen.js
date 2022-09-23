@@ -1,36 +1,57 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import MapView from 'react-native-maps'
 import Garis from '../Components/Garis'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from "@env";
+import { updateMangkal } from '../features/mangkalSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 const FLocScreen = () => {
+
+  const navigation = useNavigation();
+
+  const { lok_mangkal } = useSelector(state => state.mangkal);
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.latar}>
-      <GooglePlacesAutocomplete
-          placeholder='Cari lokasi...'
-          nearbyPlacesAPI="GooglePlacesSearch"
-          debounce={400}
-      />
       <MapView style={styles.peta}
         initialRegion={{
-          latitude: -0.803328,
-          longitude: 117.908533,
-          latitudeDelta: 45.19,
-          longitudeDelta: 45.19,
+          latitude: -6.561355,
+          longitude: 106.731703,
+          latitudeDelta: 0.01, 
+          longitudeDelta: 0.01,
         }}
       />
       <View style={styles.pencarian}>
-        <Text style={styles.judul}>Lokasi kamu mangkal dimana?</Text>
-        <Garis/>
-        <TextInput 
-        placeholder='Cari Lokasi...'/>
+          <Text style={styles.judul}>Lokasi kamu mangkal dimana?</Text>
+          <Garis/>
+          <GooglePlacesAutocomplete
+            placeholder='Cari lokasi mangkal...'
+            query={{
+              key: GOOGLE_MAPS_APIKEY,
+              language: 'en'
+            }}
+            enablePoweredByContainer={false}
+            minLength={3}
+            nearbyPlacesAPI="GooglePlacesSearch"
+            debounce={400}
+            onPress={(data, details = null) => {
+              dispatch(updateMangkal({
+                location: details.geometry.location,
+                description: data.description
+              }))
+            }}
+          />
       </View>
-      <Pressable style={styles.komfirmasi}>
-        <Text style={{fontSize: 18, fontWeight:'bold', color: Putih}}>Komfirmasi</Text>
-      </Pressable>
+      { lok_mangkal && 
+        <Pressable style={styles.komfirmasi} onPress={() => navigation.goBack()}>
+          <Text style={{fontSize: 18, fontWeight:'bold', color: Putih}}>Komfirmasi</Text>
+        </Pressable>
+      }
     </View>
   )
 }
@@ -55,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: IjoTua,
+    paddingLeft: 10,
   },
   peta:{
     width: '100%',

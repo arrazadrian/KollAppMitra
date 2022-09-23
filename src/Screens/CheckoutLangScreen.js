@@ -102,16 +102,6 @@ const CheckoutLangScreen = () => {
   const subtotalhargaKeranjang = useSelector(totalHarga)
   const hargalayanan =  1000
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
-
-  const tambahProduk = () => {
-    dispatch(masukKeranjang({item}))
-  };
-
-  const buangProduk = () => {
-    if(!items.length > 0) return;
-    
-    dispatch(keluarKeranjang({items}))
-  }
  
   return (
     <View style={styles.latar}>

@@ -4,6 +4,7 @@ import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useSelector } from 'react-redux';
 
 const { height, width } = Dimensions.get('window')
 
@@ -11,16 +12,16 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
+  const { lok_mangkal } = useSelector(state => state.mangkal);
+
   const [namalengkap, setNamalengkap] = useState('');
   const [namatoko, setNamatoko] = useState('');
   const [buka, setBuka] = useState('');
   const [tutup, setTutup] = useState('');
-  const [mangkal, setMangkal] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
 
   const [date, setDate] = useState(new Date);
   const [showBuka, setShowBuka] = useState(false);
@@ -84,7 +85,6 @@ const SignUpScreen = () => {
     setNamatoko('');
     setBuka('');
     setTutup('');
-    setMangkal('');
     setEmail('');
     setPhone('');
     setPassword('');
@@ -100,7 +100,7 @@ const SignUpScreen = () => {
       Alert.alert('Waktu buka masih kosong','Isi waktu buka dengan benar.');
     } else if (!tutup) {
       Alert.alert('Waktu tutup masih kosong','Isi waktu tutup dengan benar.');
-    } else if (!mangkal) {
+    } else if (!lok_mangkal) {
       Alert.alert('Tempat mangkal masih kosong','Isi tempat mangkal dengan benar.');
     } else if (!email) {
       Alert.alert('Email masih kosong','Isi email dengan benar.');
@@ -121,7 +121,7 @@ const SignUpScreen = () => {
         namatoko,
         buka,
         tutup,
-        mangkal,
+        lok_mangkal,
         phone,
       );
       emptyState();
@@ -222,10 +222,10 @@ const SignUpScreen = () => {
                   <Text style={styles.subjudul}>Tempat Mangkal</Text>
               </View>
               <View style={{marginBottom: 10}}>
-                {mangkal ? (
+                {lok_mangkal ? (
                   <Pressable style={{ backgroundColor: Putih, padding: 10, borderRadius: 10, justifyContent:'center'}}>
                     <Text>
-                      {mangkal}
+                      {lok_mangkal}
                     </Text>
                   </Pressable>
                 ):(

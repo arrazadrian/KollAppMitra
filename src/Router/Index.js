@@ -55,12 +55,14 @@ const HomeStackScreen = () =>{
 export const Gerbang = () => {
 return(
   <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-      <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
-    </Stack.Navigator>
+    <Provider store={store}>
+      <Stack.Navigator>
+        <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+        <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </Provider>
   </NavigationContainer>
 );
 };
