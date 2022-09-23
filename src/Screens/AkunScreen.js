@@ -91,24 +91,24 @@ const AkunScreen = () => {
                 <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
                       <View style={{flex: 1}}>
                           <Text style={styles.subjudul}>Nama Toko</Text> 
-                          <Text style={{color: Putih, fontSize: 18}}>{tokoakun}</Text>   
+                          <Text style={styles.subisi}>{tokoakun}</Text>   
                       </View>    
                       <View style={{flex: 1, paddingStart: 10}}>     
                             <Text style={styles.subjudul}>Waktu Operasional</Text> 
-                            <Text style={{color: Putih, fontSize: 18}}>{waktu_buka} - {waktu_tutup}</Text>   
+                            <Text style={styles.subisi}>{waktu_buka} - {waktu_tutup}</Text>   
                       </View>
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
                       <View style={{flex: 1}}>     
                             <Text style={styles.subjudul}>No.Handphone</Text> 
-                            <Text style={{color: Putih, fontSize: 18}}>{phoneakun}</Text>   
+                            <Text style={styles.subisi}>{phoneakun}</Text>   
                       </View>
                       <View style={{flex: 1, paddingStart: 10}}>     
                             <Text style={styles.subjudul}>Email</Text> 
-                            <Text style={{color: Putih, fontSize: 18}}>{emailakun}</Text>   
+                            <Text style={styles.subisi}>{emailakun}</Text>   
                       </View>
                 </View>
-                <View style={{backgroundColor: 'rgba(0,0,0,0.2)', padding: 10, borderRadius: 10}}>
+                <View>
                     <Text style={styles.subjudul}>Tempat Mangkal</Text>
                     <Text style={{color: Putih, fontSize: 13}} numberOfLines={3}>{alamat}</Text>
                 </View>
@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
     color: Putih, 
     fontSize: 15, 
     fontWeight:'bold'
+  },
+  subisi:{
+    color: Putih, 
+    fontSize: 16, 
   },
   edit:{
     borderColor: Ijo,
