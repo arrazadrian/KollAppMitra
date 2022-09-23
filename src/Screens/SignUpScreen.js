@@ -12,7 +12,7 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const { lok_mangkal } = useSelector(state => state.mangkal);
+  const { geo, alamat } = useSelector(state => state.mangkal);
 
   const [namalengkap, setNamalengkap] = useState('');
   const [namatoko, setNamatoko] = useState('');
@@ -100,7 +100,7 @@ const SignUpScreen = () => {
       Alert.alert('Waktu buka masih kosong','Isi waktu buka dengan benar.');
     } else if (!tutup) {
       Alert.alert('Waktu tutup masih kosong','Isi waktu tutup dengan benar.');
-    } else if (!lok_mangkal) {
+    } else if (!alamat) {
       Alert.alert('Tempat mangkal masih kosong','Isi tempat mangkal dengan benar.');
     } else if (!email) {
       Alert.alert('Email masih kosong','Isi email dengan benar.');
@@ -121,7 +121,9 @@ const SignUpScreen = () => {
         namatoko,
         buka,
         tutup,
-        lok_mangkal,
+        geo,
+        alamat,
+        geohash,
         phone,
       );
       emptyState();
@@ -222,10 +224,12 @@ const SignUpScreen = () => {
                   <Text style={styles.subjudul}>Tempat Mangkal</Text>
               </View>
               <View style={{marginBottom: 10}}>
-                {lok_mangkal ? (
-                  <Pressable style={{ backgroundColor: Putih, padding: 10, borderRadius: 10, justifyContent:'center'}}>
+                {alamat ? (
+                  <Pressable style={{ backgroundColor: Putih, padding: 10, borderRadius: 10, justifyContent:'center'}}
+                    onPress={() => navigation.navigate('FLocScreen')}
+                    >
                     <Text>
-                      {lok_mangkal}
+                      {alamat}
                     </Text>
                   </Pressable>
                 ):(

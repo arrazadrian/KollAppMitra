@@ -3,14 +3,17 @@ import { createSlice } from '@reduxjs/toolkit'
 const mangkalSlice = createSlice({
     name: "mangkal",
     initialState:{
-        lok_mangkal: null,
+        geo: null,
+        alamat: null,
     },
     reducers:{
         updateMangkal: (state, action) => {
-            state.lok_mangkal = action.payload.lok_mangkal;
+            state.geo = action.payload.geo;
+            state.alamat = action.payload.alamat;
         },
         resetMangkal: (state) => {
-            state.lok_mangkal = null;
+            state.geo = null;
+            state.alamat = null;
         }
     }
 });

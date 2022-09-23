@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 // MEMBUAT AKUN BARU DENGAN EMAIL DAN PASSWORD, 
 // LALU MEMBUAT DOKUMEN BARU PADA COLLECTION MITRA
 
-export async function registration(email, password, namalengkap, namatoko, buka, tutup, mangkal, phone) {
+export async function registration(email, password, namalengkap, namatoko, buka, tutup, geo, alamat, geohash, phone ) {
     const auth = getAuth();
     const db = getFirestore(app);
   try {
@@ -39,7 +39,9 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 namatoko: namatoko,
                 buka: buka,
                 tutup: tutup,
-                mangkal: mangkal,
+                geo: geo,
+                alamat: alamat,
+                geohash: geohash,
                 phone: phone,
                 status_sekarang: "Tidak Aktif",
                 status_sekarang: false,
