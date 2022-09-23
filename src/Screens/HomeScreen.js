@@ -88,7 +88,6 @@ const HomeScreen = ({ navigation }) => {
           // Respond to data
 
         });
-        dispatch(setMitra({ namamitra, namatoko }));
         console.log('Masuk Redux namamitra');
         //unsubscribe();
       } catch (err){
@@ -96,6 +95,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getuserHome();
+    dispatch(setMitra({ namamitra, namatoko }));
   },[])
 
 
@@ -106,11 +106,10 @@ const HomeScreen = ({ navigation }) => {
         >
           <View style={{
             flexDirection: 'row',
-            justifyContent:'space-between',
-            alignItems:'baseline',
+            alignItems:'center',
             marginBottom: 20,
             }}>
-            <View>
+            <View style={{flex:1}}>
               <Text style={{
                 fontSize: 20,
                 color: Ijo,
@@ -122,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
                 color: IjoTua,
               }}>{namamitra}</Text>
             </View>
-            <View>
+            <View style={{flex:1, left: width * 0.1}}>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>

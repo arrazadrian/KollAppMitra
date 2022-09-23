@@ -8,7 +8,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
 import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemethod';
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,6 +17,7 @@ const EditScreen = ({navigation, route}) => {
   const { nama, foto, toko, phone, waktu_buka, waktu_tutup, alamat_sementara } = route.params;
 
   const { geo, alamat, geohash } = useSelector(state => state.mangkal);
+  const dispatch = useDispatch();
 
   const [namaakun, setNamaakun] = useState(nama)
   const [fotoakun, setFotoakun] = useState(foto)
@@ -44,7 +45,7 @@ const EditScreen = ({navigation, route}) => {
     return result.uri
   };
 
-  const handleperbaruiakun = async () =>{
+  const handleperbaruiakun = () =>{
     if ( !fotoakun || fotoakun == fotolama){
         if (!namaakun) {
           Alert.alert('Nama lengkap masih kosong','Isi nama lengkap anda.');
@@ -53,7 +54,7 @@ const EditScreen = ({navigation, route}) => {
         } else if (!phoneakun && 9 < phoneakun.length < 14) {
           Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
         } else { 
-          await updateakunTanpafoto(
+          updateakunTanpafoto(
             namaakun,
             tokoakun,
             phoneakun,
@@ -61,6 +62,7 @@ const EditScreen = ({navigation, route}) => {
             alamat,
             geohash, 
           );
+          dispatch(resetMangkal())
           navigation.goBack();
         };
     } else {
@@ -71,7 +73,7 @@ const EditScreen = ({navigation, route}) => {
       } else if (!phoneakun && 9 < phoneakun.length < 14) {
         Alert.alert('No. Handpone tidak bisa kosong','Isi No. Handpone dengan benar.');
       } else {
-        await updateakunDenganfoto(
+         updateakunDenganfoto(
             fotoakun,
             namaakun,
             tokoakun,
