@@ -31,6 +31,7 @@ const AkunScreen = () => {
   const [emailakun, setEmailakun] = useState('')
   const [waktu_buka, setWaktu_buka] = useState('')
   const [waktu_tutup, setWaktu_tutup] = useState('')
+  const [alamat, setAlamat] = useState('')
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -45,6 +46,7 @@ const AkunScreen = () => {
         setEmailakun(doc.data().email);
         setWaktu_buka(doc.data().waktu_buka);
         setWaktu_tutup(doc.data().waktu_tutup);
+        setAlamat(doc.data().alamat);
         console.log('getuserAkun jalan (Akun Screen)')
           // Respond to data
           // ...
@@ -88,26 +90,28 @@ const AkunScreen = () => {
             <View style={{paddingTop: 10}}>
                 <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
                       <View style={{flex: 1}}>
-                          <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Nama Toko</Text> 
+                          <Text style={styles.subjudul}>Nama Toko</Text> 
                           <Text style={{color: Putih, fontSize: 18}}>{tokoakun}</Text>   
                       </View>    
                       <View style={{flex: 1, paddingStart: 10}}>     
-                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Waktu Operasional</Text> 
+                            <Text style={styles.subjudul}>Waktu Operasional</Text> 
                             <Text style={{color: Putih, fontSize: 18}}>{waktu_buka} - {waktu_tutup}</Text>   
                       </View>
                 </View>
                 <View style={{justifyContent:"space-between", marginBottom: 10, flexDirection:'row'}}>
                       <View style={{flex: 1}}>     
-                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>No.Handphone</Text> 
+                            <Text style={styles.subjudul}>No.Handphone</Text> 
                             <Text style={{color: Putih, fontSize: 18}}>{phoneakun}</Text>   
                       </View>
                       <View style={{flex: 1, paddingStart: 10}}>     
-                            <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Email</Text> 
+                            <Text style={styles.subjudul}>Email</Text> 
                             <Text style={{color: Putih, fontSize: 18}}>{emailakun}</Text>   
                       </View>
                 </View>
-                <Text style={{color: Putih, fontSize: 15, fontWeight:'bold'}}>Tempat Mangkal</Text>
-                <Text style={{color: Putih, fontSize: 18}} numberOfLines={2}>HIHADIDAHIADIAHDIcahahashsaoi cagasuhsaa ucagucsgia AH</Text>
+                <View style={{backgroundColor: 'rgba(0,0,0,0.2)', padding: 10, borderRadius: 10}}>
+                    <Text style={styles.subjudul}>Tempat Mangkal</Text>
+                    <Text style={{color: Putih, fontSize: 13}} numberOfLines={3}>{alamat}</Text>
+                </View>
             </View>
             <View style={styles.logout}>
               <Text 
@@ -141,9 +145,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 15,
   },
-  tulisan:{
-    fontSize: 16,
-    color: Putih,
+  subjudul:{
+    color: Putih, 
+    fontSize: 15, 
+    fontWeight:'bold'
   },
   edit:{
     borderColor: Ijo,

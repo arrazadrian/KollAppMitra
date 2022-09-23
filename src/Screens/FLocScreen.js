@@ -9,26 +9,28 @@ import { updateMangkal } from '../features/mangkalSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
+
 const FLocScreen = () => {
 
   const navigation = useNavigation();
 
   const { geo, alamat } = useSelector(state => state.mangkal);
+  const geofire = require('geofire-common');
 
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false)
 
   const [pin,setPin] = useState ({
-    latitude: geo.lat || -6.561355,
-    longitude: geo.lng || 106.731703,
+    latitude: geo?.lat || -6.561355,
+    longitude: geo?.lng || 106.731703,
     latitudeDelta: 0.005, 
     longitudeDelta: 0.005,
   });
 
   const [region,setRegion] = useState ({
-    latitude: geo.lat || -6.561355,
-    longitude: geo.lng || 106.731703,
+    latitude: geo?.lat || -6.561355,
+    longitude: geo?.lng || 106.731703,
     latitudeDelta: 0.005, 
     longitudeDelta: 0.005,
   });
@@ -48,7 +50,7 @@ const FLocScreen = () => {
           longitudeDelta: 0.005,
         }}
       >
-        { (geo.lat || show) &&
+        { (geo?.lat || show) &&
           <Marker coordinate={{latitude: pin?.latitude, longitude: pin?.longitude}}/>
         }
 
@@ -96,7 +98,8 @@ const FLocScreen = () => {
               })
               dispatch(updateMangkal({
                 geo: details.geometry.location,
-                alamat: data.description
+                alamat: data.description,
+                geohash: geofire.geohashForLocation([details.geometry.location.lat,details.geometry.location.lng])
               }))
             }}
           />

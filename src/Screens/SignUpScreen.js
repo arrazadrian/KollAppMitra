@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
@@ -12,7 +12,7 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const { geo, alamat } = useSelector(state => state.mangkal);
+  const { geo, alamat, geohash } = useSelector(state => state.mangkal);
 
   const [namalengkap, setNamalengkap] = useState('');
   const [namatoko, setNamatoko] = useState('');
