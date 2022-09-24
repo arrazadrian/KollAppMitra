@@ -81,8 +81,7 @@ const FLocScreen = () => {
               // }))
               //  }
               //}
-              >
-              </Marker>
+              />
         }
         <Circle 
             center={{latitude: pin?.latitude, longitude: pin?.longitude}}
@@ -116,9 +115,9 @@ const FLocScreen = () => {
               location: `${awal.lat},${awal.lng}`
             }}
             enablePoweredByContainer={false}
-            minLength={3}
+            minLength={5}
             nearbyPlacesAPI="GooglePlacesSearch"
-            debounce={400}
+            debounce={500}
             onPress={(data, details=null) => {
               // console.log(data, details)
               setShow(true)
