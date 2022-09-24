@@ -44,7 +44,7 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 geohash: geohash,
                 phone: phone,
                 status_sekarang: "Tidak Aktif",
-                status_sekarang: false,
+                mangkal: false,
             })
         })
   } catch (err) {
