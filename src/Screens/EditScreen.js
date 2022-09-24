@@ -9,6 +9,8 @@ import { updateakunTanpafoto, updateakunDenganfoto } from '../../API/firebasemet
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector, useDispatch } from 'react-redux';
+import { resetMangkal } from '../features/mangkalSlice';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -23,6 +25,7 @@ const EditScreen = ({navigation, route}) => {
   const [fotoakun, setFotoakun] = useState(foto)
   const [tokoakun, setTokoakun] = useState(toko)
   const [phoneakun, setPhoneakun] = useState(phone)
+  //Waktu ada di baris 96
 
   const auth = getAuth();
   const db = getFirestore(app)
@@ -58,6 +61,8 @@ const EditScreen = ({navigation, route}) => {
             namaakun,
             tokoakun,
             phoneakun,
+            buka,
+            tutup,
             geo,
             alamat,
             geohash, 
@@ -78,10 +83,13 @@ const EditScreen = ({navigation, route}) => {
             namaakun,
             tokoakun,
             phoneakun,
+            buka,
+            tutup,
             geo,
             alamat,
             geohash,
         );
+        dispatch(resetMangkal())
         navigation.goBack();
       };
     }

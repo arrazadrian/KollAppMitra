@@ -317,7 +317,7 @@ export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprod
 // PERBARUI DATA AKUN
 // DI FIRESTORE TANPA FOTO DI STORAGE
 
-export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, geo, alamat, geohash){
+export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, buka, tutup, geo, alamat, geohash){
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -333,6 +333,8 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, geo, al
           namalengkap: namaakun,
           namatoko: tokoakun,
           phone: phoneakun,
+          waktu_buka: buka,
+          waktu_tutup: tutup,
           geo: geo,
           alamat: alamat,
           geohash: geohash,
@@ -351,10 +353,10 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, geo, al
 }; 
 
 // API 11: updateakunDenganfoto
-// PERBARUI DATA AKUN
+// PERBARUI DATA AKUN,  YG SEBELUMNYA ADA FOTO (IF) MAUPUN YG TIDAK ADA (ELSE)
 // DI FIRESTORE DENGAN FOTO DI STORAGE
 
-export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun, geo, alamat, geohash){
+export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneakun, buka, tutup, geo, alamat, geohash){
   const urlgambarbaru = await uploadgambarakun(fotoakun);
 
   const auth = getAuth();
@@ -375,6 +377,8 @@ export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneak
             namalengkap: namaakun,
             namatoko: tokoakun,
             phone: phoneakun,
+            waktu_buka: buka,
+            waktu_tutup: tutup,
             geo: geo,
             alamat: alamat,
             geohash: geohash,
@@ -392,6 +396,11 @@ export async function updateakunDenganfoto(fotoakun, namaakun, tokoakun, phoneak
             namalengkap: namaakun,
             namatoko: tokoakun,
             phone: phoneakun,
+            waktu_buka: buka,
+            waktu_tutup: tutup,
+            geo: geo,
+            alamat: alamat,
+            geohash: geohash,
           });
           Alert.alert(
             'Data Akun Berhasil Diperbarui','Data akunmu sudah terbarui.'

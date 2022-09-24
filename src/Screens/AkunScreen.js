@@ -20,7 +20,7 @@ const AkunScreen = () => {
       nama: namaakun,
       foto: fotoakun,
       toko: tokoakun,
-      phone: phoneakun,
+      phone: phoneakun, 
       waktu_buka: waktu_buka,
       waktu_tutup: waktu_tutup,
       alamat_sementara : alamat,

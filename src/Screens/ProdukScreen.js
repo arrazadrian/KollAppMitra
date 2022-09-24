@@ -22,10 +22,23 @@ const kosongproduk = () => {
     <ProdukKosong/>
     <Text style={{
       fontSize: 16, color: IjoTua, textAlign:'center',
-      width: width*0.8,
+      width: width*0.7,
     }}>
-      Kamu tidak punya produk utama. Buat produk utama
-      dengan ketuk tanda plus di kanan bawah.
+      Kamu tidak punya produk utama sama sekali
+    </Text>
+  </View>
+  )
+}
+
+const kosongprodukkategori = () => {
+  return(
+  <View style={{alignItems:'center'}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.7,
+    }}>
+      Kamu tidak punya produk utama kategori ini
     </Text>
   </View>
   )
@@ -160,7 +173,9 @@ const ProdukScreen = ({ navigation }) => {
                   renderItem= {({item}) => <ListProduk item={item} />}
                   keyExtractor={(item) => item.id}
                   ListHeaderComponent= {atasproduk}
-                  ListEmptyComponent={kosongproduk}
+                  ListEmptyComponent={ produkutama.length < 1 ?
+                    kosongproduk : kosongprodukkategori
+                  }
                   ListFooterComponent={<View style={{height:10}}></View>}
               />
               </View>

@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, Pressable, Dimensions } from 'react-native'
 import React, { useState } from 'react'
-import { IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import MapView, { Marker } from 'react-native-maps'
+import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
+import MapView, { Marker, Circle } from 'react-native-maps'
 import Garis from '../Components/Garis'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from "@env";
@@ -9,6 +9,7 @@ import { updateMangkal } from '../features/mangkalSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
+const { width, height } = Dimensions.get('window')
 
 const FLocScreen = () => {
 
@@ -24,15 +25,15 @@ const FLocScreen = () => {
   const [pin,setPin] = useState ({
     latitude: geo?.lat || -6.561355,
     longitude: geo?.lng || 106.731703,
-    latitudeDelta: 0.005, 
-    longitudeDelta: 0.005,
+    latitudeDelta: 12.05, 
+    longitudeDelta: 12.05,
   });
 
   const [region,setRegion] = useState ({
     latitude: geo?.lat || -6.561355,
     longitude: geo?.lng || 106.731703,
-    latitudeDelta: 0.005, 
-    longitudeDelta: 0.005,
+    latitudeDelta: 12.05, 
+    longitudeDelta: 12.05,
   });
   
   const awal = {
@@ -46,13 +47,50 @@ const FLocScreen = () => {
         region={{
           latitude: region.latitude,
           longitude: region.longitude,
-          latitudeDelta: 0.005, 
-          longitudeDelta: 0.005,
+          latitudeDelta: 0.02, 
+          longitudeDelta: 0.02,
         }}
       >
         { (geo?.lat || show) &&
-          <Marker coordinate={{latitude: pin?.latitude, longitude: pin?.longitude}}/>
+          <Marker 
+            coordinate={{latitude: pin?.latitude, longitude: pin?.longitude}}
+            // draggable={true}
+            // onDragStart={(data, details=null) => {
+            //    console.log('mulai')
+            // }}
+            // onDragEnd={
+            //   e => console.log(e.nativeEvent)
+              // (data, details=null) => {
+              // console.log(data, details)
+              // setRegion({
+              //   latitude: coordinate.latitude,
+              //   longitude: coordinate.longitude,
+              //   latitudeDelta: 0.01, 
+              //   longitudeDelta: 0.01,
+              // })
+              // setPin({
+              //   latitude: coordinate.latitude,
+              //   longitude: coordinate.longitude,
+              //   latitudeDelta: 0.01, 
+              //   longitudeDelta: 0.01,
+              // })
+              // dispatch(updateMangkal({
+              //   geo: details.geometry.location,
+              //   alamat: data.description,
+              //   geohash: geofire.geohashForLocation([coordinate.latitude,coordinate.longitude])
+              // }))
+              //  }
+              //}
+              >
+              </Marker>
         }
+        <Circle 
+            center={{latitude: pin?.latitude, longitude: pin?.longitude}}
+            radius={1000}
+            strokeWidth={1}
+            strokeColor={Ijo}
+            fillColor={'rgba(201,227,172,0.5)'}
+        />
 
       </MapView>
 
@@ -105,9 +143,16 @@ const FLocScreen = () => {
           />
       </View>
       { alamat && 
-        <Pressable style={styles.komfirmasi} onPress={() => navigation.goBack()}>
-          <Text style={{fontSize: 18, fontWeight:'bold', color: Putih}}>Kembali</Text>
-        </Pressable>
+        <View style={styles.bawah}>
+            <View style={styles.kotak}>
+              <Text style={[styles.alamatjelas, {fontWeight: 'normal'}]}>Lokasi Mangkal</Text>
+              <Text style={styles.alamatjelas}>{alamat}</Text>
+              <Text style={[styles.alamatjelas, {fontWeight: 'normal', fontSize: 12, fontStyle:'italic'}]}>Catatan: Lingkaran menampilkan area pelanggan</Text>
+            </View> 
+            <Pressable style={styles.komfirmasi} onPress={() => navigation.goBack()}>
+              <Text style={{fontSize: 18, fontWeight:'bold', color: Putih, textAlign:'center'}}>Kembali</Text>
+            </Pressable>
+        </View>
       }
     </View>
   )
@@ -139,13 +184,30 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  alamatjelas:{
+    color: IjoTua,
+    fontSize: 14,
+    fontWeight:'bold',
+    textAlign: 'center',
+  },
+  kotak:{
+    padding: 10,
+    backgroundColor: IjoMint,
+    marginBottom: 20,
+    borderRadius: 10,
+    width: width * 0.9,
+  },
   komfirmasi:{
-    position: 'absolute',
-    bottom: 50,
     backgroundColor: IjoTua,
     paddingHorizontal: 40,
     paddingVertical: 10,
     borderRadius: 20,
+  },
+  bawah:{
+    position: 'absolute',
+    bottom: 50,
+    alignItems:'center',
+    justifyContent:'center',
     alignSelf:'center',
-  }
+  },
 })

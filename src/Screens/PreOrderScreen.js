@@ -16,7 +16,7 @@ import Garis from '../Components/Garis'
 
 const { width, height } = Dimensions.get('window')
 
-const kosongpre = () => {
+const kosongprekategori = () => {
   return(
   <View style={{alignItems:'center'}}>
     <ProdukKosong/>
@@ -28,7 +28,21 @@ const kosongpre = () => {
     </Text>
   </View>
   )
-}
+};
+
+const kosongpre = () => {
+  return(
+  <View style={{alignItems:'center'}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.8,
+    }}>
+      Kamu tidak punya produk pre-order sama sekali
+    </Text>
+  </View>
+  )
+};
 
 const ataspre = () => {
   const[pilkategori, setPilkategori]= useState("Semua Produk")
@@ -158,7 +172,9 @@ const PreOrderScreen = ({navigation}) => {
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ item => item.id}
           ListHeaderComponent={ataspre}
-          ListEmptyComponent={kosongpre}
+          ListEmptyComponent={ produkpreorder.length < 1 ?
+            kosongpre : kosongprekategori
+          }
           ListFooterComponent={<View style={{height:10}}></View>}
        />
       </View>
