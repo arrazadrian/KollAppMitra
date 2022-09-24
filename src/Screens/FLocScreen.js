@@ -83,13 +83,15 @@ const FLocScreen = () => {
               //}
               />
         }
-        <Circle 
-            center={{latitude: pin?.latitude, longitude: pin?.longitude}}
-            radius={1000}
-            strokeWidth={1}
-            strokeColor={Ijo}
-            fillColor={'rgba(201,227,172,0.5)'}
-        />
+         { (geo?.lat || show) && 
+          <Circle 
+              center={{latitude: pin?.latitude, longitude: pin?.longitude}}
+              radius={1000}
+              strokeWidth={1}
+              strokeColor={Ijo}
+              fillColor={'rgba(201,227,172,0.5)'}
+          />
+         }
 
       </MapView>
 
