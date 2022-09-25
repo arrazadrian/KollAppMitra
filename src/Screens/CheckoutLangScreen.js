@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   pilihProdukKeranjang, 
   totalHarga, 
-  keluarKeranjang, 
-  masukKeranjang,
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
 import { resetPelanggan } from '../features/pelangganSlice';
