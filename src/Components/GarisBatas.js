@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
 
-export default function Garis() {
+export default function GarisBatas() {
   return (
     <View style={styles.garis}/>
   )

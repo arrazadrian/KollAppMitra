@@ -11,7 +11,7 @@ import { app } from '../../Firebase/config';
 import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
 import { useDispatch, useSelector } from 'react-redux';
-import Garis from '../Components/Garis'
+import GarisBatas from '../Components/GarisBatas'
 
 
 const { width, height } = Dimensions.get('window')
@@ -76,7 +76,7 @@ const ataspre = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <Garis/>
+      <GarisBatas/>
       <View style={{marginBottom: 10, paddingHorizontal: 10}}>
         <Text style={styles.judul}>Produk Pre-Order</Text>
         <Text style={styles.deskripsi}>Produk yang diantar satu hari setelah pemesanan.</Text>

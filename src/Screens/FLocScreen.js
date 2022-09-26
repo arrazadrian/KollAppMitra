@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import MapView, { Marker, Circle } from 'react-native-maps'
-import Garis from '../Components/Garis'
+import GarisBatas from '../Components/GarisBatas'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { updateMangkal } from '../features/mangkalSlice'
@@ -97,7 +97,7 @@ const FLocScreen = () => {
 
       <View style={styles.pencarian}>
           <Text style={styles.judul}>Lokasi kamu mangkal dimana?</Text>
-          <Garis/>
+          <GarisBatas/>
           <GooglePlacesAutocomplete
             placeholder='Cari lokasi mangkal...'
             fetchDetails={true}

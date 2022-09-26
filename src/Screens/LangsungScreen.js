@@ -4,7 +4,7 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
-import Garis from '../Components/Garis'
+import GarisBatas from '../Components/GarisBatas'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
@@ -68,7 +68,7 @@ const atasjual = () => {
             ))}
           </ScrollView>
       </View>
-      <Garis/>
+      <GarisBatas/>
       <View style={{paddingHorizontal: 10, marginBottom:10 }}>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk Utama</Text>
       </View>

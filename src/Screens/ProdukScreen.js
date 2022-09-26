@@ -4,7 +4,6 @@ import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
-import Garis from '../Components/Garis'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
@@ -12,6 +11,7 @@ import { app } from '../../Firebase/config';
 import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
 import { useDispatch, useSelector } from 'react-redux';
+import GarisBatas from '../Components/GarisBatas'
 
  
 const { width, height } = Dimensions.get('window')
@@ -76,7 +76,7 @@ const atasproduk = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <Garis/>
+      <GarisBatas/>
       <View style={{marginBottom: 10, paddingHorizontal: 10}}>
         <Text style={styles.judul}>Produk Utama</Text>
         <Text style={styles.deskripsi}>Produk utama adalah produk yang siap dibawa mitra.</Text>
