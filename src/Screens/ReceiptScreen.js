@@ -13,12 +13,11 @@ const { width, height } = Dimensions.get('window')
 const ReceiptScreen = ({route}) => {
 
   moment.updateLocale('id', localization);
-  moment().format('llll');
 
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-    status_transaksi,
+    status_transaksi, catatan,
      } = route.params;
 
   return (
@@ -81,12 +80,24 @@ const ReceiptScreen = ({route}) => {
         <View>
             <View style={styles.bagian}>
                 <Text  style={styles.subjudul}>Alamat Tujuan</Text>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
+                <View style={{flexDirection:'row', alignItems:'center', width:'90%'}}>
                     < Image source={Location} style={styles.location} />
                     <Text>{alamat_pelanggan}</Text>
                 </View>
+                {catatan ?(
+                  <View style={styles.catatan}>
+                    <Text style={{fontWeight:'bold'}}>Catatan lokasi</Text>
+                    <Text style={{fontStyle:'italic'}}>{catatan}</Text>
+                  </View>
+                ):(
+                  <View style={styles.catatan}>
+                    <Text style={{fontStyle:'italic'}}>Tanpa catatan lokasi...</Text>
+                  </View>
+                ) 
+                }
                 <View style={styles.reminder}>
-                    <Text style={{color: Putih}}>Paling lambat diantar: {moment(waktu_dipesan.toDate()).add(2, 'days').calendar()}</Text>
+                    <Text style={{color: Putih}}>Paling lambat diantar:</Text>
+                    <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(2, 'days').format('LLLL')}</Text>
                 </View>
             </View>
             <GarisBatas/>
@@ -169,6 +180,14 @@ const styles = StyleSheet.create({
     height: width * 0.05,
     marginRight:5,
   },
+  catatan:{
+    borderColor: Ijo,
+    borderWidth:1,
+    borderRadius: 10,
+    padding: 10,
+    width: '100%',
+    marginTop: 10,
+},
   harga:{
     fontSize: 16,
     color: IjoTua,
