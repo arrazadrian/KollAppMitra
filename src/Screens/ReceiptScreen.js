@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import { KollLong, Location } from '../assets/Images/Index';
+import { Call } from '../assets/Icons/Index';
 import ListReceipt from '../Components/ListReceipt';
 import moment from 'moment';
 import localization from 'moment/locale/id';
@@ -22,7 +23,7 @@ const ReceiptScreen = ({route}) => {
 
   return (
     <View style={styles.latar}>
-      <ScrollView style={{marginBottom: height* 0.15}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
 
         <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'center', marginBottom: 10, paddingTop: 20}}>
           <View>
@@ -46,14 +47,9 @@ const ReceiptScreen = ({route}) => {
                 <Text style={styles.subjudul}>ID Transaksi</Text>
                 <Text>{id_transaksi}</Text>
             </View>
-        </View>
-
-        <GarisBatas/>
-      
-        <View style={styles.bagian}>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Nama Pelanggan</Text>
-                  <Text>{namapelanggan}</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={styles.subjudul}>Status Transaksi</Text>
+                  <Text>{status_transaksi}</Text>
               </View>
               { waktu_selesai ? 
                 (
@@ -68,9 +64,24 @@ const ReceiptScreen = ({route}) => {
                 </View>
                 )
               }
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Status Transaksi</Text>
-                  <Text>{status_transaksi}</Text>
+        </View>
+
+        <GarisBatas/>
+      
+        <View style={styles.bagian}>
+              <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <View>
+                    <Text style={styles.subjudul}>Nama Pelanggan</Text>
+                    <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namapelanggan}</Text>
+                </View>
+                { status_transaksi == "Dalam Proses" ? (
+                  <View>
+                    <Image style={styles.telepon} source={Call}/>
+                  </View>
+                ):(
+                  <View/>
+                )
+                }
               </View>
         </View>
       
@@ -103,24 +114,24 @@ const ReceiptScreen = ({route}) => {
             <GarisBatas/>
         </View>
         }
-
-
         <View style={styles.bagian}>
-          <Text  style={styles.subjudul}>Daftar Produk</Text>
-            {Object.entries(produk).map(([key, items]) => (
-                <View key={key}>
-                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                      <Text style={styles.deskripsi}>
-                          <Text>{items.length}x   </Text>
-                          <Text>{items[0]?.namaproduk}</Text>
-                      </Text>
-                      <Text style={styles.harga}>
-                          <Text>Rp</Text>
-                          <Text>{items[0]?.harga * items.length}</Text>
-                      </Text>
-                  </View>
-                </View>
-            ))}
+          <View style={{marginBottom: height* 0.25}}>
+              <Text  style={styles.subjudul}>Daftar Produk</Text>
+                {Object.entries(produk).map(([key, items]) => (
+                    <View key={key}>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={styles.deskripsi}>
+                              <Text>{items.length}x   </Text>
+                              <Text>{items[0]?.namaproduk}</Text>
+                          </Text>
+                          <Text style={styles.harga}>
+                              <Text>Rp</Text>
+                              <Text>{items[0]?.harga * items.length}</Text>
+                          </Text>
+                      </View>
+                    </View>
+                ))}
+          </View>
         </View>
 
       </ScrollView>
@@ -138,6 +149,15 @@ const ReceiptScreen = ({route}) => {
                   <Text style={styles.subjudul}>Total Harga</Text>
                   <Text style={styles.subjudul}>Rp{hargatotalsemua}</Text>
               </View>
+              { status_transaksi == "Dalam Proses" ? 
+                (
+                  <TouchableOpacity style={styles.diantar}>
+                    <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Sudah diantar dan dibayar</Text>
+                  </TouchableOpacity>
+                ):(
+                  <View/>
+                )
+              }
           </View>
       </View>
     </View>
@@ -165,6 +185,10 @@ const styles = StyleSheet.create({
   deskripsi:{
     fontSize: 16,
     color: IjoTua,
+  },
+  telepon:{
+    width: width * 0.1,
+    height: width * 0.1,
   },
   reminder:{
     backgroundColor: IjoTua,
@@ -203,6 +227,14 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 10,
     flexDirection:'column-reverse',
+  },
+  diantar:{
+    backgroundColor: Ijo,
+    justifyContent:'center',
+    alignItems:'center',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 20,
   },
   bagian:{
     paddingHorizontal: 20,
