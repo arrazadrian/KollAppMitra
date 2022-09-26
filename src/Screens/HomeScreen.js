@@ -120,6 +120,10 @@ const HomeScreen = ({ navigation }) => {
                 fontWeight: 'bold',
                 color: IjoTua,
               }}>{namamitra}</Text>
+              <Text style={{
+                fontSize: 14,
+                color: IjoTua,
+              }}>Pengelola <Text style={{fontWeight: 'bold',}}> {namatoko}</Text></Text>
             </View>
             <View style={{flex:1, left: width * 0.1}}>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>

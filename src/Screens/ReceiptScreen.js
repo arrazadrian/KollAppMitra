@@ -15,7 +15,7 @@ const ReceiptScreen = ({route}) => {
 
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
-    jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu, 
+    jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, 
      } = route.params;
 
   return (
@@ -55,7 +55,7 @@ const ReceiptScreen = ({route}) => {
               </View>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={styles.subjudul}>Waktu Transaksi</Text>
-                  <Text>{moment(waktu.toDate()).calendar()}</Text>
+                  <Text>{moment(waktu_selesai.toDate()).calendar()}</Text>
               </View>
         </View>
         <View style={{borderBottomWidth:1, borderColor: Ijo, marginBottom:10}}/>
@@ -71,7 +71,7 @@ const ReceiptScreen = ({route}) => {
                     </Text>
                     <Text style={styles.harga}>
                         <Text>Rp</Text>
-                        <Text>{items[0]?.harga}</Text>
+                        <Text>{items[0]?.harga * items.length}</Text>
                     </Text>
                 </View>
               </View>

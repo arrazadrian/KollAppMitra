@@ -28,7 +28,7 @@ const RiwayatCard = ({ item }) => {
       namatoko: item.namatoko,
       namapelanggan: item.namapelanggan,
       produk: item.produk,
-      waktu: item.waktu,
+      waktu_selesai: item.waktu_selesai,
       id_transaksi: item.id,
     })
   }
@@ -59,7 +59,7 @@ const RiwayatCard = ({ item }) => {
             <Text>Produk</Text>
         </Text>
         <View style={{flexDirection:'row'}}>
-          <Text>{moment(item.waktu.toDate()).calendar()}</Text>
+          <Text>{moment(item.waktu_selesai.toDate()).calendar()}</Text>
         </View>
       </View>
     </Pressable>
