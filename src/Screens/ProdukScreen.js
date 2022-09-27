@@ -173,8 +173,8 @@ const ProdukScreen = ({ navigation }) => {
                   renderItem= {({item}) => <ListProduk item={item} />}
                   keyExtractor={(item) => item.id}
                   ListHeaderComponent= {atasproduk}
-                  ListEmptyComponent={ produkutama.length < 1 ?
-                    kosongproduk : kosongprodukkategori
+                  ListEmptyComponent={ !produkutama ?
+                    (kosongproduk) : (kosongprodukkategori)
                   }
                   ListFooterComponent={<View style={{height:10}}></View>}
               />

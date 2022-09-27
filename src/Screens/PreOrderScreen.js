@@ -172,8 +172,8 @@ const PreOrderScreen = ({navigation}) => {
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ item => item.id}
           ListHeaderComponent={ataspre}
-          ListEmptyComponent={ produkpreorder.length < 1 ?
-            kosongpre : kosongprekategori
+          ListEmptyComponent={ !produkpreorder ?
+            (kosongpre) : (kosongprekategori)
           }
           ListFooterComponent={<View style={{height:10}}></View>}
        />

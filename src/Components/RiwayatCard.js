@@ -61,8 +61,14 @@ const RiwayatCard = ({ item }) => {
             <Text>{item.jumlah_kuantitas} </Text>
             <Text>Produk</Text>
         </Text>
-        <View style={{flexDirection:'row'}}>
-          <Text>{moment(item.waktu_selesai.toDate()).calendar()}</Text>
+        <View>
+          { item.jenislayanan == 'Pre-Order' ? 
+            (
+              <Text>Diterima pada {moment(item.waktu_selesai.toDate()).format('ll')}</Text>
+            ):(
+              <Text>{moment(item.waktu_selesai.toDate()).format('lll')}</Text>
+            ) 
+          }
         </View>
       </View>
     </Pressable>
