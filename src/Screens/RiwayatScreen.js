@@ -64,8 +64,8 @@ const RiwayatScreen = () => {
       }
     }
     fetchRiwayat();
-  },[riwayat])
-
+  },[])
+  //Tambah parameter "riwayat" bila mau auto refresh
 
   return (
     <View style={styles.latar}>

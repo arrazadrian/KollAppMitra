@@ -81,7 +81,9 @@ const ProsesScreen = () => {
       }
     }
     fetchProses();
-  },[proses])
+  },[])
+  //Tambah parameter "proses" bila mau auto refresh
+
 
   return (
     <View style={styles.latar}>
