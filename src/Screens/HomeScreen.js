@@ -125,7 +125,7 @@ const HomeScreen = ({ navigation }) => {
                 color: IjoTua,
               }}>Pengelola <Text style={{fontWeight: 'bold',}}> {namatoko}</Text></Text>
             </View>
-            <View style={{flex:1, left: width * 0.1}}>
+            <View style={{flex:1, left: width * 0.07}}>
               <Text style={{color: Ijo, fontSize:16}}>Hari ini:</Text>
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
