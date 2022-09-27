@@ -81,7 +81,7 @@ const ProsesScreen = () => {
       }
     }
     fetchProses();
-  },[])
+  },[proses])
 
   return (
     <View style={styles.latar}>
@@ -98,6 +98,11 @@ const ProsesScreen = () => {
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={{height:10}}></View>}
           ListHeaderComponent={<View style={{height:10}}></View>}
+          ListEmptyComponent={ 
+            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+              <Text style={{textAlign:'center'}}>Anda tidak ada transaksi dalam proses</Text> 
+            </View>
+          }
       />
       )}
     </View>

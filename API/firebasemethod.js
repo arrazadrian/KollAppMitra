@@ -529,7 +529,6 @@ export async function updatemangkal(mangkal){
   })
 }; 
 
-
 // API 15: buatTransaksi
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
@@ -555,4 +554,24 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
   } catch(err){
     console.log('Ada Error Membuat Tranksaksi.', error);
   };
+};
+
+// API 16: selesaikanPO
+// UPDATE PO JADI TRANSAKSI YANG SELESAI
+
+export const selesaikanPO = async (id_transaksi) => {
+    const db = getFirestore(app);
+    const docrefproduk = doc(db, "transaksi", id_transaksi);
+    getDoc(docrefproduk).then(docSnap => {
+      if (docSnap.exists()) {
+        try {
+            updateDoc(docrefproduk, { 
+              status_transaksi: "Selesai", 
+              waktu_selesai: serverTimestamp(), 
+            });
+        } catch (err) {
+          Alert.alert('Ada error untuk menyelesaikan PO!', err);
+        }
+      }
+    })
 };

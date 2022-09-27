@@ -64,7 +64,7 @@ const RiwayatScreen = () => {
       }
     }
     fetchRiwayat();
-  },[])
+  },[riwayat])
 
 
   return (

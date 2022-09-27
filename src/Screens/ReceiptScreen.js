@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import * as Linking from 'expo-linking';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
@@ -8,6 +8,8 @@ import ListReceipt from '../Components/ListReceipt';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import GarisBatas from '../Components/GarisBatas';
+import { selesaikanPO } from '../../API/firebasemethod';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window')
@@ -15,6 +17,8 @@ const { width, height } = Dimensions.get('window')
 const ReceiptScreen = ({route}) => {
 
   moment.updateLocale('id', localization);
+
+  const navigation = useNavigation();
 
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
@@ -28,6 +32,32 @@ const ReceiptScreen = ({route}) => {
 
   const sms = () => {
     Linking.openURL(`sms:${phonepelanggan}`);
+  };
+
+  const selesaiTransaksiPO =()=> {
+    Alert.alert('Apakah pelanggan sudah menerima produk?','Pastikan belanjaan sudah diterima dan pelanggan sudah melunasi belanjaan.',
+          [
+            {
+              text: 'Batal',
+              onPress: () => {
+                console.log('Batal dipencet')
+              }
+            },
+            {
+              text: 'Sudah',
+              onPress: selesaiPO,
+            }
+          ]
+          )
+  }
+
+  async function selesaiPO(){
+    try{
+        selesaikanPO(id_transaksi);
+        navigation.navigate("TQScreen"); 
+    } catch (err){
+      Alert.alert('Ada error menyelesaikan pre-order!', err.message);
+    }  
   };
 
   return (
@@ -165,7 +195,7 @@ const ReceiptScreen = ({route}) => {
               </View>
               { status_transaksi == "Dalam Proses" ? 
                 (
-                  <TouchableOpacity style={styles.diantar}>
+                  <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
                     <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Sudah diantar dan dibayar</Text>
                   </TouchableOpacity>
                 ):(
