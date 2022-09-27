@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Ijo, Kuning, Hitam, Putih, IjoTua } from '../Utils/Warna'
 import RiwayatCard from '../Components/RiwayatCard'
@@ -6,7 +6,10 @@ import { dataRiwayat } from '../Data/dataRiwayat'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
+import { Receipt } from '../assets/Images/Index';
 
+
+const { width, height } = Dimensions.get('window')
 
 const RiwayatScreen = () => {
 
@@ -83,8 +86,9 @@ const RiwayatScreen = () => {
           ListFooterComponent={<View style={{height:10}}></View>}
           ListHeaderComponent={<View style={{height:10}}></View>}
           ListEmptyComponent={ 
-          <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-            <Text style={{textAlign:'center'}}>Anda belum pernah membuat transaksi</Text> 
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+            <Image style={styles.kertas} source={Receipt}/>
+            <Text style={{textAlign:'center'}}>Belum pernah ada transaksi</Text> 
           </View>
         }
       />
@@ -99,5 +103,10 @@ const styles = StyleSheet.create({
   latar:{
     backgroundColor: Kuning,
     flex: 1,
+  },
+  kertas:{
+    width: width * 0.3,
+    height: width * 0.3,
+    marginTop: height * 0.25,
   },
 })

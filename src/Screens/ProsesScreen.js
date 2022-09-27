@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Kuning, IjoTua } from '../Utils/Warna'
 import ProsesCard from '../Components/ProsesCard'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
+import { Receipt } from '../assets/Images/Index';
 
+const { width, height } = Dimensions.get('window')
 
 const ProsesScreen = () => {
 
@@ -101,8 +103,9 @@ const ProsesScreen = () => {
           ListFooterComponent={<View style={{height:10}}></View>}
           ListHeaderComponent={<View style={{height:10}}></View>}
           ListEmptyComponent={ 
-            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-              <Text style={{textAlign:'center'}}>Anda tidak ada transaksi dalam proses</Text> 
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+              <Image style={styles.kertas} source={Receipt}/>
+              <Text style={{textAlign:'center'}}>Tidak ada transaksi dalam proses</Text> 
             </View>
           }
       />
@@ -117,5 +120,10 @@ const styles = StyleSheet.create({
   latar:{
     backgroundColor: Kuning,
     flex: 1,
-  }
+  },
+  kertas:{
+    width: width * 0.3,
+    height: width * 0.3,
+    marginTop: height * 0.25,
+  },
 })

@@ -24,6 +24,7 @@ import Kategori07 from './Kategori07.png'
 import Kategori08 from './Kategori08.png'
 import Kategori09 from './Kategori09.png'
 import DefaultFoto from './DefaultFoto.png'
+import Receipt from './Receipt.png'
 import Kosong from './kosong.png'
 import Bag from './Bag.png'
 import Location from './Location.png'
@@ -38,5 +39,5 @@ export { Splash, Awan, gerobaksplash,
         Kategori07, Kategori08, Kategori09,
         Bag, Bawah, Pasar, halaman,
         mitrasplash, Kosong, DefaultFoto,
-        PanggilMitra, Location,
+        PanggilMitra, Location, Receipt,
     }
