@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
-import React from 'react'
-import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna'
-import { DPkartu, Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index'
-import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native';
+import React from 'react';
+import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
+import { DPkartu, Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
+import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
+import localization from 'moment/locale/id';
 
 const { width, height } = Dimensions.get('window')
 
 
 const ProsesCard = ({ item }) => {
+
+  moment.updateLocale('id', localization);
 
   const navigation = useNavigation();
 
@@ -57,7 +61,7 @@ const ProsesCard = ({ item }) => {
         ):(
           <View>
             <Text style={{fontSize:14, color:Ijo}}>
-                Pre-Order kamu dalam proses
+             DL: {moment(item.waktu_dipesan.toDate()).add(2, 'days').format('lll')}
             </Text>  
             <Text style={{fontSize:14, color:Ijo, fontWeight:'bold'}}>
                Rp{item.hargatotalsemua} | {item.jumlah_kuantitas} produk

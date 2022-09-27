@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollV
 import React, {useEffect, useState, useRef} from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import { KollLong, Location } from '../assets/Images/Index';
-import { Call } from '../assets/Icons/Index';
+import { Call, Chat } from '../assets/Icons/Index';
 import ListReceipt from '../Components/ListReceipt';
 import moment from 'moment';
 import localization from 'moment/locale/id';
@@ -75,8 +75,9 @@ const ReceiptScreen = ({route}) => {
                     <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namapelanggan}</Text>
                 </View>
                 { status_transaksi == "Dalam Proses" ? (
-                  <View>
+                  <View style={{flexDirection: 'row'}}>
                     <Image style={styles.telepon} source={Call}/>
+                    <Image style={styles.telepon} source={Chat}/>
                   </View>
                 ):(
                   <View/>
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
   telepon:{
     width: width * 0.1,
     height: width * 0.1,
+    marginHorizontal: 5,
   },
   reminder:{
     backgroundColor: IjoTua,
