@@ -76,8 +76,8 @@ const ReceiptScreen = ({route}) => {
                 </View>
                 { status_transaksi == "Dalam Proses" ? (
                   <View style={{flexDirection: 'row'}}>
-                    <Image style={styles.telepon} source={Call}/>
-                    <Image style={styles.telepon} source={Chat}/>
+                    <Image style={styles.aksi} source={Call}/>
+                    <Image style={styles.aksi} source={Chat}/>
                   </View>
                 ):(
                   <View/>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: IjoTua,
   },
-  telepon:{
+  aksi:{
     width: width * 0.1,
     height: width * 0.1,
     marginHorizontal: 5,
