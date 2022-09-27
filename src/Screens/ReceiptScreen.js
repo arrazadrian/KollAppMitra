@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
+import * as Linking from 'expo-linking';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
 import { KollLong, Location } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
@@ -18,8 +19,16 @@ const ReceiptScreen = ({route}) => {
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-    status_transaksi, catatan,
+    status_transaksi, catatan, phonemitra, phonepelanggan,
      } = route.params;
+
+  const telepon = () => {
+    Linking.openURL(`tel:${phonepelanggan}`);
+  };
+
+  const sms = () => {
+    Linking.openURL(`sms:${phonepelanggan}`);
+  };
 
   return (
     <View style={styles.latar}>
@@ -76,8 +85,12 @@ const ReceiptScreen = ({route}) => {
                 </View>
                 { status_transaksi == "Dalam Proses" ? (
                   <View style={{flexDirection: 'row'}}>
-                    <Image style={styles.aksi} source={Call}/>
-                    <Image style={styles.aksi} source={Chat}/>
+                    <Pressable onPress={telepon}>
+                       <Image style={styles.aksi} source={Call}/>
+                    </Pressable>
+                    <Pressable  onPress={sms}>
+                        <Image style={styles.aksi} source={Chat}/>
+                    </Pressable>
                   </View>
                 ):(
                   <View/>

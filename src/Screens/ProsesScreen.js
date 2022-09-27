@@ -42,6 +42,8 @@ const ProsesScreen = () => {
             hargalayanan,
             hargatotalsemua,
             jumlah_kuantitas,
+            phonemitra, 
+            phonepelanggan,
           } = doc.data();
           list.push({
             id: doc.id,
@@ -61,6 +63,8 @@ const ProsesScreen = () => {
             hargalayanan,
             hargatotalsemua,
             jumlah_kuantitas,
+            phonemitra, 
+            phonepelanggan,
           });
         });
 
