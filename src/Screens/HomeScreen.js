@@ -118,6 +118,7 @@ const HomeScreen = ({ navigation }) => {
     getAktifTransaksi();
     dispatch(updateProses({ aktif }));
   },[])
+  
 
   return ( 
     <View style={styles.latar}>
