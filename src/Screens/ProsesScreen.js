@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 import { Receipt } from '../assets/Images/Index';
+import { useDispatch } from 'react-redux';
 
 const { width, height } = Dimensions.get('window')
 
@@ -14,6 +15,8 @@ const ProsesScreen = () => {
   const[proses,setProses] = useState();
   const[loading, setLoading] = useState(true);
   const componentMounted = useRef(true);
+
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     const fetchProses = async() => {
@@ -69,7 +72,7 @@ const ProsesScreen = () => {
             phonepelanggan,
           });
         });
-
+        
         if (componentMounted.current){ // (5) is component still mounted?
           setProses(list); // (1) write data to state
           setLoading(false); // (2) write some value to state
@@ -85,7 +88,6 @@ const ProsesScreen = () => {
     fetchProses();
   },[])
   //Tambah parameter "proses" bila mau auto refresh
-
 
   return (
     <View style={styles.latar}>

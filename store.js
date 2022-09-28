@@ -4,6 +4,7 @@ import mitraReducer from './src/features/mitraSlice';
 import pelangganReducer from './src/features/pelangganSlice';
 import kategoriReducer from './src/features/kategoriSlice';
 import mangkalReducer from './src/features/mangkalSlice';
+import counterReducer from './src/features/counterSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     pelanggan: pelangganReducer,
     kategori: kategoriReducer,
     mangkal: mangkalReducer,
+    counter: counterReducer,
   },
 });
