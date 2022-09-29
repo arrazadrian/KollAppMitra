@@ -4,7 +4,6 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
-import PopupMasukPanggilan from '../Components/PopupMasukPanggilan';
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, onSnapshot, collection, query, where, orderBy } from 'firebase/firestore';
 import { app } from '../../Firebase/config';
@@ -117,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
     }
     getAktifTransaksi();
     dispatch(updateProses({ aktif }));
-  },[])
+  },[aktif])
   
 
   return ( 
@@ -213,7 +212,6 @@ const HomeScreen = ({ navigation }) => {
               </Pressable>
           </View>
         </ScrollView>
-        {/* <PopupMasukPanggilan/>  */}
     </View>
   )
 }

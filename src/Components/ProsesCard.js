@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native';
 import React from 'react';
 import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
-import { DPkartu, Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
+import { PanggilMitra, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import localization from 'moment/locale/id';
@@ -14,6 +14,24 @@ const ProsesCard = ({ item }) => {
   moment.updateLocale('id', localization);
 
   const navigation = useNavigation();
+
+  const pindahPanggilan = () => {
+    navigation.navigate('PanggilanScreen', { 
+      alamat_pelanggan: item?.alamat_pelanggan,
+      id_mitra: item.id_mitra,
+      id_pelanngan: item.id_mitra,
+      jenislayanan: item.jenislayanan,
+      namamitra: item.namamitra,
+      namatoko: item.namatoko,
+      phonemitra: item.phonemitra,
+      namapelanggan: item.namapelanggan,
+      phonepelanggan: item.phonepelanggan,
+      status_transaksi: item.status_transaksi,
+      waktu_dipesan: item?.waktu_dipesan,
+      catatan: item?.catatan,
+      id_transaksi: item.id,
+    })
+  };
 
   const pindahDetail = () => {
     navigation.navigate('ReceiptScreen', { 
@@ -37,42 +55,48 @@ const ProsesCard = ({ item }) => {
       catatan: item?.catatan,
       id_transaksi: item.id,
     })
-  }
+  };
 
   return (
-    <Pressable style={styles.card}
-    onPress={pindahDetail}
-    >
-    { item.jenislayanan == 'Temu Langsung' ? (
-      <Image source={TemuLangsung} style={styles.foto} />      
-      ): item.jenislayanan == 'Panggil Mitra' ? (
-        <Image source={Gerobak} style={styles.foto} />      
-      ) : (
-        <Image source={PreOrder} style={styles.foto} />
+    <View>
+    { item.jenislayanan == "Pre-Order" ? 
+      (
+      <Pressable style={styles.card} onPress={pindahDetail}>
+          <Image source={PreOrder} style={styles.foto} />
+          <View style={{flex: 3}}>
+              <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}}>
+                  {item.namapelanggan}
+              </Text>
+              <View>
+                    <Text style={{fontSize:14, color:Ijo}}>
+                    DL: {moment(item.waktu_dipesan.toDate()).add(2, 'days').format('lll')}
+                    </Text>  
+                    <Text style={{fontSize:14, color:Ijo, fontWeight:'bold'}}>
+                      Rp{item.hargatotalsemua} | {item.jumlah_kuantitas} produk
+                    </Text>  
+              </View>
+          </View>
+      </Pressable>
+      ):(
+      <Pressable style={styles.card} onPress={pindahPanggilan}>
+          <Image source={PanggilMitra} style={styles.foto} />
+          <View style={{flex: 3}}>
+              <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}}>
+                  {item.namapelanggan}
+              </Text>
+              <View>
+                    <Text style={{fontSize:14, color:Ijo, fontWeight:'bold'}}>
+                      Ada panggilan pelanggan
+                    </Text>  
+                    <Text style={{fontSize:14, color:Ijo}} numberOfLines={2}>
+                      {item.alamat_pelanggan} 
+                    </Text>  
+              </View>
+          </View>
+      </Pressable>
       )
     }
-      <View>
-        <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}}>
-            {item.namapelanggan}
-        </Text>
-
-      { item.jenislayanan == 'Panggil Mitra' ? (
-          <Text style={{fontSize:16, fontWeight:'bold', color:Ijo}}>
-              Sedang menuju lokasi kamu
-          </Text>      
-        ):(
-          <View>
-            <Text style={{fontSize:14, color:Ijo}}>
-             DL: {moment(item.waktu_dipesan.toDate()).add(2, 'days').format('lll')}
-            </Text>  
-            <Text style={{fontSize:14, color:Ijo, fontWeight:'bold'}}>
-               Rp{item.hargatotalsemua} | {item.jumlah_kuantitas} produk
-            </Text>  
-          </View>
-        )
-      }
-      </View>
-    </Pressable>
+    </View>
   )
 }
 
@@ -87,12 +111,14 @@ const styles = StyleSheet.create({
         elevation: 5,
         flexDirection: 'row',
         alignItems:'center',
+        padding: 10,
     },
     foto:{
+        flex: 1,
         width: height * 0.12,
         height: height * 0.12,
         borderRadius: 10,
-        margin: 10,
         backgroundColor: IjoMint,
+        marginRight: 10,
     }
 })
