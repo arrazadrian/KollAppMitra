@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
-import { Kuning, IjoTua } from '../Utils/Warna'
+import { Kuning, IjoTua, Ijo } from '../Utils/Warna'
 import ProsesCard from '../Components/ProsesCard'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
@@ -119,6 +119,10 @@ const ProsesScreen = () => {
 export default ProsesScreen
 
 const styles = StyleSheet.create({
+  latar:{
+    backgroundColor: Kuning,
+    flex: 1,
+},
   kertas:{
     width: width * 0.4,
     height: width * 0.4,

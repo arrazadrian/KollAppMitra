@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import React from 'react'
-import { Ijo, IjoMint, Putih } from '../Utils/Warna'
-import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Ijo, IjoMint, Putih } from '../Utils/Warna';
+import { useNavigation } from '@react-navigation/native';
+import MapView, { Marker } from 'react-native-maps';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -10,7 +12,13 @@ const PopupMasukPanggilan = () => {
     const navigation = useNavigation();
   
     const clickTerima = () => {
-      navigation.navigate('Panggilan')
+    //   navigation.navigate('Panggilan')
+    console.log("Terima dipilih")
+    }
+  
+    const clickTolak = () => {
+    //   navigation.navigate('Panggilan')
+    console.log("Tolak dipilih")
     }
 
   return (
@@ -20,38 +28,48 @@ const PopupMasukPanggilan = () => {
              <Text style={styles.judul}>Panggilan ke Lokasi</Text>
         </View>
         <View style={{padding:10}}>
-            <View style={{
-                marginBottom: 10,
-                padding: 10,
+            <View style={{marginBottom: 10, padding: 10,
                 }}>
-                <Text style={{fontSize: 20,}}
-                >
+                <Text style={{fontSize: 16,}}>
+                    Nama Pelanggan
+                </Text>
+                <Text style={{fontSize: 18, color: Ijo, fontWeight:'bold'}}>
                     Azriel Hafizh
                 </Text>
-                <Text 
-                style={{fontSize: 20, fontWeight: 'bold'}}
-                numberOfLines={3}
-                >
+                <MapView style={styles.peta} 
+                    initialRegion={{
+                    latitude: -6.561355,
+                    longitude: 106.731703,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
+                }}>
+                <Marker 
+                    coordinate={{
+                    latitude: -6.561355,
+                    longitude: 106.731703,
+                    }}
+                    title={"WAW"}
+                    description="Lokasi Pelanggan"
+                    pinColor={'tan'}
+                    identifier="pelanggan"
+                />
+                </MapView>
+                <Text style={{fontSize: 16, fontWeight: 'bold'}} numberOfLines={3}>
                     Dramaga Cantik Blok E9, Bogor, Jawa Barat.
                 </Text>
-                <Text style={{fontSize: 22}}
-                >
+                <Text style={{fontSize: 16}}>
                     100 m | 10 menit
                 </Text>
             </View>
-            <View style={{
-                flexDirection:'row', 
-                alignItems:'center',
-                
-                }}>
+            <View style={{ flexDirection:'row', alignItems:'center', }}>
                 <View style={{flex:1}}>
-                    <Text style={styles.tolak}>Tolak</Text>
+                    <Text style={styles.tolak} onPress={clickTolak}>Tolak</Text>
                 </View>
-                <View style={styles.tombol}>
+                <TouchableOpacity style={styles.tombol}>
                      <Text style={styles.terima}
                      onPress={clickTerima}
                      >Terima</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     </View>
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
         backgroundColor: Putih,
         elevation: 5,
         marginHorizontal: 20,
-        marginTop: height * 0.3,
+        marginTop: height * 0.1,
         borderColor: Ijo,
         borderWidth: 2,
     },
@@ -83,28 +101,34 @@ const styles = StyleSheet.create({
     judul:{
         color: Putih,
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
         textAlign:'center',
     },
     pesanan:{
         color: Putih,
-        fontSize: 18,
+        fontSize: 16,
         textAlign:'center',
+    },
+    peta:{
+        width: '100%',
+        height: height * 0.3,
+        marginVertical: 10,
     },
     tolak:{
         color: Ijo,
         fontSize: 18,
         textAlign:'center',
+        fontWeight:'bold',
     },
     terima:{
-        color: Ijo,
+        color: Putih,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign:'center',
     },
     tombol:{
         flex: 1,
-        backgroundColor:IjoMint,
+        backgroundColor:Ijo,
         padding: 10,
         borderRadius: 10,
     }
