@@ -88,7 +88,7 @@ const RiwayatScreen = () => {
           ListEmptyComponent={ 
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <Image style={styles.kertas} source={Receipt}/>
-            <Text style={{textAlign:'center'}}>Belum pernah ada transaksi</Text> 
+            <Text style={styles.none}>Belum pernah ada transaksi</Text> 
           </View>
         }
       />
@@ -105,8 +105,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   kertas:{
-    width: width * 0.3,
-    height: width * 0.3,
+    width: width * 0.4,
+    height: width * 0.4,
     marginTop: height * 0.25,
+    marginBottom: 10,
+  },
+  none:{
+    fontSize: 16,
+    fontWeight:'bold',
+    color: Ijo,
+    textAlign:'center',
+    paddingHorizontal: 20,
   },
 })
