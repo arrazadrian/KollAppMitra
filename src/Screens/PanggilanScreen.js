@@ -5,10 +5,11 @@ import MapView, { Marker } from 'react-native-maps';
 import GarisBatas from '../Components/GarisBatas';
 import moment from 'moment';
 import localization from 'moment/locale/id';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window')
 
-const PanggilanScreen = ({ route }) => {
+const PanggilanScreen = ({ route, navigation }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [timer, setTimer] = useState(null)
@@ -27,12 +28,24 @@ const PanggilanScreen = ({ route }) => {
 
     };
 
+    const handleKembali = async () =>{
+        await clearInterval(durasibalas);
+        navigation.goBack();
+    };
+
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
 
-    setInterval(function(){
-        let sisa = moment.duration(15000).asSeconds();
-        setTimer(sisa);
+    const durasibalas = setInterval(function(){
+        const target = moment(waktu_dipesan.toDate()).add(4, 'days');
+        const sekarang = new Date();
+        if(timer != 0 ){
+            let durasi = target.diff(sekarang, 'seconds');
+            setTimer(durasi);
+        } else {
+            setTimer("Waktu Habis");
+            clearInterval(durasibalas)
+        }
     }, 1000);
 
   return (
@@ -127,6 +140,9 @@ const PanggilanScreen = ({ route }) => {
             {timer}
             </Text>
         </View>
+        <Pressable style={styles.kembali} onPress={handleKembali}>
+            <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
+        </Pressable>
     </View>
   )
 }
@@ -182,7 +198,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         position: 'absolute',
-        top: height *  0.02,
+        top: height *  0.06,
         right: width * 0.03,
     },
     modal:{
@@ -210,7 +226,15 @@ const styles = StyleSheet.create({
         backgroundColor:Putih,
         padding: 10,
         position:'absolute',
-        top: height *  0.02,
+        top: height *  0.06,
         left: width * 0.03,
+    },
+    kembali:{
+        borderRadius: 20,
+        position:'absolute',
+        top: height * 0.58,
+        left: width * 0.02,
+        justifyContent:'center',
+        alignItems:'center',
     },
 })
