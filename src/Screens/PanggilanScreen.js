@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih, Kuning, Abu } from '../Utils/Warna';
 import MapView, { Marker } from 'react-native-maps';
 import GarisBatas from '../Components/GarisBatas';
+import moment from 'moment';
+import localization from 'moment/locale/id';
 
 const { width, height } = Dimensions.get('window')
 
 const PanggilanScreen = ({ route }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [timer, setTimer] = useState(null)
 
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
@@ -23,6 +26,14 @@ const PanggilanScreen = ({ route }) => {
     const handleTolak = () =>{
 
     };
+
+    moment.updateLocale('id', localization)
+    let tanggal = moment().locale('id');
+
+    setInterval(function(){
+        let sisa = moment.duration(15000).asSeconds();
+        setTimer(sisa);
+    }, 1000);
 
   return (
     <View style={styles.latar}>
@@ -110,10 +121,10 @@ const PanggilanScreen = ({ route }) => {
         </TouchableOpacity>
         <View style={styles.timer}>
             <Text style={{textAlign:'center', fontSize: 12}}>
-                Waktu tersisa
+                Durasi merespon
             </Text>
             <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
-                02:12
+            {timer}
             </Text>
         </View>
     </View>
