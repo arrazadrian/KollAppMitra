@@ -109,8 +109,8 @@ const PanggilanScreen = ({ route }) => {
             <Text style={{color: Ijo, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Tolak Panggilan</Text>
         </TouchableOpacity>
         <View style={styles.timer}>
-            <Text style={{textAlign:'center'}}>
-                Waktu tersisa untuk merespon
+            <Text style={{textAlign:'center', fontSize: 12}}>
+                Waktu tersisa
             </Text>
             <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
                 02:12
