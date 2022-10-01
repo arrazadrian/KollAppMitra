@@ -28,15 +28,10 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     };
 
-    const handleKembali = async () =>{
-        await clearInterval(durasibalas);
-        navigation.goBack();
-    };
-
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
-
-    const durasibalas = setInterval(function(){
+    
+    let durasibalas = setInterval(function(){
         const target = moment(waktu_dipesan.toDate()).add(4, 'days');
         const sekarang = new Date();
         if(timer != 0 ){
@@ -47,7 +42,13 @@ const PanggilanScreen = ({ route, navigation }) => {
             clearInterval(durasibalas)
         }
     }, 1000);
-
+    
+    function handleKembali(){
+        clearInterval(durasibalas);
+        console.log("dipencet clear")
+        // navigation.goBack();
+    };
+    
   return (
     <View style={styles.latar}>
         <Modal
