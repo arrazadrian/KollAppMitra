@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert, TouchableOpacity, Modal} from 'react-native';
 import React, { useState } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih, Kuning, Abu } from '../Utils/Warna';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import GarisBatas from '../Components/GarisBatas';
 
 const { width, height } = Dimensions.get('window')
@@ -13,8 +13,16 @@ const PanggilanScreen = ({ route }) => {
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
         jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-        status_transaksi, catatan, phonemitra, phonepelanggan,
+        status_transaksi, catatan, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
+
+    const handlePanggil = () =>{
+
+    };
+
+    const handleTolak = () =>{
+
+    };
 
   return (
     <View style={styles.latar}>
@@ -44,10 +52,27 @@ const PanggilanScreen = ({ route }) => {
                 </View>
             </View>
         </Modal>
-      <MapView style={styles.peta}/>
+        <MapView style={styles.peta} 
+            initialRegion={{
+              latitude: geo_alamat.lat,
+              longitude: geo_alamat.lng,
+              latitudeDelta: 0.009,
+              longitudeDelta: 0.009,
+          }}>
+          <Marker 
+            coordinate={{
+            latitude: geo_alamat.lat,
+            longitude: geo_alamat.lng,
+            }}
+            title={namapelanggan}
+            description="Lokasi Pelanggan"
+            pinColor={'tan'}
+            identifier="pelanggan"
+          />
+          </MapView>
       <View style={styles.bawah}>
         <View style={{marginTop: 10}}>
-            <Text style={[styles.subjudul, {textAlign: 'center'}]}>
+            <Text style={[styles.subjudul, {textAlign:'center'}]}>
                 Nama Pelanggan
             </Text>
             <Text style={styles.nama} numberOfLines={1}>
@@ -61,9 +86,10 @@ const PanggilanScreen = ({ route }) => {
             <Text style={{fontSize: 14, marginBottom: 10}} numberOfLines={3}>
                 {alamat_pelanggan}
             </Text>
-            <Pressable style={styles.catatan}  onPress={() => {
-          setModalVisible(true);
-        }}>
+            <Pressable style={styles.catatan}  
+            onPress={() => {
+                setModalVisible(true);
+            }}>
                 <Text style={styles.subjudul}>
                     Catatan Lokasi
                 </Text>
@@ -71,13 +97,25 @@ const PanggilanScreen = ({ route }) => {
                     {catatan}
                 </Text>
             </Pressable>
-            <TouchableOpacity style={styles.terima}>
+            <TouchableOpacity style={styles.terima}
+                onPress={handlePanggil}
+            >
                 <Text style={{color: Putih, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Terima Panggilan</Text>
             </TouchableOpacity>
       </View>
-        <TouchableOpacity style={styles.tolak}>
+        <TouchableOpacity style={styles.tolak}
+            onPress={handleTolak}
+        >
             <Text style={{color: Ijo, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Tolak Panggilan</Text>
         </TouchableOpacity>
+        <View style={styles.timer}>
+            <Text style={{textAlign:'center'}}>
+                Waktu tersisa untuk merespon
+            </Text>
+            <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
+                02:12
+            </Text>
+        </View>
     </View>
   )
 }
@@ -119,6 +157,7 @@ const styles = StyleSheet.create({
         borderColor: IjoTua,
         borderWidth: 1,
         borderRadius: 10,
+        backgroundColor: Putih,
     },
     terima:{
         padding: 10,
@@ -128,10 +167,9 @@ const styles = StyleSheet.create({
     },
     tolak:{
         padding: 10,
-        backgroundColor: Putih,
+        backgroundColor: IjoMint,
         borderRadius: 10,
-        width: width * 0.4,
-        height: height * 0.06,
+        padding: 10,
         position: 'absolute',
         top: height *  0.02,
         right: width * 0.03,
@@ -156,5 +194,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
-    }
+    },
+    timer:{
+        backgroundColor:Putih,
+        padding: 10,
+        position:'absolute',
+        top: height *  0.02,
+        left: width * 0.03,
+    },
 })
