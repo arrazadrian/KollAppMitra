@@ -44,7 +44,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             }
         }, 1000);
         return() => clearInterval(durasibalas);
-    },[])
+    },[]);
     
     
   return (
@@ -129,13 +129,13 @@ const PanggilanScreen = ({ route, navigation }) => {
         <TouchableOpacity style={styles.tolak}
             onPress={handleTolak}
         >
-            <Text style={{color: Ijo, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Tolak Panggilan</Text>
+            <Text style={{color: Ijo, textAlign:'center', fontWeight:'bold', fontSize: 14}}>Tolak Panggilan</Text>
         </TouchableOpacity>
         <View style={styles.timer}>
-            <Text style={{textAlign:'center', fontSize: 12}}>
-                Durasi merespon
+            <Text style={{textAlign:'center', fontSize: 10}}>
+                Durasi Respon
             </Text>
-            {   !timer ? 
+            {  !timer ? 
             (
                 <ActivityIndicator size="small" color={Ijo}/>
             ):(
@@ -144,6 +144,9 @@ const PanggilanScreen = ({ route, navigation }) => {
                 </Text>
             )
             }
+             <Text style={{textAlign:'center', fontSize: 10}}>
+                (detik)
+            </Text>
         </View>
         <Pressable style={styles.kembali} onPress={()=> navigation.goBack()}>
             <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
@@ -197,15 +200,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
     },
-    tolak:{
-        padding: 10,
-        backgroundColor: IjoMint,
-        borderRadius: 10,
-        padding: 10,
-        position: 'absolute',
-        top: height *  0.06,
-        right: width * 0.03,
-    },
     modal:{
         flex: 1,
         justifyContent: "center",
@@ -227,18 +221,34 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
+    tolak:{
+        padding: 10,
+        backgroundColor: IjoMint,
+        padding: 10,
+        position: 'absolute',
+        top: height *  0.06,
+        right: width * 0.03,
+        height: height * 0.08,
+        width: width * 0.3,
+        justifyContent:'center',
+        borderRadius: 10,
+    },
     timer:{
         backgroundColor:Putih,
         padding: 10,
         position:'absolute',
         top: height *  0.06,
         left: width * 0.03,
+        height: height * 0.08,
+        width: width * 0.3,
+        justifyContent:'center',
+        borderRadius: 10,
     },
     kembali:{
         borderRadius: 20,
         position:'absolute',
         top: height * 0.58,
-        left: width * 0.02,
+        left: width * 0.03,
         justifyContent:'center',
         alignItems:'center',
     },
