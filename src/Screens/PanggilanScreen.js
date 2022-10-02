@@ -6,13 +6,15 @@ import GarisBatas from '../Components/GarisBatas';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { terimaPM, tolakPM } from '../../API/firebasemethod';
 
 const { width, height } = Dimensions.get('window')
 
 const PanggilanScreen = ({ route, navigation }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [timer, setTimer] = useState(null)
+    const [timer, setTimer] = useState(null);
+    const [habis, setHabis] = useState(false);
 
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
@@ -20,13 +22,6 @@ const PanggilanScreen = ({ route, navigation }) => {
         status_transaksi, catatan, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
 
-    const handlePanggil = () =>{
-
-    };
-
-    const handleTolak = () =>{
-
-    };
 
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
@@ -39,12 +34,23 @@ const PanggilanScreen = ({ route, navigation }) => {
                 let durasi = target.diff(sekarang, 'seconds');
                 setTimer(durasi);
             } else {
+                clearInterval(durasibalas);
                 setTimer("Waktu Habis");
-                clearInterval(durasibalas)
+                setHabis(true)
             }
         }, 1000);
         return() => clearInterval(durasibalas);
     },[]);
+
+    const handleTerima = () =>{
+        terimaPM(id_transaksi);
+        navigation.navigate("OtwScreen");
+    };
+  
+    const handleTolak = () =>{
+        tolakPM(id_transaksi);
+        navigation.navigate("HomeScreen");
+    };
     
     
   return (
@@ -120,17 +126,27 @@ const PanggilanScreen = ({ route, navigation }) => {
                     {catatan}
                 </Text>
             </Pressable>
-            <TouchableOpacity style={styles.terima}
-                onPress={handlePanggil}
-            >
-                <Text style={{color: Putih, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Terima Panggilan</Text>
-            </TouchableOpacity>
+            { !habis ? 
+                (
+                    <TouchableOpacity style={styles.terima}
+                        onPress={handleTerima}
+                    >
+                        <Text style={{color: Putih, textAlign:'center', fontWeight:'bold', fontSize: 16}}>Terima Panggilan</Text>
+                    </TouchableOpacity>
+                ):(
+                    <View style={[styles.terima, {backgroundColor:Abu}]}>
+                        <Text style={{color: Putih, textAlign:'center', fontWeight:'bold', fontSize: 14}}>Anda, tidak bisa lagi menerima panggilan ini.</Text>
+                    </View>
+                )
+            }
       </View>
+      { !habis && 
         <TouchableOpacity style={styles.tolak}
             onPress={handleTolak}
         >
             <Text style={{color: Ijo, textAlign:'center', fontWeight:'bold', fontSize: 14}}>Tolak Panggilan</Text>
         </TouchableOpacity>
+      }
         <View style={styles.timer}>
             <Text style={{textAlign:'center', fontSize: 10}}>
                 Durasi Respon

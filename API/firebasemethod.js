@@ -575,3 +575,43 @@ export const selesaikanPO = async (id_transaksi) => {
       }
     })
 };
+
+
+// API 17: terimaPM
+// UPDATE PANGGILAN PM JADI DITERIMA 
+
+export const terimaPM = async (id_transaksi) => {
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "transaksi", id_transaksi);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+          updateDoc(docrefproduk, { 
+            panggilan: "Diterima",
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err);
+      }
+    }
+  })
+};
+
+// API 18: tolakPM
+// UPDATE PANGGILAN PM JADI DITERIMA 
+
+export const tolakPM = async (id_transaksi) => {
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "transaksi", id_transaksi);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+          updateDoc(docrefproduk, { 
+            panggilan: "Ditolak", 
+            status_transaksi: "Ditolak",  
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err);
+      }
+    }
+  })
+};
