@@ -36,7 +36,18 @@ const PanggilanScreen = ({ route, navigation }) => {
             } else {
                 clearInterval(durasibalas);
                 setTimer("Waktu Habis");
-                setHabis(true)
+                setHabis(true);
+                Alert.alert(
+                    'Waktu habis untuk merespon','Anda tidak bisa merespon permintaan ini lagi.',
+                    [
+                      {
+                        text: 'Tutup',
+                        onPress: () => {
+                          navigation.replace('HomeScreen')
+                        }
+                      },
+                    ]
+                );
             }
         }, 1000);
         return() => clearInterval(durasibalas);
@@ -44,12 +55,12 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     const handleTerima = () =>{
         terimaPM(id_transaksi);
-        navigation.navigate("OtwScreen");
+        navigation.replace("OtwScreen");
     };
   
     const handleTolak = () =>{
         tolakPM(id_transaksi);
-        navigation.navigate("HomeScreen");
+        navigation.replace("HomeScreen");
     };
     
     
