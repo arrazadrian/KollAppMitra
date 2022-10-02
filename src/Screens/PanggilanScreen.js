@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert, TouchableOpacity, Modal} from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert, TouchableOpacity, Modal, ActivityIndicator} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih, Kuning, Abu } from '../Utils/Warna';
 import MapView, { Marker } from 'react-native-maps';
 import GarisBatas from '../Components/GarisBatas';
@@ -30,24 +30,22 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
+
+    useEffect(() => {
+        const durasibalas = setInterval(() => {
+            const target = moment(waktu_dipesan.toDate()).add(4, 'days');
+            const sekarang = new Date();
+            if(timer != 0 ){
+                let durasi = target.diff(sekarang, 'seconds');
+                setTimer(durasi);
+            } else {
+                setTimer("Waktu Habis");
+                clearInterval(durasibalas)
+            }
+        }, 1000);
+        return() => clearInterval(durasibalas);
+    },[])
     
-    let durasibalas = setInterval(function(){
-        const target = moment(waktu_dipesan.toDate()).add(4, 'days');
-        const sekarang = new Date();
-        if(timer != 0 ){
-            let durasi = target.diff(sekarang, 'seconds');
-            setTimer(durasi);
-        } else {
-            setTimer("Waktu Habis");
-            clearInterval(durasibalas)
-        }
-    }, 1000);
-    
-    function handleKembali(){
-        clearInterval(durasibalas);
-        console.log("dipencet clear")
-        // navigation.goBack();
-    };
     
   return (
     <View style={styles.latar}>
@@ -137,11 +135,17 @@ const PanggilanScreen = ({ route, navigation }) => {
             <Text style={{textAlign:'center', fontSize: 12}}>
                 Durasi merespon
             </Text>
-            <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
-            {timer}
-            </Text>
+            {   !timer ? 
+            (
+                <ActivityIndicator size="small" color={Ijo}/>
+            ):(
+                <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
+                {timer}
+                </Text>
+            )
+            }
         </View>
-        <Pressable style={styles.kembali} onPress={handleKembali}>
+        <Pressable style={styles.kembali} onPress={()=> navigation.goBack()}>
             <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
         </Pressable>
     </View>
