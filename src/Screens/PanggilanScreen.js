@@ -28,7 +28,7 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         const durasibalas = setInterval(() => {
-            const target = moment(waktu_dipesan.toDate()).add(10, 'minutes');
+            const target = moment(waktu_dipesan.toDate()).add(2, 'minutes');
             const sekarang = new Date();
             if(timer != 0 ){
                 let durasi = target.diff(sekarang, 'seconds');

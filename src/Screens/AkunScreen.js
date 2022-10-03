@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
+import { Abu, Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
 import { usermitra } from '../Data/usermitra'
 import { useNavigation } from '@react-navigation/native'
@@ -113,7 +113,13 @@ const AkunScreen = () => {
                 </View>
                 <View>
                     <Text style={styles.subjudul}>Tempat Mangkal</Text>
-                    <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
+                    { alamat ? 
+                      (
+                        <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
+                        ) : (
+                        <Text style={{color: Abu, fontSize: 14, fontStyle: 'italic'}}>Tambahkan dari "Atur Profil"</Text>                        
+                      )
+                    }
                 </View>
             </View>
             <View style={styles.logout}>

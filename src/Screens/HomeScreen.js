@@ -73,6 +73,8 @@ const HomeScreen = ({ navigation }) => {
 
   const [namamitra, setNamamitra] = useState("Loading...");
   const [namatoko, setNamatoko] = useState("");
+  const [tempat, setTempat] = useState("");
+ 
   const[aktif,setAktif] = useState();
 
   const auth = getAuth();
@@ -80,10 +82,11 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() =>{ 
     async function getuserHome(){
-      try{
+      try{      
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
         setNamamitra(doc.data().namalengkap);
         setNamatoko(doc.data().namatoko);
+        setTempat(doc.data()?.alamat);
 
         console.log('getuserHome jalan (Home Screen)')
           // Respond to data
@@ -98,6 +101,27 @@ const HomeScreen = ({ navigation }) => {
     getuserHome();
     dispatch(setMitra({ namamitra, namatoko }));
   },[])
+
+  // const docRef = doc(db, "mitra", auth.currentUser.uid);
+  // const colRef = collection(docRef, "produk")
+
+  // useEffect(() => {
+  //   async function getProduk(){
+  //     try{
+  //       const docRef = doc(db, "mitra", auth.currentUser.uid);
+  //       const colRef = collection(docRef, "produk")
+
+  //       const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
+  //       const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //           setAktif(querySnapshot.size)
+  //           console.log('produk sekarang: ' + querySnapshot.size)
+  //       });
+  //       //unsubscribe();
+  //       }catch (err){
+  //         Alert.alert('There is an error.', err.message)
+  //       };
+  //   }
+  // },[])
 
   useEffect(() => {
     async function getAktifTransaksi(){
@@ -150,22 +174,36 @@ const HomeScreen = ({ navigation }) => {
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
           </View>
-          <View style={styles.status}>
-            <View>
-                <Text style={styles.judul}>Status anda: 
-                <Text> </Text>
-                <Text style={{color: IjoTua}}>{status}</Text>
-                </Text>
-                <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
+          { tempat ? 
+            (
+              <View style={styles.status}>
+              <View>
+                  <Text style={styles.judul}>Status anda: 
+                  <Text> </Text>
+                  <Text style={{color: IjoTua}}>{status}</Text>
+                  </Text>
+                  <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
+              </View>
+                <Switch
+                  trackColor={{ false: '#767577', true: Ijo }}
+                  thumbColor={isStatusEnabled ? '#f4f3f4' : '#f5dd4b'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitchStatus}
+                  value={!isStatusEnabled}
+                />
             </View>
-              <Switch
-                trackColor={{ false: '#767577', true: Ijo }}
-                thumbColor={isStatusEnabled ? '#f4f3f4' : '#f5dd4b'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchStatus}
-                value={!isStatusEnabled}
-              />
-          </View>
+            ) : (
+            <View style={styles.syarat}>
+                <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold', textAlign:'center'}}>
+                  Anda belum bisa berjualan
+                </Text>    
+                <Text style={{color: IjoTua, fontStyle:'italic', textAlign:'center'}}>
+                  Terlebih dahulu lengkapi tempat anda mangkal di halaman akun
+                </Text>    
+            </View>
+            ) 
+          }
+        
           { status == "Aktif" ? (
               <View style={styles.mangkal}>
                 <View>
@@ -224,6 +262,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop:StatusBar.currentHeight + 10,
+  },
+  syarat: {
+    backgroundColor: IjoMint,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Ijo,
+    borderWidth: 1,
+    marginBottom: 10,
   },
   status: {
     backgroundColor: Putih,
