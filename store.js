@@ -6,6 +6,7 @@ import kategoriReducer from './src/features/kategoriSlice';
 import mangkalReducer from './src/features/mangkalSlice';
 import counterReducer from './src/features/counterSlice';
 import posisiReducer from './src/features/posisiSlice';
+import bobotReducer from './src/features/bobotSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     mangkal: mangkalReducer,
     counter: counterReducer,
     posisi: posisiReducer,
+    bobot: bobotReducer,
   },
 });

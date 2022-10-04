@@ -12,7 +12,7 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
 import { updatePosisi } from '../features/posisiSlice';
 import MapViewDirections from "react-native-maps-directions";
-
+import { updateBobot } from '../features/bobotSlice';
 
 
 const { width, height } = Dimensions.get('window')
@@ -76,8 +76,9 @@ const PanggilanScreen = ({ route, navigation }) => {
     const [errorMsg, setErrorMsg] = useState(null);
     const dispatch = useDispatch();
     const geofire = require('geofire-common');
-    const { geo, alamat, geohash } = useSelector(state => state.posisi);
+    const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
     const { namamitra } = useSelector(state => state.mitra);
+    const { estimasi_waktu, jarak } = useSelector(state => state.bobot);
 
     //Dapetin posisi mitra saat ini
     useEffect(() => {
@@ -101,17 +102,17 @@ const PanggilanScreen = ({ route, navigation }) => {
         .then((data) => {
             //console.log(data.results[0].formatted_address);
             dispatch(updatePosisi({
-            geo: {lat:location.coords.latitude, lng:location.coords.longitude},
-            alamat: data.results[0].formatted_address,
-            geohash: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+            geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+            alamat_mitra: data.results[0].formatted_address,
+            geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
             }));
         })
         })();
     }, []); 
     
-    // console.log(geo);
-    // console.log(alamat);
-    // console.log(geohash);
+    // console.log(geo_mitra);
+    // console.log(alamat_mitra);
+    // console.log(geohash_mitra);
 
     let text = 'Waiting..';
     if (errorMsg) {
@@ -121,12 +122,23 @@ const PanggilanScreen = ({ route, navigation }) => {
     }
 
     useEffect(()=>{
-        if(!alamat||!alamat_pelanggan) return;
+       // if(!alamat_mitra||!alamat_pelanggan) return;
 
-        const getBobot = async () => {
-
-        }
-    },[])
+        (async () => {
+            fetch(
+                `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${alamat_mitra}&destinations=${alamat_pelanggan}
+                &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
+            ).then((res) => res.json())
+            .then((data) => {
+                console.log(data.rows[0].elements[0].distance.text);
+                console.log(data.rows[0].elements[0].duration.text);
+                dispatch(updateBobot({
+                    estimasi_waktu: data.rows[0].elements[0].duration.text,
+                    jarak: data.rows[0].elements[0].distance.text,
+                    }));
+            })
+        })();
+    },[]);
     
   return (
     <View style={styles.latar}>
@@ -158,22 +170,20 @@ const PanggilanScreen = ({ route, navigation }) => {
         </Modal>
         <MapView style={styles.peta} 
             initialRegion={{
-              latitude: (geo_alamat.lat + geo?.lat)/2,
-              longitude: (geo_alamat.lng + geo?.lng)/2,
-            //   latitudeDelta: 0.009,
-            //   longitudeDelta: 0.009,
-              latitudeDelta: 0.9,
-              longitudeDelta: 0.9,
+              latitude: geo_alamat.lat,
+              longitude: geo_alamat.lng,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
           }}>
-        { geo && geo_alamat && (
+        {/* { geo_mitra && geo_alamat && (
             <MapViewDirections
-                origin={alamat}
+                origin={alamat_mitra}
                 destination={alamat_pelanggan}
                 apikey={GOOGLE_MAPS_APIKEY}
                 strokeColor="green"
                 strokeWidth={3}
             />
-        )}
+        )} */}
           <Marker 
             coordinate={{
             latitude: geo_alamat.lat,
@@ -184,35 +194,35 @@ const PanggilanScreen = ({ route, navigation }) => {
             pinColor={'tan'}
             identifier="pelanggan"
           />
-          <Marker 
+          {/* <Marker 
             coordinate={{
-            latitude: geo?.lat,
-            longitude: geo?.lng,
+            latitude: geo_mitra?.lat,
+            longitude: geo_mitra?.lng,
             }}
             title={namamitra}
             description="Lokasi Anda"
             pinColor={'red'}
             identifier="mitra"
-          />
+          /> */}
           </MapView>
+        <View style={styles.bobot}> 
+            <Text style={styles.bobotAngka}>{jarak}</Text>
+            <Text style={styles.bobotAngka}>{estimasi_waktu}</Text>
+        </View>
       <View style={styles.bawah}>
         <View style={{marginTop: 10, flexDirection:'row'}}>
-            <View style={{flex: 4, flexDirection:'row'}}>
-                <Pressable style={{marginRight: 10}} onPress={()=> navigation.goBack()}>
+            <View style={{ flexDirection:'row'}}>
+                <Pressable style={{marginRight: width * 0.13}} onPress={()=> navigation.goBack()}>
                     <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
                 </Pressable>
                 <View>
-                    <Text style={styles.subjudul}>
+                    <Text style={[styles.subjudul, {textAlign:'center'}]}>
                         Nama Pelanggan
                     </Text>
                     <Text style={styles.nama} numberOfLines={1}>
                         {namapelanggan}
                     </Text>
                 </View>
-            </View>
-            <View style={{flex:1, justifyContent:'center'}}>
-                <Text style={styles.bobot}>200m</Text>
-                <Text  style={styles.bobot}>20 Menit</Text>
             </View>
         </View>
         <GarisBatas/>
@@ -290,6 +300,19 @@ const styles = StyleSheet.create({
         width: width,
         height: height * 0.7,
     },
+    bobot:{
+        flexDirection:'row',
+        backgroundColor: IjoMint,
+        position: 'absolute',
+        width: width,
+        height: height * 0.1,
+        bottom: height * 0.36,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        paddingHorizontal: 20,
+        paddingTop: 10,
+        justifyContent:'space-evenly',
+    },
     bawah:{
         backgroundColor: Kuning,
         paddingHorizontal: 20,
@@ -300,6 +323,12 @@ const styles = StyleSheet.create({
         position:'absolute',
         bottom: 0,
     },
+    bobotAngka:{
+        fontSize: 16,
+        textAlign:'center',
+        fontWeight:'bold',
+        color:IjoTua,
+    },
     subjudul:{
         fontSize: 14,
         fontWeight: 'bold',
@@ -309,6 +338,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: Ijo,
+        textAlign:'center',
     },
     catatan:{
         padding: 10,
@@ -366,10 +396,5 @@ const styles = StyleSheet.create({
         width: width * 0.3,
         justifyContent:'center',
         borderRadius: 10,
-    },
-    bobot:{
-        textAlign:'center',
-        fontWeight:'bold',
-        color:IjoTua,
     },
 })

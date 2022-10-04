@@ -106,27 +106,6 @@ const HomeScreen = ({ navigation }) => {
     dispatch(setMitra({ namamitra, namatoko }));
   },[])
 
-  // const docRef = doc(db, "mitra", auth.currentUser.uid);
-  // const colRef = collection(docRef, "produk")
-
-  // useEffect(() => {
-  //   async function getProduk(){
-  //     try{
-  //       const docRef = doc(db, "mitra", auth.currentUser.uid);
-  //       const colRef = collection(docRef, "produk")
-
-  //       const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
-  //       const unsubscribe = onSnapshot(q, (querySnapshot) => {
-  //           setAktif(querySnapshot.size)
-  //           console.log('produk sekarang: ' + querySnapshot.size)
-  //       });
-  //       //unsubscribe();
-  //       }catch (err){
-  //         Alert.alert('There is an error.', err.message)
-  //       };
-  //   }
-  // },[])
-
   useEffect(() => {
     async function getAktifTransaksi(){
       try{
@@ -172,9 +151,9 @@ const HomeScreen = ({ navigation }) => {
       .then((data) => {
           //console.log(data.results[0].formatted_address);
           dispatch(updatePosisi({
-          geo: {lat:location.coords.latitude, lng:location.coords.longitude},
-          alamat: data.results[0].formatted_address,
-          geohash: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+          geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+          alamat_mitra: data.results[0].formatted_address,
+          geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
           }));
       })
       })();
