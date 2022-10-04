@@ -55,7 +55,9 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     const handleTerima = () =>{
         terimaPM(id_transaksi);
-        navigation.replace("OtwScreen");
+        navigation.replace("OtwScreen",{
+            id_transaksi: id_transaksi,
+          });
     };
   
     const handleTolak = () =>{

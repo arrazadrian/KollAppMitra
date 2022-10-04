@@ -226,7 +226,7 @@ const HomeScreen = ({ navigation }) => {
             )
           }
           <View>
-            <Text style={styles.judul}>Etalase Produk</Text>
+            <Text style={styles.judul} onPress={() => navigation.push('OtwScreen')}>Etalase Produk</Text>
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                 <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
                   <Image source={Gerobak} style={styles.gambar}/>

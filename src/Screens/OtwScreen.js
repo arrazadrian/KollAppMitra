@@ -5,10 +5,9 @@ import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { DPkartu } from '../assets/Images/Index'
 import { Call, Chat } from '../assets/Icons/Index'
 import { useNavigation } from '@react-navigation/native'
+import GarisBatas from '../Components/GarisBatas'
 
 const { width, height } = Dimensions.get('window')
-
-
 
 const OtwScreen = () => {
 
@@ -25,20 +24,30 @@ const OtwScreen = () => {
         onPress={clickLanjut}
       >
         <Text style={styles.tekslanjut}>
-          Sudah sampai? Yuk lanjut belanja
+          Sudah Sampai Lokasi
         </Text>
       </Pressable>
       <View style={styles.bungkus}>
-          <Image source={DPkartu} style={styles.foto} />
-          <View>
-          <Text style={{fontSize:20, fontWeight:'bold', color:IjoTua}}>
-            Sayur Aa Anri
-            </Text>
-          <Text style={{color: Ijo}}>Menuju lokasi pelanggan</Text>
-          <View style={{flexDirection:'row'}}>
-          <Image source={Call} style={styles.icon} />
-          <Image source={Chat} style={styles.icon} />
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <View>
+              <Text style={{fontSize:20, fontWeight:'bold', color:IjoTua}}>
+                Sayur Aa Anri
+                </Text>
+              <View style={{flexDirection:'row'}}>
+                  <Image source={Call} style={styles.icon} />
+                  <Image source={Chat} style={styles.icon} />
+              </View>
+            </View>
+            <Image source={DPkartu} style={styles.foto} />
           </View>
+          <GarisBatas/>
+          <View style={{marginBottom: 10,}}>
+            <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Tujuan Lokasi</Text>
+            <Text numberOfLines={3}>Jl. Semoga overflow banyak yg sehat sekeluarga dan dilapangkan rizekinya sampai tua nanti aicusuas coashcasohacs acsuhuaihasch acoboaoabsasobca</Text>
+          </View>
+          <View style={styles.catatan}>
+            <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Catatan Lokasi</Text>
+            <Text style={{fontStyle:'italic'}} numberOfLines={1}>Jl. Semoga overflow banyak yg sehat sekeluarga dan dilapangkan rizekinya sampai tua nanti aicusuas coashcasohacs acsuhuaihasch acoboaoabsasobca</Text>
           </View>
       </View>
     </View>
@@ -52,19 +61,23 @@ const styles = StyleSheet.create({
     flex: 1,
 },
 peta:{
-    flex:4,
+    width: width,
+    height: height * 0.5,
 },
 bungkus:{
-    flex:1,
-    flexDirection: 'row',
-    alignItems:'center',
+    width: width,
+    height: height * 0.5,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 19,
+    padding: 10,
     backgroundColor: Kuning,
+    position:'absolute',
+    bottom: 0,
 },
 foto:{
-    width: 100,
-    height: 100,
-    borderRadius: 20,
-    margin: 10,
+    width: width * 0.2,
+    height: width * 0.2,
+    borderRadius: 10,
 },
 icon:{
     width: 40,
@@ -89,5 +102,12 @@ tekslanjut:{
   fontSize: 18,
   fontWeight: 'bold',
   color: Ijo,
+},
+catatan:{
+  backgroundColor:Putih,
+  borderWidth: 1,
+  borderRadius: 10,
+  padding: 10,
+  elevation: 5,
 },
 })
