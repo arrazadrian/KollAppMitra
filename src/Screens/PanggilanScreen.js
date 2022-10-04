@@ -28,14 +28,14 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         const durasibalas = setInterval(() => {
-            const target = moment(waktu_dipesan.toDate()).add(2, 'minutes');
-            const sekarang = new Date();
-            if(timer != 0 ){
-                let durasi = target.diff(sekarang, 'seconds');
+            let target = moment(waktu_dipesan.toDate()).add(1, 'minutes');
+            let sekarang = new Date();
+            let durasi = target.diff(sekarang, 'seconds');
+            if(durasi > 0 ){
                 setTimer(durasi);
             } else {
                 clearInterval(durasibalas);
-                setTimer("Waktu Habis");
+                setTimer("Habis");
                 setHabis(true);
                 Alert.alert(
                     'Waktu habis untuk merespon','Anda tidak bisa merespon permintaan ini lagi.',
@@ -52,6 +52,28 @@ const PanggilanScreen = ({ route, navigation }) => {
         }, 1000);
         return() => clearInterval(durasibalas);
     },[]);
+
+    // useEffect(()=>{
+    //     const waktuNunggu = setTimeout(  () =>{
+    //       clearInterval(durasibalas);
+    //       clearTimeout(waktuNunggu);
+    //       setHabis(true);
+    //       Alert.alert(
+    //         'Waktu habis untuk merespon','Anda tidak bisa merespon permintaan ini lagi.',
+    //         [
+    //           {
+    //             text: 'Tutup',
+    //             onPress: () => {
+    //               navigation.replace('HomeScreen')
+    //             }
+    //           },
+    //         ]
+    //     );
+    //     }, 60000);
+    //     // 1 minute =  60 seconds = 60000 miliseconds
+    //     // 10 minutes = 600000 ms
+    //     return() => clearTimeout(waktuNunggu); 
+    //   },[]);
 
     const handleTerima = () =>{
         terimaPM(id_transaksi);
@@ -167,6 +189,10 @@ const PanggilanScreen = ({ route, navigation }) => {
             {  !timer ? 
             (
                 <ActivityIndicator size="small" color={Ijo}/>
+            ) :  timer == "Habis" ? (
+                <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 12}}>
+                Waktu Habis
+                </Text>
             ):(
                 <Text style={{textAlign:'center', fontWeight:'bold', fontSize: 16}}>
                 {timer}
