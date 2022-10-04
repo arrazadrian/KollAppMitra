@@ -7,6 +7,13 @@ import moment from 'moment';
 import localization from 'moment/locale/id';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { terimaPM, tolakPM } from '../../API/firebasemethod';
+import { useSelector, useDispatch } from 'react-redux';
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import * as Location from 'expo-location';
+import { updatePosisi } from '../features/posisiSlice';
+import MapViewDirections from "react-native-maps-directions";
+
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -18,7 +25,7 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
-        jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
+        jumlah_kuantitas, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
         status_transaksi, catatan, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
 
@@ -28,7 +35,7 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         const durasibalas = setInterval(() => {
-            let target = moment(waktu_dipesan.toDate()).add(1, 'minutes');
+            let target = moment(waktu_dipesan.toDate()).add(2, 'days');
             let sekarang = new Date();
             let durasi = target.diff(sekarang, 'seconds');
             if(durasi > 0 ){
@@ -53,28 +60,6 @@ const PanggilanScreen = ({ route, navigation }) => {
         return() => clearInterval(durasibalas);
     },[]);
 
-    // useEffect(()=>{
-    //     const waktuNunggu = setTimeout(  () =>{
-    //       clearInterval(durasibalas);
-    //       clearTimeout(waktuNunggu);
-    //       setHabis(true);
-    //       Alert.alert(
-    //         'Waktu habis untuk merespon','Anda tidak bisa merespon permintaan ini lagi.',
-    //         [
-    //           {
-    //             text: 'Tutup',
-    //             onPress: () => {
-    //               navigation.replace('HomeScreen')
-    //             }
-    //           },
-    //         ]
-    //     );
-    //     }, 60000);
-    //     // 1 minute =  60 seconds = 60000 miliseconds
-    //     // 10 minutes = 600000 ms
-    //     return() => clearTimeout(waktuNunggu); 
-    //   },[]);
-
     const handleTerima = () =>{
         terimaPM(id_transaksi);
         navigation.replace("OtwScreen",{
@@ -86,7 +71,62 @@ const PanggilanScreen = ({ route, navigation }) => {
         tolakPM(id_transaksi);
         navigation.replace("HomeScreen");
     };
+
+    const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const dispatch = useDispatch();
+    const geofire = require('geofire-common');
+    const { geo, alamat, geohash } = useSelector(state => state.posisi);
+    const { namamitra } = useSelector(state => state.mitra);
+
+    //Dapetin posisi mitra saat ini
+    useEffect(() => {
+        (async () => {
+        
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        // console.log("Lat: " +location.coords.latitude);
+        // console.log("Lng: " +location.coords.longitude);
+
+        fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
+            &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
+        ).then((res) => res.json())
+        .then((data) => {
+            //console.log(data.results[0].formatted_address);
+            dispatch(updatePosisi({
+            geo: {lat:location.coords.latitude, lng:location.coords.longitude},
+            alamat: data.results[0].formatted_address,
+            geohash: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+            }));
+        })
+        })();
+    }, []); 
     
+    // console.log(geo);
+    // console.log(alamat);
+    // console.log(geohash);
+
+    let text = 'Waiting..';
+    if (errorMsg) {
+        text = errorMsg;
+    } else if (location) {
+        text = JSON.stringify(location);
+    }
+
+    useEffect(()=>{
+        if(!alamat||!alamat_pelanggan) return;
+
+        const getBobot = async () => {
+
+        }
+    },[])
     
   return (
     <View style={styles.latar}>
@@ -118,11 +158,22 @@ const PanggilanScreen = ({ route, navigation }) => {
         </Modal>
         <MapView style={styles.peta} 
             initialRegion={{
-              latitude: geo_alamat.lat,
-              longitude: geo_alamat.lng,
-              latitudeDelta: 0.009,
-              longitudeDelta: 0.009,
+              latitude: (geo_alamat.lat + geo?.lat)/2,
+              longitude: (geo_alamat.lng + geo?.lng)/2,
+            //   latitudeDelta: 0.009,
+            //   longitudeDelta: 0.009,
+              latitudeDelta: 0.9,
+              longitudeDelta: 0.9,
           }}>
+        { geo && geo_alamat && (
+            <MapViewDirections
+                origin={alamat}
+                destination={alamat_pelanggan}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeColor="green"
+                strokeWidth={3}
+            />
+        )}
           <Marker 
             coordinate={{
             latitude: geo_alamat.lat,
@@ -133,15 +184,36 @@ const PanggilanScreen = ({ route, navigation }) => {
             pinColor={'tan'}
             identifier="pelanggan"
           />
+          <Marker 
+            coordinate={{
+            latitude: geo?.lat,
+            longitude: geo?.lng,
+            }}
+            title={namamitra}
+            description="Lokasi Anda"
+            pinColor={'red'}
+            identifier="mitra"
+          />
           </MapView>
       <View style={styles.bawah}>
-        <View style={{marginTop: 10}}>
-            <Text style={[styles.subjudul, {textAlign:'center'}]}>
-                Nama Pelanggan
-            </Text>
-            <Text style={styles.nama} numberOfLines={1}>
-                {namapelanggan}
-            </Text>
+        <View style={{marginTop: 10, flexDirection:'row'}}>
+            <View style={{flex: 4, flexDirection:'row'}}>
+                <Pressable style={{marginRight: 10}} onPress={()=> navigation.goBack()}>
+                    <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
+                </Pressable>
+                <View>
+                    <Text style={styles.subjudul}>
+                        Nama Pelanggan
+                    </Text>
+                    <Text style={styles.nama} numberOfLines={1}>
+                        {namapelanggan}
+                    </Text>
+                </View>
+            </View>
+            <View style={{flex:1, justifyContent:'center'}}>
+                <Text style={styles.bobot}>200m</Text>
+                <Text  style={styles.bobot}>20 Menit</Text>
+            </View>
         </View>
         <GarisBatas/>
             <Text style={styles.subjudul}>
@@ -203,9 +275,6 @@ const PanggilanScreen = ({ route, navigation }) => {
                 (detik)
             </Text>
         </View>
-        <Pressable style={styles.kembali} onPress={()=> navigation.goBack()}>
-            <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
-        </Pressable>
     </View>
   )
 }
@@ -240,7 +309,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: Ijo,
-        textAlign:'center',
     },
     catatan:{
         padding: 10,
@@ -299,12 +367,9 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         borderRadius: 10,
     },
-    kembali:{
-        borderRadius: 20,
-        position:'absolute',
-        top: height * 0.58,
-        left: width * 0.03,
-        justifyContent:'center',
-        alignItems:'center',
+    bobot:{
+        textAlign:'center',
+        fontWeight:'bold',
+        color:IjoTua,
     },
 })

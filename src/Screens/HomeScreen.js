@@ -8,9 +8,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, onSnapshot, collection, query, where, orderBy } from 'firebase/firestore';
 import { app } from '../../Firebase/config';
 import { updatestatus, updatemangkal } from '../../API/firebasemethod';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { setMitra } from '../features/mitraSlice';
 import { updateProses } from '../features/counterSlice';
+import { updatePosisi } from '../features/posisiSlice';
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import * as Location from 'expo-location';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -141,6 +145,40 @@ const HomeScreen = ({ navigation }) => {
     getAktifTransaksi();
     dispatch(updateProses({ aktif }));
   },[aktif])
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const geofire = require('geofire-common');
+
+
+  useEffect(() => {
+      (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      // console.log("Lat: " +location.coords.latitude);
+      // console.log("Lng: " +location.coords.longitude);
+
+      fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
+          &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
+      ).then((res) => res.json())
+      .then((data) => {
+          //console.log(data.results[0].formatted_address);
+          dispatch(updatePosisi({
+          geo: {lat:location.coords.latitude, lng:location.coords.longitude},
+          alamat: data.results[0].formatted_address,
+          geohash: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+          }));
+      })
+      })();
+  }, []); 
   
 
   return ( 
