@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, Dimensions, Alert} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';

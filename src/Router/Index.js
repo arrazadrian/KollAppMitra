@@ -87,7 +87,7 @@ export const AppUtama = () => {
           <HomeStack.Screen name="TQScreen" component={TQScreen} options={{ headerShown: false  }}/>
           <HomeStack.Screen name="ReceiptScreen" component={ReceiptScreen} options={{  title: "Bukti Transaksi", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}    }}/>
           <HomeStack.Screen name="PanggilanScreen" component={PanggilanScreen} options={{ headerShown: false }}/>
-          <HomeStack.Screen name="OtwScreen" component={OtwScreen} options={{ title: "Manuju Lokasi", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="OtwScreen" component={OtwScreen} options={{ headerShown: false  }}/>
           <HomeStack.Screen name="LanjutBelanjaScreen" component={LanjutBelanjaScreen} options={{ title: "Lanjut Belanja", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo} }}/>
 
           <HomeStack.Screen name="AkunScreen" component={AkunScreen} options={{ headerShown: false }}/>

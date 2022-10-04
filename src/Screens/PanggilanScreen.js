@@ -69,7 +69,7 @@ const PanggilanScreen = ({ route, navigation }) => {
   return (
     <View style={styles.latar}>
         <Modal
-            animationType="nonde"
+            animationType="fade"
             //animationInTiming = {13900}
             transparent={true}
             visible={modalVisible}
