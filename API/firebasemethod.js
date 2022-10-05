@@ -617,3 +617,44 @@ export const tolakPM = async (id_transaksi) => {
     }
   })
 };
+
+// API 19: batalPMolehMitra
+// Mitra membatalkan panggilan saat otw
+
+export const batalPMolehMitra = async (id_transaksi) => {
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "transaksi", id_transaksi);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+          updateDoc(docrefproduk, { 
+            panggilan: "Dibatalkan Mitra", 
+            status_transaksi: "Dibatalkan Mitra",
+            waktu_pembatalan: serverTimestamp(),  
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err);
+      }
+    }
+  })
+};
+
+// API 17: sampaiPM
+// UPDATE PANGGILAN PM JADI SAMPAI
+// KARENA SUDAH SAMPAI 
+
+export const sampaiPM = async (id_transaksi) => {
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "transaksi", id_transaksi);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+          updateDoc(docrefproduk, { 
+            panggilan: "Sudah Sampai",
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err);
+      }
+    }
+  })
+};

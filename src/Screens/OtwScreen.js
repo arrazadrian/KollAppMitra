@@ -7,10 +7,13 @@ import { Call, Chat } from '../assets/Icons/Index';
 import { useNavigation } from '@react-navigation/native';
 import GarisBatas from '../Components/GarisBatas';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
 import * as Linking from 'expo-linking';
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
+import { batalPMolehMitra, sampaiPM } from '../../API/firebasemethod';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetBobot } from '../features/bobotSlice';
+import { resetPosisi } from '../features/posisiSlice';
 
 const { width, height } = Dimensions.get('window')
 
@@ -36,6 +39,8 @@ const OtwScreen = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { namamitra } = useSelector(state => state.mitra);
   const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
+  const dispatch = useDispatch();
+
 
   // const mapRef = useRef(null);
 
@@ -52,18 +57,60 @@ const OtwScreen = ({ route }) => {
     Alert.alert('Anda yakin sudah sampai?','Sistem akan mengingatkan pelanggan bahwa mitra sudah sampai.',
           [
             {
-              text: 'Batal',
+              text: 'Tutup',
               onPress: () => {
-                console.log('Batal dipencet')
+                console.log('Tutup dipencet')
               }
             },
             {
               text: 'Sudah',
-              onPress: () => {navigation.navigate('LangsungScreen')}
+              onPress: () => {
+                sampaiPM(id_transaksi);
+                navigation.navigate("LangsungScreen",{
+                  // id_transaksi: id_transaksi,
+                  // id_mitra : id_mitra, 
+                  // id_pelanggan : id_pelanggan, 
+                  // jenislayanan : jenislayanan,
+                  // namapelanggan : namapelanggan, 
+                  // waktu_dipesan : waktu_dipesan, 
+                  // alamat_pelanggan : alamat_pelanggan,
+                  // catatan : catatan, 
+                  // phonemitra : phonemitra, 
+                  // phonepelanggan : phonepelanggan, 
+                  // geo_alamat : geo_alamat,
+                  // geo_mitra : geo_mitra,
+                  // alamat_mitra: alamat_mitra,
+                  // estimasi_waktu: estimasi_waktu,
+                  // jarak: jarak,
+                });
+              }
             }
           ]
           )
-  }
+  };
+
+  const clickBatal =()=> {
+    Alert.alert('Anda yakin mau membatalkan?','Pelanggan tentunya akan kecewa kamu batalkan.',
+          [
+            {
+              text: 'Tutup',
+              onPress: () => {
+                console.log('tutup dipencet')
+              }
+            },
+            {
+              text: 'Batalkan',
+              onPress: () => { 
+                batalPMolehMitra(id_transaksi);  
+                dispatch(resetBobot());
+                dispatch(resetPosisi());
+                navigation.replace("HomeScreen");
+                console.log('batal dipencet');
+              }
+            }
+          ]
+          )
+  };
 
   const telepon = () => {
     Linking.openURL(`tel:${phonepelanggan}`);
@@ -175,7 +222,7 @@ const OtwScreen = ({ route }) => {
           </Pressable>
           <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
               <Pressable style={styles.batal}
-                // onPress={clicBatal}
+                onPress={clickBatal}
               >
                 <Text style={styles.teksbatal}>
                   Batalkan 
