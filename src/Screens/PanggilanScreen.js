@@ -61,9 +61,23 @@ const PanggilanScreen = ({ route, navigation }) => {
     },[]);
 
     const handleTerima = () =>{
-        terimaPM(id_transaksi);
+        terimaPM(id_transaksi,estimasi_waktu,jarak);
         navigation.replace("OtwScreen",{
             id_transaksi: id_transaksi,
+            id_mitra : id_mitra, 
+            id_pelanggan : id_pelanggan, 
+            jenislayanan : jenislayanan,
+            namapelanggan : namapelanggan, 
+            waktu_dipesan : waktu_dipesan, 
+            alamat_pelanggan : alamat_pelanggan,
+            catatan : catatan, 
+            phonemitra : phonemitra, 
+            phonepelanggan : phonepelanggan, 
+            geo_alamat : geo_alamat,
+            geo_mitra : geo_mitra,
+            alamat_mitra: alamat_mitra,
+            estimasi_waktu: estimasi_waktu,
+            jarak: jarak,
           });
     };
   
@@ -77,7 +91,6 @@ const PanggilanScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
     const geofire = require('geofire-common');
     const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
-    const { namamitra } = useSelector(state => state.mitra);
     const { estimasi_waktu, jarak } = useSelector(state => state.bobot);
 
     //Dapetin posisi mitra saat ini
@@ -121,6 +134,7 @@ const PanggilanScreen = ({ route, navigation }) => {
         text = JSON.stringify(location);
     }
 
+    //Dapetin jarak dan waktu perjalanan mitra ke pelanggan 
     useEffect(()=>{
        // if(!alamat_mitra||!alamat_pelanggan) return;
 
@@ -130,12 +144,31 @@ const PanggilanScreen = ({ route, navigation }) => {
                 &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
             ).then((res) => res.json())
             .then((data) => {
-                console.log(data.rows[0].elements[0].distance.text);
-                console.log(data.rows[0].elements[0].duration.text);
-                dispatch(updateBobot({
-                    estimasi_waktu: data.rows[0].elements[0].duration.text,
-                    jarak: data.rows[0].elements[0].distance.text,
-                    }));
+                //console.log(data.rows[0].elements[0].duration.text);
+                // console.log(data.rows[0].elements[0].distance.text);
+                let dur = data.rows[0].elements[0].duration.text;
+                let reg = /\d+/g;
+                let arr = dur.match(reg);
+                //console.log("Panjangnya "+ arr.length);
+                if(arr.length == 1){
+                  let  dur_id = (arr[0] + " menit");
+                  dispatch(updateBobot({
+                      estimasi_waktu: dur_id,
+                      jarak: data.rows[0].elements[0].distance.text,
+                      }));
+                } else if(arr.length == 2){
+                   let dur_id = (arr[0] + " jam "+ arr[1] + " menit");
+                   dispatch(updateBobot({
+                       estimasi_waktu: dur_id,
+                       jarak: data.rows[0].elements[0].distance.text,
+                       }));
+                } else {  
+                   let dur_id = (arr[0] + " hari "+ arr[1] + " jam " + arr[2] + " menit");
+                   dispatch(updateBobot({
+                       estimasi_waktu: dur_id,
+                       jarak: data.rows[0].elements[0].distance.text,
+                       }));
+                };
             })
         })();
     },[]);

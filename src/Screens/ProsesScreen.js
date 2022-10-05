@@ -49,6 +49,9 @@ const ProsesScreen = () => {
             jumlah_kuantitas,
             phonemitra, 
             phonepelanggan,
+            panggilan,
+            jarak,
+            estimasi_waktu,
           } = doc.data();
           list.push({
             id: doc.id,
@@ -70,6 +73,9 @@ const ProsesScreen = () => {
             jumlah_kuantitas,
             phonemitra, 
             phonepelanggan,
+            panggilan,
+            jarak,
+            estimasi_waktu,
           });
         });
         

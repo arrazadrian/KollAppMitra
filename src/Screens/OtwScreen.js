@@ -1,24 +1,52 @@
-import { Image, StyleSheet, Text, View, Pressable, Dimensions, Alert, Modal, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import MapView from 'react-native-maps';
+import { Image, StyleSheet, Text, View, Pressable, Dimensions, Alert, Modal, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import MapView, { Marker } from 'react-native-maps';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { DPkartu } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
 import { useNavigation } from '@react-navigation/native';
 import GarisBatas from '../Components/GarisBatas';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { useSelector } from 'react-redux';
+import * as Linking from 'expo-linking';
+import MapViewDirections from "react-native-maps-directions";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 const { width, height } = Dimensions.get('window')
 
-const OtwScreen = () => {
+const OtwScreen = ({ route }) => {
+
+  const { 
+    id_transaksi,
+    id_mitra, 
+    id_pelanggan, 
+    jenislayanan,
+    namapelanggan, 
+    waktu_dipesan, 
+    alamat_pelanggan,
+    catatan, 
+    phonemitra, 
+    phonepelanggan, 
+    geo_alamat,
+    estimasi_waktu,
+    jarak,
+     } = route.params;
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const { namamitra } = useSelector(state => state.mitra);
+  const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
 
-  // const clickLanjut = () => {
-  //   navigation.navigate('LanjutBelanjaScreen')
-  // }
+  // const mapRef = useRef(null);
+
+  // useEffect(() => {
+  //   // if (!pelanggan || !mitra) return;
+
+  //   //Zoom out
+  //   mapRef.current.fitToSuppliedMarkers(['pelanggan','mitra'], {
+  //     edgePadding:{ top: 100, right: 100, bottom: 100, left: 100}
+  //   });
+  // },[jarak])
 
   const clickLanjut =()=> {
     Alert.alert('Anda yakin sudah sampai?','Sistem akan mengingatkan pelanggan bahwa mitra sudah sampai.',
@@ -37,6 +65,14 @@ const OtwScreen = () => {
           )
   }
 
+  const telepon = () => {
+    Linking.openURL(`tel:${phonepelanggan}`);
+  };
+
+  const sms = () => {
+    Linking.openURL(`sms:${phonepelanggan}`);
+  };
+
   return (
     <View style={styles.latar}>
         <Modal
@@ -53,7 +89,7 @@ const OtwScreen = () => {
             <View style={styles.modal}>
                 <View style={styles.modalView}>
                     <Text style={styles.subjudul}>Catatan Lokasi</Text>
-                    <Text style={{fontSize: 14}}>Jl. Semoga overflow banyak yg sehat sekeluarga</Text>
+                    <Text style={{fontSize: 14}}>{catatan}</Text>
                     <TouchableOpacity
                     style={{ marginTop: 20}}
                     onPress={() => {
@@ -65,45 +101,95 @@ const OtwScreen = () => {
                 </View>
             </View>
         </Modal>
-      <MapView style={styles.peta}/>
+        <MapView style={styles.peta} 
+            // ref={mapRef}
+            initialRegion={{
+              latitude: (geo_alamat.lat + geo_mitra.lat)/2,
+              longitude: (geo_alamat.lng + geo_mitra.lng)/2,
+              latitudeDelta: 0.5,
+              longitudeDelta: 0.5,
+          }}>
+        { geo_mitra && geo_alamat && (
+            <MapViewDirections
+                origin={alamat_mitra}
+                destination={alamat_pelanggan}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeColor="green"
+                strokeWidth={3}
+            />
+        )}
+          <Marker 
+            coordinate={{
+            latitude: geo_alamat.lat,
+            longitude: geo_alamat.lng,
+            }}
+            title={namapelanggan}
+            description="Lokasi Pelanggan"
+            pinColor={'tan'}
+            identifier="pelanggan"
+          />
+          <Marker 
+            coordinate={{
+            latitude: geo_mitra?.lat,
+            longitude: geo_mitra?.lng,
+            }}
+            title={namamitra}
+            description="Lokasi Anda"
+            pinColor={'red'}
+            identifier="mitra"
+          />
+          </MapView>
       <View style={styles.bungkus}>
-          <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:10}}>
-              <View>
-                <Text style={{fontSize:20, fontWeight:'bold', color:IjoTua}}>
-                  Sayur Aa Anri
+          <View style={{flexDirection:'row', marginBottom:10, alignItems:'center'}}>
+              <Pressable style={{flex:1}} onPress={()=> navigation.goBack()}>
+                    <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
+              </Pressable>
+              <View style={{flex:4}} >
+                <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}} numberOfLines={1}>
+                  {namapelanggan}
                 </Text>
-                <Text style={{fontSize:16, color:IjoTua}}>
-                  700m | 20 minutes
+                <Text style={{fontSize:14, color:IjoTua}}>
+                  {jarak} | {estimasi_waktu}
                 </Text>
               </View>
-              <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'row', flex:2.2}}>
+                <Pressable onPress={telepon}>
                   <Image source={Call} style={styles.icon} />
+                </Pressable>
+                <Pressable onPress={sms}>
                   <Image source={Chat} style={styles.icon} />
+                </Pressable>
               </View>
           </View>
           <GarisBatas/>
           <View style={{marginVertical: 10}}>
             <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Tujuan Lokasi</Text>
-            <Text numberOfLines={3}>Jl. Semoga overflow banyak yg sehat sekeluarga dan dilapangkan rizekinya sampai tua nanti aicusuas coashcasohacs acsuhuaihasch acoboaoabsasobca</Text>
+            <Text numberOfLines={3}>{alamat_pelanggan}</Text>
           </View>
           <Pressable style={styles.catatan}
               onPress={() => {
                   setModalVisible(true);
               }}>
               <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Catatan Lokasi</Text>
-              <Text style={{fontStyle:'italic'}} numberOfLines={1}>Jl. Semoga overflow banyak yg sehat sekeluarga dan dilapangkan rizekinya sampai tua nanti aicusuas coashcasohacs acsuhuaihasch acoboaoabsasobca</Text>
+              <Text style={{fontStyle:'italic'}} numberOfLines={1}>{catatan}</Text>
           </Pressable>
-          <Pressable style={styles.lanjut}
-            onPress={clickLanjut}
-          >
-            <Text style={styles.tekslanjut}>
-              Sudah Sampai Lokasi
-            </Text>
-          </Pressable>
+          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+              <Pressable style={styles.batal}
+                // onPress={clicBatal}
+              >
+                <Text style={styles.teksbatal}>
+                  Batalkan 
+                </Text>
+              </Pressable>
+              <Pressable style={styles.lanjut}
+                onPress={clickLanjut}
+              >
+                <Text style={styles.tekslanjut}>
+                  Sudah Sampai
+                </Text>
+              </Pressable>
+          </View>
       </View>
-      <Pressable style={styles.kembali} onPress={()=> navigation.goBack()}>
-            <Ionicons name="chevron-back-circle-outline" size={40} color={Putih} />
-      </Pressable>
       <View style={styles.tips}>
             <Text style={{fontSize: 14, color: IjoTua}}>Tekan pin kuning lalu panah biru di kanan bawah peta untuk menggunakann <Text style={{fontWeight:'bold'}}>Google Maps</Text>.</Text>
       </View>
@@ -119,17 +205,13 @@ const styles = StyleSheet.create({
     },
     peta:{
         width: width,
-        height: height * 0.64,
+        height: height * 0.55,
     },
     bungkus:{
         width: width,
-        height: height * 0.47,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 19,
+        height: height * 0.5,
         padding: 20,
         backgroundColor: Kuning,
-        position:'absolute',
-        bottom: 0,
     },
     foto:{
         width: width * 0.2,
@@ -140,23 +222,37 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         marginVertical: 5,
-        marginRight:20,
+        marginLeft:10,
     },
     lanjut:{
+        width: width * 0.4,
         backgroundColor: Ijo,
         padding: 10,
         justifyContent:'center',
         alignItems: 'center',
-        alignSelf:'center',
-        top: height * 0.02,
+        borderRadius: 10,
+        borderColor: IjoMint,
+        borderWidth: 2,
+    },
+    batal:{
+        width: width * 0.4,
+        backgroundColor: IjoMint,
+        padding: 10,
+        justifyContent:'center',
+        alignItems: 'center',
         borderRadius: 10,
         borderColor: IjoMint,
         borderWidth: 2,
     },
     tekslanjut:{
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
         color: Putih,
+    },
+    teksbatal:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: Ijo,
     },
     catatan:{
         backgroundColor:Putih,
@@ -164,6 +260,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         elevation: 5,
+        marginBottom: 20,
     },
     modal:{
       flex: 1,
@@ -191,14 +288,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       color: IjoTua,
     },
-    kembali:{
-      borderRadius: 20,
-      position:'absolute',
-      top: height * 0.5,
-      left: width * 0.03,
-      justifyContent:'center',
-      alignItems:'center',
-  },
     tips:{
       backgroundColor: IjoMint,
       padding: 10,

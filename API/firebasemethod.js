@@ -580,7 +580,7 @@ export const selesaikanPO = async (id_transaksi) => {
 // API 17: terimaPM
 // UPDATE PANGGILAN PM JADI DITERIMA 
 
-export const terimaPM = async (id_transaksi) => {
+export const terimaPM = async (id_transaksi, estimasi_waktu, jarak) => {
   const db = getFirestore(app);
   const docrefproduk = doc(db, "transaksi", id_transaksi);
   getDoc(docrefproduk).then(docSnap => {
@@ -588,6 +588,8 @@ export const terimaPM = async (id_transaksi) => {
       try {
           updateDoc(docrefproduk, { 
             panggilan: "Diterima",
+            estimasi_waktu: estimasi_waktu,
+            jarak: jarak
           });
       } catch (err) {
         Alert.alert('Ada error merima PM!', err);
