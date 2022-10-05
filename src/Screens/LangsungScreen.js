@@ -84,7 +84,7 @@ const LangsungScreen = ({ navigation }) => {
   const componentMounted = useRef(true);
 
   const { pilkategori } = useSelector(state => state.kategori);
-  const { geo_mitra} = useSelector(state => state.posisi);
+  const { jarak } = useSelector(state => state.bobot);
 
   useEffect(()=>{
     const fetchProdukUtama = async() => {
@@ -174,7 +174,7 @@ const LangsungScreen = ({ navigation }) => {
                 }
             />
             
-            <Keranjang geo_mitra={geo_mitra}/>
+            <Keranjang jarak={jarak}/>
         </View>
       )}
     </View>

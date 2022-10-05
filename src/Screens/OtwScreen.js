@@ -67,7 +67,7 @@ const OtwScreen = ({ route }) => {
               onPress: () => {
                 sampaiPM(id_transaksi);
                 navigation.navigate("LangsungScreen",{
-                  // id_transaksi: id_transaksi,
+                  id_transaksi: id_transaksi,
                   // id_mitra : id_mitra, 
                   // id_pelanggan : id_pelanggan, 
                   // jenislayanan : jenislayanan,

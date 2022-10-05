@@ -639,7 +639,7 @@ export const batalPMolehMitra = async (id_transaksi) => {
   })
 };
 
-// API 17: sampaiPM
+// API 20: sampaiPM
 // UPDATE PANGGILAN PM JADI SAMPAI
 // KARENA SUDAH SAMPAI 
 
@@ -651,6 +651,33 @@ export const sampaiPM = async (id_transaksi) => {
       try {
           updateDoc(docrefproduk, { 
             panggilan: "Sudah Sampai",
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err);
+      }
+    }
+  })
+};
+
+// API 21: selesaikanPM
+// UPDATE PANGGILAN PM JADI SAMPAI
+// KARENA SUDAH SAMPAI 
+
+export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas) => {
+  const db = getFirestore(app);
+  const docrefproduk = doc(db, "transaksi", id_transaksi);
+  getDoc(docrefproduk).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+          updateDoc(docrefproduk, { 
+            kelompokProduk: kelompokProduk,
+            subtotalhargaKeranjang: subtotalhargaKeranjang,
+            hargalayanan: hargalayanan,
+            hargatotalsemua: hargatotalsemua,
+            jumlah_kuantitas: jumlah_kuantitas,
+            panggilan: "Selesai", 
+            status_transaksi: "Selesai",
+            waktu_selesai: serverTimestamp(),  
           });
       } catch (err) {
         Alert.alert('Ada error merima PM!', err);

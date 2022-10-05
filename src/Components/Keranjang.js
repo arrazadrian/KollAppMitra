@@ -37,7 +37,7 @@ const Keranjang = (props) => {
                           Pilih produk pelangan
                         </Text>
                       </View>
-                    ): props.geo_mitra ?(
+                    ): props.jarak ?(
                       <Pressable 
                         disabled={!items.length}
                         style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
