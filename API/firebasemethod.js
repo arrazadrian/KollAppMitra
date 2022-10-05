@@ -671,7 +671,7 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
       try {
           updateDoc(docrefproduk, { 
             produk: kelompokProduk,
-            subtotalhargaKeranjang: subtotalhargaKeranjang,
+            hargasubtotal: subtotalhargaKeranjang,
             hargalayanan: hargalayanan,
             hargatotalsemua: hargatotalsemua,
             jumlah_kuantitas: jumlah_kuantitas,
