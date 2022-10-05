@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from "react-redux";
 import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
 
-const Keranjang = (props) => {
+const KeranjangTL = () => {
   const items = useSelector(pilihProdukKeranjang)
   const navigation = useNavigation();
   const totalhargaKeranjang = useSelector(totalHarga)
@@ -37,14 +37,6 @@ const Keranjang = (props) => {
                           Pilih produk pelangan
                         </Text>
                       </View>
-                    ): props.jarak ?(
-                      <Pressable 
-                        disabled={!items.length}
-                        style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
-                        onPress={() => navigation.navigate('CheckoutPMScreen')}
-                        >
-                        <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
-                      </Pressable>
                     ):(
                       <Pressable 
                         disabled={!items.length}
@@ -61,7 +53,7 @@ const Keranjang = (props) => {
   )
 }
 
-export default Keranjang
+export default KeranjangTL
 
 const styles = StyleSheet.create({
     pesan:{

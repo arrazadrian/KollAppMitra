@@ -14,6 +14,8 @@ import { updateProses } from '../features/counterSlice';
 import { updatePosisi } from '../features/posisiSlice';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
+import { kosongkanKeranjang } from '../features/keranjangSlice';
+import { resetPelanggan } from '../features/pelangganSlice';
 
 
 const { width, height } = Dimensions.get('window')
@@ -256,7 +258,11 @@ const HomeScreen = ({ navigation }) => {
                 </Pressable>
             </View>
               <Text style={styles.judul}>Bertemu di Jalan?</Text>
-              <Pressable style={styles.langsung} onPress={() => navigation.push('LangsungScreen')}>
+              <Pressable style={styles.langsung} onPress={() => {
+                dispatch(kosongkanKeranjang());
+                dispatch(resetPelanggan());
+                navigation.push('LangsungScreen')
+                }}>
                 <View>
                   <Text style={styles.texttemu}>Temu Langsung</Text>
                   <Text style={styles.deskripsi}

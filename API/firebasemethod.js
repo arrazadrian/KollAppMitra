@@ -670,7 +670,7 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
     if (docSnap.exists()) {
       try {
           updateDoc(docrefproduk, { 
-            kelompokProduk: kelompokProduk,
+            produk: kelompokProduk,
             subtotalhargaKeranjang: subtotalhargaKeranjang,
             hargalayanan: hargalayanan,
             hargatotalsemua: hargatotalsemua,

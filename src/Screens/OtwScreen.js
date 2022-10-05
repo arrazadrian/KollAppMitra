@@ -14,6 +14,7 @@ import { batalPMolehMitra, sampaiPM } from '../../API/firebasemethod';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetBobot } from '../features/bobotSlice';
 import { resetPosisi } from '../features/posisiSlice';
+import { kosongkanKeranjang } from '../features/keranjangSlice';
 
 const { width, height } = Dimensions.get('window')
 
@@ -66,7 +67,8 @@ const OtwScreen = ({ route }) => {
               text: 'Sudah',
               onPress: () => {
                 sampaiPM(id_transaksi);
-                navigation.navigate("LangsungScreen",{
+                dispatch(kosongkanKeranjang());
+                navigation.navigate("LanjutBelanjaScreen",{
                   id_transaksi: id_transaksi,
                   // id_mitra : id_mitra, 
                   // id_pelanggan : id_pelanggan, 

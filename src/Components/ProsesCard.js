@@ -60,8 +60,8 @@ const ProsesCard = ({ item }) => {
 
   const pindahOtw = () => {
     navigation.navigate('OtwScreen', { 
-      alamat_pelanggan: item?.alamat_pelanggan,
-      geo_alamat: item?.geo_alamat,
+      alamat_pelanggan: item.alamat_pelanggan,
+      geo_alamat: item.geo_alamat,
       id_mitra: item.id_mitra,
       id_pelanngan: item.id_mitra,
       jenislayanan: item.jenislayanan,

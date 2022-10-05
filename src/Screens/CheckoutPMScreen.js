@@ -10,11 +10,16 @@ import {
   totalHarga, 
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
+import { selesaikanPM } from '../../API/firebasemethod'
  
 
 const { width, height } = Dimensions.get('window')
  
-const CheckoutPMScreen = () => {
+const CheckoutPMScreen = ({ route }) => {
+
+  const { 
+    id_transaksi,
+     } = route.params;
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -22,7 +27,7 @@ const CheckoutPMScreen = () => {
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const selesaiTransaksi =()=> {
-    Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
+    Alert.alert('Apakah transaksi sudah sesuai?','Pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
           [
             {
               text: 'Tutup',
@@ -32,45 +37,33 @@ const CheckoutPMScreen = () => {
             },
             {
               text: 'Sudah',
-              onPress: () => {
-                console.log('Sudah dipencet')
-              }
-              //onPress: uploadtransaksiTemuLangsung,
+              onPress: selesaikanPanggilMitra,
             }
           ]
           )
   }
 
-//   async function uploadtransaksiTemuLangsung(){
-//     try{
-//       let jumlah_kuantitas = items.length;
-//       if (!namapelanggan) {
-//         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
-//       } else if (!namamitra) {
-//         Alert.alert('Nama mitra kosong','Silahkan tutup dan buka kembali aplikasi ini.');
-//       } else if (!namatoko) {
-//         Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
-//       } else if (!items) {
-//         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-//       } else {
-//         buatTransaksiTL(
-//           namamitra,
-//           namatoko,
-//           namapelanggan,
-//           kodeUID,
-//           kelompokProduk,
-//           subtotalhargaKeranjang,
-//           hargalayanan,
-//           hargatotalsemua,
-//           jumlah_kuantitas,
-//         );
-//         dispatch(kosongkanKeranjang());
-//         navigation.navigate("TQScreen");
-//       }
-//     } catch (err){
-//       Alert.alert('Ada error buat transaksi temu langsung!', err.message);
-//     }  
-//   };
+async function selesaikanPanggilMitra(){
+  try{
+    let jumlah_kuantitas = items.length;
+    if (!items) {
+      Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
+    } else {
+      selesaikanPM(
+        id_transaksi,
+        kelompokProduk,
+        subtotalhargaKeranjang,
+        hargalayanan,
+        hargatotalsemua,
+        jumlah_kuantitas,
+      );
+      navigation.navigate("TQScreen");
+      //dispatch(kosongkanKeranjang());
+    }
+  } catch (err){
+    Alert.alert('Ada error menyelesaikan Panggilan Mitra!', err.message);
+  }  
+  };
 
   useEffect(() => {
     const kelompok = items.reduce((results, item) => {

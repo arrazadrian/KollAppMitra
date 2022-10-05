@@ -9,7 +9,7 @@ import GarisBatas from '../Components/GarisBatas'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
 import { useDispatch, useSelector } from 'react-redux';
-import Keranjang from '../Components/Keranjang'
+import KeranjangTL from '../Components/KeranjangTL'
 import ProdukKosong from '../Components/ProdukKosong'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
@@ -84,7 +84,6 @@ const LangsungScreen = ({ navigation }) => {
   const componentMounted = useRef(true);
 
   const { pilkategori } = useSelector(state => state.kategori);
-  const { jarak } = useSelector(state => state.bobot);
 
   useEffect(()=>{
     const fetchProdukUtama = async() => {
@@ -174,7 +173,7 @@ const LangsungScreen = ({ navigation }) => {
                 }
             />
             
-            <Keranjang jarak={jarak}/>
+            <KeranjangTL/>
         </View>
       )}
     </View>

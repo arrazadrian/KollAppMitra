@@ -1,67 +1,93 @@
-import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions, ActivityIndicator } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Image, ScrollView, FlatList, Dimensions, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { Bawah } from '../assets/Images/Index'
 import PencarianBar from '../Components/PencarianBar'
 import JualProduk from '../Components/JualProduk'
-import { daftarproduk } from '../Data/daftarproduk'
+import GarisBatas from '../Components/GarisBatas'
+//import { daftarproduk } from '../Data/daftarproduk'
 import { jeniskategori } from '../Data/jeniskategori'
 import LogoKategori from '../Components/LogoKategori'
-import Keranjang from '../Components/Keranjang'
+import { useDispatch, useSelector } from 'react-redux';
+import KeranjangPM from '../Components/KeranjangPM'
 import ProdukKosong from '../Components/ProdukKosong'
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
+import { updateKategori } from '../features/kategoriSlice'
+
 
 const { width, height } = Dimensions.get('window')
 
 const kosongproduk = () => {
-    return(
-    <View style={{alignItems:'center', paddingBottom:40}}>
-      <ProdukKosong/>
-      <Text style={{
-        fontSize: 16, color: IjoTua, textAlign:'center',
-        width: width*0.8,
-      }}>
-        Kamu tidak punya produk utama. Kembali ke beranda dan 
-        ketuk bagian produk utama unuk membuatnya.
-      </Text>
-    </View>
-    )
-  }
+  return(
+  <View style={{alignItems:'center', paddingBottom:40}}>
+    <ProdukKosong/>
+    <Text style={{
+      fontSize: 16, color: IjoTua, textAlign:'center',
+      width: width*0.8,
+    }}>
+      Kamu tidak punya produk kategori ini. Kembali ke beranda dan 
+      ketuk bagian produk utama unuk membuatnya.
+    </Text>
+  </View>
+  )
+}
 
-  const atasjual = () => {
-    return(
-      <View style={{ paddingHorizontal: 10 }}>
-  
+const atasjual = () => {
+  const[pilkategori, setPilkategori]= useState("Semua Produk")
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const pilihKategori = () => {
+      dispatch(updateKategori({pilkategori}));
+      console.log("Kategori yg dipilih: " + pilkategori)
+    };
+    pilihKategori();
+  }, [pilkategori]);
+
+  return(
+    <View style={{ paddingTop: 10 }}>
       <View>
-          <View style={{marginBottom:10 }}>
-              <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Kategori</Text>
+          <View style={{ paddingHorizontal: 10, marginBottom:5 }}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: IjoTua}}>Kategori</Text>
           </View>
-          <View>
-          <FlatList
-              horizontal= {true}
-              data={jeniskategori}
-              renderItem= {({item}) => <LogoKategori item={item} />}
-              keyExtractor={ jeniskategori => jeniskategori.id}
-              showsHorizontalScrollIndicator={false}
-              bounces={false}
-          />
-          </View>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{paddingStart: 10, paddingEnd: 10}}>
+            {jeniskategori.map((item, index) => (
+              <TouchableOpacity key={index}
+                style={{backgroundColor: pilkategori == item.nama ? IjoMint : Putih, ...styles.kartuKategori}}
+                onPress={() =>setPilkategori(item.nama)}>
+                <View style={ styles.kategoripilihan}>
+                    <Image source={item.image} style={styles.gambar} />
+                </View>
+                <Text style={{color: pilkategori == item.nama ? Ijo : IjoTua,...styles.nama}}>{item.nama}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
       </View>
-      <View style={{marginBottom:10 }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk</Text>
+      <GarisBatas/>
+      <View style={{paddingHorizontal: 10, marginBottom:10 }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: Ijo}}>Daftar Produk Utama</Text>
       </View>
     </View>
-    )
-  } 
-  
+  )
+}
 
-const LanjutBelanjaScreen = () => {
+
+const LanjutBelanjaScreen = ({ navigation, route }) => {
+
+  const { 
+    id_transaksi,
+     } = route.params;
 
   const[produkutama,setProdukUtama] = useState();
   const[loading, setLoading] = useState(true);
   const componentMounted = useRef(true);
+
+  const { pilkategori } = useSelector(state => state.kategori);
 
   useEffect(()=>{
     const fetchProdukUtama = async() => {
@@ -72,11 +98,12 @@ const LanjutBelanjaScreen = () => {
         const docRef = doc(db, "mitra", auth.currentUser.uid);
         const colRef = collection(docRef, "produk")
 
-        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
+        if ( pilkategori == "Semua Produk" ) {
+        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("namaproduk"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          const { image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+          const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
           list.push({
             id: doc.id,
             namaproduk,
@@ -88,6 +115,24 @@ const LanjutBelanjaScreen = () => {
             kategori,
           });
         });
+        } else {
+          const qq = query(colRef, where("jenis", "==", "Produk utama"), where("kategori", "==", pilkategori), orderBy("namaproduk"));
+          const querySnapshot = await getDocs(qq);
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori} = doc.data();
+            list.push({
+              id: doc.id,
+              namaproduk,
+              deskproduk,
+              image,
+              harga,
+              kuantitas,
+              satuan,
+              kategori,
+            });
+          });
+        }
 
         if (componentMounted.current){ // (5) is component still mounted?
           setProdukUtama(list); // (1) write data to state
@@ -102,54 +147,80 @@ const LanjutBelanjaScreen = () => {
       }
     }
     fetchProdukUtama();
-  },[])
+  },[pilkategori])
 
+  
   return (
-  <View style={styles.latar}>
+    <View style={styles.latar}>
       {loading ? (
         <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
           <ActivityIndicator size="large" color={IjoTua}/>
         </View>
       ):(
-    <View>
-    <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
-        <PencarianBar/>
-    </View>
-    <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={3}
-        columnWrapperStyle={{
-          justifyContent:'space-between',
-          paddingHorizontal: 10,
-        }}
-        data={produkutama}
-        renderItem= {({item}) => <JualProduk item={item} />}
-        keyExtractor={ item => item.id}
-        ListHeaderComponent={atasjual}
-        ListEmptyComponent={kosongproduk}
-        ListFooterComponent={
-        <View>
-          <Image source={Bawah} style={styles.bawah}/>
+        <View> 
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent:'space-around',
+                  paddingHorizontal: 10,
+                }}
+                data={produkutama}
+                renderItem= {({item}) => <JualProduk item={item} />}
+                keyExtractor={ item => item.id}
+                ListHeaderComponent={atasjual}
+                ListEmptyComponent={kosongproduk}
+                ListFooterComponent={
+                <View>
+                  <Image source={Bawah} style={styles.bawah}/>
+                </View>
+                }
+            />
+            
+            <KeranjangPM id_transaksi = {id_transaksi}/>
         </View>
-        }
-    />
-      <Keranjang/> 
+      )}
     </View>
-    )}
-  </View>
   )
 }
 
 export default LanjutBelanjaScreen
 
 const styles = StyleSheet.create({
-    latar:{
-        flex: 5,
-        backgroundColor: Kuning,
-      },
-      bawah:{
-        flex: 1,
-        width: '100%',
-        height: height*0.15,
-      },  
+  latar:{
+    flex: 1,
+    backgroundColor: Kuning,
+  },
+  bawah:{
+    marginTop: '55%',
+    flex: 1,
+    width: '100%',
+    height: height*0.15,
+  }, 
+  nama:{
+    fontSize: 14,
+    fontWeight: 'bold',
+    width: 60,
+  },  
+  gambar:{
+    width: width*0.1,
+    height: width*0.1,
+  },
+  kartuKategori:{
+    flexDirection: 'row',
+    alignSelf:'center',
+    marginRight: 10,
+    marginBottom: 10,
+    padding: 5,
+    borderRadius: 50,
+    justifyContent:'flex-start',
+    alignItems:'center',
+  },
+  kategoripilihan:{
+    alignItems:'center',
+    padding: 5, 
+    borderRadius: 50, 
+    marginRight: 10,
+    backgroundColor: Putih,
+  },
 })

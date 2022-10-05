@@ -67,9 +67,9 @@ const CheckoutLangScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
         );
-        dispatch(kosongkanKeranjang());
-        dispatch(resetPelanggan());
         navigation.navigate("TQScreen");
+        // dispatch(kosongkanKeranjang());
+        // dispatch(resetPelanggan());
       }
     } catch (err){
       Alert.alert('Ada error buat transaksi temu langsung!', err.message);
