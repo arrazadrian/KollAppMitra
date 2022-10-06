@@ -152,7 +152,7 @@ const ReceiptScreen = ({route}) => {
                 }
                 <View style={styles.reminder}>
                     <Text style={{color: Putih}}>Paling lambat diantar:</Text>
-                    <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(2, 'days').format('LLLL')}</Text>
+                    <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(1, 'days').format('LLLL')}</Text>
                 </View>
             </View>
             <GarisBatas/>
