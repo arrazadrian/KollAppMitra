@@ -118,7 +118,6 @@ const HomeScreen = ({ navigation }) => {
 
   const [namamitra, setNamamitra] = useState("Loading...");
   const [namatoko, setNamatoko] = useState("");
-  const [tempat, setTempat] = useState("");
  
   const[aktif,setAktif] = useState();
 
@@ -131,7 +130,6 @@ const HomeScreen = ({ navigation }) => {
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
         setNamamitra(doc.data().namalengkap);
         setNamatoko(doc.data().namatoko);
-        setTempat(doc.data()?.alamat);
 
         console.log('getuserHome jalan (Home Screen)')
           // Respond to data
@@ -232,43 +230,29 @@ const HomeScreen = ({ navigation }) => {
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
           </View>
-          { tempat ?  
-            (
-              <View style={styles.status}>
-              <View>
-                  <Text style={styles.judul}>Status anda: 
-                  <Text> </Text>
-                  <Text style={{color: IjoTua}}>{status}</Text>
-                  </Text>
-                  <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
-              </View>
-                { isStatusEnabled == null ? 
-                  (
-                    <ActivityIndicator size="small" color={IjoTua}/>
-                  ):(
-                    
-                    <Switch
-                      trackColor={{ false: '#767577', true: Ijo }}
-                      thumbColor={isStatusEnabled ?  '#f5dd4b' : '#f4f3f4'}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={toggleSwitchStatus}
-                      value={isStatusEnabled}
-                    />
-                  )
-                }
-            </View>
-            ) : (
-            <View style={styles.syarat}>
-                <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold', textAlign:'center'}}>
-                  Anda belum bisa berjualan
-                </Text>    
-                <Text style={{color: IjoTua, fontStyle:'italic', textAlign:'center'}}>
-                  Terlebih dahulu lengkapi tempat anda mangkal di halaman akun
-                </Text>    
-            </View>
-            ) 
-          }
-        
+          <View style={styles.status}>
+          <View>
+              <Text style={styles.judul}>Status anda: 
+              <Text> </Text>
+              <Text style={{color: IjoTua}}>{status}</Text>
+              </Text>
+              <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
+          </View>
+            { isStatusEnabled == null ? 
+              (
+                <ActivityIndicator size="small" color={IjoTua}/>
+              ):(
+                
+                <Switch
+                  trackColor={{ false: '#767577', true: Ijo }}
+                  thumbColor={isStatusEnabled ?  '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitchStatus}
+                  value={isStatusEnabled}
+                />
+              )
+            }
+        </View>          
           { status == "Aktif" ? (
               <View style={styles.mangkal}>
                 <View>

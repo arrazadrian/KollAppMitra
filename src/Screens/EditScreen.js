@@ -19,7 +19,7 @@ const EditScreen = ({navigation, route}) => {
   const { nama, foto, toko, phone, waktu_buka, waktu_tutup, alamat_sementara } = route.params;
 
   const { geo, alamat, geohash } = useSelector(state => state.mangkal);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const [namaakun, setNamaakun] = useState(nama)
   const [fotoakun, setFotoakun] = useState(foto)
@@ -67,7 +67,7 @@ const EditScreen = ({navigation, route}) => {
             alamat,
             geohash, 
           );
-          dispatch(resetMangkal())
+         // dispatch(resetMangkal())
           navigation.goBack();
         };
     } else {
@@ -89,7 +89,7 @@ const EditScreen = ({navigation, route}) => {
             alamat,
             geohash,
         );
-        dispatch(resetMangkal())
+       // dispatch(resetMangkal())
         navigation.goBack();
       };
     }
