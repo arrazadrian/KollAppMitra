@@ -26,7 +26,7 @@ const ProsesCard = ({ item }) => {
       phonemitra: item.phonemitra,
       namapelanggan: item.namapelanggan,
       phonepelanggan: item.phonepelanggan,
-      status_transaksi: item.status_transaksi,
+      status_transaksi: item?.status_transaksi,
       waktu_dipesan: item?.waktu_dipesan,
       catatan: item?.catatan,
       geo_alamat: item.geo_alamat,
@@ -50,7 +50,7 @@ const ProsesCard = ({ item }) => {
       namapelanggan: item.namapelanggan,
       phonepelanggan: item.phonepelanggan,
       produk: item.produk,
-      status_transaksi: item.status_transaksi,
+      status_transaksi: item?.status_transaksi,
       waktu_selesai: item?.waktu_selesai,
       waktu_dipesan: item?.waktu_dipesan,
       catatan: item?.catatan,
@@ -71,7 +71,7 @@ const ProsesCard = ({ item }) => {
       phonemitra: item.phonemitra,
       namapelanggan: item.namapelanggan,
       phonepelanggan: item.phonepelanggan,
-      status_transaksi: item.status_transaksi,
+      status_transaksi: item?.status_transaksi,
       waktu_selesai: item?.waktu_selesai,
       waktu_dipesan: item?.waktu_dipesan,
       catatan: item?.catatan,
@@ -84,7 +84,7 @@ const ProsesCard = ({ item }) => {
 
   return (
     <View>
-    { (item.jenislayanan == "Pre-Order" && status_transaksi == "Dalam Proses") ? 
+    { (item.jenislayanan == "Pre-Order" && item.status_transaksi == "Dalam Proses") ? 
       (
       <Pressable style={styles.card} onPress={pindahDetail}>
           <Image source={PreOrder} style={styles.foto} />

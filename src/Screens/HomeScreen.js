@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, Dimensions, Alert} from 'react-native';
+import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, Dimensions, Alert, ActivityIndicator} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
@@ -21,55 +21,94 @@ import { resetPelanggan } from '../features/pelangganSlice';
 const { width, height } = Dimensions.get('window')
 
 const HomeScreen = ({ navigation }) => {
-  const [status, setStatus] = useState("Tidak Aktif");
-  const [penjelasan, setPenjelasan] = useState('tidak');
-  const [mangkal, setMangkal] = useState("Tidak");
-  const [yatidak, setYatidak] = useState("bisa");
-  const [isStatusEnabled, setIsStatusEnabled] = useState(true);
-  const [isMangkalEnabled, setIsMangkalEnabled] = useState(true);
+  const [status, setStatus] = useState();
+  const [penjelasan, setPenjelasan] = useState();
+  const [mangkal, setMangkal] = useState();
+  const [yatidak, setYatidak] = useState();
+  const [isStatusEnabled, setIsStatusEnabled] = useState();
+  const [isMangkalEnabled, setIsMangkalEnabled] = useState();
   
   const dispatch = useDispatch();
+
+  //Untuk mendapatkan status saat ini,
+  useEffect(() => {
+    async function getStatus(){
+      const auth = getAuth();
+      const docRef = doc(db, "mitra", auth.currentUser.uid);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+          if(docSnap.data().status_sekarang == "Tidak Aktif"){
+            setIsStatusEnabled(false);
+            setIsMangkalEnabled(false);
+            setStatus("Tidak Aktif");
+            setPenjelasan("tidak");
+            setMangkal("tidak");
+            setYatidak("bisa");
+          } else if (docSnap.data().status_sekarang == "Aktif" && docSnap.data().mangkal == true){
+            setIsStatusEnabled(true);
+            setIsMangkalEnabled(true);
+            setStatus("Aktif");
+            setPenjelasan("aktif");
+            setMangkal("Ya");
+            setYatidak("tidak bisa");
+          } else {
+            setIsStatusEnabled(true);
+            setIsMangkalEnabled(false);
+            setStatus("Aktif");
+            setPenjelasan("aktif");
+            setMangkal("Tidak");
+            setYatidak("bisa");
+          };
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      };
+    };
+    getStatus();
+  },[])
+
   
   function toggleSwitchStatus() {
-    if(isStatusEnabled){
+    if(!isStatusEnabled){
+      setIsStatusEnabled(true)
+      updatestatus(!isStatusEnabled)
       setStatus('Aktif')
       setPenjelasan('aktif')
       //console.log(status)
       //console.log(isEnabled)
-      updatestatus(isStatusEnabled)
-      setIsStatusEnabled(false)
     } else {
+      setIsStatusEnabled(false)
+      updatestatus(!isStatusEnabled)
       setStatus('Tidak Aktif')
       setPenjelasan('tidak')
       if(mangkal == "Ya"){
         setMangkal('Tidak')
         setYatidak('bisa')
-        updatemangkal(isMangkalEnabled)
-        setIsMangkalEnabled(true)
+        updatemangkal(!isMangkalEnabled)
+        setIsMangkalEnabled(false)
       } 
       //console.log(status)
       //console.log(isEnabled)
-      updatestatus(isStatusEnabled)
-      setIsStatusEnabled(true)
     }
     //setIsStatusEnabled(previousState => !previousState)
   }
 
   function toggleSwitchMangkal() {
-    if(isMangkalEnabled){
+    if(!isMangkalEnabled){
+      setIsMangkalEnabled(true)
+      updatemangkal(!isMangkalEnabled)
       setMangkal('Ya')
       setYatidak('tidak bisa')
       //console.log(status)
       //console.log(isEnabled)
-      updatemangkal(isMangkalEnabled)
-      setIsMangkalEnabled(false)
     } else {
+      setIsMangkalEnabled(false)
+      updatemangkal(!isMangkalEnabled)
       setMangkal('Tidak')
       setYatidak('bisa')
       //console.log(status)
       //console.log(isEnabled)
-      updatemangkal(isMangkalEnabled)
-      setIsMangkalEnabled(true)
     }
     //setIsMangkalEnabled(previousState => !previousState)
   }
@@ -193,7 +232,7 @@ const HomeScreen = ({ navigation }) => {
               <Text style={{color: Ijo, fontWeight:'bold'}}>{tanggal.format('dddd, DD MMM YYYY')}</Text>
             </View>
           </View>
-          { tempat ? 
+          { tempat ?  
             (
               <View style={styles.status}>
               <View>
@@ -203,13 +242,20 @@ const HomeScreen = ({ navigation }) => {
                   </Text>
                   <Text style={styles.deskripsi}>Anda sedang {penjelasan} berjualan.</Text>
               </View>
-                <Switch
-                  trackColor={{ false: '#767577', true: Ijo }}
-                  thumbColor={isStatusEnabled ? '#f4f3f4' : '#f5dd4b'}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitchStatus}
-                  value={!isStatusEnabled}
-                />
+                { isStatusEnabled == null ? 
+                  (
+                    <ActivityIndicator size="small" color={IjoTua}/>
+                  ):(
+                    
+                    <Switch
+                      trackColor={{ false: '#767577', true: Ijo }}
+                      thumbColor={isStatusEnabled ?  '#f5dd4b' : '#f4f3f4'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitchStatus}
+                      value={isStatusEnabled}
+                    />
+                  )
+                }
             </View>
             ) : (
             <View style={styles.syarat}>
@@ -232,13 +278,19 @@ const HomeScreen = ({ navigation }) => {
                     </Text>
                     <Text style={styles.deskripsi}>Anda {yatidak} dipanggil pelanggan via aplikasi.</Text>
                 </View>
-                  <Switch
-                    trackColor={{ false: '#767577', true: Ijo }}
-                    thumbColor={isMangkalEnabled ? '#f4f3f4' : '#f5dd4b'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitchMangkal}
-                    value={!isMangkalEnabled}
-                  />
+                { isMangkalEnabled == null ? 
+                  (
+                    <ActivityIndicator size="small" color={IjoTua}/>
+                  ):(
+                    <Switch
+                      trackColor={{ false: '#767577', true: Ijo }}
+                      thumbColor={isMangkalEnabled ? '#f5dd4b' : '#f4f3f4'  }
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitchMangkal}
+                      value={isMangkalEnabled}
+                    />
+                  )
+                }
               </View>
             ):(
               <View style={{marginBottom:10}}/>

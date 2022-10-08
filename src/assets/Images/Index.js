@@ -27,7 +27,7 @@ import DefaultFoto from './DefaultFoto.png'
 import Receipt from './Receipt.png'
 import Kosong from './kosong.png'
 import Bag from './Bag.png'
-import Location from './Location.png'
+import Location from './Location.png'   
 import Bawah from './Bawah.png'
 
 export { Splash, Awan, gerobaksplash,
