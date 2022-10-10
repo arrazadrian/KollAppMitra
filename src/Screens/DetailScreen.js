@@ -7,11 +7,18 @@ const { width, height } = Dimensions.get('window')
 
 const DetailScreen = ({ navigation, route }) => {
 
-  const { namaproduk, deskproduk, image, harga, satuan, kuantitas } = route.params;
+  const { namaproduk, deskproduk, image, harga, satuan, kuantitas, tersedia } = route.params;
 
   return (
     <View style={styles.latar}>
-      <Image source={{uri:image}} style={styles.gambar}/>
+      <View style={{alignItems:'center'}}>
+          <Image source={{uri:image}} style={styles.gambar}/>
+          { !tersedia && 
+          <View style={styles.bungkushabis}>
+            <Text style={styles.habis}>Stok Habis</Text>
+          </View>
+          }
+      </View>
       <View style={{marginBottom:2}}>
         <Text style={styles.subjudul}>{namaproduk}</Text>
         <Text style={styles.deskripsi}>{deskproduk}</Text>
@@ -43,7 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Ijo,
         marginBottom: 10,
-        alignSelf:'center'
+        alignSelf:'center',
     },
     subjudul:{
         fontSize: 26,
@@ -71,6 +78,19 @@ const styles = StyleSheet.create({
         color: Ijo,
         fontWeight:'bold',
         fontSize: 20,
-        
     },
+    habis:{
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: 'tomato',
+      textAlign: 'center',
+    },
+    bungkushabis:{
+      backgroundColor:"#FAEAED", 
+      position: 'absolute',
+      padding: 8,
+      width: width * 0.5,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+    }
 })

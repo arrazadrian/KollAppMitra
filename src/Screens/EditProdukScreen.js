@@ -27,7 +27,7 @@ const EditProdukScreen = ({ navigation, route }) => {
     //Untuk mendapatkan status produk saat ini,
     useEffect(() => {
       async function getStatusProduk(){
-        console.log(tersediabaru);
+        // console.log(tersediabaru);
         if(tersediabaru == true){
           setStatusproduk("Tersedia")
         } else {
@@ -236,7 +236,7 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
-            <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+            <View style={styles.kesediaan}>
                 <Text style={styles.subjudul}>
                   Status Produk:
                   { tersediabaru == true ? 
@@ -328,6 +328,16 @@ const styles = StyleSheet.create({
       fontSize: 16,
       padding: 10,
       marginBottom: 10,
+    },
+    kesediaan:{
+      flexDirection:'row', 
+      justifyContent:'space-between', 
+      alignItems:'center',
+      backgroundColor: Putih,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      borderColor: Ijo,
+      borderWidth: 1,
     },
     hapus:{
       flex: 1,

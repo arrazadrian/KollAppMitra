@@ -39,6 +39,8 @@ const ListProduk = ({item}) => {
     
   return (
     <View>
+      {item.tersedia ?
+      (
        <View
        style={styles.container}>
           <Pressable onPress={pindahDetail}>
@@ -62,6 +64,32 @@ const ListProduk = ({item}) => {
             </Pressable>
           </View>
        </View> 
+      ):(
+       <View
+       style={styles.container}>
+          <Pressable onPress={pindahDetail}>
+              <Text style={styles.habis}>Stok Habis</Text>
+              <Image source={{uri:item.image}} style={styles.gambarhabis} />
+          </Pressable>
+          <View>
+              <Text 
+              style={{fontSize:18, fontWeight:'bold'}}
+              numberOfLines={1}
+              >Rp{item.harga}</Text> 
+              <Text 
+              style={{fontSize:16}}
+              numberOfLines={1}
+              >{item.namaproduk}</Text> 
+              <Text>{item.kuantitas} {item.satuan}</Text> 
+          </View>
+          <View style={{position:'absolute', right:10, bottom:10}}>
+            <Pressable 
+            onPress={pindahEdit}>
+              <Edit/>
+            </Pressable>
+          </View>
+       </View> 
+      )}
     </View>
   )
 }
@@ -86,5 +114,23 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         resizeMode: 'cover',
         marginBottom: 10,
+    },
+    gambarhabis: {
+        width:  height * 0.13,
+        height: height * 0.13,
+        borderRadius: 10,
+        alignSelf: 'center',
+        resizeMode: 'cover',
+        marginBottom: 10,
+        opacity: 0.3,
+    },
+    habis:{
+        position:'absolute',
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: 'tomato',
+        textAlign: 'center',
+        top: width * 0.1,
+        left:  width * 0.04,
     },
 })
