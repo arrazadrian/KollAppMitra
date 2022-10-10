@@ -235,7 +235,7 @@ export async function hapusproduk (produkid){
 // PERBARUI DATA PRODUK
 // DI FIRESTORE TANPA FOTO DI STORAGE
 
-export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodukbaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
+export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodukbaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru, tersediabaru){
 
   const auth = getAuth();
   const db = getFirestore(app);
@@ -255,6 +255,7 @@ export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodu
           satuan: satuanbaru,
           kategori: kategoribaru,
           pemilik: auth.currentUser.uid,
+          tersedia: tersediabaru,
         });
         Alert.alert(
           'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'
@@ -273,7 +274,7 @@ export async function updateprodukTanpafoto (produkid, namaprodukbaru, deskprodu
 // PERBARUI DATA PRODUK
 // DI FIRESTORE BESERTA FOTO DI STORAGE
 
-export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprodukbaru, imagebaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru){
+export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprodukbaru, imagebaru, hargabaru, kuantitasbaru, satuanbaru, kategoribaru, tersediabaru){
   const urlgambarbaru = await uploadgambarproduk(imagebaru);
 
   const auth = getAuth();
@@ -299,6 +300,7 @@ export async function updateprodukDenganfoto (produkid, namaprodukbaru, deskprod
           satuan: satuanbaru,
           kategori: kategoribaru,
           pemilik: auth.currentUser.uid,
+          tersedia: tersediabaru,
         });
         Alert.alert(
           'Data Produk Berhasil Diperbarui','Produk sudah memiliki data baru.'

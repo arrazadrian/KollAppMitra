@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Dimensions, Alert } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Dimensions, Alert, Switch } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import {  DPdefault, Delete } from '../assets/Images/Index.js'
 import {Picker} from '@react-native-picker/picker';
@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window')
 
 const EditProdukScreen = ({ navigation, route }) => {
   
-  const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori } = route.params;
+  const { produkid, namaproduk, deskproduk, image, harga, satuan, kuantitas, kategori, tersedia } = route.params;
 
   const [namaprodukbaru, setNamaprodukbaru] = useState(namaproduk);
   const [deskprodukbaru, setDeskprodukbaru] = useState(deskproduk);
@@ -20,7 +20,23 @@ const EditProdukScreen = ({ navigation, route }) => {
   const [kuantitasbaru, setKuantitasbaru] = useState(kuantitas);
   const [satuanbaru, setSatuanbaru] = useState(satuan);
   const [kategoribaru, setKategoribaru] = useState(kategori);
+  const [tersediabaru, setTersediabaru] = useState(tersedia);
   
+  const [statusproduk, setStatusproduk] = useState();
+
+    //Untuk mendapatkan status produk saat ini,
+    useEffect(() => {
+      async function getStatusProduk(){
+        console.log(tersediabaru);
+        if(tersediabaru == true){
+          setStatusproduk("Tersedia")
+        } else {
+          setStatusproduk("Habis")
+        };
+      };
+      getStatusProduk();
+    },[]);
+
   const imagelama = image;
 
   const pickImage = async () => {
@@ -60,6 +76,7 @@ const EditProdukScreen = ({ navigation, route }) => {
             kuantitasbaru,
             satuanbaru,
             kategoribaru,
+            tersediabaru,
           );
           navigation.goBack();
         };
@@ -82,6 +99,7 @@ const EditProdukScreen = ({ navigation, route }) => {
           kuantitasbaru,
           satuanbaru,
           kategoribaru,
+          tersediabaru,
         );
         navigation.goBack();
       };
@@ -110,6 +128,21 @@ const EditProdukScreen = ({ navigation, route }) => {
 
     );
   };
+
+  function toggleSwitchTersedia() {
+    if(tersediabaru == true){
+      setStatusproduk("Habis");
+      setTersediabaru(false);
+      //console.log(status)
+      //console.log(isEnabled)
+    } else {
+      setStatusproduk("Tersedia");
+      setTersediabaru(true);
+      //console.log(status)
+      //console.log(isEnabled)
+    }
+    //setTersediabaru(previousState => !previousState)
+  }
 
   return (
 <ScrollView style={styles.latar}>
@@ -188,7 +221,7 @@ const EditProdukScreen = ({ navigation, route }) => {
             <Text style={styles.subjudul}>Kategori Produk</Text>
             <Picker
               mode='dropdown'
-              style={{backgroundColor: Putih}}
+              style={{backgroundColor: Putih, marginBottom: 10}}
               selectedValue={kategoribaru}
               onValueChange={(itemValue, itemIndex) =>
                 setKategoribaru(itemValue)
@@ -203,6 +236,25 @@ const EditProdukScreen = ({ navigation, route }) => {
               <Picker.Item label="Bumbu" value="Bumbu" />
               <Picker.Item label="Frozen Food" value="Frozen Food" />
             </Picker>
+            <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <Text style={styles.subjudul}>
+                  Status Produk:
+                  { tersediabaru == true ? 
+                    (
+                      <Text style={{color: Ijo}}> {statusproduk}</Text>
+                      ):(
+                      <Text style={{color: 'tomato'}}> {statusproduk}</Text>
+                    )
+                  } 
+                </Text>
+                <Switch
+                  trackColor={{ false: '#767577', true: Ijo }}
+                  thumbColor={tersediabaru ? '#f5dd4b' : '#f4f3f4'  }
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitchTersedia}
+                  value={tersediabaru}
+                />
+            </View>
             <View style={{flexDirection:'row', alignItems:'center', marginVertical: 20}}>
                 <View style={styles.hapus}>
                     <Text style={{color:Ijo, fontSize: 16, fontWeight:'bold'}}

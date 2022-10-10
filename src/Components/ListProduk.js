@@ -19,6 +19,7 @@ const ListProduk = ({item}) => {
       harga: item.harga,
       satuan: item.satuan,
       kuantitas: item.kuantitas,
+      tersedia: item.tersedia,
     })
   }
   
@@ -31,7 +32,8 @@ const ListProduk = ({item}) => {
       harga: item.harga,
       satuan: item.satuan,
       kuantitas: item.kuantitas, 
-      kategori: item.kategori, 
+      kategori: item.kategori,
+      tersedia: item.tersedia, 
     })
   }
     

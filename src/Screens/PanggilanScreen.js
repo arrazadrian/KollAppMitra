@@ -116,7 +116,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             //console.log(data.results[0].formatted_address);
             dispatch(updatePosisi({
             geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
-            alamat_mitra: data.results[0].formatted_address,
+            alamat_mitra: data.results[0]?.formatted_address,
             geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
             }));
         })
@@ -140,7 +140,7 @@ const PanggilanScreen = ({ route, navigation }) => {
 
         (async () => {
             fetch(
-                `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${alamat_mitra}&destinations=${alamat_pelanggan}
+                `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${geo_mitra.lat},${geo_mitra.lng}&destinations=${geo_alamat.lat},${geo_alamat.lng}
                 &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
             ).then((res) => res.json())
             .then((data) => {

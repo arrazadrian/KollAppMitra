@@ -160,8 +160,8 @@ const OtwScreen = ({ route }) => {
           }}>
         { geo_mitra && geo_alamat && (
             <MapViewDirections
-                origin={alamat_mitra}
-                destination={alamat_pelanggan}
+                origin={{latitude: geo_mitra.lat, longitude:geo_mitra.lng}}
+                destination={{latitude: geo_alamat.lat, longitude:geo_alamat.lng}}
                 apikey={GOOGLE_MAPS_APIKEY}
                 strokeColor="green"
                 strokeWidth={3}
