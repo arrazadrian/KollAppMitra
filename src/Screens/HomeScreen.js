@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
             setIsMangkalEnabled(false);
             setStatus("Tidak Aktif");
             setPenjelasan("tidak");
-            setMangkal("tidak");
+            setMangkal("Tidak");
             setYatidak("bisa");
           } else if (docSnap.data().status_sekarang == "Aktif" && docSnap.data().mangkal == true){
             setIsStatusEnabled(true);
@@ -117,7 +117,7 @@ const HomeScreen = ({ navigation }) => {
   let tanggal = moment().locale('id');
 
   const [namamitra, setNamamitra] = useState("Loading...");
-  const [namatoko, setNamatoko] = useState("");
+  const [namatoko, setNamatoko] = useState("Loading...");
  
   const[aktif,setAktif] = useState();
 
@@ -130,20 +130,20 @@ const HomeScreen = ({ navigation }) => {
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
         setNamamitra(doc.data().namalengkap);
         setNamatoko(doc.data().namatoko);
-
+        
         console.log('getuserHome jalan (Home Screen)')
-          // Respond to data
-
-        });
-        console.log('Masuk Redux namamitra');
-        //unsubscribe();
+        // Respond to data
+        
+      });
+      console.log('Masuk Redux namamitra');
+      //unsubscribe();
       } catch (err){
         Alert.alert('There is an error.', err.message)
       }
     }
     getuserHome();
     dispatch(setMitra({ namamitra, namatoko }));
-  },[])
+  },[namatoko])
 
   useEffect(() => {
     async function getAktifTransaksi(){
@@ -191,7 +191,7 @@ const HomeScreen = ({ navigation }) => {
           //console.log(data.results[0].formatted_address);
           dispatch(updatePosisi({
           geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
-          alamat_mitra: data.results[0].formatted_address,
+          alamat_mitra: data.results[0]?.formatted_address,
           geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
           }));
       })
