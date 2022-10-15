@@ -45,6 +45,11 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 phone: phone,
                 status_sekarang: "Tidak Aktif",
                 mangkal: false,
+                rating_layanan: 0, 
+                rating_produk: 0, 
+                jml_nilai_layanan: 0,
+                jml_nilai_produk: 0,
+                nilai_masuk: 0,  
             })
         })
   } catch (err) {
