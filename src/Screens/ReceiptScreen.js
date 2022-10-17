@@ -193,14 +193,10 @@ const ReceiptScreen = ({route}) => {
                   <Text style={styles.subjudul}>Total Harga</Text>
                   <Text style={styles.subjudul}>Rp{hargatotalsemua}</Text>
               </View>
-              { status_transaksi == "Dalam Proses" ? 
-                (
+              { status_transaksi == "Dalam Proses" && 
                   <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
                     <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Sudah diantar dan dibayar</Text>
                   </TouchableOpacity>
-                ):(
-                  <View/>
-                )
               }
           </View>
       </View>
