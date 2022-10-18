@@ -132,6 +132,8 @@ const HomeScreen = ({ navigation }) => {
         setNamatoko(doc.data().namatoko);
         
         console.log('getuserHome jalan (Home Screen)')
+        console.log(namamitra)
+        console.log(namatoko)
         // Respond to data
         
       });

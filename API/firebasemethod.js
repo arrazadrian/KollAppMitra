@@ -544,7 +544,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
   const auth = getAuth();
   const db = getFirestore(app);
   try{
-    addDoc(collection(db, "transaksi"), {
+  const docRef = await addDoc(collection(db, "transaksi"), {
       id_mitra: auth.currentUser.uid, 
       namamitra: namamitra,
       namatoko: namatoko,
@@ -559,9 +559,11 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
       hargatotalsemua: hargatotalsemua,
       jumlah_kuantitas: jumlah_kuantitas,
       pembayaran: pembayaran,
-    })
+   });
+    console.log("ID dokumenTLnya: ", docRef.id)
+    return docRef.id;
   } catch(err){
-    console.log('Ada Error Membuat Tranksaksi.', error);
+    console.log('Ada Error Membuat Tranksaksi.', err);
   };
 };
 
@@ -698,9 +700,10 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
 // API 22: buatKasbonBaru
 // MEMBUAT KASBON BARU. 
 
-export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, transaksi, total_kasbon) => {  
+export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, transaksi, hargatotalsemua) => {  
   const auth = getAuth();
   const db = getFirestore(app);
+  transaksi.waktu_transaksi = serverTimestamp();
   try{
     addDoc(collection(db, "kasbon"), {
       id_mitra: auth.currentUser.uid, 
@@ -711,9 +714,9 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
       status_kasbon: "Belum Lunas",
       waktu_dibuat: serverTimestamp(),
       transaksi: transaksi,
-      total_kasbon: total_kasbon,
+      total_kasbon: hargatotalsemua,
     })
   } catch(err){
-    console.log('Ada Error Membuat Kasbon.', error);
+    console.log('Ada Error Membuat Kasbon.', err);
   };
 };

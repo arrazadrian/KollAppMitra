@@ -49,7 +49,7 @@ const AdaKasbonScreen = () => {
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
       } else {
-        buatTransaksiTL(
+        const kode_transaksiTL = await buatTransaksiTL(
           namamitra,
           namatoko,
           namapelanggan,
@@ -60,20 +60,22 @@ const AdaKasbonScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
-        );
-        let transaksi = {harga_total: hargatotalsemua, }
+          );
+          let transaksi = {harga_total: hargatotalsemua, id_transaksi: kode_transaksiTL}
         buatKasbonBaru(
           namamitra,
           namatoko,
           namapelanggan,
           kodeUID,
+          transaksi,
+          hargatotalsemua,
         );
         navigation.navigate("TQScreen");
         // dispatch(kosongkanKeranjang());
         // dispatch(resetPelanggan());
       }
     } catch (err){
-      Alert.alert('Ada error buat transaksi temu langsung!', err.message);
+      Alert.alert('Ada error buat transaksi temu langsung dengan kasbon!', err.message);
     }  
   };
 
@@ -88,6 +90,23 @@ const AdaKasbonScreen = () => {
   const subtotalhargaKeranjang = useSelector(totalHarga)
   const hargalayanan =  1000
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
+
+  useEffect(() => {
+    const kelompok = items.reduce((results, item) => {
+      (results[item.item.id] = results[item.item.id] || []).push(item.item);
+      return results;
+    }, {});
+
+    const jikakosong = () => {
+      if(!items.length){
+        navigation.goBack();
+      }
+    };
+    
+    setKelompokProduk(kelompok);
+    jikakosong();
+
+  }, [items]);
  
 
   const[adakasbon,setAdaKasbon] = useState();

@@ -15,7 +15,10 @@ const KasbonCard = () => {
         <Text style={styles.nama}>Antonia Kerona</Text>
         <Text>Mulai dari: 21 Sept 2021</Text>
       </View>
+      <View>
+        <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
         <Text style={styles.total}>Rp400000</Text>
+      </View>
     </Pressable>
   )
 }

@@ -44,17 +44,11 @@ const CheckoutLangScreen = () => {
   }
 
   const pindahKasbon = () => {
-    //console.log(item.id)
-    navigation.navigate('AdaKasbonScreen', { 
-      // namaproduk: item.namaproduk,
-      // deskproduk: item.deskproduk,
-      // image: item.image,
-      // harga: item.harga,
-      // satuan: item.satuan,
-      // kuantitas: item.kuantitas,
-      // tersedia: item.tersedia,
-    })
-  }
+    if (!namapelanggan) {
+      Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
+    } else navigation.navigate('AdaKasbonScreen')
+  };
+  
   async function uploadtransaksiTemuLangsung(){
     try{
       let jumlah_kuantitas = items.length;
