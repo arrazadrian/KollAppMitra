@@ -1,14 +1,81 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image, Pressable} from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image, Pressable, Alert} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
-import { Kuning, IjoTua, Ijo } from '../Utils/Warna'
+import { Kuning, IjoTua, Ijo, Putih } from '../Utils/Warna'
 import KasbonCard from '../Components/KasbonCard'
 import { getAuth } from "firebase/auth"
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore"
 import { app } from '../../Firebase/config'
-import { DompetKasbon } from '../assets/Images/Index';
+import { DompetKasbon } from '../assets/Images/Index'
+import { 
+  pilihProdukKeranjang, 
+  totalHarga, 
+  kosongkanKeranjang,
+ } from '../features/keranjangSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import { buatKasbonBaru, buatTransaksiTL } from '../../API/firebasemethod'
+
+const { width, height } = Dimensions.get('window')
 
 const AdaKasbonScreen = () => {
+
+  const kasbonBaru =()=> {
+    Alert.alert('Anda yakin buat kasbon baru?','Pastikan anda mengenal pelanggan tersebut dan dapat mempercayainya.',
+          [
+            {
+              text: 'Batal',
+              onPress: () => {
+                console.log('Batal dipencet')
+              }
+            },
+            {
+              text: 'Yakin',
+              onPress: TemuLangsungKasbon,
+            }
+          ]
+          )
+  }
+
+  async function TemuLangsungKasbon(){
+    try{
+      let jumlah_kuantitas = items.length;
+      let pembayaran = 'Kasbon';
+      if (!namapelanggan) {
+        Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
+      } else if (!namamitra) {
+        Alert.alert('Nama mitra kosong','Silahkan tutup dan buka kembali aplikasi ini.');
+      } else if (!namatoko) {
+        Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
+      } else if (!items) {
+        Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
+      } else {
+        buatTransaksiTL(
+          namamitra,
+          namatoko,
+          namapelanggan,
+          kodeUID,
+          kelompokProduk,
+          subtotalhargaKeranjang,
+          hargalayanan,
+          hargatotalsemua,
+          jumlah_kuantitas,
+          pembayaran,
+        );
+        let transaksi = {harga_total: hargatotalsemua, }
+        buatKasbonBaru(
+          namamitra,
+          namatoko,
+          namapelanggan,
+          kodeUID,
+        );
+        navigation.navigate("TQScreen");
+        // dispatch(kosongkanKeranjang());
+        // dispatch(resetPelanggan());
+      }
+    } catch (err){
+      Alert.alert('Ada error buat transaksi temu langsung!', err.message);
+    }  
+  };
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -17,6 +84,11 @@ const AdaKasbonScreen = () => {
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
   const { namamitra, namatoko } = useSelector(state => state.mitra);
+
+  const subtotalhargaKeranjang = useSelector(totalHarga)
+  const hargalayanan =  1000
+  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
+ 
 
   const[adakasbon,setAdaKasbon] = useState();
   const[loading, setLoading] = useState(true);
@@ -90,10 +162,10 @@ const AdaKasbonScreen = () => {
           ListHeaderComponent={<View style={{height:10}}></View>}
           ListEmptyComponent={ 
             <View style={{justifyContent:'center', alignItems:'center'}}>
-              <Image style={styles.kertas} source={DompetKasbon}/>
-              <Text style={styles.none}>Pelanggan sedang tidak punya kasbon yang belum dibayar</Text> 
-              <Pressable style={styles.tombol}>
-                Buat Kasbon Baru
+              <Image style={styles.dompet} source={DompetKasbon}/>
+              <Text style={styles.none}>Pelanggan ini sedang tidak punya kasbon yang belum dibayar</Text> 
+              <Pressable style={styles.tombol} onPress={kasbonBaru}>
+                  <Text style={styles.tomboltext}>Buat kasbon baru</Text>
               </Pressable> 
             </View>
           }
@@ -111,10 +183,29 @@ const styles = StyleSheet.create({
         backgroundColor: Kuning,
     },
     tombol:{
-      borderColor: Ijo,
-      borderWidth: 3,
-      width:'100%',
-      padding: 8,
-      borderRadius: 10,
+      backgroundColor: Ijo,
+      width:'50%',
+      padding: 10,
+      borderRadius: 20,
+    },
+    dompet:{
+      width: width * 0.4,
+      height: width * 0.3,
+      marginTop: height * 0.25,
+      marginBottom: 10,
+    },
+    none:{
+      fontSize: 16,
+      fontWeight:'bold',
+      color: Ijo,
+      textAlign:'center',
+      paddingHorizontal: 20,
+      marginBottom: 10,
+    },
+    tomboltext:{
+      fontSize: 18,
+      textAlign:'center',
+      color: Putih,
+      fontWeight:'bold',
     },
 })

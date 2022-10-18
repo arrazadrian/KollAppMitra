@@ -1,7 +1,6 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Ijo, IjoTua, Putih } from '../Utils/Warna'
-import { Kasbon } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get('window')
@@ -14,9 +13,9 @@ const KasbonCard = () => {
     <Pressable style={styles.card} onPress={()=> navigation.navigate('ReceiptKasbonScreen')}>
       <View>
         <Text style={styles.nama}>Antonia Kerona</Text>
-        <Text style={styles.total}>Rp400000</Text>
+        <Text>Mulai dari: 21 Sept 2021</Text>
       </View>
-      <Image source={Kasbon} style={styles.cap}/>
+        <Text style={styles.total}>Rp400000</Text>
     </Pressable>
   )
 }
@@ -40,16 +39,12 @@ const styles = StyleSheet.create({
     },
     nama:{
         color: IjoTua,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
     },
     total:{
         color: Ijo,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
     },
-    cap:{
-        width: width * 0.2,
-        height: width * 0.2,
-    }
 })

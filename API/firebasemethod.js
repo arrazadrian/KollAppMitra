@@ -537,10 +537,10 @@ export async function updatemangkal(mangkal){
   })
 }; 
 
-// API 15: buatTransaksi
+// API 15: buatTransaksiTL
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
-export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeUID, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas) => {  
+export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeUID, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran) => {  
   const auth = getAuth();
   const db = getFirestore(app);
   try{
@@ -558,6 +558,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
       hargalayanan: hargalayanan,
       hargatotalsemua: hargatotalsemua,
       jumlah_kuantitas: jumlah_kuantitas,
+      pembayaran: pembayaran,
     })
   } catch(err){
     console.log('Ada Error Membuat Tranksaksi.', error);
@@ -692,4 +693,27 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
       }
     }
   })
+};
+
+// API 22: buatKasbonBaru
+// MEMBUAT KASBON BARU. 
+
+export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, transaksi, total_kasbon) => {  
+  const auth = getAuth();
+  const db = getFirestore(app);
+  try{
+    addDoc(collection(db, "kasbon"), {
+      id_mitra: auth.currentUser.uid, 
+      namamitra: namamitra,
+      namatoko: namatoko,
+      id_pelanggan: kodeUID,
+      namapelanggan: namapelanggan,
+      status_kasbon: "Belum Lunas",
+      waktu_dibuat: serverTimestamp(),
+      transaksi: transaksi,
+      total_kasbon: total_kasbon,
+    })
+  } catch(err){
+    console.log('Ada Error Membuat Kasbon.', error);
+  };
 };

@@ -26,7 +26,7 @@ const ReceiptKasbonScreen = () => {
               <Text>Belum Lunas</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
-              <Text>Tanggal Dibuat</Text>
+              <Text>Mulai Tanggal</Text>
               <Text>10 - 1 - 2022</Text>
           </View>
       </View>
