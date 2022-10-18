@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import React from 'react';
 import { Ijo, IjoMint, Kuning } from '../Utils/Warna';
 import { IconHomeIjo } from '../assets/Icons/Index';

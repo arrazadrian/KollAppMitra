@@ -13,7 +13,6 @@ import {
 import { resetPelanggan } from '../features/pelangganSlice';
 import { buatTransaksiTL } from '../../API/firebasemethod'
  
- 
 
 const { width, height } = Dimensions.get('window')
  
@@ -44,6 +43,18 @@ const CheckoutLangScreen = () => {
           )
   }
 
+  const pindahKasbon = () => {
+    //console.log(item.id)
+    navigation.navigate('AdaKasbonScreen', { 
+      // namaproduk: item.namaproduk,
+      // deskproduk: item.deskproduk,
+      // image: item.image,
+      // harga: item.harga,
+      // satuan: item.satuan,
+      // kuantitas: item.kuantitas,
+      // tersedia: item.tersedia,
+    })
+  }
   async function uploadtransaksiTemuLangsung(){
     try{
       let jumlah_kuantitas = items.length;
@@ -168,7 +179,7 @@ const CheckoutLangScreen = () => {
           
           <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', flex: 1}}>
             <TouchableOpacity style={styles.tombolkasbon}
-              onPress={selesaiTransaksi}
+              onPress={pindahKasbon}
             >
               <Text style={{color:Ijo, fontWeight:'bold', textAlign:'center'}}>Masuk Kasbon</Text>
             </TouchableOpacity>

@@ -43,7 +43,7 @@ const ReceiptKasbonScreen = () => {
             <Text style={{fontSize: 12}}> ID: 2e1890138012</Text>
             <Text style={{color:Ijo, fontSize: 16}}>8 Febura 2081</Text>
           </View>
-          <Text style={{color: IjoTua, fontSize: 18}}>Rp67000</Text>
+          <Text style={{color: IjoTua, fontSize: 16}}>Rp67000</Text>
         </View>
       </View>
       <View style={styles.bawah}>
