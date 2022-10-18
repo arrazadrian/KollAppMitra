@@ -127,6 +127,7 @@ const CheckoutLangScreen = () => {
       )}
 
       <ScrollView style={styles.atas}>
+        <Text style={{fontSize: 18, color: IjoTua, fontWeight:'bold'}}>Daftar Belanjaan</Text>
             {Object.entries(kelompokProduk).map(([key, items]) => (
             <View key={key}>
             <View style={styles.card}>
@@ -158,18 +159,23 @@ const CheckoutLangScreen = () => {
             <Text>Biaya Layanan</Text>
             <Text>{hargalayanan}</Text>
           </View>
+          <View style={styles.desk}>
+            <Text>Harga Total</Text>
+            <Text style={styles.harga}>Rp{hargatotalsemua}</Text>
+          </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
           
-          <View style={styles.desk}>
-            <View>
-              <Text>Harga Total</Text>
-              <Text style={styles.harga}>Rp{hargatotalsemua}</Text>
-            </View>
-            <TouchableOpacity style={styles.tombol}
+          <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', flex: 1}}>
+            <TouchableOpacity style={styles.tombolkasbon}
               onPress={selesaiTransaksi}
             >
-              <Text style={{color:Putih, fontWeight:'bold'}}>Selesaikan Pesanan</Text>
+              <Text style={{color:Ijo, fontWeight:'bold', textAlign:'center'}}>Masuk Kasbon</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.tombollunas}
+              onPress={selesaiTransaksi}
+            >
+              <Text style={{color:Putih, fontWeight:'bold', textAlign:'center'}}>Sudah Lunas</Text>
             </TouchableOpacity>
           </View>
       </View>
@@ -250,9 +256,16 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight:'bold',
     },
-    tombol:{
+    tombollunas:{
       borderRadius: 10,
       padding: 10,
       backgroundColor: Ijo,
+      width: '40%',
+    },
+    tombolkasbon:{
+      borderRadius: 10,
+      padding: 10,
+      backgroundColor: Putih,
+      width: '40%',
     },
 })

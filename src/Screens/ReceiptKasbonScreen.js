@@ -40,16 +40,16 @@ const ReceiptKasbonScreen = () => {
         <Text style={styles.subjudul}>Daftar Transaksi</Text>
         <View style={styles.transaksi}>
           <View>
-            <Text style={{fontSize: 12}}>2e1890138012</Text>
+            <Text style={{fontSize: 12}}> ID: 2e1890138012</Text>
             <Text style={{color:Ijo, fontSize: 16}}>8 Febura 2081</Text>
           </View>
-          <Text style={[styles.subjudul, {color: IjoTua, fontSize: 18}]}>Rp67000</Text>
+          <Text style={{color: IjoTua, fontSize: 18}}>Rp67000</Text>
         </View>
       </View>
       <View style={styles.bawah}>
         <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 10, alignItems:'center'}}>
           <Text>Total Kasbon</Text>
-          <Text style={[styles.subjudul, { fontSize: 20,}]}>Rp340500</Text>
+          <Text style={styles.subjudul}>Rp340500</Text>
         </View>
         <TouchableOpacity style={styles.tombol}>
             <Text style={[styles.subjudul, {color: Ijo, fontSize: 20, textAlign:'center'}]}>Sudah Lunas</Text>
