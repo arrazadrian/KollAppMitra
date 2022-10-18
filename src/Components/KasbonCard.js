@@ -2,22 +2,26 @@ import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-nati
 import React from 'react'
 import { Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { Kasbon } from '../assets/Images/Index'
+import { useNavigation } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get('window')
 
-const CardKasbon = () => {
+const KasbonCard = () => {
+  const navigation = useNavigation();
+  
+
   return (
-    <Pressable style={styles.card}>
-    <View>
-      <Text style={styles.nama}>Antonia Kerona</Text>
-      <Text style={styles.total}>Rp400000</Text>
-    </View>
-    <Image source={Kasbon} style={styles.cap}/>
+    <Pressable style={styles.card} onPress={()=> navigation.navigate('ReceiptKasbonScreen')}>
+      <View>
+        <Text style={styles.nama}>Antonia Kerona</Text>
+        <Text style={styles.total}>Rp400000</Text>
+      </View>
+      <Image source={Kasbon} style={styles.cap}/>
     </Pressable>
   )
 }
 
-export default CardKasbon
+export default KasbonCard
 
 const styles = StyleSheet.create({
     card:{

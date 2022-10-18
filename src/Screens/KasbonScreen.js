@@ -2,13 +2,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { Ijo, IjoMint, Kuning } from '../Utils/Warna';
 import { IconHomeIjo } from '../assets/Icons/Index';
-import CardKasbon from '../Components/CardKasbon';
+import KasbonCard from '../Components/KasbonCard';
 
 
 const KasbonScreen = ({navigation}) => {
   return (
     <View style={styles.latar}>
-      <CardKasbon/>
+      <KasbonCard/>
       <TouchableOpacity style={styles.kembali} onPress={() => navigation.navigate('HomeScreen')}>
             <IconHomeIjo/>
       </TouchableOpacity>

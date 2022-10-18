@@ -25,6 +25,7 @@ import TQScreen from "./TQScreen";
 import AkunJadiScreen from "./AkunJadiScreen";
 import KasbonScreen from "./KasbonScreen";
 import LunasScreen from "./LunasScreen";
+import ReceiptKasbonScreen from "./ReceiptKasbonScreen";
 
 export {
      SplashScreen, HomeScreen, 
@@ -35,5 +36,5 @@ export {
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
      OtwScreen, LanjutBelanjaScreen, TQScreen, AkunJadiScreen,
      ReceiptScreen, ScanScreen, FLocScreen, PanggilanScreen,
-     CheckoutPMScreen, KasbonScreen, LunasScreen,
+     CheckoutPMScreen, KasbonScreen, LunasScreen, ReceiptKasbonScreen,
     };
