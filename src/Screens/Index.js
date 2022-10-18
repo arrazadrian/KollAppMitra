@@ -22,7 +22,9 @@ import EditProdukScreen from "./EditProdukScreen";
 import OtwScreen from "./OtwScreen";
 import LanjutBelanjaScreen from "./LanjutBelanjaScreen";
 import TQScreen from "./TQScreen";
-import AkunJadiScreen from "./AkunJadiScreen"
+import AkunJadiScreen from "./AkunJadiScreen";
+import KasbonScreen from "./KasbonScreen";
+import LunasScreen from "./LunasScreen";
 
 export {
      SplashScreen, HomeScreen, 
@@ -33,5 +35,5 @@ export {
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
      OtwScreen, LanjutBelanjaScreen, TQScreen, AkunJadiScreen,
      ReceiptScreen, ScanScreen, FLocScreen, PanggilanScreen,
-     CheckoutPMScreen,
+     CheckoutPMScreen, KasbonScreen, LunasScreen,
     };

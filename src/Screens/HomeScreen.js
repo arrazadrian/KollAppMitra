@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, Dimensions, Alert, ActivityIndicator} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
-import { Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
+import { DompetKasbon, Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import { getAuth } from "firebase/auth";
@@ -281,7 +281,7 @@ const HomeScreen = ({ navigation }) => {
             )
           }
           <View>
-            <Text style={styles.judul} onPress={() => navigation.push('OtwScreen')}>Etalase Produk</Text>
+            <Text style={styles.judul} onPress={() => navigation.push('OtwScreen')}>Keperluan Toko</Text>
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                 <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
                   <Image source={Gerobak} style={styles.gambar}/>
@@ -293,6 +293,17 @@ const HomeScreen = ({ navigation }) => {
                   <Text style={styles.cardtext}>Produk Pre-Order</Text>
                 </Pressable>
             </View>
+            <Pressable style={styles.kasbon} onPress={() => {
+                navigation.push('Kasbon')
+                }}>
+                <View>
+                  <Text style={styles.texttemu}>Catatan Kasbon</Text>
+                  <Text style={styles.deskripsi}
+                    numberOfLines={2}
+                  >Daftar pinjaman pelanggan</Text>
+                </View>
+                <Image source={DompetKasbon} style={styles.gambardompet}/>
+              </Pressable>
               <Text style={styles.judul}>Bertemu di Jalan?</Text>
               <Pressable style={styles.langsung} onPress={() => {
                 dispatch(kosongkanKeranjang());
@@ -364,14 +375,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: IjoTua,
     fontWeight: 'bold',
+    flex: 2,
+    marginLeft: 10,
   },
   card:{
+    flexDirection: 'row',
     backgroundColor: Putih,
-    width:  width*0.42,
-    height: width*0.42,
+    width:  width*0.43,
+    height: width*0.20,
     padding: 15,
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 10,
     borderColor: Ijo,
     alignItems: 'center',
@@ -380,13 +394,14 @@ const styles = StyleSheet.create({
     padding:10,
   },
   gambar:{
-    width: 110,
-    height: 110,
+    width: width * 0.15,
+    height: width * 0.16,
     borderRadius: 10,
+    flex: 1.4,
   },
   langsung:{
     width: '100%',
-    height: height*0.16,
+    height: height*0.14,
     backgroundColor: Putih,
     padding: 10,
     marginTop: 10,
@@ -397,9 +412,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  kasbon:{
+    width: '100%',
+    height: height*0.1,
+    backgroundColor: Putih,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 10,
+    elevation: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   gambartemu:{
     width: width*0.25,
     height: width*0.25,
+    borderRadius: 10,
+  },
+  gambardompet:{
+    width: width*0.18,
+    height: width*0.13,
     borderRadius: 10,
   },
   texttemu:{
