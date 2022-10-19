@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image, Pressable, Alert} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
-import { Kuning, IjoTua, Ijo, Putih } from '../Utils/Warna'
+import { Kuning, IjoTua, Ijo, Putih, IjoMint } from '../Utils/Warna'
 import KasbonCard from '../Components/KasbonCard'
 import { getAuth } from "firebase/auth"
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore"
@@ -164,7 +164,10 @@ const AdaKasbonScreen = () => {
       }
     }
     fetchProses();
-  },[])
+  },[]);
+
+
+
   return (
     <View style={styles.latar}>
       {loading ? (
@@ -176,7 +179,21 @@ const AdaKasbonScreen = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom:80}} 
           data={adakasbon}
-          renderItem= {({item}) => <KasbonCard item={item} />}
+          renderItem= {({item}) => 
+              <View style={styles.card}>
+                <View>
+                    <Text style={styles.nama}>{item.namapelanggan}</Text>
+                    <Text style={{fontSize: 12}}>Mulai dari: {moment(item.waktu_dibuat.toDate()).calendar()}</Text>
+                </View>
+                <View>
+                    <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
+                    <Text style={styles.total}>Rp{item.total_kasbon}</Text>
+                </View>
+                <Pressable style={styles.tomboltambah}>
+                    <Text style={{fontSize: 16, textAlign:'center', color: Ijo, fontWeight:'bold'}}>Tambahkan dalam kasbon ini</Text>
+                </Pressable>
+              </View>
+            }
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={{height:10}}></View>}
           ListHeaderComponent={<View style={{height:10}}></View>}
@@ -184,7 +201,7 @@ const AdaKasbonScreen = () => {
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <Image style={styles.dompet} source={DompetKasbon}/>
               <Text style={styles.none}>Pelanggan ini sedang tidak punya kasbon yang belum dibayar</Text> 
-              <Pressable style={styles.tombol} onPress={kasbonBaru}>
+              <Pressable style={styles.tombol}>
                   <Text style={styles.tomboltext}>Buat kasbon baru</Text>
               </Pressable> 
             </View>
@@ -194,6 +211,8 @@ const AdaKasbonScreen = () => {
     </View>
   )
 }
+
+
 
 export default AdaKasbonScreen
 
@@ -207,6 +226,13 @@ const styles = StyleSheet.create({
       width:'50%',
       padding: 10,
       borderRadius: 20,
+    },
+    tomboltambah:{
+      backgroundColor: IjoMint,
+      width:'90%',
+      padding: 10,
+      borderRadius: 10,
+      marginTop: 10,
     },
     dompet:{
       width: width * 0.4,
@@ -227,5 +253,31 @@ const styles = StyleSheet.create({
       textAlign:'center',
       color: Putih,
       fontWeight:'bold',
+    },
+    card:{
+      backgroundColor: Putih,
+      borderColor: Ijo,
+      borderWidth: 1,
+      marginHorizontal: 10,
+      marginTop: 5,
+      marginBottom: 5,
+      borderRadius: 10,
+      elevation: 5,
+      flexDirection: 'row',
+      alignItems:'center',
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      flexDirection:'row',
+      justifyContent:'space-between',
+    },
+    nama:{
+      color: IjoTua,
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    total:{
+        color: Ijo,
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 })
