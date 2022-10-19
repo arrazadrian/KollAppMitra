@@ -113,7 +113,7 @@ const ReceiptScreen = ({route}) => {
                     <Text style={styles.subjudul}>Nama Pelanggan</Text>
                     <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namapelanggan}</Text>
                 </View>
-                { status_transaksi == "Dalam Proses" ? (
+                { status_transaksi == "Dalam Proses" && (
                   <View style={{flexDirection: 'row'}}>
                     <Pressable onPress={telepon}>
                        <Image style={styles.aksi} source={Call}/>
@@ -122,10 +122,7 @@ const ReceiptScreen = ({route}) => {
                         <Image style={styles.aksi} source={Chat}/>
                     </Pressable>
                   </View>
-                ):(
-                  <View/>
-                )
-                }
+                )}
               </View>
         </View>
       

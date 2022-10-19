@@ -61,7 +61,7 @@ const AdaKasbonScreen = () => {
           jumlah_kuantitas,
           pembayaran,
           );
-          let transaksi = {harga_total: hargatotalsemua, id_transaksi: kode_transaksiTL}
+          let transaksi = [{harga_total: hargatotalsemua, id: kode_transaksiTL}]
         buatKasbonBaru(
           namamitra,
           namatoko,

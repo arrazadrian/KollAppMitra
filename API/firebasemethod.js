@@ -706,7 +706,7 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
 
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
-  transaksi.waktu_transaksi = serverTimestamp();
+  transaksi[0].waktu_transaksi = new Date();
   try{
     if(docSnap.exists()){
       addDoc(collection(db, "kasbon"), {

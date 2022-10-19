@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { DompetKasbon, KollLong } from '../assets/Images/Index'
 import GarisBatas from '../Components/GarisBatas'
 import moment from 'moment'
 import localization from 'moment/locale/id'
-
+import { Call, Chat } from '../assets/Icons/Index'
+import * as Linking from 'expo-linking'
 
 const { width, height } = Dimensions.get('window')
 
@@ -18,6 +19,14 @@ const ReceiptKasbonScreen = ({ route }) => {
     id_kasbon, id_mitra, namamitra, namatoko, phonemitra, id_pelanngan, status_kasbon,
     namapelanggan, phonepelanggan, waktu_dibuat, transaksi, total_kasbon,
      } = route.params;
+
+     const telepon = () => {
+      Linking.openURL(`tel:${phonepelanggan}`);
+    };
+  
+    const sms = () => {
+      Linking.openURL(`sms:${phonepelanggan}`);
+    };
 
   return (
     <View style={styles.latar}>
@@ -44,22 +53,36 @@ const ReceiptKasbonScreen = ({ route }) => {
       </View>
       <GarisBatas/>
       <View style={styles.bagian}>
-        <Text style={styles.subjudul}>Nama Pelanggan</Text>
-          <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namamitra}</Text>
+          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+            <View>
+                <Text style={styles.subjudul}>Nama Pelanggan</Text>
+                <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namamitra}</Text>
+            </View>
+            { status_kasbon == "Belum Lunas" && (
+                <View style={{flexDirection: 'row'}}>
+                  <Pressable onPress={telepon}>
+                    <Image style={styles.aksi} source={Call}/>
+                  </Pressable>
+                  <Pressable  onPress={sms}>
+                      <Image style={styles.aksi} source={Chat}/>
+                  </Pressable>
+                </View>
+            )}
+          </View>
       </View>
       <GarisBatas/>
       <View style={styles.bagian}>
-        <Text style={styles.subjudul}>Daftar Transaksi</Text>
-        {Object.entries(transaksi).map(([key, items]) => (
-            <View key={key}>
+        <Text style={{fontSize: 16, color: IjoTua, fontWeight:'bold', marginBottom: 10 }}>Daftar Transaksi</Text>
+        {transaksi.map(key => (
+          <View key={key}>
               <View style={styles.transaksi}>
                 <View>
-                  <Text style={{fontSize: 12}}> ID: {items[0]?.id_transaksi}</Text>
-                  <Text style={{color:Ijo, fontSize: 16}}>{items[0]?.waktu_transaksi}</Text>
+                  <Text style={{fontSize: 12}}> ID: {transaksi[0]?.id}</Text>
+                  <Text style={{color:Ijo, fontSize: 16}}>{moment(transaksi[0]?.waktu_transaksi.toDate()).calendar()}</Text>
                 </View>
-                <Text style={{color: IjoTua, fontSize: 16}}>Rp{items[0]?.harga_total}</Text>
-              </View>
-            </View>
+                <Text style={{color: IjoTua, fontSize: 16}}>Rp{transaksi[0]?.harga_total}</Text>
+              </View> 
+          </View>
         ))}
       </View>
       <View style={styles.bawah}>
@@ -127,5 +150,10 @@ const styles = StyleSheet.create({
       width:'100%',
       padding: 8,
       borderRadius: 10,
+    },
+    aksi:{
+      width: width * 0.1,
+      height: width * 0.1,
+      marginHorizontal: 5,
     },
 })
