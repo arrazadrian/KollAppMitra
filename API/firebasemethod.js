@@ -700,22 +700,29 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
 // API 22: buatKasbonBaru
 // MEMBUAT KASBON BARU. 
 
-export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, transaksi, hargatotalsemua) => {  
+export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, phonepelanggan,transaksi, hargatotalsemua) => {  
   const auth = getAuth();
   const db = getFirestore(app);
+
+  const docRef = doc(db, "mitra", auth.currentUser.uid);
+  const docSnap = await getDoc(docRef);
   transaksi.waktu_transaksi = serverTimestamp();
   try{
-    addDoc(collection(db, "kasbon"), {
-      id_mitra: auth.currentUser.uid, 
-      namamitra: namamitra,
-      namatoko: namatoko,
-      id_pelanggan: kodeUID,
-      namapelanggan: namapelanggan,
-      status_kasbon: "Belum Lunas",
-      waktu_dibuat: serverTimestamp(),
-      transaksi: transaksi,
-      total_kasbon: hargatotalsemua,
-    })
+    if(docSnap.exists()){
+      addDoc(collection(db, "kasbon"), {
+        id_mitra: auth.currentUser.uid, 
+        namamitra: namamitra,
+        namatoko: namatoko,
+        phonemitra: docSnap.data().phone,
+        id_pelanggan: kodeUID,
+        namapelanggan: namapelanggan,
+        phonepelanggan: phonepelanggan,
+        status_kasbon: "Belum Lunas",
+        waktu_dibuat: serverTimestamp(),
+        transaksi: transaksi,
+        total_kasbon: hargatotalsemua,
+      })
+    }
   } catch(err){
     console.log('Ada Error Membuat Kasbon.', err);
   };

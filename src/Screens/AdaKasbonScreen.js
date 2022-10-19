@@ -67,6 +67,7 @@ const AdaKasbonScreen = () => {
           namatoko,
           namapelanggan,
           kodeUID,
+          phonepelanggan,
           transaksi,
           hargatotalsemua,
         );
@@ -84,7 +85,7 @@ const AdaKasbonScreen = () => {
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
-  const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
+  const { kodeUID, namapelanggan, phonepelanggan } = useSelector(state => state.pelanggan);
   const { namamitra, namatoko } = useSelector(state => state.mitra);
 
   const subtotalhargaKeranjang = useSelector(totalHarga)

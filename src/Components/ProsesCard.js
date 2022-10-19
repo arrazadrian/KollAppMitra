@@ -19,7 +19,7 @@ const ProsesCard = ({ item }) => {
     navigation.navigate('PanggilanScreen', { 
       alamat_pelanggan: item?.alamat_pelanggan,
       id_mitra: item.id_mitra,
-      id_pelanngan: item.id_mitra,
+      id_pelanngan: item.id_pelanngan,
       jenislayanan: item.jenislayanan,
       namamitra: item.namamitra,
       namatoko: item.namatoko,

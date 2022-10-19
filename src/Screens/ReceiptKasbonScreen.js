@@ -3,10 +3,22 @@ import React from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
 import { DompetKasbon, KollLong } from '../assets/Images/Index'
 import GarisBatas from '../Components/GarisBatas'
+import moment from 'moment'
+import localization from 'moment/locale/id'
+
 
 const { width, height } = Dimensions.get('window')
 
-const ReceiptKasbonScreen = () => {
+
+const ReceiptKasbonScreen = ({ route }) => {
+
+  moment.updateLocale('id', localization);
+
+  const { 
+    id_kasbon, id_mitra, namamitra, namatoko, phonemitra, id_pelanngan, status_kasbon,
+    namapelanggan, phonepelanggan, waktu_dibuat, transaksi, total_kasbon,
+     } = route.params;
+
   return (
     <View style={styles.latar}>
       <View style={styles.atas}>
@@ -19,37 +31,41 @@ const ReceiptKasbonScreen = () => {
       <View style={styles.bagian}>
           <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
               <Text>ID Kasbon</Text>
-              <Text>128237bhjadasa</Text>
+              <Text>{id_kasbon}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
               <Text>Status Kasbon</Text>
-              <Text>Belum Lunas</Text>
+              <Text>{status_kasbon}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
               <Text>Mulai Tanggal</Text>
-              <Text>10 - 1 - 2022</Text>
+              <Text>{moment(waktu_dibuat.toDate()).calendar()}</Text>
           </View>
       </View>
       <GarisBatas/>
       <View style={styles.bagian}>
         <Text style={styles.subjudul}>Nama Pelanggan</Text>
-          <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>Hooa Hamep</Text>
+          <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namamitra}</Text>
       </View>
       <GarisBatas/>
       <View style={styles.bagian}>
         <Text style={styles.subjudul}>Daftar Transaksi</Text>
-        <View style={styles.transaksi}>
-          <View>
-            <Text style={{fontSize: 12}}> ID: 2e1890138012</Text>
-            <Text style={{color:Ijo, fontSize: 16}}>8 Febura 2081</Text>
-          </View>
-          <Text style={{color: IjoTua, fontSize: 16}}>Rp67000</Text>
-        </View>
+        {Object.entries(transaksi).map(([key, items]) => (
+            <View key={key}>
+              <View style={styles.transaksi}>
+                <View>
+                  <Text style={{fontSize: 12}}> ID: {items[0]?.id_transaksi}</Text>
+                  <Text style={{color:Ijo, fontSize: 16}}>{items[0]?.waktu_transaksi}</Text>
+                </View>
+                <Text style={{color: IjoTua, fontSize: 16}}>Rp{items[0]?.harga_total}</Text>
+              </View>
+            </View>
+        ))}
       </View>
       <View style={styles.bawah}>
         <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 10, alignItems:'center'}}>
           <Text>Total Kasbon</Text>
-          <Text style={styles.subjudul}>Rp340500</Text>
+          <Text style={styles.subjudul}>Rp{total_kasbon}</Text>
         </View>
         <TouchableOpacity style={styles.tombol}>
             <Text style={[styles.subjudul, {color: Ijo, fontSize: 20, textAlign:'center'}]}>Sudah Lunas</Text>
@@ -94,6 +110,7 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
+      marginBottom: 10,
     },
     bawah:{
       borderTopLeftRadius: 20,

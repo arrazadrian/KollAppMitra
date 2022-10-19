@@ -15,6 +15,7 @@ const ScanScreen = () => {
     const [scanned, setScanned] = useState(false);
     const [kodeUID, setKodeUID] = useState();
     const [namapelanggan, setNamapelanggan] = useState();
+    const [phonepelanggan, setPhonepelanggan] = useState();
     const dispatch = useDispatch();
 
     const navigation = useNavigation();
@@ -38,6 +39,7 @@ const ScanScreen = () => {
           await getDoc(docRef).then(docSnap => {
             if (docSnap.exists()) {
               setNamapelanggan(docSnap.data().namalengkap);
+              setPhonepelanggan(docSnap.data().phone);
               setKodeUID(data);
             } else {
               Alert.alert('QR Code tidak dikenal','Pastikan QR Code berasal dari pengguna aplikasi Koll.');
@@ -56,7 +58,7 @@ const ScanScreen = () => {
 
       const masukredux = () =>{
         if(kodeUID){
-          dispatch(updateUID({kodeUID, namapelanggan}));
+          dispatch(updateUID({kodeUID, namapelanggan, phonepelanggan}));
           console.log('Sukses masuk redux')
           navigation.goBack();
         } else {
