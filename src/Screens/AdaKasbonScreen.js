@@ -13,11 +13,15 @@ import {
  } from '../features/keranjangSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { buatKasbonBaru, buatTransaksiTL } from '../../API/firebasemethod'
+import { buatKasbonBaru, buatTransaksiTL, tambahTransaksiKasbon } from '../../API/firebasemethod'
+import moment from 'moment'
+import localization from 'moment/locale/id'
 
 const { width, height } = Dimensions.get('window')
 
 const AdaKasbonScreen = () => {
+
+  moment.updateLocale('id', localization);
 
   const kasbonBaru =()=> {
     Alert.alert('Anda yakin buat kasbon baru?','Pastikan anda mengenal pelanggan tersebut dan dapat mempercayainya.',
@@ -49,6 +53,49 @@ const AdaKasbonScreen = () => {
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
       } else {
+        const id_transaksi = await buatTransaksiTL(
+          namamitra,
+          namatoko,
+          namapelanggan,
+          kodeUID,
+          kelompokProduk,
+          subtotalhargaKeranjang,
+          hargalayanan,
+          hargatotalsemua,
+          jumlah_kuantitas,
+          pembayaran,
+          );
+        buatKasbonBaru(
+          namamitra,
+          namatoko,
+          namapelanggan,
+          kodeUID,
+          phonepelanggan,
+          hargatotalsemua,
+          id_transaksi,
+        );
+        navigation.navigate("TQScreen");
+        // dispatch(kosongkanKeranjang());
+        // dispatch(resetPelanggan());
+      }
+    } catch (err){
+      Alert.alert('Ada error buat transaksi temu langsung dengan kasbon!', err.message);
+    }  
+  };
+
+  async function tambahkanKasbon(id_kasbon){
+    try{
+      let jumlah_kuantitas = items.length;
+      let pembayaran = 'Kasbon';
+      if (!namapelanggan) {
+        Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
+      } else if (!namamitra) {
+        Alert.alert('Nama mitra kosong','Silahkan tutup dan buka kembali aplikasi ini.');
+      } else if (!namatoko) {
+        Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
+      } else if (!items) {
+        Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
+      } else {
         const kode_transaksiTL = await buatTransaksiTL(
           namamitra,
           namatoko,
@@ -61,15 +108,10 @@ const AdaKasbonScreen = () => {
           jumlah_kuantitas,
           pembayaran,
           );
-          let transaksi = [{harga_total: hargatotalsemua, id: kode_transaksiTL}]
-        buatKasbonBaru(
-          namamitra,
-          namatoko,
-          namapelanggan,
-          kodeUID,
-          phonepelanggan,
-          transaksi,
-          hargatotalsemua,
+          let transaksi_baru = [{harga_total: hargatotalsemua, id: kode_transaksiTL}]
+        tambahTransaksiKasbon(
+          id_kasbon,
+          transaksi_baru,
         );
         navigation.navigate("TQScreen");
         // dispatch(kosongkanKeranjang());
@@ -78,7 +120,7 @@ const AdaKasbonScreen = () => {
     } catch (err){
       Alert.alert('Ada error buat transaksi temu langsung dengan kasbon!', err.message);
     }  
-  };
+  }
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -138,7 +180,7 @@ const AdaKasbonScreen = () => {
             total_kasbon,
           } = doc.data();
           list.push({
-            id: doc.id,
+            id_kasbon: doc.id,
             id_mitra, 
             namamitra,
             namatoko,
@@ -181,15 +223,17 @@ const AdaKasbonScreen = () => {
           data={adakasbon}
           renderItem= {({item}) => 
               <View style={styles.card}>
-                <View>
-                    <Text style={styles.nama}>{item.namapelanggan}</Text>
-                    <Text style={{fontSize: 12}}>Mulai dari: {moment(item.waktu_dibuat.toDate()).calendar()}</Text>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <View>
+                        <Text style={styles.nama}>{item.namapelanggan}</Text>
+                        <Text style={{fontSize: 12}}>Mulai dari: {moment(item.waktu_dibuat.toDate()).calendar()}</Text>
+                    </View>
+                    <View>
+                        <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
+                        <Text style={styles.total}>Rp{item.total_kasbon}</Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
-                    <Text style={styles.total}>Rp{item.total_kasbon}</Text>
-                </View>
-                <Pressable style={styles.tomboltambah}>
+                <Pressable style={styles.tomboltambah} onPress={tambahkanKasbon}>
                     <Text style={{fontSize: 16, textAlign:'center', color: Ijo, fontWeight:'bold'}}>Tambahkan dalam kasbon ini</Text>
                 </Pressable>
               </View>
@@ -201,7 +245,7 @@ const AdaKasbonScreen = () => {
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <Image style={styles.dompet} source={DompetKasbon}/>
               <Text style={styles.none}>Pelanggan ini sedang tidak punya kasbon yang belum dibayar</Text> 
-              <Pressable style={styles.tombol}>
+              <Pressable style={styles.tombol} onPress={kasbonBaru}>
                   <Text style={styles.tomboltext}>Buat kasbon baru</Text>
               </Pressable> 
             </View>
@@ -263,12 +307,9 @@ const styles = StyleSheet.create({
       marginBottom: 5,
       borderRadius: 10,
       elevation: 5,
-      flexDirection: 'row',
       alignItems:'center',
       paddingVertical: 10,
       paddingHorizontal: 15,
-      flexDirection:'row',
-      justifyContent:'space-between',
     },
     nama:{
       color: IjoTua,

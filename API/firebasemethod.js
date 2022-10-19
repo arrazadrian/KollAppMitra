@@ -8,7 +8,7 @@ import {
 import { 
   getFirestore, collection, 
   addDoc, setDoc, doc, 
-  serverTimestamp, onSnapshot,
+  serverTimestamp, 
   deleteDoc, getDoc, updateDoc,
   } from 'firebase/firestore/lite';
 import { 
@@ -333,11 +333,11 @@ export async function updateakunTanpafoto(namaakun, tokoakun, phoneakun, buka, t
   // const colRef = collection(docRef, "produk")
   // const storage = getStorage();
   
-  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
-  getDoc(docrefproduk).then(docSnap => {
+  const docrefakun = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefakun).then(docSnap => {
     if (docSnap.exists()) {
       try{
-        updateDoc(docrefproduk, {
+        updateDoc(docrefakun, {
           namalengkap: namaakun,
           namatoko: tokoakun,
           phone: phoneakun,
@@ -511,19 +511,19 @@ export async function updatemangkal(mangkal){
   const auth = getAuth();
   const db = getFirestore(app);
 
-  const docrefproduk = doc(db, "mitra", auth.currentUser.uid);
-  getDoc(docrefproduk).then(docSnap => {
+  const docrefakun = doc(db, "mitra", auth.currentUser.uid);
+  getDoc(docrefakun).then(docSnap => {
     if (docSnap.exists()) {
       try{
         if(mangkal == true ){
-          updateDoc(docrefproduk, {
+          updateDoc(docrefakun, {
           mangkal: true,     
           });
           Alert.alert(
             'Status mangkal sudah aktif','Anda sekarang tidak bisa dipanggil oleh pelanggan via aplikasi dan pastikan anda berada di posisi mangkal.'          
           );
         } else {
-          updateDoc(docrefproduk, {
+          updateDoc(docrefakun, {
           mangkal: false,     
           });
         }   
@@ -700,16 +700,15 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
 // API 22: buatKasbonBaru
 // MEMBUAT KASBON BARU. 
 
-export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, phonepelanggan,transaksi, hargatotalsemua) => {  
+export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, phonepelanggan, hargatotalsemua, id_transaksi) => {  
   const auth = getAuth();
   const db = getFirestore(app);
 
   const docRef = doc(db, "mitra", auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
-  transaksi[0].waktu_transaksi = new Date();
   try{
     if(docSnap.exists()){
-      addDoc(collection(db, "kasbon"), {
+    const docRef = await addDoc(collection(db, "kasbon"), {
         id_mitra: auth.currentUser.uid, 
         namamitra: namamitra,
         namatoko: namatoko,
@@ -719,11 +718,50 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
         phonepelanggan: phonepelanggan,
         status_kasbon: "Belum Lunas",
         waktu_dibuat: serverTimestamp(),
-        transaksi: transaksi,
         total_kasbon: hargatotalsemua,
-      })
+      });
+    const colRef = collection(docRef,"transaksi_kasbon")
+    addDoc(colRef,{
+      id_transaksi: id_transaksi,
+      waktu_transaksi: serverTimestamp(),
+      total_harga: hargatotalsemua,
+    });
     }
   } catch(err){
     console.log('Ada Error Membuat Kasbon.', err);
   };
 };
+
+
+// // API 23: tambahTransaksiKasbon
+// // MENAMBAH TRANSAKSI DALAM KASBON. 
+
+// export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, total_kasbon, id_transaksi) => {  
+//   const db = getFirestore(app);
+//   try{
+//     const docRef = doc(db, "kasbon", id_kasbon);
+//     getDoc(docRef).then(docSnap => {
+//       if (docSnap.exists()) {
+//         try{
+//             updateDoc(docRef, {
+//             total_kasbon: total_kasbon,     
+//             });
+          
+//         } catch (err) {
+//           Alert.alert('Ada error untuk memperbarui status!', err.message);
+//         }
+//       } else {
+//         // doc.data() will be undefined in this case
+//         console.log("Tidak ada dokumen tersebut!");
+//       }
+//     })
+//     const colRef = collection(docRef,"transaksi_kasbon")
+//     addDoc(colRef,{
+//       id_transaksi: id_transaksi,
+//       waktu_transaksi: serverTimestamp(),
+//       harga_total: hargatotalsemua,
+//     });
+//   } catch(err){
+//     console.log('Ada error menambah transaksi kasbon.', err);
+//   };
+// };
