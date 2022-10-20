@@ -32,7 +32,7 @@ const RiwayatScreen = () => {
           const { 
             hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, jenislayanan, 
             jumlah_kuantitas, namamitra,  namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, status_transaksi,
-            catatan,
+            catatan_lokasi, catatan_produk, pembayaran,
           } = doc.data();
           list.push({
             id: doc.id,
@@ -50,7 +50,9 @@ const RiwayatScreen = () => {
             waktu_selesai,
             waktu_dipesan, 
             status_transaksi,
-            catatan,
+            catatan_lokasi,
+            catatan_produk,
+            pembayaran,
           });
         });
 

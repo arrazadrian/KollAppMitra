@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollV
 import React, {useEffect, useState, useRef} from 'react'
 import * as Linking from 'expo-linking';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
-import { KollLong, Location } from '../assets/Images/Index';
+import { Kasbon, KollLong, Location, Lunas } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
 import ListReceipt from '../Components/ListReceipt';
 import moment from 'moment';
@@ -23,7 +23,7 @@ const ReceiptScreen = ({route}) => {
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-    status_transaksi, catatan, phonemitra, phonepelanggan,
+    status_transaksi, catatan, phonemitra, phonepelanggan, pembayaran,
      } = route.params;
 
   const telepon = () => {
@@ -123,6 +123,12 @@ const ReceiptScreen = ({route}) => {
                     </Pressable>
                   </View>
                 )}
+                { pembayaran == "Lunas" ? (
+                  <Image source={Lunas} style={{width: width * 0.2, height: width * 0.2, marginVertical: -20}}/>
+                  ):(
+                    <Image source={Kasbon} style={{width: width * 0.2, height: width * 0.2, marginVertical: -20}}/>
+                  )
+                }
               </View>
         </View>
       

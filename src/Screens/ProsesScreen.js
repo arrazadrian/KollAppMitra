@@ -33,7 +33,8 @@ const ProsesScreen = () => {
           const { 
             alamat_pelanggan,
             geo_alamat,
-            catatan,
+            catatan_lokasi,
+            catatan_produk,
             id_mitra, 
             namamitra,
             namatoko,
@@ -52,12 +53,14 @@ const ProsesScreen = () => {
             panggilan,
             jarak,
             estimasi_waktu,
+            pembayaran,
           } = doc.data();
           list.push({
             id: doc.id,
             alamat_pelanggan,
             geo_alamat,
-            catatan,
+            catatan_lokasi,
+            catatan_produk,
             id_mitra, 
             namamitra,
             namatoko,
@@ -76,6 +79,7 @@ const ProsesScreen = () => {
             panggilan,
             jarak,
             estimasi_waktu,
+            pembayaran,
           });
         });
         

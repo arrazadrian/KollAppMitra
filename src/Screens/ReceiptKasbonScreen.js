@@ -143,17 +143,6 @@ const ReceiptKasbonScreen = ({ navigation, route }) => {
       <GarisBatas/>
       <View style={styles.bagian}>
         <Text style={{fontSize: 16, color: IjoTua, fontWeight:'bold', marginBottom: 10 }}>Daftar Transaksi</Text>
-        {/* {transaksi.map(key => (
-          <View key={key}>
-              <View style={styles.transaksi}>
-                <View>
-                  <Text style={{fontSize: 12}}> ID: {transaksi[0]?.id}</Text>
-                  <Text style={{color:Ijo, fontSize: 16}}>{moment(transaksi[0]?.waktu_transaksi.toDate()).calendar()}</Text>
-                </View>
-                <Text style={{color: IjoTua, fontSize: 16}}>Rp{transaksi[0]?.harga_total}</Text>
-              </View> 
-          </View>
-        ))} */}
         {loading ? (
         <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
           <ActivityIndicator size="large" color={IjoTua}/>
