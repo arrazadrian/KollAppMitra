@@ -307,9 +307,9 @@ const HomeScreen = ({ navigation }) => {
                 <Image source={DompetKasbon} style={styles.gambardompet}/>
               </Pressable>
               <Text style={styles.judul}>Bertemu di Jalan?</Text>
-              <Pressable style={styles.langsung} onPress={() => {
-                dispatch(kosongkanKeranjang());
-                dispatch(resetPelanggan());
+              <Pressable style={styles.langsung} onPress={ async () => {
+                await dispatch(kosongkanKeranjang());
+                await dispatch(resetPelanggan());
                 navigation.push('LangsungScreen')
                 }}>
                 <View>

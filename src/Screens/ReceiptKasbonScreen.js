@@ -42,7 +42,8 @@ const ReceiptKasbonScreen = ({ route }) => {
           const docRef = doc(db, "kasbon", id_kasbon);
           const colRef = collection(docRef, "transaksi_kasbon")
   
-          const querySnapshot = await getDocs(colRef);
+          const q = query(colRef, orderBy("waktu_transaksi","desc"));
+          const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             const { id_transaksi, total_harga, waktu_transaksi } = doc.data();
