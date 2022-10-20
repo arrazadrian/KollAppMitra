@@ -96,7 +96,7 @@ const AdaKasbonScreen = () => {
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
       } else {
-        const kode_transaksiTL = await buatTransaksiTL(
+        const id_transaksi = await buatTransaksiTL(
           namamitra,
           namatoko,
           namapelanggan,
@@ -108,10 +108,10 @@ const AdaKasbonScreen = () => {
           jumlah_kuantitas,
           pembayaran,
           );
-          let transaksi_baru = [{harga_total: hargatotalsemua, id: kode_transaksiTL}]
         tambahTransaksiKasbon(
           id_kasbon,
-          transaksi_baru,
+          hargatotalsemua,
+          id_transaksi
         );
         navigation.navigate("TQScreen");
         // dispatch(kosongkanKeranjang());
@@ -180,7 +180,7 @@ const AdaKasbonScreen = () => {
             total_kasbon,
           } = doc.data();
           list.push({
-            id_kasbon: doc.id,
+            id: doc.id,
             id_mitra, 
             namamitra,
             namatoko,
@@ -233,7 +233,7 @@ const AdaKasbonScreen = () => {
                         <Text style={styles.total}>Rp{item.total_kasbon}</Text>
                     </View>
                 </View>
-                <Pressable style={styles.tomboltambah} onPress={tambahkanKasbon}>
+                <Pressable style={styles.tomboltambah} onPress={() => tambahkanKasbon(item.id)}>
                     <Text style={{fontSize: 16, textAlign:'center', color: Ijo, fontWeight:'bold'}}>Tambahkan dalam kasbon ini</Text>
                 </Pressable>
               </View>
@@ -273,10 +273,11 @@ const styles = StyleSheet.create({
     },
     tomboltambah:{
       backgroundColor: IjoMint,
-      width:'90%',
+      width:'100%',
       padding: 10,
       borderRadius: 10,
       marginTop: 10,
+      alignSelf:'center',
     },
     dompet:{
       width: width * 0.4,
@@ -307,9 +308,7 @@ const styles = StyleSheet.create({
       marginBottom: 5,
       borderRadius: 10,
       elevation: 5,
-      alignItems:'center',
-      paddingVertical: 10,
-      paddingHorizontal: 15,
+      padding: 10,
     },
     nama:{
       color: IjoTua,

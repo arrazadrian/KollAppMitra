@@ -267,12 +267,12 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
       backgroundColor: Ijo,
-      width: '40%',
+      width: '48%',
     },
     tombolkasbon:{
       borderRadius: 10,
       padding: 10,
       backgroundColor: Putih,
-      width: '40%',
+      width: '48%',
     },
 })

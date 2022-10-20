@@ -134,7 +134,7 @@ const ReceiptKasbonScreen = ({ route }) => {
           ):(
         <View style={{marginBottom: height * 0.2}}>
           {transaksiKB.map(item => (
-           <View key={transaksiKB.id}>
+           <View key={item.id}>
                <View style={styles.transaksi}>
                  <View>
                    <Text style={{fontSize: 12}}> ID: {item.id_transaksi}</Text>

@@ -733,35 +733,31 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
 };
 
 
-// // API 23: tambahTransaksiKasbon
-// // MENAMBAH TRANSAKSI DALAM KASBON. 
+// API 23: tambahTransaksiKasbon
+// MENAMBAH TRANSAKSI DALAM KASBON. 
 
-// export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, total_kasbon, id_transaksi) => {  
-//   const db = getFirestore(app);
-//   try{
-//     const docRef = doc(db, "kasbon", id_kasbon);
-//     getDoc(docRef).then(docSnap => {
-//       if (docSnap.exists()) {
-//         try{
-//             updateDoc(docRef, {
-//             total_kasbon: total_kasbon,     
-//             });
-          
-//         } catch (err) {
-//           Alert.alert('Ada error untuk memperbarui status!', err.message);
-//         }
-//       } else {
-//         // doc.data() will be undefined in this case
-//         console.log("Tidak ada dokumen tersebut!");
-//       }
-//     })
-//     const colRef = collection(docRef,"transaksi_kasbon")
-//     addDoc(colRef,{
-//       id_transaksi: id_transaksi,
-//       waktu_transaksi: serverTimestamp(),
-//       harga_total: hargatotalsemua,
-//     });
-//   } catch(err){
-//     console.log('Ada error menambah transaksi kasbon.', err);
-//   };
-// };
+export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, id_transaksi) => {  
+  const db = getFirestore(app);
+  const docRef = doc(db, "kasbon", id_kasbon);
+  const docSnap = await getDoc(docRef);
+  const colRef = collection(docRef, "transaksi_kasbon");
+  try{
+    if(docSnap.exists()){
+        let total_kasbon = docSnap.data().total_kasbon + hargatotalsemua;
+
+        updateDoc(docRef, { 
+            total_kasbon: total_kasbon, 
+          });
+           
+        addDoc(colRef,{
+          id_transaksi: id_transaksi,
+          total_harga: hargatotalsemua,
+          waktu_transaksi: serverTimestamp(),
+        });
+    } else {
+      console.log("No such document!");
+    }
+  } catch(err){
+    console.log('Ada Error manambah tranksaksi kasbon.', err);
+  };
+};

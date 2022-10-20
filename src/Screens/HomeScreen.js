@@ -171,34 +171,34 @@ const HomeScreen = ({ navigation }) => {
   const geofire = require('geofire-common');
 
 
-  useEffect(() => {
-      (async () => {
+  // useEffect(() => {
+  //     (async () => {
       
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-      }
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //         setErrorMsg('Permission to access location was denied');
+  //         return;
+  //     }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      // console.log("Lat: " +location.coords.latitude);
-      // console.log("Lng: " +location.coords.longitude);
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //     // console.log("Lat: " +location.coords.latitude);
+  //     // console.log("Lng: " +location.coords.longitude);
 
-      fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
-          &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
-      ).then((res) => res.json())
-      .then((data) => {
-          //console.log(data.results[0].formatted_address);
-          dispatch(updatePosisi({
-          geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
-          alamat_mitra: data.results[0]?.formatted_address,
-          geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
-          }));
-      })
-      })();
-  }, []); 
+  //     fetch(
+  //         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
+  //         &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
+  //     ).then((res) => res.json())
+  //     .then((data) => {
+  //         //console.log(data.results[0].formatted_address);
+  //         dispatch(updatePosisi({
+  //         geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+  //         alamat_mitra: data.results[0]?.formatted_address,
+  //         geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+  //         }));
+  //     })
+  //     })();
+  // }, []); 
   
 
   return ( 
