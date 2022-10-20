@@ -732,8 +732,27 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
   };
 };
 
+// API 23: lunaskanKasbon
+// MENAMBAH TRANSAKSI DALAM KASBON. 
 
-// API 23: tambahTransaksiKasbon
+export const lunaskanKasbon = async (id_kasbon) => {  
+  const db = getFirestore(app);
+  const docRef = doc(db, "kasbon", id_kasbon);
+  const docSnap = await getDoc(docRef);
+  try{
+    if(docSnap.exists()){
+      updateDoc(docRef, { 
+          status_kasbon: "Lunas", 
+      });
+    } else {
+      console.log("No such document!");
+    }
+  } catch(err){
+    console.log('Ada Error manambah tranksaksi kasbon.', err);
+  };
+};
+
+// API 24: tambahTransaksiKasbon
 // MENAMBAH TRANSAKSI DALAM KASBON. 
 
 export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, id_transaksi) => {  

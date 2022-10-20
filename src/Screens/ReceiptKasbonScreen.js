@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Pressable, ActivityIndicator, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Pressable, ActivityIndicator, ScrollView, Alert} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna'
-import { DompetKasbon, KollLong } from '../assets/Images/Index'
+import { DompetKasbon, KollLong, Lunas } from '../assets/Images/Index'
 import GarisBatas from '../Components/GarisBatas'
 import moment from 'moment'
 import localization from 'moment/locale/id'
@@ -9,13 +9,36 @@ import { Call, Chat } from '../assets/Icons/Index'
 import * as Linking from 'expo-linking'
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore"
 import { app } from '../../Firebase/config'
+import { lunaskanKasbon } from '../../API/firebasemethod'
 
 const { width, height } = Dimensions.get('window')
 
-
-const ReceiptKasbonScreen = ({ route }) => {
+const ReceiptKasbonScreen = ({ navigation, route }) => {
 
   moment.updateLocale('id', localization);
+
+  const handleLunas =()=> {
+    Alert.alert('Anda yakin melunaskan kasbon?','Pastikan pelanggan terkait sudah membayar lunas total kasbon.',
+          [
+            {
+              text: 'Batal',
+              onPress: () => {
+                console.log('Batal dipencet')
+              }
+            },
+            {
+              text: 'Yakin',
+              onPress: melunaskanKasbon,
+            }
+          ]
+          )
+  };
+
+  const melunaskanKasbon = () =>{
+      lunaskanKasbon(id_kasbon);
+      Alert.alert('Status kasbon sudah menjadi lunas','Akhirnya uang yang ditunggu pun tiba!');
+      navigation.navigate('LunasScreen')
+  };
 
   const { 
     id_kasbon, id_mitra, namamitra, namatoko, phonemitra, id_pelanngan, status_kasbon,
@@ -112,6 +135,9 @@ const ReceiptKasbonScreen = ({ route }) => {
                   </Pressable>
                 </View>
             )}
+            { status_kasbon == "Lunas" && (
+                <Image source={Lunas} style={{width: width * 0.2, height: width * 0.2, marginVertical:-20}}/>
+            )}
           </View>
       </View>
       <GarisBatas/>
@@ -156,9 +182,11 @@ const ReceiptKasbonScreen = ({ route }) => {
           <Text>Total Kasbon</Text>
           <Text style={styles.subjudul}>Rp{total_kasbon}</Text>
         </View>
-        <TouchableOpacity style={styles.tombol}>
+        { status_kasbon == "Belum Lunas" && (
+        <TouchableOpacity style={styles.tombol} onPress={handleLunas}>
             <Text style={[styles.subjudul, {color: Ijo, fontSize: 20, textAlign:'center'}]}>Sudah Lunas</Text>
         </TouchableOpacity>
+        )}
       </View>
     </View>
   )
