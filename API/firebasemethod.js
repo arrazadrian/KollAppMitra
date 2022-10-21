@@ -160,6 +160,7 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
     satuan: satuan,
     kategori: kategori,
     pemilik: auth.currentUser.uid,
+    tersedia: true,
   })
   .then(() => {
     Alert.alert(
@@ -193,6 +194,7 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
     satuan: satuan,
     kategori: kategori,
     pemilik: auth.currentUser.uid,
+    tersedia: true,
   })
   .then(() => {
     Alert.alert(
