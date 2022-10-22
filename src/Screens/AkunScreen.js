@@ -8,6 +8,7 @@ import { handleSignOut } from '../../API/firebasemethod'
 import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window')
 
@@ -35,6 +36,8 @@ const AkunScreen = () => {
   const [waktu_buka, setWaktu_buka] = useState('')
   const [waktu_tutup, setWaktu_tutup] = useState('')
   const [alamat, setAlamat] = useState('')
+  const [rating_layanan, setRating_layanan] = useState('')
+  const [rating_produk, setRating_produk] = useState('')
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -50,6 +53,8 @@ const AkunScreen = () => {
         setWaktu_buka(doc.data().waktu_buka);
         setWaktu_tutup(doc.data().waktu_tutup);
         setAlamat(doc.data().alamat);
+        setRating_layanan(doc.data().rating_layanan);
+        setRating_produk(doc.data().rating_produk);
         console.log('getuserAkun jalan (Akun Screen)')
           // Respond to data
           // ...
@@ -68,8 +73,11 @@ const AkunScreen = () => {
         <Image source={KollLong} style={styles.logo}/>
       </View>
       <View style={styles.bungkus}>
-            <View style={{borderBottomColor: Ijo, borderBottomWidth: 1, marginBottom: 10 }}>
+            <View style={{borderBottomColor: Ijo, borderBottomWidth: 1, marginBottom: 10, justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
               <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Profil</Text>
+              <Pressable  onPress={pindahEdit}>
+                  <Ionicons name="settings" size={20} color={Ijo} />
+              </Pressable>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', marginBottom: 10}}>
               { fotoakun ? (
@@ -80,11 +88,20 @@ const AkunScreen = () => {
                 <View>
                     <Text style={{fontSize: 20, fontWeight:'bold', color: Putih,}}>{namaakun}</Text>
                     <Text style={{fontSize: 16,color: Putih,}}>Mitra Pedagang</Text>
-                    <Pressable  onPress={pindahEdit} >
-                        <View style={styles.edit}>
-                          <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Atur Profil</Text>
+                    <View style={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
+                        <View style={{alignItems:'center'}}>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Ionicons name="star" size={24} color="orange" />
+                                <Text style={styles.rating}>{rating_layanan.toFixed(1)}</Text>
+                            </View>
                         </View>
-                    </Pressable>
+                        <View style={{alignItems:'center'}}>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Ionicons name="leaf" size={24} color="green" />
+                                <Text style={styles.rating}>{rating_produk.toFixed(1)}</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
             </View>
             <View style={{borderBottomColor: Ijo, borderBottomWidth: 1}}>
@@ -113,13 +130,7 @@ const AkunScreen = () => {
                 </View>
                 <View>
                     <Text style={styles.subjudul}>Tempat Mangkal</Text>
-                    { alamat ? 
-                      (
-                        <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
-                        ) : (
-                        <Text style={{color: Abu, fontSize: 14, fontStyle: 'italic'}}>Tambahkan dari "Atur Profil"</Text>                        
-                      )
-                    }
+                    <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
                 </View>
             </View>
             <View style={styles.logout}>
@@ -154,6 +165,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 15,
   },
+  rating:{
+    fontSize: 24,
+    color: Putih,
+    fontWeight: 'bold',
+    marginLeft: 5,
+    marginRight: 15,
+  }, 
   subjudul:{
     color: Putih, 
     fontSize: 15, 
@@ -162,16 +180,6 @@ const styles = StyleSheet.create({
   subisi:{
     color: Putih, 
     fontSize: 16, 
-  },
-  edit:{
-    borderColor: Ijo,
-    borderWidth: 2,
-    borderRadius: 10,
-    width: '100%',
-    padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
   },
   logout:{
     alignItems: 'center',

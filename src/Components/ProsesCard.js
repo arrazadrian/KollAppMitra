@@ -28,7 +28,7 @@ const ProsesCard = ({ item }) => {
       phonepelanggan: item.phonepelanggan,
       status_transaksi: item?.status_transaksi,
       waktu_dipesan: item?.waktu_dipesan,
-      catatan: item?.catatan,
+      catatan_lokasi: item?.catatan_lokasi,
       geo_alamat: item.geo_alamat,
       id_transaksi: item.id,
     })
@@ -53,7 +53,9 @@ const ProsesCard = ({ item }) => {
       status_transaksi: item?.status_transaksi,
       waktu_selesai: item?.waktu_selesai,
       waktu_dipesan: item?.waktu_dipesan,
-      catatan: item?.catatan,
+      catatan_lokasi: item?.catatan_lokasi,
+      catatan_produk: item?.catatan_produk,
+      pembayaran: item?.pembayaran,
       id_transaksi: item.id,
     })
   };

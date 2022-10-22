@@ -52,7 +52,7 @@ const CheckoutLangScreen = () => {
   async function uploadtransaksiTemuLangsung(){
     try{
       let jumlah_kuantitas = items.length;
-      let pembayaran = 'Lunas';
+      let pembayaran = 'Tunai';
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
       } else if (!namamitra) {

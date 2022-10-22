@@ -301,7 +301,6 @@ const HomeScreen = ({ navigation }) => {
                 <View>
                   <Text style={styles.texttemu}>Catatan Kasbon</Text>
                   <Text style={styles.deskripsi}
-                    numberOfLines={2}
                   >Daftar pinjaman pelanggan</Text>
                 </View>
                 <Image source={DompetKasbon} style={styles.gambardompet}/>
