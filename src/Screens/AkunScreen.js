@@ -92,13 +92,13 @@ const AkunScreen = () => {
                         <View style={{alignItems:'center'}}>
                             <View style={{flexDirection:'row', alignItems:'center'}}>
                                 <Ionicons name="star" size={24} color="orange" />
-                                <Text style={styles.rating}>{rating_layanan.toFixed(1)}</Text>
+                                <Text style={styles.rating}>{Number(rating_layanan).toFixed(1)}</Text>
                             </View>
                         </View>
                         <View style={{alignItems:'center'}}>
                             <View style={{flexDirection:'row', alignItems:'center'}}>
                                 <Ionicons name="leaf" size={24} color="green" />
-                                <Text style={styles.rating}>{rating_produk.toFixed(1)}</Text>
+                                <Text style={styles.rating}>{Number(rating_produk).toFixed(1)}</Text>
                             </View>
                         </View>
                     </View>

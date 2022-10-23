@@ -1,12 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
    IconAkunIjo, IconAkunPutih,
    IconHomeIjo, IconHomePutih,
    IconRiwayatIjo, IconRiwayatPutih
 } from '../assets/Icons/Index'
 import { IjoTua, Putih } from '../Utils/Warna';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAuth } from "firebase/auth";
+import { getFirestore, doc, getDoc, onSnapshot, collection, query, where, orderBy } from 'firebase/firestore';
+import { app } from '../../Firebase/config';
+import { updateProses } from '../features/counterSlice';
 
 
 const TabItem = ({ isFocused, onPress, onLongPress, label}) => {
@@ -16,7 +20,28 @@ const TabItem = ({ isFocused, onPress, onLongPress, label}) => {
     if(label === "Akun") return isFocused ? <IconAkunPutih/> : <IconAkunIjo/>
   }
 
-  const { aktif } = useSelector(state => state.counter);
+  const[aktif,setAktif] = useState();
+  const auth = getAuth();
+  const db = getFirestore(app)
+  const dispatch = useDispatch();
+
+  //Get aktif trsanksaksi
+  useEffect(() => {
+    const colRef = collection(db, "transaksi")
+
+    const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Dalam Proses"), orderBy("waktu_dipesan","desc"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        setAktif(querySnapshot.size)
+        console.log('conter sekarang: ' + querySnapshot.size)
+    });
+    //unsubscribe();
+
+    dispatch(updateProses({ aktif }));
+    
+    return () => unsubscribe()
+  },[]) 
+
+  // const { aktif } = useSelector(state => state.counter);
 
   return (
     <TouchableOpacity

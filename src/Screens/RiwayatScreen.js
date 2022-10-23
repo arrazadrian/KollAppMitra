@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image} from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Ijo, Kuning, Hitam, Putih, IjoTua } from '../Utils/Warna'
 import RiwayatCard from '../Components/RiwayatCard'
 import { dataRiwayat } from '../Data/dataRiwayat'
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, orderBy, onSnapshot } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 import { Receipt } from '../assets/Images/Index';
+import { useFocusEffect } from '@react-navigation/native'
 
 
 const { width, height } = Dimensions.get('window')
@@ -14,67 +15,87 @@ const { width, height } = Dimensions.get('window')
 const RiwayatScreen = () => {
 
   const[riwayat,setRiwayat] = useState();
-  const[loading, setLoading] = useState(true);
-  const componentMounted = useRef(true);
 
-  useEffect(()=>{
-    const fetchRiwayat = async() => {
-      try{
-        const list = []; 
-        const auth = getAuth();
-        const db = getFirestore(app);
-        const colRef = collection(db, "transaksi")
+  // useEffect(()=>{
+  //   const fetchRiwayat = async() => {
+  //     try{
+  //       const list = []; 
+  //       const auth = getAuth();
+  //       const db = getFirestore(app);
+  //       const colRef = collection(db, "transaksi")
 
-        const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Selesai"), orderBy("waktu_selesai","desc"));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          const { 
-            hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, jenislayanan, 
-            jumlah_kuantitas, namamitra,  namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, status_transaksi,
-            catatan_lokasi, catatan_produk, pembayaran,
-          } = doc.data();
-          list.push({
-            id: doc.id,
-            hargalayanan,
-            hargasubtotal,
-            hargatotalsemua,
-            id_mitra,
-            id_pelanggan,
-            jenislayanan,
-            jumlah_kuantitas,
-            namamitra,
-            namatoko,
-            namapelanggan,
-            produk,
-            waktu_selesai,
-            waktu_dipesan, 
-            status_transaksi,
-            catatan_lokasi,
-            catatan_produk,
-            pembayaran,
-          });
-        });
+  //       const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Selesai"), orderBy("waktu_selesai","desc"));
+  //       const querySnapshot = await getDocs(q);
+  //       querySnapshot.forEach((doc) => {
+  //         // doc.data() is never undefined for query doc snapshots
+  //         const { 
+  //           hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, jenislayanan, 
+  //           jumlah_kuantitas, namamitra,  namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, status_transaksi,
+  //           catatan_lokasi, catatan_produk, pembayaran,
+  //         } = doc.data();
+  //         list.push({
+  //           id: doc.id,
+  //           hargalayanan,
+  //           hargasubtotal,
+  //           hargatotalsemua,
+  //           id_mitra,
+  //           id_pelanggan,
+  //           jenislayanan,
+  //           jumlah_kuantitas,
+  //           namamitra,
+  //           namatoko,
+  //           namapelanggan,
+  //           produk,
+  //           waktu_selesai,
+  //           waktu_dipesan, 
+  //           status_transaksi,
+  //           catatan_lokasi,
+  //           catatan_produk,
+  //           pembayaran,
+  //         });
+  //       });
 
-        if (componentMounted.current){ // (5) is component still mounted?
-          setRiwayat(list); // (1) write data to state
-          setLoading(false); // (2) write some value to state
-        }
-        return () => { // This code runs when component is unmounted
-            componentMounted.current = false; // (4) set it to false when we leave the page
-        }
+  //       if (componentMounted.current){ // (5) is component still mounted?
+  //         setRiwayat(list); // (1) write data to state
+  //         setLoading(false); // (2) write some value to state
+  //       }
+  //       return () => { // This code runs when component is unmounted
+  //           componentMounted.current = false; // (4) set it to false when we leave the page
+  //       }
 
-      } catch(err){
-        console.log(err);
-      }
-    }
-    fetchRiwayat();
-  },[])
+  //     } catch(err){
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchRiwayat();
+  //   return() => {
+  //     console.log('Riwayat unmounted');
+  //   }
+  // },[])
   //Tambah parameter "riwayat" bila mau auto refresh
+
+  //Dapetin data proses, putus listener kalo pindah halaman
+  useFocusEffect(
+    useCallback(() => {
+      const auth = getAuth();
+      const db = getFirestore(app);
+      const colRef = collection(db, "transaksi");
+      const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Selesai"), orderBy("waktu_selesai","desc"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const listRiwayat = []; 
+        querySnapshot.forEach(doc => listRiwayat.push({...doc.data(), id: doc.id}));
+        setRiwayat(listRiwayat);
+      });
+      return () => {
+        console.log('Riwayat Unmounted'); 
+        unsubscribe();
+      }
+    },[])
+  );
 
   return (
     <View style={styles.latar}>
-      {loading ? (
+      {!riwayat ? (
         <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
           <ActivityIndicator size="large" color={IjoTua}/>
         </View>

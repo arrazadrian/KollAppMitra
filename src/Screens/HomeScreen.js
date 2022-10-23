@@ -10,7 +10,6 @@ import { app } from '../../Firebase/config';
 import { updatestatus, updatemangkal } from '../../API/firebasemethod';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMitra } from '../features/mitraSlice';
-import { updateProses } from '../features/counterSlice';
 import { updatePosisi } from '../features/posisiSlice';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
@@ -120,8 +119,6 @@ const HomeScreen = ({ navigation }) => {
   const [namamitra, setNamamitra] = useState("Loading...");
   const [namatoko, setNamatoko] = useState("Loading...");
  
-  const[aktif,setAktif] = useState();
-
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -147,25 +144,6 @@ const HomeScreen = ({ navigation }) => {
     getuserHome();
     dispatch(setMitra({ namamitra, namatoko }));
   },[namatoko])
-
-  useEffect(() => {
-    async function getAktifTransaksi(){
-      try{
-        const colRef = collection(db, "transaksi")
-
-        const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Dalam Proses"), orderBy("waktu_dipesan","desc"));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            setAktif(querySnapshot.size)
-            console.log('conter sekarang: ' + querySnapshot.size)
-        });
-        //unsubscribe();
-        }catch (err){
-          Alert.alert('There is an error.', err.message)
-        };
-    }
-    getAktifTransaksi();
-    dispatch(updateProses({ aktif }));
-  },[aktif])
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);

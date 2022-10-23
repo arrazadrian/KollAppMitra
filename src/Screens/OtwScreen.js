@@ -34,6 +34,7 @@ const OtwScreen = ({ route }) => {
     geo_alamat,
     estimasi_waktu,
     jarak,
+    hargalayanan,
      } = route.params;
 
   const navigation = useNavigation();
@@ -70,6 +71,7 @@ const OtwScreen = ({ route }) => {
                 dispatch(kosongkanKeranjang());
                 navigation.navigate("LanjutBelanjaScreen",{
                   id_transaksi: id_transaksi,
+                  hargalayanan: hargalayanan,
                   // id_mitra : id_mitra, 
                   // id_pelanggan : id_pelanggan, 
                   // jenislayanan : jenislayanan,
@@ -219,8 +221,24 @@ const OtwScreen = ({ route }) => {
               onPress={() => {
                   setModalVisible(true);
               }}>
-              <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Catatan Lokasi</Text>
-              <Text style={{fontStyle:'italic'}} numberOfLines={1}>{catatan_lokasi}</Text>
+              { catatan_lokasi ? (
+                <View>
+                    <Text style={styles.subjudul}>
+                        Catatan Lokasi
+                    </Text>
+                    <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
+                        {catatan_lokasi}
+                    </Text>
+                </View>
+
+                ):(
+                <View>
+                    <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
+                        Tanpa catatan lokasi
+                    </Text>
+                </View>
+                )
+                }
           </Pressable>
           <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
               <Pressable style={styles.batal}

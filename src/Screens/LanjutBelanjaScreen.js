@@ -80,7 +80,7 @@ const atasjual = () => {
 const LanjutBelanjaScreen = ({ navigation, route }) => {
 
   const { 
-    id_transaksi,
+    id_transaksi, hargalayanan,
      } = route.params;
 
   const[produkutama,setProdukUtama] = useState();
@@ -177,7 +177,7 @@ const LanjutBelanjaScreen = ({ navigation, route }) => {
                 }
             />
             
-            <KeranjangPM id_transaksi = {id_transaksi}/>
+            <KeranjangPM id_transaksi = {id_transaksi} hargalayanan ={hargalayanan}/>
         </View>
       )}
     </View>

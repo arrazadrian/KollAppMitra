@@ -14,6 +14,7 @@ const KeranjangPM = (props) => {
   const handlePindahCheckout = () => {
     navigation.navigate('CheckoutPMScreen', { 
         id_transaksi: props.id_transaksi,
+        hargalayanan: props.hargalayanan,
       })
   };
 

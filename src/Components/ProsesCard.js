@@ -31,6 +31,7 @@ const ProsesCard = ({ item }) => {
       catatan_lokasi: item?.catatan_lokasi,
       geo_alamat: item.geo_alamat,
       id_transaksi: item.id,
+      hargalayanan: item.hargalayanan
     })
   };
 

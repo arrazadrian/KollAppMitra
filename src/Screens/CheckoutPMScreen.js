@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window')
 const CheckoutPMScreen = ({ route }) => {
 
   const { 
-    id_transaksi,
+    id_transaksi, hargalayanan,
      } = route.params;
 
   const navigation = useNavigation();
@@ -87,7 +87,6 @@ async function selesaikanPanggilMitra(){
   // console.log(namapelanggan);
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
-  const hargalayanan =  5000
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
  
   return (
@@ -124,14 +123,14 @@ async function selesaikanPanggilMitra(){
             <Text>Biaya Layanan</Text>
             <Text>{hargalayanan}</Text>
           </View>
+          <View style={styles.desk}>
+            <Text>Harga Total</Text>
+            <Text  style={styles.harga}>Rp{hargatotalsemua}</Text>
+          </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
           
           <View style={styles.desk}>
-            <View>
-              <Text>Harga Total</Text>
-              <Text style={styles.harga}>Rp{hargatotalsemua}</Text>
-            </View>
             <TouchableOpacity style={styles.tombol}
               onPress={selesaiTransaksi}
             >
@@ -171,7 +170,8 @@ const styles = StyleSheet.create({
       paddingHorizontal:10
     },
     card:{
-      backgroundColor: Putih,
+      borderColor: Ijo,
+      borderWidth: 0.3,
       padding: 10,
       flexDirection: 'row',
       borderRadius: 10,

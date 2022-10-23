@@ -29,7 +29,7 @@ const PanggilanScreen = ({ route, navigation }) => {
         status_transaksi, catatan_lokasi, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
 
-
+ 
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
 
@@ -57,7 +57,9 @@ const PanggilanScreen = ({ route, navigation }) => {
                 );
             }
         }, 1000);
-        return() => clearInterval(durasibalas);
+        return() => {
+            clearInterval(durasibalas);
+        }
     },[]);
 
     const handleTerima = () =>{
@@ -78,6 +80,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             alamat_mitra: alamat_mitra,
             estimasi_waktu: estimasi_waktu,
             jarak: jarak,
+            hargalayanan: hargalayanan,
           });
     };
   
@@ -93,35 +96,36 @@ const PanggilanScreen = ({ route, navigation }) => {
     const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
     const { estimasi_waktu, jarak } = useSelector(state => state.bobot);
 
-    //Dapetin posisi mitra saat ini
-    useEffect(() => {
-        (async () => {
+    // //Dapetin posisi mitra saat ini
+    // useEffect(() => {
+
+    //     (async () => {
         
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-        }
+    //     let { status } = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //         setErrorMsg('Permission to access location was denied');
+    //         return;
+    //     }
 
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-        // console.log("Lat: " +location.coords.latitude);
-        // console.log("Lng: " +location.coords.longitude);
+    //     let location = await Location.getCurrentPositionAsync({});
+    //     setLocation(location);
+    //     // console.log("Lat: " +location.coords.latitude);
+    //     // console.log("Lng: " +location.coords.longitude);
 
-        fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
-            &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
-        ).then((res) => res.json())
-        .then((data) => {
-            //console.log(data.results[0].formatted_address);
-            dispatch(updatePosisi({
-            geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
-            alamat_mitra: data.results[0]?.formatted_address,
-            geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
-            }));
-        })
-        })();
-    }, []); 
+    //     fetch(
+    //         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
+    //         &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
+    //     ).then((res) => res.json())
+    //     .then((data) => {
+    //         //console.log(data.results[0].formatted_address);
+    //         dispatch(updatePosisi({
+    //         geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+    //         alamat_mitra: data.results[0]?.formatted_address,
+    //         geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+    //         }));
+    //     })
+    //     })();
+    // }, []); 
     
     // console.log(geo_mitra);
     // console.log(alamat_mitra);
@@ -137,12 +141,13 @@ const PanggilanScreen = ({ route, navigation }) => {
     //Dapetin jarak dan waktu perjalanan mitra ke pelanggan 
     useEffect(()=>{
        // if(!alamat_mitra||!alamat_pelanggan) return;
+        const abortJar = new AbortController();
 
         (async () => {
             fetch(
                 `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${geo_mitra.lat},${geo_mitra.lng}&destinations=${geo_alamat.lat},${geo_alamat.lng}
                 &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
-            ).then((res) => res.json())
+            ,{ signal: abortJar.signal }).then((res) => res.json())
             .then((data) => {
                 //console.log(data.rows[0].elements[0].duration.text);
                 // console.log(data.rows[0].elements[0].distance.text);
@@ -171,6 +176,9 @@ const PanggilanScreen = ({ route, navigation }) => {
                 };
             })
         })();
+        return () => {
+            abortJar.abort();
+        };
     },[]);
     
   return (
@@ -239,8 +247,18 @@ const PanggilanScreen = ({ route, navigation }) => {
           /> */}
           </MapView>
         <View style={styles.bobot}> 
-            <Text style={styles.bobotAngka}>{jarak}</Text>
-            <Text style={styles.bobotAngka}>{estimasi_waktu}</Text>
+            <View style={{flex: 1}}>
+                <Text style={styles.bocil}>Harga Layanan</Text>
+                <Text style={styles.bobotAngka}>Rp{hargalayanan}</Text>
+            </View>
+            <View style={{flex: 1}}>
+                <Text style={styles.bocil}>Jarak Tempuh</Text>
+                <Text style={styles.bobotAngka}>{jarak}</Text>
+            </View>
+            <View style={{flex: 1}}>
+                <Text style={styles.bocil}>Waktu Tempuh</Text>
+                <Text style={styles.bobotAngka}>{estimasi_waktu}</Text>
+            </View>
         </View>
       <View style={styles.bawah}>
         <View style={{marginTop: 10, flexDirection:'row'}}>
@@ -269,12 +287,24 @@ const PanggilanScreen = ({ route, navigation }) => {
             onPress={() => {
                 setModalVisible(true);
             }}>
-                <Text style={styles.subjudul}>
-                    Catatan Lokasi
-                </Text>
-                <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
-                    {catatan_lokasi}
-                </Text>
+                { catatan_lokasi ? (
+                <View>
+                    <Text style={styles.subjudul}>
+                        Catatan Lokasi
+                    </Text>
+                    <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
+                        {catatan_lokasi}
+                    </Text>
+                </View>
+
+                ):(
+                <View>
+                    <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
+                        Tanpa catatan lokasi
+                    </Text>
+                </View>
+                )
+                }
             </Pressable>
             { !habis ? 
                 (
@@ -339,12 +369,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: width,
         height: height * 0.1,
-        bottom: height * 0.36,
+        bottom: height * 0.38,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         paddingHorizontal: 20,
         paddingTop: 10,
         justifyContent:'space-evenly',
+        flex: 1,
     },
     bawah:{
         backgroundColor: Kuning,
@@ -361,6 +392,10 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontWeight:'bold',
         color:IjoTua,
+    },
+    bocil:{
+        fontSize: 12,
+        textAlign:'center',
     },
     subjudul:{
         fontSize: 14,
