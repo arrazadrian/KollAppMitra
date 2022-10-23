@@ -28,7 +28,7 @@ const OtwScreen = ({ route }) => {
     namapelanggan, 
     waktu_dipesan, 
     alamat_pelanggan,
-    catatan, 
+    catatan_lokasi, 
     phonemitra, 
     phonepelanggan, 
     geo_alamat,
@@ -138,7 +138,7 @@ const OtwScreen = ({ route }) => {
             <View style={styles.modal}>
                 <View style={styles.modalView}>
                     <Text style={styles.subjudul}>Catatan Lokasi</Text>
-                    <Text style={{fontSize: 14}}>{catatan}</Text>
+                    <Text style={{fontSize: 14}}>{catatan_lokasi}</Text>
                     <TouchableOpacity
                     style={{ marginTop: 20}}
                     onPress={() => {
@@ -155,8 +155,8 @@ const OtwScreen = ({ route }) => {
             initialRegion={{
               latitude: (geo_alamat.lat + geo_mitra.lat)/2,
               longitude: (geo_alamat.lng + geo_mitra.lng)/2,
-              latitudeDelta: 0.5,
-              longitudeDelta: 0.5,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
           }}>
         { geo_mitra && geo_alamat && (
             <MapViewDirections
@@ -220,7 +220,7 @@ const OtwScreen = ({ route }) => {
                   setModalVisible(true);
               }}>
               <Text style={{color: IjoTua, fontWeight:'bold', fontSize: 16}}>Catatan Lokasi</Text>
-              <Text style={{fontStyle:'italic'}} numberOfLines={1}>{catatan}</Text>
+              <Text style={{fontStyle:'italic'}} numberOfLines={1}>{catatan_lokasi}</Text>
           </Pressable>
           <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
               <Pressable style={styles.batal}

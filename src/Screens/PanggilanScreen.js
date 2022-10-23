@@ -26,7 +26,7 @@ const PanggilanScreen = ({ route, navigation }) => {
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
         jumlah_kuantitas, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-        status_transaksi, catatan, phonemitra, phonepelanggan, geo_alamat,
+        status_transaksi, catatan_lokasi, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
 
 
@@ -70,7 +70,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             namapelanggan : namapelanggan, 
             waktu_dipesan : waktu_dipesan, 
             alamat_pelanggan : alamat_pelanggan,
-            catatan : catatan, 
+            catatan_lokasi : catatan_lokasi, 
             phonemitra : phonemitra, 
             phonepelanggan : phonepelanggan, 
             geo_alamat : geo_alamat,
@@ -189,7 +189,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             <View style={styles.modal}>
                 <View style={styles.modalView}>
                     <Text style={styles.subjudul}>Catatan Lokasi</Text>
-                    <Text style={{fontSize: 14}}>{catatan}</Text>
+                    <Text style={{fontSize: 14}}>{catatan_lokasi}</Text>
                     <TouchableOpacity
                     style={{ marginTop: 20}}
                     onPress={() => {
@@ -273,7 +273,7 @@ const PanggilanScreen = ({ route, navigation }) => {
                     Catatan Lokasi
                 </Text>
                 <Text style={{fontSize: 14, fontStyle:'italic'}}  numberOfLines={1}>
-                    {catatan}
+                    {catatan_lokasi}
                 </Text>
             </Pressable>
             { !habis ? 
