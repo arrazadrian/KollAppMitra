@@ -167,16 +167,17 @@ const ReceiptScreen = ({route}) => {
         <View style={styles.bagian}>
           <View style={{marginBottom: height* 0.25}}>
               <Text  style={styles.subjudul}>Daftar Produk</Text>
-              {catatan_produk ?(
-                <View style={[styles.catatan, {marginBottom: 10}]}>
-                  <Text style={{fontWeight:'bold'}}>Catatan produk</Text>
-                  <Text style={{fontStyle:'italic'}}>{catatan_produk}</Text>
-                </View>
-              ):(
-                <View style={[styles.catatan, {marginBottom: 10}]}>
-                  <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
-                </View>
-              ) 
+              {catatan_produk ?
+                (
+                  <View style={[styles.catatan, {marginBottom: 10}]}>
+                    <Text style={{fontWeight:'bold'}}>Catatan produk</Text>
+                    <Text style={{fontStyle:'italic'}}>{catatan_produk}</Text>
+                  </View>
+                ): catatan_produk && jenislayanan == "Pre-Order" ? (
+                  <View style={[styles.catatan, {marginBottom: 10}]}>
+                    <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
+                  </View>
+                ):( <View/> ) 
               }
                 {Object.entries(produk).map(([key, items]) => (
                     <View key={key}>

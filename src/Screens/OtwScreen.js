@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, View, Pressable, Dimensions, Alert, Modal, Tou
 import React, { useState, useEffect, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
-import { DPkartu } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
 import { useNavigation } from '@react-navigation/native';
 import GarisBatas from '../Components/GarisBatas';
@@ -43,18 +42,6 @@ const OtwScreen = ({ route }) => {
   const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
   const dispatch = useDispatch();
 
-
-  // const mapRef = useRef(null);
-
-  // useEffect(() => {
-  //   // if (!pelanggan || !mitra) return;
-
-  //   //Zoom out
-  //   mapRef.current.fitToSuppliedMarkers(['pelanggan','mitra'], {
-  //     edgePadding:{ top: 100, right: 100, bottom: 100, left: 100}
-  //   });
-  // },[jarak])
-
   const clickLanjut =()=> {
     Alert.alert('Anda yakin sudah sampai?','Sistem akan mengingatkan pelanggan bahwa mitra sudah sampai.',
           [
@@ -68,7 +55,6 @@ const OtwScreen = ({ route }) => {
               text: 'Sudah',
               onPress: () => {
                 sampaiPM(id_transaksi);
-                dispatch(kosongkanKeranjang());
                 navigation.navigate("LanjutBelanjaScreen",{
                   id_transaksi: id_transaksi,
                   hargalayanan: hargalayanan,

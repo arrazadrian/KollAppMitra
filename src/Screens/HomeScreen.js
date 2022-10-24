@@ -13,8 +13,8 @@ import { setMitra } from '../features/mitraSlice';
 import { updatePosisi } from '../features/posisiSlice';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
-import { kosongkanKeranjang } from '../features/keranjangSlice';
 import { resetPelanggan } from '../features/pelangganSlice';
+import { kosongkanKeranjang } from '../features/keranjangSlice';
 
 
 const { width, height } = Dimensions.get('window')

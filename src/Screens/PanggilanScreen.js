@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, SafeAreaView, Dimensions, Alert, TouchableOpacity, Modal, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, Pressable, Dimensions, Alert, TouchableOpacity, Modal, ActivityIndicator} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih, Kuning, Abu } from '../Utils/Warna';
 import MapView, { Marker } from 'react-native-maps';
@@ -10,8 +10,6 @@ import { terimaPM, tolakPM } from '../../API/firebasemethod';
 import { useSelector, useDispatch } from 'react-redux';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
-import { updatePosisi } from '../features/posisiSlice';
-import MapViewDirections from "react-native-maps-directions";
 import { updateBobot } from '../features/bobotSlice';
 
 
@@ -28,7 +26,6 @@ const PanggilanScreen = ({ route, navigation }) => {
         jumlah_kuantitas, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
         status_transaksi, catatan_lokasi, phonemitra, phonepelanggan, geo_alamat,
          } = route.params;
-
  
     moment.updateLocale('id', localization)
     let tanggal = moment().locale('id');
@@ -96,8 +93,9 @@ const PanggilanScreen = ({ route, navigation }) => {
     const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
     const { estimasi_waktu, jarak } = useSelector(state => state.bobot);
 
-    // //Dapetin posisi mitra saat ini
+    //Dapetin posisi mitra saat ini
     // useEffect(() => {
+    //     const abort_pos = new AbortController();
 
     //     (async () => {
         
@@ -115,7 +113,7 @@ const PanggilanScreen = ({ route, navigation }) => {
     //     fetch(
     //         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}
     //         &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
-    //     ).then((res) => res.json())
+    //     ,{signal: abort_pos.signal}).then((res) => res.json())
     //     .then((data) => {
     //         //console.log(data.results[0].formatted_address);
     //         dispatch(updatePosisi({
@@ -125,29 +123,32 @@ const PanggilanScreen = ({ route, navigation }) => {
     //         }));
     //     })
     //     })();
+    //     return () => {
+    //         abort_pos.abort();
+    //     };
     // }, []); 
     
     // console.log(geo_mitra);
     // console.log(alamat_mitra);
     // console.log(geohash_mitra);
 
-    let text = 'Waiting..';
-    if (errorMsg) {
-        text = errorMsg;
-    } else if (location) {
-        text = JSON.stringify(location);
-    }
+    // let text = 'Waiting..';
+    // if (errorMsg) {
+    //     text = errorMsg;
+    // } else if (location) {
+    //     text = JSON.stringify(location);
+    // }
 
     //Dapetin jarak dan waktu perjalanan mitra ke pelanggan 
     useEffect(()=>{
        // if(!alamat_mitra||!alamat_pelanggan) return;
-        const abortJar = new AbortController();
+        const abort_jar = new AbortController();
 
         (async () => {
             fetch(
                 `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${geo_mitra.lat},${geo_mitra.lng}&destinations=${geo_alamat.lat},${geo_alamat.lng}
                 &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
-            ,{ signal: abortJar.signal }).then((res) => res.json())
+            ,{ signal: abort_jar.signal }).then((res) => res.json())
             .then((data) => {
                 //console.log(data.rows[0].elements[0].duration.text);
                 // console.log(data.rows[0].elements[0].distance.text);
@@ -177,7 +178,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             })
         })();
         return () => {
-            abortJar.abort();
+            abort_jar.abort();
         };
     },[]);
     
