@@ -264,11 +264,11 @@ const PanggilanScreen = ({ route, navigation }) => {
       <View style={styles.bawah}>
         <View style={{marginTop: 10, flexDirection:'row'}}>
             <View style={{ flexDirection:'row'}}>
-                <Pressable style={{marginRight: width * 0.13}} onPress={()=> navigation.goBack()}>
+                <Pressable style={{marginRight: 10}} onPress={()=> navigation.goBack()}>
                     <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
                 </Pressable>
                 <View>
-                    <Text style={[styles.subjudul, {textAlign:'center'}]}>
+                    <Text style={styles.subjudul}>
                         Nama Pelanggan
                     </Text>
                     <Text style={styles.nama} numberOfLines={1}>
@@ -407,7 +407,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: Ijo,
-        textAlign:'center',
     },
     catatan:{
         padding: 10,
