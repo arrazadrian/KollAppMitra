@@ -3,6 +3,8 @@ import React from 'react'
 import { Ijo, Putih } from '../Utils/Warna'
 import { Edit } from '../assets/Icons/Index'
 import { useNavigation } from '@react-navigation/native'
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -50,7 +52,7 @@ const ListProduk = ({item}) => {
               <Text 
               style={{fontSize:18, fontWeight:'bold'}}
               numberOfLines={1}
-              >Rp{item.harga}</Text> 
+              >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
               <Text 
               style={{fontSize:16}}
               numberOfLines={1}
@@ -75,7 +77,7 @@ const ListProduk = ({item}) => {
               <Text 
               style={{fontSize:18, fontWeight:'bold'}}
               numberOfLines={1}
-              >Rp{item.harga}</Text> 
+              >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
               <Text 
               style={{fontSize:16}}
               numberOfLines={1}

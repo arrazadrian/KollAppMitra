@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import * as Linking from 'expo-linking';
-import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna'
+import { Ijo, IjoMint, IjoTua, Kuning, Putih, Pink} from '../Utils/Warna'
 import { Kasbon, KollLong, Location, Lunas } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
 import moment from 'moment';
@@ -9,6 +9,8 @@ import localization from 'moment/locale/id';
 import GarisBatas from '../Components/GarisBatas';
 import { selesaikanPO } from '../../API/firebasemethod';
 import { useNavigation } from '@react-navigation/native';
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 
 const { width, height } = Dimensions.get('window')
@@ -57,6 +59,10 @@ const ReceiptScreen = ({route}) => {
     } catch (err){
       Alert.alert('Ada error menyelesaikan pre-order!', err.message);
     }  
+  };
+
+  const pindahKasbon = () => {
+    navigation.navigate('AdaKasbonScreen');
   };
 
   return (
@@ -173,7 +179,7 @@ const ReceiptScreen = ({route}) => {
                     <Text style={{fontWeight:'bold'}}>Catatan produk</Text>
                     <Text style={{fontStyle:'italic'}}>{catatan_produk}</Text>
                   </View>
-                ): catatan_produk && jenislayanan == "Pre-Order" ? (
+                ): !catatan_produk && jenislayanan == "Pre-Order" ? (
                   <View style={[styles.catatan, {marginBottom: 10}]}>
                     <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
                   </View>
@@ -188,7 +194,7 @@ const ReceiptScreen = ({route}) => {
                           </Text>
                           <Text style={styles.harga}>
                               <Text>Rp</Text>
-                              <Text>{items[0]?.harga * items.length}</Text>
+                              <Text>{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}</Text>
                           </Text>
                       </View>
                     </View>
@@ -201,20 +207,25 @@ const ReceiptScreen = ({route}) => {
           <View style={styles.bagian}>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text>Sub Total</Text>
-                  <Text>Rp{hargasubtotal}</Text>
+                  <Text>Rp{new Intl.NumberFormat('id-Id').format(hargasubtotal).toString()}</Text>
               </View>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text>Biaya Layanan</Text>
-                  <Text>Rp{hargalayanan}</Text>
+                  <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
               </View>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={styles.subjudul}>Total Harga</Text>
-                  <Text style={styles.subjudul}>Rp{hargatotalsemua}</Text>
+                  <Text style={styles.subjudul}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
               </View>
               { status_transaksi == "Dalam Proses" && 
-                  <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
-                    <Text style={{color: Putih, fontSize: 18, fontWeight:'bold'}}>Sudah diantar dan dibayar</Text>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <TouchableOpacity style={styles.kasbon} onPress={pindahKasbon}>
+                    <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold'}}>Masuk kasbon</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
+                    <Text style={{color: Putih, fontSize: 16, fontWeight:'bold'}}>Sudah dibayar</Text>
+                  </TouchableOpacity>
+                </View>
               }
           </View>
       </View>
@@ -297,7 +308,17 @@ const styles = StyleSheet.create({
     alignItems:'center',
     padding: 10,
     marginTop: 10,
-    borderRadius: 20,
+    borderRadius: 10,
+    width: '46%'
+  },
+  kasbon:{
+    backgroundColor: Putih,
+    justifyContent:'center',
+    alignItems:'center',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 10,
+    width: '46%'
   },
   bagian:{
     paddingHorizontal: 20,

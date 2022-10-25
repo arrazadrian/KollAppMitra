@@ -8,3 +8,4 @@ export const Abu = '#DDDDDD';
 export const AbuTua = '#474747';
 export const Merah = '#f06060';
 export const Ungu = '#111252';
+export const Pink = '#FAEAED';

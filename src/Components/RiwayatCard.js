@@ -5,6 +5,8 @@ import { TemuLangsung, PanggilMitra, PreOrder } from '../assets/Images/Index'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import localization from 'moment/locale/id';
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -57,8 +59,7 @@ const RiwayatCard = ({ item }) => {
             {item.namapelanggan}
         </Text>
         <Text style={{fontSize:16, color:Ijo}}>
-            <Text>Rp</Text>
-            <Text>{item.hargatotalsemua}</Text>
+            <Text>Rp{new Intl.NumberFormat('id-Id').format(item.hargatotalsemua).toString()}</Text>
             <Text> | </Text>
             <Text>{item.jumlah_kuantitas} </Text>
             <Text>Produk</Text>

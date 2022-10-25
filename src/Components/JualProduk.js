@@ -4,6 +4,8 @@ import { Abu, Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { keluarKeranjang, masukKeranjang, pilihprodukID, pilihProdukKeranjang  } from '../features/keranjangSlice'
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -34,6 +36,7 @@ const JualProduk = ({item}) => {
       harga: item.harga,
       satuan: item.satuan,
       kuantitas: item.kuantitas,
+      tersedia: item.tersedia,
     })
   }
 
@@ -47,7 +50,7 @@ const JualProduk = ({item}) => {
             <Text 
             style={{fontSize:18, fontWeight:'bold'}}
             numberOfLines={1}
-            >Rp{item.harga}</Text> 
+            >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
             <Text
             style={{fontSize:16}}
             numberOfLines={1}

@@ -5,6 +5,8 @@ import { PanggilMitra, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import localization from 'moment/locale/id';
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -100,7 +102,7 @@ const ProsesCard = ({ item }) => {
                     DL: {moment(item.waktu_dipesan.toDate()).add(2, 'days').format('lll')}
                     </Text>  
                     <Text style={{fontSize:14, color:Ijo, fontWeight:'bold'}}>
-                      Rp{item.hargatotalsemua} | {item.jumlah_kuantitas} produk
+                      Rp{new Intl.NumberFormat('id-Id').format(item.hargatotalsemua).toString()} | {item.jumlah_kuantitas} produk
                     </Text>  
               </View>
           </View>
