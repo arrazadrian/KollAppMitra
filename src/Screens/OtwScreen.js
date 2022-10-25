@@ -53,8 +53,9 @@ const OtwScreen = ({ route }) => {
             },
             {
               text: 'Sudah',
-              onPress: () => {
-                sampaiPM(id_transaksi);
+              onPress: async () => {
+                await dispatch(kosongkanKeranjang())
+                await sampaiPM(id_transaksi);
                 navigation.navigate("LanjutBelanjaScreen",{
                   id_transaksi: id_transaksi,
                   hargalayanan: hargalayanan,
@@ -90,10 +91,10 @@ const OtwScreen = ({ route }) => {
             },
             {
               text: 'Batalkan',
-              onPress: () => { 
-                batalPMolehMitra(id_transaksi);  
-                dispatch(resetBobot());
-                dispatch(resetPosisi());
+              onPress: async () => { 
+                await batalPMolehMitra(id_transaksi);  
+                await dispatch(resetBobot());
+                await dispatch(resetPosisi());
                 navigation.replace("HomeScreen");
                 console.log('batal dipencet');
               }

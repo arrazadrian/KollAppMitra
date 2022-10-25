@@ -59,8 +59,8 @@ const PanggilanScreen = ({ route, navigation }) => {
         }
     },[]);
 
-    const handleTerima = () =>{
-        terimaPM(id_transaksi,estimasi_waktu,jarak);
+    const handleTerima = async () =>{
+        await terimaPM(id_transaksi,estimasi_waktu,jarak);
         navigation.replace("OtwScreen",{
             id_transaksi: id_transaksi,
             id_mitra : id_mitra, 
@@ -217,15 +217,6 @@ const PanggilanScreen = ({ route, navigation }) => {
               latitudeDelta: 0.005,
               longitudeDelta: 0.005,
           }}>
-        {/* { geo_mitra && geo_alamat && (
-            <MapViewDirections
-                origin={alamat_mitra}
-                destination={alamat_pelanggan}
-                apikey={GOOGLE_MAPS_APIKEY}
-                strokeColor="green"
-                strokeWidth={3}
-            />
-        )} */}
           <Marker 
             coordinate={{
             latitude: geo_alamat.lat,
@@ -236,16 +227,6 @@ const PanggilanScreen = ({ route, navigation }) => {
             pinColor={'tan'}
             identifier="pelanggan"
           />
-          {/* <Marker 
-            coordinate={{
-            latitude: geo_mitra?.lat,
-            longitude: geo_mitra?.lng,
-            }}
-            title={namamitra}
-            description="Lokasi Anda"
-            pinColor={'red'}
-            identifier="mitra"
-          /> */}
           </MapView>
         <View style={styles.bobot}> 
             <View style={{flex: 1}}>
