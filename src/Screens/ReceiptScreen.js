@@ -53,8 +53,9 @@ const ReceiptScreen = ({route}) => {
   }
 
   async function selesaiPO(){
+    let pembayaran = 'Lunas';
     try{
-        selesaikanPO(id_transaksi);
+        selesaikanPO(id_transaksi, pembayaran);
         navigation.navigate("TQScreen"); 
     } catch (err){
       Alert.alert('Ada error menyelesaikan pre-order!', err.message);
@@ -62,8 +63,17 @@ const ReceiptScreen = ({route}) => {
   };
 
   const pindahKasbon = () => {
-    navigation.navigate('AdaKasbonScreen');
+    navigation.navigate('AdaKasbonPOScreen',{
+      id_pelanggan: id_pelanggan,
+      id_transaksi: id_transaksi,
+      namamitra: namamitra,
+      namatoko: namatoko,
+      namapelanggan: namapelanggan,
+      phonepelanggan: phonepelanggan,
+      hargatotalsemua: hargatotalsemua,
+    });
   };
+
 
   return (
     <View style={styles.latar}>

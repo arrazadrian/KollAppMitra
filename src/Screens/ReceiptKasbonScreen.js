@@ -10,6 +10,8 @@ import * as Linking from 'expo-linking'
 import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore"
 import { app } from '../../Firebase/config'
 import { lunaskanKasbon } from '../../API/firebasemethod'
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -156,7 +158,7 @@ const ReceiptKasbonScreen = ({ navigation, route }) => {
                    <Text style={{fontSize: 12}}> ID: {item.id_transaksi}</Text>
                    <Text style={{color:Ijo, fontSize: 16}}>{moment(item.waktu_transaksi.toDate()).calendar()}</Text>
                  </View>
-                 <Text style={{color: IjoTua, fontSize: 16}}>Rp{item.total_harga}</Text>
+                 <Text style={{color: IjoTua, fontSize: 16}}>Rp{new Intl.NumberFormat('id-Id').format(item.total_harga).toString()}</Text>
                </View> 
            </View>
          ))} 
@@ -169,7 +171,7 @@ const ReceiptKasbonScreen = ({ navigation, route }) => {
       <View style={styles.bawah}>
         <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 10, alignItems:'center'}}>
           <Text>Total Kasbon</Text>
-          <Text style={styles.subjudul}>Rp{total_kasbon}</Text>
+          <Text style={styles.subjudul}>Rp{new Intl.NumberFormat('id-Id').format(total_kasbon).toString()}</Text>
         </View>
         { status_kasbon == "Belum Lunas" && (
         <TouchableOpacity style={styles.tombol} onPress={handleLunas}>

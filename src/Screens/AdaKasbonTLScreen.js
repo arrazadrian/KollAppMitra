@@ -19,7 +19,7 @@ import localization from 'moment/locale/id'
 
 const { width, height } = Dimensions.get('window')
 
-const AdaKasbonScreen = () => {
+const AdaKasbonTLScreen = () => {
 
   moment.updateLocale('id', localization);
 
@@ -44,6 +44,7 @@ const AdaKasbonScreen = () => {
     try{
       let jumlah_kuantitas = items.length;
       let pembayaran = 'Kasbon';
+      let id_pelanggan = kodeUID;
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
       } else if (!namamitra) {
@@ -57,7 +58,7 @@ const AdaKasbonScreen = () => {
           namamitra,
           namatoko,
           namapelanggan,
-          kodeUID,
+          id_pelanggan,
           kelompokProduk,
           subtotalhargaKeranjang,
           hargalayanan,
@@ -69,7 +70,7 @@ const AdaKasbonScreen = () => {
           namamitra,
           namatoko,
           namapelanggan,
-          kodeUID,
+          id_pelanggan,
           phonepelanggan,
           hargatotalsemua,
           id_transaksi,
@@ -131,7 +132,7 @@ const AdaKasbonScreen = () => {
   const { namamitra, namatoko } = useSelector(state => state.mitra);
 
   const subtotalhargaKeranjang = useSelector(totalHarga)
-  const hargalayanan =  1000
+  const hargalayanan =  0
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
 
   useEffect(() => {
@@ -157,7 +158,7 @@ const AdaKasbonScreen = () => {
   const componentMounted = useRef(true);
 
   useEffect(()=>{
-    const fetchProses = async() => {
+    const fetchKasbon = async() => {
       try{
         const list = []; 
         const auth = getAuth();
@@ -205,7 +206,7 @@ const AdaKasbonScreen = () => {
         console.log(err);
       }
     }
-    fetchProses();
+    fetchKasbon();
   },[]);
 
 
@@ -258,7 +259,7 @@ const AdaKasbonScreen = () => {
 
 
 
-export default AdaKasbonScreen
+export default AdaKasbonTLScreen
 
 const styles = StyleSheet.create({
     latar:{

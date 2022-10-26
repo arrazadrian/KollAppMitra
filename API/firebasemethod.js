@@ -542,7 +542,7 @@ export async function updatemangkal(mangkal){
 // API 15: buatTransaksiTL
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
-export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeUID, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran) => {  
+export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pelanggan, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran) => {  
   const auth = getAuth();
   const db = getFirestore(app);
   try{
@@ -551,7 +551,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
       namamitra: namamitra,
       namatoko: namatoko,
       namapelanggan: namapelanggan,
-      id_pelanggan: kodeUID,
+      id_pelanggan: id_pelanggan,
       waktu_selesai: serverTimestamp(),
       jenislayanan: 'Temu Langsung',
       status_transaksi: 'Selesai',
@@ -572,13 +572,14 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, kodeU
 // API 16: selesaikanPO
 // UPDATE PO JADI TRANSAKSI YANG SELESAI
 
-export const selesaikanPO = async (id_transaksi) => {
+export const selesaikanPO = async (id_transaksi, pembayaran) => {
     const db = getFirestore(app);
     const docrefproduk = doc(db, "transaksi", id_transaksi);
     getDoc(docrefproduk).then(docSnap => {
       if (docSnap.exists()) {
         try {
-            updateDoc(docrefproduk, { 
+            updateDoc(docrefproduk, {
+              pembayaran: pembayaran,
               status_transaksi: "Selesai", 
               waktu_selesai: serverTimestamp(), 
             });
@@ -588,7 +589,6 @@ export const selesaikanPO = async (id_transaksi) => {
       }
     })
 };
-
 
 // API 17: terimaPM
 // UPDATE PANGGILAN PM JADI DITERIMA 
@@ -702,7 +702,7 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
 // API 22: buatKasbonBaru
 // MEMBUAT KASBON BARU. 
 
-export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUID, phonepelanggan, hargatotalsemua, id_transaksi) => {  
+export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, id_pelanggan, phonepelanggan, hargatotalsemua, id_transaksi) => {  
   const auth = getAuth();
   const db = getFirestore(app);
 
@@ -715,7 +715,7 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, kodeUI
         namamitra: namamitra,
         namatoko: namatoko,
         phonemitra: docSnap.data().phone,
-        id_pelanggan: kodeUID,
+        id_pelanggan: id_pelanggan,
         namapelanggan: namapelanggan,
         phonepelanggan: phonepelanggan,
         status_kasbon: "Belum Lunas",

@@ -46,13 +46,14 @@ const CheckoutLangScreen = () => {
   const pindahKasbon = () => {
     if (!namapelanggan) {
       Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
-    } else navigation.navigate('AdaKasbonScreen')
+    } else navigation.navigate('AdaKasbonTLScreen')
   };
   
   async function uploadtransaksiTemuLangsung(){
     try{
       let jumlah_kuantitas = items.length;
       let pembayaran = 'Tunai';
+      let id_pelanggan = kodeUID;
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
       } else if (!namamitra) {
@@ -66,7 +67,7 @@ const CheckoutLangScreen = () => {
           namamitra,
           namatoko,
           namapelanggan,
-          kodeUID,
+          id_pelanggan,
           kelompokProduk,
           subtotalhargaKeranjang,
           hargalayanan,
@@ -105,7 +106,7 @@ const CheckoutLangScreen = () => {
   // console.log(namapelanggan);
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
-  const hargalayanan =  1000
+  const hargalayanan =  0
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
  
   return (

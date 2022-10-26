@@ -4,6 +4,8 @@ import { Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import localization from 'moment/locale/id'
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -37,7 +39,7 @@ const KasbonCard = ({ item }) => {
       </View>
       <View>
         <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
-        <Text style={styles.total}>Rp{item.total_kasbon}</Text>
+        <Text style={styles.total}>Rp{new Intl.NumberFormat('id-Id').format(item.total_kasbon).toString()}</Text>
       </View>
     </Pressable>
   )

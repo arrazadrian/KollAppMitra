@@ -58,18 +58,17 @@ const RiwayatCard = ({ item }) => {
         >
             {item.namapelanggan}
         </Text>
-        <Text style={{fontSize:16, color:Ijo}}>
+        <Text style={{fontSize:14, color:Ijo}}>
             <Text>Rp{new Intl.NumberFormat('id-Id').format(item.hargatotalsemua).toString()}</Text>
             <Text> | </Text>
-            <Text>{item.jumlah_kuantitas} </Text>
-            <Text>Produk</Text>
+            <Text>{item.jumlah_kuantitas} Produk</Text>
         </Text>
         <View>
           { item.jenislayanan == 'Pre-Order' ? 
             (
-              <Text>Diterima pada {moment(item.waktu_selesai.toDate()).format('ll')}</Text>
+              <Text style={{fontSize: 14}}>Diterima pada {moment(item.waktu_selesai.toDate()).format('ll')}</Text>
             ):(
-              <Text>{moment(item.waktu_selesai.toDate()).format('lll')}</Text>
+              <Text style={{fontSize: 14}}>{moment(item.waktu_selesai.toDate()).format('lll')}</Text>
             ) 
           }
         </View>
@@ -99,5 +98,5 @@ const styles = StyleSheet.create({
         backgroundColor: IjoMint,
         alignItems:'center',
         justifyContent:'center',
-    }
+    },
 })

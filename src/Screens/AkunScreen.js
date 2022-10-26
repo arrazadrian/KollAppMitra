@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Abu, Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
@@ -73,6 +73,13 @@ const AkunScreen = () => {
         <Image source={KollLong} style={styles.logo}/>
       </View>
       <View style={styles.bungkus}>
+        { !namaakun ? 
+        (
+        <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
+          <ActivityIndicator size="large" color={Ijo}/>
+        </View>
+        ):(
+          <View>
             <View style={{borderBottomColor: Ijo, borderBottomWidth: 1, marginBottom: 10, justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
               <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Profil</Text>
               <Pressable  onPress={pindahEdit}>
@@ -133,12 +140,14 @@ const AkunScreen = () => {
                     <Text style={{color: Putih, fontSize: 14}} numberOfLines={3}>{alamat}</Text>
                 </View>
             </View>
-            <View style={styles.logout}>
-              <Text 
-              style={{fontSize: 20, color: Ijo, fontWeight: 'bold'}}
-              onPress={handleSignOut}
-              >Keluar Akun</Text>
-            </View>
+          </View>
+        )}
+      <View style={styles.logout}>
+        <Text 
+        style={{fontSize: 20, color: Ijo, fontWeight: 'bold'}}
+        onPress={handleSignOut}
+        >Keluar Akun</Text>
+      </View>
       </View>
     </SafeAreaView>
   )
@@ -187,7 +196,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position:'absolute',
     bottom: height * 0.05,
-
   },
   bungkus:{
     backgroundColor: IjoTua,
