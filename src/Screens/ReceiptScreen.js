@@ -24,7 +24,7 @@ const ReceiptScreen = ({route}) => {
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-    status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran,
+    status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran, potongan,
      } = route.params;
 
   const telepon = () => {
@@ -219,6 +219,12 @@ const ReceiptScreen = ({route}) => {
                   <Text>Sub Total</Text>
                   <Text>Rp{new Intl.NumberFormat('id-Id').format(hargasubtotal).toString()}</Text>
               </View>
+              { potongan > 0 &&
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text>Potongan</Text>
+                  <Text>Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+              </View>
+              }
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text>Biaya Layanan</Text>
                   <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
