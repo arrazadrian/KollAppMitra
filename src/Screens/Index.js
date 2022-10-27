@@ -18,6 +18,7 @@ import LangsungScreen from "./LangsungScreen";
 import CheckoutLangScreen from "./CheckoutLangScreen";
 import CheckoutPMScreen from "./CheckoutPMScreen";
 import ScanScreen from "./ScanScreen";
+import ScanVoucherScreen from "./ScanVoucherScreen";
 import EditProdukScreen from "./EditProdukScreen";
 import OtwScreen from "./OtwScreen";
 import LanjutBelanjaScreen from "./LanjutBelanjaScreen";
@@ -39,5 +40,5 @@ export {
      OtwScreen, LanjutBelanjaScreen, TQScreen, AkunJadiScreen,
      ReceiptScreen, ScanScreen, FLocScreen, PanggilanScreen,
      CheckoutPMScreen, KasbonScreen, LunasScreen, ReceiptKasbonScreen,
-     AdaKasbonTLScreen, AdaKasbonPOScreen,
+     AdaKasbonTLScreen, AdaKasbonPOScreen, ScanVoucherScreen,
     };

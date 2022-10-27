@@ -222,7 +222,7 @@ const ReceiptScreen = ({route}) => {
               { potongan > 0 &&
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text>Potongan</Text>
-                  <Text>Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+                  <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
               </View>
               }
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>

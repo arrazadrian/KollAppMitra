@@ -542,7 +542,7 @@ export async function updatemangkal(mangkal){
 // API 15: buatTransaksiTL
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
-export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pelanggan, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran) => {  
+export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pelanggan, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran, potongan) => {  
   const auth = getAuth();
   const db = getFirestore(app);
   try{
@@ -561,6 +561,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
       hargatotalsemua: hargatotalsemua,
       jumlah_kuantitas: jumlah_kuantitas,
       pembayaran: pembayaran,
+      potongan: potongan,
    });
     console.log("ID dokumenTLnya: ", docRef.id)
     return docRef.id;

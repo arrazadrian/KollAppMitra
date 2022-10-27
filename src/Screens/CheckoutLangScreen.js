@@ -4,6 +4,7 @@ import { IjoTua, Kuning, Putih, Ijo, IjoMint } from '../Utils/Warna'
 //import ListReceipt from '../Components/ListReceipt'
 import { useNavigation } from '@react-navigation/native'
 //import ProdukKeranjang from '../Components/ProdukKeranjang'
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux'
 import { 
   pilihProdukKeranjang, 
@@ -12,6 +13,8 @@ import {
  } from '../features/keranjangSlice'
 import { resetPelanggan } from '../features/pelangganSlice';
 import { buatTransaksiTL } from '../../API/firebasemethod'
+import "intl";
+import "intl/locale-data/jsonp/id";
  
 
 const { width, height } = Dimensions.get('window')
@@ -25,6 +28,7 @@ const CheckoutLangScreen = () => {
 
   const { kodeUID, namapelanggan } = useSelector(state => state.pelanggan);
   const { namamitra, namatoko } = useSelector(state => state.mitra);
+  const { potongan, id_voucher } = useSelector(state => state.voucher);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Sebelum menyelesaikan transaksi, pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -74,6 +78,7 @@ const CheckoutLangScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
+          potongan,
         );
         navigation.navigate("TQScreen");
         // dispatch(kosongkanKeranjang());
@@ -107,11 +112,55 @@ const CheckoutLangScreen = () => {
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
   const hargalayanan =  0
-  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
+  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan - potongan
+
+  const ScanQRPelanggan = () => {
+    return(
+      <Pressable style={styles.scan} onPress={() => navigation.push('ScanScreen')}>
+          <View style={{backgroundColor: Ijo, padding: 10, borderRadius: 20}}>
+            <Ionicons name="person" size={20} color={IjoMint}/>
+          </View>
+          { kodeUID ? (
+            <View>
+              <Text>Nama Pelanggan</Text>  
+              <Text style={styles.nama}>{namapelanggan}</Text>  
+            </View>
+            ):(
+              <Text  style={styles.deskscan}>Scan QR Pelanggan</Text>
+              )
+            }
+          <Ionicons name="chevron-forward-outline" size={15} color={Ijo}/>
+      </Pressable>
+    )
+  };
+
+  const pindahScanVoucher = () =>{
+    navigation.navigate('ScanVoucherScreen',{
+      jenis_layanan: 'Temu Langsung',
+      subtotalhargaKeranjang: subtotalhargaKeranjang,
+    })
+  }
+
+  const ScanVoucerPromo = () => {
+    return(
+      <Pressable style={styles.scan}  onPress={pindahScanVoucher}>
+          <View style={{backgroundColor: Ijo, padding: 10, borderRadius: 20}}>
+            <Ionicons name="pricetags" size={20} color={IjoMint}/>
+          </View>
+          { id_voucher ? (
+            <Text style={styles.nama}>Voucher Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            ):(
+            <Text  style={styles.deskscan}>Scan QR Voucher</Text>
+          )
+          }
+          <Ionicons name="chevron-forward-outline" size={15} color={Ijo}/>
+      </Pressable>
+    )
+  };
  
   return (
     <View style={styles.latar}>
-      {kodeUID ? (
+      {/* {kodeUID ? (
         <View style={styles.pelanggan}>
           <View style={{width: width * 0.6}}> 
             <Text>Nama Pelanggan</Text>  
@@ -125,17 +174,18 @@ const CheckoutLangScreen = () => {
         </View>
       ):(
         <View style={styles.pelanggan}>
-          <Text>Scan QR Code pelanggan bila pelanggan membutuhkan struk belanjaan</Text>
+          <Text>Scan QR Code milik pelanggan</Text>
           <TouchableOpacity style={styles.scan}
             onPress={() => navigation.push('ScanScreen')}
           >
             <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
           </TouchableOpacity>
         </View>
-      )}
-
+      )} */}
+      <ScanQRPelanggan/>
+      <ScanVoucerPromo/>
       <ScrollView style={styles.atas}>
-        <Text style={{fontSize: 18, color: IjoTua, fontWeight:'bold'}}>Daftar Belanjaan</Text>
+        <Text style={{fontSize: 16, fontWeight:'bold', color: IjoTua}}>Daftar Belanjaan</Text>
             {Object.entries(kelompokProduk).map(([key, items]) => (
             <View key={key}>
             <View style={styles.card}>
@@ -146,12 +196,12 @@ const CheckoutLangScreen = () => {
                   <Image source={{uri: items[0]?.image}} style={styles.foto}/>
                   <View>
                       <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
-                      <Text>Rp{items[0]?.harga}</Text>
+                      <Text>Rp{new Intl.NumberFormat('id-Id').format(items[0]?.harga).toString()}</Text>
                   </View>
               </View>
               <View style={{justifyContent:'center'}}>
                   <Text style={styles.harga}>
-                    Rp{items.length * items[0]?.harga}
+                    Rp{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}
                   </Text>
               </View>
           </View>
@@ -161,15 +211,21 @@ const CheckoutLangScreen = () => {
       <View style={styles.simpulan}>
           <View style={styles.desk}>
             <Text>Subtotal</Text>
-            <Text>Rp{subtotalhargaKeranjang}</Text>
+            <Text>Rp{new Intl.NumberFormat('id-Id').format(subtotalhargaKeranjang).toString()}</Text>
           </View>
+          { potongan &&
+            <View style={styles.desk}>
+              <Text>Potongam</Text>
+              <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            </View>
+          }
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
-            <Text>{hargalayanan}</Text>
+            <Text>Rp{hargalayanan}</Text>
           </View>
           <View style={styles.desk}>
             <Text>Harga Total</Text>
-            <Text style={styles.harga}>Rp{hargatotalsemua}</Text>
+            <Text style={styles.harga}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
           </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
@@ -216,10 +272,24 @@ const styles = StyleSheet.create({
       paddingVertical: 2,
     },
     atas:{
-      paddingHorizontal:10
+      padding:10
+    },
+    scan:{
+      flexDirection:'row',
+      borderBottomColor: Ijo,
+      borderBottomWidth: 0.5,
+      padding: 8,
+      alignItems:'center',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    deskscan:{
+      color: Ijo,
+      fontSize: 16,
     },
     card:{
-      backgroundColor: Putih,
+      borderWidth: 0.3,
+      borderColor: Ijo,
       padding: 10,
       flexDirection: 'row',
       borderRadius: 10,
