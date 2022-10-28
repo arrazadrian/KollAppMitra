@@ -7,7 +7,7 @@ import { Call, Chat } from '../assets/Icons/Index';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import GarisBatas from '../Components/GarisBatas';
-import { selesaikanPO } from '../../API/firebasemethod';
+import { batalkanPO, selesaikanPO } from '../../API/firebasemethod';
 import { useNavigation } from '@react-navigation/native';
 import "intl";
 import "intl/locale-data/jsonp/id";
@@ -52,11 +52,38 @@ const ReceiptScreen = ({route}) => {
           )
   }
 
+  const batalkanTransaksiPO =()=> {
+    Alert.alert('Anda yakin membatalkan pesanan pelanggan?','Pastikan anda sudah menghubungi (telpon/sms) pelanggan untuk memberi alasan pembatalan.',
+          [
+            {
+              text: 'Tutup',
+              onPress: () => {
+                console.log('Tutup dipencet')
+              }
+            },
+            {
+              text: 'Yakin',
+              onPress: batalPO,
+            }
+          ]
+          )
+  }
+
   async function selesaiPO(){
     let pembayaran = 'Lunas';
     try{
         selesaikanPO(id_transaksi, pembayaran);
         navigation.navigate("TQScreen"); 
+    } catch (err){
+      Alert.alert('Ada error menyelesaikan pre-order!', err.message);
+    }  
+  };
+
+  async function batalPO(){
+    try{
+        batalkanPO(id_transaksi);
+        Alert.alert('Pre-Order sudah dibatalkan', 'Terima kasih sudah memeberi kepastian, semangat!');
+        navigation.navigate("HomeScreen"); 
     } catch (err){
       Alert.alert('Ada error menyelesaikan pre-order!', err.message);
     }  
@@ -171,10 +198,15 @@ const ReceiptScreen = ({route}) => {
                     <Text style={{fontStyle:'italic'}}>Tanpa catatan lokasi...</Text>
                   </View>
                 ) 
-                }
-                <View style={styles.reminder}>
-                    <Text style={{color: Putih}}>Paling lambat diantar:</Text>
-                    <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(1, 'days').format('LLLL')}</Text>
+                } 
+                <View style={{flexDirection:'row',  marginTop: 10, flex: 1, justifyContent:'space-between'}}>
+                    <TouchableOpacity style={styles.batal} onPress={batalkanTransaksiPO}>
+                        <Text style={{color: IjoTua}}>Batalkan Pesanan</Text>
+                    </TouchableOpacity>
+                    <View style={styles.reminder}>
+                        <Text style={{color: Putih}}>Paling lambat diantar:</Text>
+                        <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(1, 'days').format('llll')}</Text>
+                    </View>
                 </View>
             </View>
             <GarisBatas/>
@@ -193,7 +225,7 @@ const ReceiptScreen = ({route}) => {
                   <View style={[styles.catatan, {marginBottom: 10}]}>
                     <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
                   </View>
-                ):( <View/> ) 
+                ):( null ) 
               }
                 {Object.entries(produk).map(([key, items]) => (
                     <View key={key}>
@@ -280,14 +312,22 @@ const styles = StyleSheet.create({
     height: width * 0.1,
     marginHorizontal: 5,
   },
+  batal:{
+    backgroundColor: IjoMint,
+    justifyContent:'center',
+    alignItems:'center',
+    width: '25%',
+    borderRadius: 10,
+    // flex:1,
+  },
   reminder:{
     backgroundColor: IjoTua,
     borderRadius: 10,
     justifyContent:'center',
     alignItems:'center',
     padding: 10,
-    width: '100%',
-    marginTop: 10,
+    width: '72%',
+    // flex: 4,
   },
   location:{
     width: width * 0.05,

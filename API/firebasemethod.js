@@ -591,6 +591,25 @@ export const selesaikanPO = async (id_transaksi, pembayaran) => {
     })
 };
 
+// API 16: batalkanPO
+// UPDATE PO JADI TRANSAKSI YANG SELESAI
+
+export const batalkanPO = async (id_transaksi) => {
+    const db = getFirestore(app);
+    const docrefproduk = doc(db, "transaksi", id_transaksi);
+    getDoc(docrefproduk).then(docSnap => {
+      if (docSnap.exists()) {
+        try {
+            updateDoc(docrefproduk, {
+              status_transaksi: "Dibatalkan Mitra", 
+            });
+        } catch (err) {
+          Alert.alert('Ada error untuk menyelesaikan PO!', err);
+        }
+      }
+    })
+};
+
 // API 17: terimaPM
 // UPDATE PANGGILAN PM JADI DITERIMA 
 
