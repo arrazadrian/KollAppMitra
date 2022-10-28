@@ -15,6 +15,7 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
 import { resetPelanggan } from '../features/pelangganSlice';
 import { kosongkanKeranjang } from '../features/keranjangSlice';
+import { resetVoucher } from '../features/voucherSlice';
 
 
 const { width, height } = Dimensions.get('window')
@@ -295,6 +296,7 @@ const HomeScreen = ({ navigation }) => {
                   <Pressable style={styles.langsung} onPress={ async () => {
                     await dispatch(kosongkanKeranjang());
                     await dispatch(resetPelanggan());
+                    await dispatch(resetVoucher());
                     navigation.push('LangsungScreen')
                     }}>
                     <View>

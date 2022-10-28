@@ -783,3 +783,58 @@ export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, id_trans
     console.log('Ada Error manambah tranksaksi kasbon.', err);
   };
 };
+
+// API 25: updateVoucherMitra
+// MENAMBAH TRANSAKSI DALAM KASBON. 
+
+export const updateVoucherMitra = async (id_voucher, potongan) => {  
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRefVou = doc(db, "promosi", id_voucher);
+  const docSnapVou = await getDoc(docRefVou);
+  const docRefMit = doc(db, "mitra", auth.currentUser.uid);
+  const docSnapMit= await getDoc(docRefMit);
+  try{
+    if(docSnapVou.exists() && docSnapMit.exists()){
+      let awal_pengguna =  docSnapVou.data().jml_pengguna
+      let awal_poin =  docSnapMit.data().poin_potongan
+      let jml_terbaru = awal_pengguna + 1
+      await updateDoc(docRefVou, { 
+          jml_pengguna: awal_pengguna + 1, 
+      });
+      updateDoc(docRefMit, { 
+          poin_potogan: awal_poin + potongan, 
+      });
+      return jml_terbaru
+    } else {
+      console.log("No such document!");
+    }
+   
+  } catch(err){
+    console.log('Ada Error update voucher.', err);
+  };
+};
+
+//API 26: updateTersediaVoucher
+// VOUCHER SUDAH MEMENUHU KUOTA ATAU BELUM
+
+export const updateTersediaVoucher = async (id_voucher, potongan) => {  
+  const jml_terbaru = await updateVoucherMitra(id_voucher, potongan)
+
+  const db = getFirestore(app);
+  const docRef = doc(db, "promosi", id_voucher);
+  const docSnap = await getDoc(docRef);
+  try{
+    if(docSnap.exists()){
+      if( jml_terbaru >= docSnap.data().kuota){
+        updateDoc(docRef, { 
+          tersedia: false, 
+        });
+      }
+    } else {
+      console.log("No such document!");
+    }
+  } catch(err){
+    console.log('Ada Error manambah tranksaksi kasbon.', err);
+  };
+};

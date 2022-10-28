@@ -45,8 +45,13 @@ const ScanVoucherScreen = ({ route }) => {
             if (docSnap.exists()){
                 if(jenis_layanan != docSnap.data().jenis_layanan){
                     Alert.alert(`Voucher ini untuk layanan ${docSnap.data().jenis_layanan}`, `Kamu sedang dalam layanan ${jenis_layanan}.`);
+                    navigation.goBack();
+                } else if(docSnap.data().tersedia == false){
+                    Alert.alert(`Pelanggan kurang beruntung`, `Maaf voucher sudah tidak berlaku.`);
+                    navigation.goBack();
                 } else if(subtotalhargaKeranjang < docSnap.data().minimal){
                     Alert.alert(`Total belanja pelanggan masih kurang`, `Syarat minimal belanja Rp${docSnap.data().minimal}.`);
+                    navigation.goBack();
                 } else {
                     setId_voucher(data);
                     setPotongan(docSnap.data().potongan);

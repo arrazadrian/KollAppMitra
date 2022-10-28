@@ -12,9 +12,11 @@ import {
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
 import { resetPelanggan } from '../features/pelangganSlice';
-import { buatTransaksiTL } from '../../API/firebasemethod'
+import { buatTransaksiTL, updateTersediaVoucher } from '../../API/firebasemethod'
 import "intl";
 import "intl/locale-data/jsonp/id";
+import { doc, getDoc, getFirestore } from 'firebase/firestore/lite';
+import { app } from '../../Firebase/config';
  
 
 const { width, height } = Dimensions.get('window')
@@ -66,23 +68,52 @@ const CheckoutLangScreen = () => {
         Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-      } else {
-        buatTransaksiTL(
-          namamitra,
-          namatoko,
-          namapelanggan,
-          id_pelanggan,
-          kelompokProduk,
-          subtotalhargaKeranjang,
-          hargalayanan,
-          hargatotalsemua,
-          jumlah_kuantitas,
-          pembayaran,
-          potongan,
-        );
-        navigation.navigate("TQScreen");
-        // dispatch(kosongkanKeranjang());
-        // dispatch(resetPelanggan());
+      } else if (potongan == 0) {
+          buatTransaksiTL(
+            namamitra,
+            namatoko,
+            namapelanggan,
+            id_pelanggan,
+            kelompokProduk,
+            subtotalhargaKeranjang,
+            hargalayanan,
+            hargatotalsemua,
+            jumlah_kuantitas,
+            pembayaran,
+            potongan,
+          );
+          navigation.navigate("TQScreen");
+      } else {        
+        const db = getFirestore(app);
+        const docRefVou = doc(db, "promosi", id_voucher);
+        const docSnapVou = await getDoc(docRefVou);
+
+        if(docSnapVou.exists()){
+          if(docSnapVou.data().tersedia == false){
+            Alert.alert('Voucher sudah tidak berlaku','Kuota pengguna vouher sudah habis.');
+          } else {
+            await buatTransaksiTL(
+              namamitra,
+              namatoko,
+              namapelanggan,
+              id_pelanggan,
+              kelompokProduk,
+              subtotalhargaKeranjang,
+              hargalayanan,
+              hargatotalsemua,
+              jumlah_kuantitas,
+              pembayaran,
+              potongan,
+            );
+            await updateTersediaVoucher(
+              id_voucher,
+              potongan,
+            );
+            navigation.navigate("TQScreen");
+            // dispatch(kosongkanKeranjang());
+            // dispatch(resetPelanggan());
+          }
+        }
       }
     } catch (err){
       Alert.alert('Ada error buat transaksi temu langsung!', err.message);
@@ -126,7 +157,9 @@ const CheckoutLangScreen = () => {
               <Text style={styles.nama}>{namapelanggan}</Text>  
             </View>
             ):(
-              <Text  style={styles.deskscan}>Scan QR Pelanggan</Text>
+              <View>
+                <Text style={styles.deskscan}>Scan QR Pelanggan</Text>
+              </View>
               )
             }
           <Ionicons name="chevron-forward-outline" size={15} color={Ijo}/>
@@ -148,9 +181,13 @@ const CheckoutLangScreen = () => {
             <Ionicons name="pricetags" size={20} color={IjoMint}/>
           </View>
           { id_voucher ? (
-            <Text style={styles.nama}>Voucher Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            <View>
+              <Text style={styles.nama}>Voucher Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            </View>
             ):(
-            <Text  style={styles.deskscan}>Scan QR Voucher</Text>
+            <View>
+              <Text  style={styles.deskscan}>Scan QR Voucher</Text>
+            </View>
           )
           }
           <Ionicons name="chevron-forward-outline" size={15} color={Ijo}/>
@@ -160,28 +197,6 @@ const CheckoutLangScreen = () => {
  
   return (
     <View style={styles.latar}>
-      {/* {kodeUID ? (
-        <View style={styles.pelanggan}>
-          <View style={{width: width * 0.6}}> 
-            <Text>Nama Pelanggan</Text>  
-            <Text style={styles.nama}>{namapelanggan}</Text>  
-          </View>
-          <TouchableOpacity style={styles.scan}
-            onPress={() => navigation.push('ScanScreen')}
-          >
-            <Text style={{color:Ijo, fontWeight:'bold'}}>Scan Ulang</Text>
-          </TouchableOpacity>
-        </View>
-      ):(
-        <View style={styles.pelanggan}>
-          <Text>Scan QR Code milik pelanggan</Text>
-          <TouchableOpacity style={styles.scan}
-            onPress={() => navigation.push('ScanScreen')}
-          >
-            <Text style={{color:Ijo, fontWeight:'bold'}}>Scan</Text>
-          </TouchableOpacity>
-        </View>
-      )} */}
       <ScanQRPelanggan/>
       <ScanVoucerPromo/>
       <ScrollView style={styles.atas}>
@@ -200,9 +215,7 @@ const CheckoutLangScreen = () => {
                   </View>
               </View>
               <View style={{justifyContent:'center'}}>
-                  <Text style={styles.harga}>
-                    Rp{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}
-                  </Text>
+                  <Text style={styles.harga}>Rp{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}</Text>
               </View>
           </View>
           </View>
@@ -213,11 +226,13 @@ const CheckoutLangScreen = () => {
             <Text>Subtotal</Text>
             <Text>Rp{new Intl.NumberFormat('id-Id').format(subtotalhargaKeranjang).toString()}</Text>
           </View>
-          { potongan &&
+          { potongan ?
+            (
             <View style={styles.desk}>
               <Text>Potongam</Text>
               <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
             </View>
+            ):(null)
           }
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
@@ -227,18 +242,14 @@ const CheckoutLangScreen = () => {
             <Text>Harga Total</Text>
             <Text style={styles.harga}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
           </View>
-
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
-          
           <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', flex: 1}}>
             <TouchableOpacity style={styles.tombolkasbon}
-              onPress={pindahKasbon}
-            >
+              onPress={pindahKasbon}>
               <Text style={{color:Ijo, fontWeight:'bold', textAlign:'center'}}>Masuk Kasbon</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tombollunas}
-              onPress={selesaiTransaksi}
-            >
+              onPress={selesaiTransaksi}>
               <Text style={{color:Putih, fontWeight:'bold', textAlign:'center'}}>Sudah Lunas</Text>
             </TouchableOpacity>
           </View>
