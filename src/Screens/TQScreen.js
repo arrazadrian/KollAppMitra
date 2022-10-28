@@ -1,7 +1,7 @@
 import { StyleSheet, View, Dimensions, Text } from 'react-native'
 import React, {useEffect} from 'react'
-import  {Check}  from '../assets/Icons/Index.js'
 import { Ijo, Kuning } from '../Utils/Warna'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 const { height, width } = Dimensions.get('window')
 
@@ -11,18 +11,18 @@ const TQScreen = ({navigation}) => {
         setTimeout( () =>{
           navigation.replace('HomeScreen');
         }, 4000)
-    }, [navigation]);
+    }, []);
 
   return (
     <View style={styles.latar}>
       <View style={{marginBottom: 10}}>
-        <Check/>
+        <Ionicons name="checkbox" size={200} color={Ijo} style={{marginHorizontal:3}}/>
       </View>
       <View>
         <Text style={styles.teks}>
           Terima kasih banyak!
         </Text>
-        <Text style={styles.teks}>
+        <Text style={styles.desk}>
           Transaksi sudah selesai
         </Text>
       </View>
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight:'bold',
         textAlign:'center',
-    }
-
+    },
+    desk:{
+        color: Ijo,
+        fontSize: 20,
+        textAlign:'center',
+  },
 })

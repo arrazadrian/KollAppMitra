@@ -8,7 +8,6 @@ import Edit from './Edit.svg'
 import IconLock from './Lock.svg'
 import IconMessage from './Message.svg'
 import Search from './Search.svg'
-import Check from './Check.svg'
 import Akun from './Akun.svg'
 import Call from './Call.png'
 import Chat from './Chat.png'
@@ -18,5 +17,5 @@ export {
     IconRiwayatPutih, IconRiwayatIjo, 
     IconAkunPutih, IconAkunIjo, Edit,
     IconLock, IconMessage, Search, 
-    Call, Chat, Check, Akun
+    Call, Chat, Akun
 }
