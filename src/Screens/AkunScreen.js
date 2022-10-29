@@ -30,6 +30,23 @@ const AkunScreen = () => {
     })
   }
 
+  const handleKeluarAkun =()=> {
+    Alert.alert('Anda ingin keluar akun?','Anda akan butuh login kembali untuk masuk.',
+          [
+            {
+              text: 'Batal',
+              onPress: () => {
+                console.log('Batal dipencet')
+              }
+            },
+            {
+              text: 'Ya',
+              onPress: handleSignOut,
+            }
+          ]
+          )
+  }
+
   const [namaakun, setNamaakun] = useState('')
   const [fotoakun, setFotoakun] = useState('')
   const [tokoakun, setTokoakun] = useState('')
@@ -45,30 +62,28 @@ const AkunScreen = () => {
   const db = getFirestore(app)
 
   useEffect(() =>{
-    async function getuserAkun(){
-      try{
-        const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-        setNamaakun(doc.data().namalengkap);
-        setFotoakun(doc.data().foto_akun);
-        setTokoakun(doc.data().namatoko);
-        setPhoneakun(doc.data().phone);
-        setEmailakun(doc.data().email);
-        setWaktu_buka(doc.data().waktu_buka);
-        setWaktu_tutup(doc.data().waktu_tutup);
-        setAlamat(doc.data().alamat);
-        setRating_layanan(doc.data().rating_layanan);
-        setRating_produk(doc.data().rating_produk);
-        setPoin(doc.data().poin_potongan);
-        console.log('getuserAkun jalan (Akun Screen)')
-          // Respond to data
-          // ...
-        });
-        //unsubscribe();
-      } catch (err){
-        Alert.alert('There is an error.', err.message)
-      }
+
+    const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+    setNamaakun(doc.data().namalengkap);
+    setFotoakun(doc.data().foto_akun);
+    setTokoakun(doc.data().namatoko);
+    setPhoneakun(doc.data().phone);
+    setEmailakun(doc.data().email);
+    setWaktu_buka(doc.data().waktu_buka);
+    setWaktu_tutup(doc.data().waktu_tutup);
+    setAlamat(doc.data().alamat);
+    setRating_layanan(doc.data().rating_layanan);
+    setRating_produk(doc.data().rating_produk);
+    setPoin(doc.data().poin_potongan);
+    console.log('getuserAkun jalan (Akun Screen)')
+      // Respond to data
+      // ...
+    });
+    
+    return() =>{
+      unsubscribe();
+      console.log('Akun Unmounted');
     }
-    getuserAkun();
   },[])
 
   return (
@@ -152,7 +167,7 @@ const AkunScreen = () => {
                 <View style={styles.logout}>
                   <Text 
                   style={{fontSize: 20, color: Ijo, fontWeight: 'bold'}}
-                  onPress={handleSignOut}
+                  onPress={handleKeluarAkun}
                   >Keluar Akun</Text>
                 </View>
               </View>
