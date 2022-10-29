@@ -822,7 +822,7 @@ export const updateVoucherMitra = async (id_voucher, potongan) => {
           jml_pengguna: awal_pengguna + 1, 
       });
       updateDoc(docRefMit, { 
-          poin_potogan: awal_poin + potongan, 
+          poin_potongan: awal_poin + potongan, 
       });
       return jml_terbaru
     } else {

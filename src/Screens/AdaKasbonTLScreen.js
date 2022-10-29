@@ -1,21 +1,21 @@
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image, Pressable, Alert} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Kuning, IjoTua, Ijo, Putih, IjoMint } from '../Utils/Warna'
-import KasbonCard from '../Components/KasbonCard'
 import { getAuth } from "firebase/auth"
-import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore"
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore"
 import { app } from '../../Firebase/config'
 import { DompetKasbon } from '../assets/Images/Index'
 import { 
   pilihProdukKeranjang, 
   totalHarga, 
-  kosongkanKeranjang,
  } from '../features/keranjangSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { buatKasbonBaru, buatTransaksiTL, tambahTransaksiKasbon } from '../../API/firebasemethod'
+import { buatKasbonBaru, buatTransaksiTL, tambahTransaksiKasbon, updateTersediaVoucher } from '../../API/firebasemethod'
 import moment from 'moment'
 import localization from 'moment/locale/id'
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
 
@@ -53,7 +53,7 @@ const AdaKasbonTLScreen = () => {
         Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-      } else {
+      } else if (potongan == 0){
         const id_transaksi = await buatTransaksiTL(
           namamitra,
           namatoko,
@@ -65,6 +65,7 @@ const AdaKasbonTLScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
+          potongan,
           );
         buatKasbonBaru(
           namamitra,
@@ -76,8 +77,44 @@ const AdaKasbonTLScreen = () => {
           id_transaksi,
         );
         navigation.navigate("TQScreen");
-        // dispatch(kosongkanKeranjang());
-        // dispatch(resetPelanggan());
+      } else {
+        const db = getFirestore(app);
+        const docRefVou = doc(db, "promosi", id_voucher);
+        const docSnapVou = await getDoc(docRefVou);
+
+        if(docSnapVou.exists()){
+          if(docSnapVou.data().tersedia == false){
+            Alert.alert('Voucher sudah tidak berlaku','Kuota pengguna vouher sudah habis.');
+          } else {
+           const id_transaksi = await buatTransaksiTL(
+              namamitra,
+              namatoko,
+              namapelanggan,
+              id_pelanggan,
+              kelompokProduk,
+              subtotalhargaKeranjang,
+              hargalayanan,
+              hargatotalsemua,
+              jumlah_kuantitas,
+              pembayaran,
+              potongan,
+            );
+            buatKasbonBaru(
+              namamitra,
+              namatoko,
+              namapelanggan,
+              id_pelanggan,
+              phonepelanggan,
+              hargatotalsemua,
+              id_transaksi,
+            );
+            await updateTersediaVoucher(
+              id_voucher,
+              potongan,
+            );
+            navigation.navigate("TQScreen");
+          }
+        }
       }
     } catch (err){
       Alert.alert('Ada error buat transaksi temu langsung dengan kasbon!', err.message);
@@ -88,6 +125,7 @@ const AdaKasbonTLScreen = () => {
     try{
       let jumlah_kuantitas = items.length;
       let pembayaran = 'Kasbon';
+      let id_pelanggan = kodeUID;
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
       } else if (!namamitra) {
@@ -96,18 +134,19 @@ const AdaKasbonTLScreen = () => {
         Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
       } else if (!items) {
         Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-      } else {
+      } else if (potongan == 0){
         const id_transaksi = await buatTransaksiTL(
           namamitra,
           namatoko,
           namapelanggan,
-          kodeUID,
+          id_pelanggan,
           kelompokProduk,
           subtotalhargaKeranjang,
           hargalayanan,
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
+          potongan,
           );
         tambahTransaksiKasbon(
           id_kasbon,
@@ -115,8 +154,40 @@ const AdaKasbonTLScreen = () => {
           id_transaksi
         );
         navigation.navigate("TQScreen");
-        // dispatch(kosongkanKeranjang());
-        // dispatch(resetPelanggan());
+      } else {
+        const db = getFirestore(app);
+        const docRefVou = doc(db, "promosi", id_voucher);
+        const docSnapVou = await getDoc(docRefVou);
+
+        if(docSnapVou.exists()){
+          if(docSnapVou.data().tersedia == false){
+            Alert.alert('Voucher sudah tidak berlaku','Kuota pengguna vouher sudah habis.');
+          } else {
+            const id_transaksi = await buatTransaksiTL(
+              namamitra,
+              namatoko,
+              namapelanggan,
+              id_pelanggan,
+              kelompokProduk,
+              subtotalhargaKeranjang,
+              hargalayanan,
+              hargatotalsemua,
+              jumlah_kuantitas,
+              pembayaran,
+              potongan,
+            );
+            await tambahTransaksiKasbon(
+              id_kasbon,
+              hargatotalsemua,
+              id_transaksi
+              );
+            await updateTersediaVoucher(
+              id_voucher,
+              potongan,
+            );
+            navigation.navigate("TQScreen");
+          }
+        }
       }
     } catch (err){
       Alert.alert('Ada error buat transaksi temu langsung dengan kasbon!', err.message);
@@ -124,16 +195,16 @@ const AdaKasbonTLScreen = () => {
   }
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const { kodeUID, namapelanggan, phonepelanggan } = useSelector(state => state.pelanggan);
   const { namamitra, namatoko } = useSelector(state => state.mitra);
+  const { potongan, id_voucher } = useSelector(state => state.voucher);
 
   const subtotalhargaKeranjang = useSelector(totalHarga)
   const hargalayanan =  0
-  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
+  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan - potongan
 
   useEffect(() => {
     const kelompok = items.reduce((results, item) => {
@@ -231,7 +302,7 @@ const AdaKasbonTLScreen = () => {
                     </View>
                     <View>
                         <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
-                        <Text style={styles.total}>Rp{item.total_kasbon}</Text>
+                        <Text style={styles.total}>Rp{new Intl.NumberFormat('id-Id').format(item.total_kasbon).toString()}</Text>
                     </View>
                 </View>
                 <Pressable style={styles.tomboltambah} onPress={() => tambahkanKasbon(item.id)}>

@@ -13,10 +13,10 @@ import {
  } from '../features/keranjangSlice'
 import { resetPelanggan } from '../features/pelangganSlice';
 import { buatTransaksiTL, updateTersediaVoucher } from '../../API/firebasemethod'
-import "intl";
-import "intl/locale-data/jsonp/id";
 import { doc, getDoc, getFirestore } from 'firebase/firestore/lite';
 import { app } from '../../Firebase/config';
+import "intl";
+import "intl/locale-data/jsonp/id";
  
 
 const { width, height } = Dimensions.get('window')
@@ -58,7 +58,7 @@ const CheckoutLangScreen = () => {
   async function uploadtransaksiTemuLangsung(){
     try{
       let jumlah_kuantitas = items.length;
-      let pembayaran = 'Tunai';
+      let pembayaran = 'Lunas';
       let id_pelanggan = kodeUID;
       if (!namapelanggan) {
         Alert.alert('Nama pelangan masih kosong','Scan QR Code milik pelanggan terlebih dahulu.');
@@ -110,8 +110,6 @@ const CheckoutLangScreen = () => {
               potongan,
             );
             navigation.navigate("TQScreen");
-            // dispatch(kosongkanKeranjang());
-            // dispatch(resetPelanggan());
           }
         }
       }

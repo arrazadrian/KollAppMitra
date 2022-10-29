@@ -39,7 +39,7 @@ const ReceiptKasbonScreen = ({ navigation, route }) => {
   const melunaskanKasbon = () =>{
       lunaskanKasbon(id_kasbon);
       Alert.alert('Status kasbon sudah menjadi lunas','Akhirnya uang yang ditunggu pun tiba!');
-      navigation.navigate('LunasScreen')
+      navigation.navigate('HomeScreen')
   };
 
   const { 

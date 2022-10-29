@@ -54,7 +54,7 @@ const ScanVoucherScreen = ({ route }) => {
                     navigation.goBack();
                 } else {
                     setId_voucher(data);
-                    setPotongan(docSnap.data().potongan);
+                    setPotongan(Number(docSnap.data().potongan));
                 }
             } else {
               Alert.alert('QR Code tidak dikenal','Pastikan QR Code berasal dari voucher aplikasi Koll.');
@@ -76,6 +76,7 @@ const ScanVoucherScreen = ({ route }) => {
           dispatch(updateVoucher({id_voucher, potongan}));
           console.log('id_voucher:' + id_voucher)
           console.log('potongan:' + potongan)
+          console.log('jenis potongan: ' + typeof(potongan))
           navigation.goBack();
         } else {
           console.log('Gagal nih ga masuk redux')
