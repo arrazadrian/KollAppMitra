@@ -81,8 +81,8 @@ const AkunScreen = () => {
     });
     
     return() =>{
-      unsubscribe();
       console.log('Akun Unmounted');
+      unsubscribe();
     }
   },[])
 

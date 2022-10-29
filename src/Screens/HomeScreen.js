@@ -124,8 +124,7 @@ const HomeScreen = ({ navigation }) => {
   const db = getFirestore(app)
 
   useEffect(() =>{ 
-    async function getuserHome(){
-      try{      
+   
         const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
         setNamamitra(doc.data().namalengkap);
         setNamatoko(doc.data().namatoko);
@@ -137,13 +136,13 @@ const HomeScreen = ({ navigation }) => {
         
       });
       console.log('Masuk Redux namamitra');
-      //unsubscribe();
-      } catch (err){
-        Alert.alert('There is an error.', err.message)
+      dispatch(setMitra({ namamitra, namatoko }));
+      
+      return() => {
+        console.log('Home Unmounted');
+        unsubscribe();
       }
-    }
-    getuserHome();
-    dispatch(setMitra({ namamitra, namatoko }));
+ 
   },[namatoko])
 
   const [location, setLocation] = useState(null);
