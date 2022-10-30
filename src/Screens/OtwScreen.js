@@ -1,18 +1,19 @@
 import { Image, StyleSheet, Text, View, Pressable, Dimensions, Alert, Modal, TouchableOpacity} from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { Call, Chat } from '../assets/Icons/Index';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import GarisBatas from '../Components/GarisBatas';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Linking from 'expo-linking';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { app } from '../../Firebase/config';
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { batalPMolehMitra, sampaiPM } from '../../API/firebasemethod';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetBobot } from '../features/bobotSlice';
-import { resetPosisi } from '../features/posisiSlice';
 import { kosongkanKeranjang } from '../features/keranjangSlice';
 
 const { width, height } = Dimensions.get('window')
@@ -34,6 +35,7 @@ const OtwScreen = ({ route }) => {
     estimasi_waktu,
     jarak,
     hargalayanan,
+    panggilan,
      } = route.params;
 
   const navigation = useNavigation();
@@ -41,6 +43,28 @@ const OtwScreen = ({ route }) => {
   const { namamitra } = useSelector(state => state.mitra);
   const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
   const dispatch = useDispatch();
+
+  const db = getFirestore(app)
+
+  useFocusEffect(
+    useCallback(() => {
+          const unsubscribe = onSnapshot(doc(db, "transaksi", id_transaksi), (doc) => {
+          if(panggilan == "Dibatalkan Pelanggan"){
+            navigation.replace('HomeScreen');
+            Alert.alert(
+              'Pelanggan membatalkan panggilan mitra','Mohon maaf, sepertinya pelanggan berubah pikiran. Tetap semangat ya!.'
+            );
+          } 
+            // Respond to data
+            // ...
+          });
+          //unsubscribe();
+          return () => {
+            console.log('Otw Unmounted') 
+            unsubscribe();
+          }
+    },[])
+  );
 
   const clickLanjut =()=> {
     Alert.alert('Anda yakin sudah sampai?','Sistem akan mengingatkan pelanggan bahwa mitra sudah sampai.',
