@@ -81,7 +81,7 @@ const OtwScreen = ({ route }) => {
   };
 
   const clickBatal =()=> {
-    Alert.alert('Anda yakin mau membatalkan?','Pelanggan tentunya akan kecewa kamu batalkan.',
+    Alert.alert('Anda yakin mau membatalkan?','Pelanggan tentunya akan kecewa bila kamu batalkan.',
           [
             {
               text: 'Tutup',
@@ -94,7 +94,6 @@ const OtwScreen = ({ route }) => {
               onPress: async () => { 
                 await batalPMolehMitra(id_transaksi);  
                 await dispatch(resetBobot());
-                await dispatch(resetPosisi());
                 navigation.replace("HomeScreen");
                 console.log('batal dipencet');
               }
@@ -182,7 +181,7 @@ const OtwScreen = ({ route }) => {
               <Pressable style={{flex:1}} onPress={()=> navigation.goBack()}>
                     <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
               </Pressable>
-              <View>
+              <View style={{flex: 4}}>
                 <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}} numberOfLines={1}>
                   {namapelanggan}
                 </Text>
