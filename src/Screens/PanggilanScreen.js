@@ -244,7 +244,6 @@ const PanggilanScreen = ({ route, navigation }) => {
         </View>
       <View style={styles.bawah}>
         <View style={{marginTop: 10, flexDirection:'row'}}>
-            <View style={{ flexDirection:'row'}}>
                 <Pressable style={{marginRight: 10}} onPress={()=> navigation.goBack()}>
                     <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
                 </Pressable>
@@ -256,7 +255,6 @@ const PanggilanScreen = ({ route, navigation }) => {
                         {namapelanggan}
                     </Text>
                 </View>
-            </View>
         </View>
         <GarisBatas/>
             <Text style={styles.subjudul}>

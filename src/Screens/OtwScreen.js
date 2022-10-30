@@ -182,7 +182,7 @@ const OtwScreen = ({ route }) => {
               <Pressable style={{flex:1}} onPress={()=> navigation.goBack()}>
                     <Ionicons name="chevron-back-circle-outline" size={40} color={Ijo} />
               </Pressable>
-              <View style={{flex:4}} >
+              <View>
                 <Text style={{fontSize:18, fontWeight:'bold', color:IjoTua}} numberOfLines={1}>
                   {namapelanggan}
                 </Text>

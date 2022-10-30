@@ -11,7 +11,8 @@ import {
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
 import { selesaikanPM } from '../../API/firebasemethod'
- 
+import "intl";
+import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
  
@@ -102,12 +103,12 @@ async function selesaikanPanggilMitra(){
                   <Image source={{uri: items[0]?.image}} style={styles.foto}/>
                   <View>
                       <Text style={styles.produk} numberOfLines={1}>{items[0]?.namaproduk}</Text>
-                      <Text>Rp{items[0]?.harga}</Text>
+                      <Text>Rp{new Intl.NumberFormat('id-Id').format(items[0]?.harga).toString()}</Text>
                   </View>
               </View>
               <View style={{justifyContent:'center'}}>
                   <Text style={styles.harga}>
-                    Rp{items.length * items[0]?.harga}
+                    Rp{new Intl.NumberFormat('id-Id').format(items.length * items[0]?.harga).toString()}
                   </Text>
               </View>
           </View>
@@ -117,15 +118,15 @@ async function selesaikanPanggilMitra(){
       <View style={styles.simpulan}>
           <View style={styles.desk}>
             <Text>Subtotal</Text>
-            <Text>Rp{subtotalhargaKeranjang}</Text>
+            <Text>Rp{new Intl.NumberFormat('id-Id').format(subtotalhargaKeranjang).toString()}</Text>
           </View>
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
-            <Text>{hargalayanan}</Text>
+            <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
           </View>
           <View style={styles.desk}>
             <Text>Harga Total</Text>
-            <Text  style={styles.harga}>Rp{hargatotalsemua}</Text>
+            <Text  style={styles.harga}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
           </View>
 
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
