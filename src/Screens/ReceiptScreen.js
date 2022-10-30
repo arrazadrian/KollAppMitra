@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import * as Linking from 'expo-linking';
-import { Ijo, IjoMint, IjoTua, Kuning, Putih, Pink} from '../Utils/Warna'
+import { Ijo, IjoMint, IjoTua, Kuning, Putih, Pink, Hitam} from '../Utils/Warna'
 import { Kasbon, KollLong, Location, Lunas } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
 import moment from 'moment';
@@ -24,7 +24,7 @@ const ReceiptScreen = ({route}) => {
   const { 
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-    status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran, potongan,
+    status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran, id_voucher, potongan,
      } = route.params;
 
   const telepon = () => {
@@ -81,8 +81,8 @@ const ReceiptScreen = ({route}) => {
 
   async function batalPO(){
     try{
-        batalkanPO(id_transaksi);
-        Alert.alert('Pre-Order sudah dibatalkan', 'Terima kasih sudah memeberi kepastian, semangat!');
+        await batalkanPO(id_transaksi, id_voucher, potongan);
+        Alert.alert('Pre-Order sudah dibatalkan', 'Terima kasih sudah memberi kepastian, semangat!');
         navigation.navigate("HomeScreen"); 
     } catch (err){
       Alert.alert('Ada error menyelesaikan pre-order!', err.message);
@@ -251,11 +251,12 @@ const ReceiptScreen = ({route}) => {
                   <Text>Sub Total</Text>
                   <Text>Rp{new Intl.NumberFormat('id-Id').format(hargasubtotal).toString()}</Text>
               </View>
-              { potongan > 0 &&
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text>Potongan</Text>
-                  <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
-              </View>
+              { potongan > 0 ? (
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text>Potongan</Text>
+                    <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+                </View>
+                ):(null)
               }
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text>Biaya Layanan</Text>
@@ -318,7 +319,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     width: '25%',
     borderRadius: 10,
-    // flex:1,
+    borderWidth: 0.5,
+    borderColor: Hitam,
   },
   reminder:{
     backgroundColor: IjoTua,

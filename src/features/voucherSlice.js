@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const voucherSlice = createSlice({
     name: "voucher",
     initialState:{
-        id_voucher: null,
+        id_voucher: "",
         potongan: 0,
     },
     reducers:{
@@ -12,7 +12,7 @@ const voucherSlice = createSlice({
             state.potongan = action.payload.potongan;
         },
         resetVoucher: (state) => {
-            state.id_voucher = null;
+            state.id_voucher = "";
             state.potongan = 0;
         }
     }

@@ -595,20 +595,35 @@ export const selesaikanPO = async (id_transaksi, pembayaran) => {
 // API 16: batalkanPO
 // UPDATE PO JADI TRANSAKSI YANG SELESAI
 
-export const batalkanPO = async (id_transaksi) => {
+export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
     const db = getFirestore(app);
-    const docrefproduk = doc(db, "transaksi", id_transaksi);
-    getDoc(docrefproduk).then(docSnap => {
-      if (docSnap.exists()) {
-        try {
-            updateDoc(docrefproduk, {
-              status_transaksi: "Dibatalkan Mitra", 
-            });
-        } catch (err) {
-          Alert.alert('Ada error untuk menyelesaikan PO!', err);
+    const docreftran = doc(db, "transaksi", id_transaksi);
+    if(potongan > 0){
+      await kurangiTersediaVoucher(id_voucher, potongan)
+      getDoc(docreftran).then(docSnap => {
+        if (docSnap.exists()) {
+          try {
+              updateDoc(docreftran, {
+                status_transaksi: "Dibatalkan Mitra", 
+              });
+          } catch (err) {
+            Alert.alert('Ada error untuk menyelesaikan PO!', err);
+          }
         }
-      }
-    })
+      })
+    } else {
+      getDoc(docreftran).then(docSnap => {
+        if (docSnap.exists()) {
+          try {
+              updateDoc(docreftran, {
+                status_transaksi: "Dibatalkan Mitra", 
+              });
+          } catch (err) {
+            Alert.alert('Ada error untuk menyelesaikan PO!', err);
+          }
+        }
+      })
+    }
 };
 
 // API 17: terimaPM
@@ -805,7 +820,7 @@ export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, id_trans
 };
 
 // API 25: updateVoucherMitra
-// MENAMBAH TRANSAKSI DALAM KASBON. 
+// MENAMBAH JML DATA VOUCHER. 
 
 export const updateVoucherMitra = async (id_voucher, potongan) => {  
   const auth = getAuth();
@@ -849,6 +864,61 @@ export const updateTersediaVoucher = async (id_voucher, potongan) => {
       if( jml_terbaru >= docSnap.data().kuota){
         updateDoc(docRef, { 
           tersedia: false, 
+        });
+      }
+    } else {
+      console.log("No such document!");
+    }
+  } catch(err){
+    console.log('Ada Error update kesediaan voucher.', err);
+  };
+};
+
+// API 27: kurangVoucherMitra
+// MENGURANGI JML DATA VOUCHER. 
+
+export const kurangVoucherMitra = async (id_voucher, potongan) => {  
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docRefVou = doc(db, "promosi", id_voucher);
+  const docSnapVou = await getDoc(docRefVou);
+  const docRefMit = doc(db, "mitra", auth.currentUser.uid);
+  const docSnapMit= await getDoc(docRefMit);
+  try{
+    if(docSnapVou.exists() && docSnapMit.exists()){
+      let awal_pengguna =  docSnapVou.data().jml_pengguna
+      let awal_poin =  docSnapMit.data().poin_potongan
+      let jml_terbaru = awal_pengguna - 1
+      await updateDoc(docRefVou, { 
+          jml_pengguna: awal_pengguna - 1, 
+      });
+      updateDoc(docRefMit, { 
+          poin_potongan: awal_poin - potongan, 
+      });
+      return jml_terbaru
+    } else {
+      console.log("No such document!");
+    }
+   
+  } catch(err){
+    console.log('Ada Error update voucher.', err);
+  };
+};
+
+//API 28: kurangiTersediaVoucher
+// VOUCHER SUDAH MEMENUHU KUOTA ATAU BELUM
+
+export const kurangiTersediaVoucher = async (id_voucher, potongan) => {  
+  const jml_terbaru = await kurangVoucherMitra(id_voucher, potongan)
+
+  const db = getFirestore(app);
+  const docRef = doc(db, "promosi", id_voucher);
+  const docSnap = await getDoc(docRef);
+  try{
+    if(docSnap.exists()){
+      if( jml_terbaru < docSnap.data().kuota){
+        updateDoc(docRef, { 
+          tersedia: true, 
         });
       }
     } else {

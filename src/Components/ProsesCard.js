@@ -59,6 +59,7 @@ const ProsesCard = ({ item }) => {
       catatan_lokasi: item?.catatan_lokasi,
       catatan_produk: item?.catatan_produk,
       pembayaran: item?.pembayaran,
+      id_voucher: item.id_voucher,
       potongan: item.potongan,
       id_transaksi: item.id,
     })
