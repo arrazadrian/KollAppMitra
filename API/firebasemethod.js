@@ -542,7 +542,7 @@ export async function updatemangkal(mangkal){
 // API 15: buatTransaksiTL
 // MEMBUAT TRANSAKSI UNTUK TEMU LANGSUNG. 
 
-export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pelanggan, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran, potongan) => {  
+export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pelanggan, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran, id_voucher, potongan) => {  
   const auth = getAuth();
   const db = getFirestore(app);
   try{
@@ -561,6 +561,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
       hargatotalsemua: hargatotalsemua,
       jumlah_kuantitas: jumlah_kuantitas,
       pembayaran: pembayaran,
+      id_voucher: id_voucher,
       potongan: potongan,
    });
     console.log("ID dokumenTLnya: ", docRef.id)
@@ -854,6 +855,6 @@ export const updateTersediaVoucher = async (id_voucher, potongan) => {
       console.log("No such document!");
     }
   } catch(err){
-    console.log('Ada Error manambah tranksaksi kasbon.', err);
+    console.log('Ada Error update kesediaan voucher.', err);
   };
 };

@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions, ActivityIndicator, ScrollView } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Abu, Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
 import { usermitra } from '../Data/usermitra'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { handleSignOut } from '../../API/firebasemethod'
 import { app } from '../../Firebase/config';
 import {  getAuth } from "firebase/auth";
@@ -61,30 +61,56 @@ const AkunScreen = () => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() =>{
+  // useEffect(() =>{
 
-    const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-    setNamaakun(doc.data().namalengkap);
-    setFotoakun(doc.data().foto_akun);
-    setTokoakun(doc.data().namatoko);
-    setPhoneakun(doc.data().phone);
-    setEmailakun(doc.data().email);
-    setWaktu_buka(doc.data().waktu_buka);
-    setWaktu_tutup(doc.data().waktu_tutup);
-    setAlamat(doc.data().alamat);
-    setRating_layanan(doc.data().rating_layanan);
-    setRating_produk(doc.data().rating_produk);
-    setPoin(doc.data().poin_potongan);
-    console.log('getuserAkun jalan (Akun Screen)')
-      // Respond to data
-      // ...
-    });
+  //   const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+  //   setNamaakun(doc.data().namalengkap);
+  //   setFotoakun(doc.data().foto_akun);
+  //   setTokoakun(doc.data().namatoko);
+  //   setPhoneakun(doc.data().phone);
+  //   setEmailakun(doc.data().email);
+  //   setWaktu_buka(doc.data().waktu_buka);
+  //   setWaktu_tutup(doc.data().waktu_tutup);
+  //   setAlamat(doc.data().alamat);
+  //   setRating_layanan(doc.data().rating_layanan);
+  //   setRating_produk(doc.data().rating_produk);
+  //   setPoin(doc.data().poin_potongan);
+  //   console.log('getuserAkun jalan (Akun Screen)')
+  //     // Respond to data
+  //     // ...
+  //   });
     
-    return() =>{
-      console.log('Akun Unmounted');
-      unsubscribe();
-    }
-  },[])
+  //   return() =>{
+  //     console.log('Akun Unmounted');
+  //     unsubscribe();
+  //   }
+  // },[])
+
+  //Dapetin data mitra akun, putus listener kalo pindah halaman
+  useFocusEffect(
+    useCallback(() => {
+          const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+            setNamaakun(doc.data().namalengkap);
+            setFotoakun(doc.data().foto_akun);
+            setPhoneakun(doc.data().phone);
+            setEmailakun(doc.data().email);
+            setWaktu_buka(doc.data().waktu_buka);
+            setWaktu_tutup(doc.data().waktu_tutup);
+            setAlamat(doc.data().alamat);
+            setRating_layanan(doc.data().rating_layanan);
+            setRating_produk(doc.data().rating_produk);
+            setPoin(doc.data().poin_potongan);
+            console.log('getuserAkun jalan (Akun Screen)')
+            // Respond to data
+            // ...
+          });
+          //unsubscribe();
+          return () => {
+            console.log('Akun Unmounted') 
+            unsubscribe();
+          }
+    },[])
+  );
 
   return (
     <View style={styles.latar}>

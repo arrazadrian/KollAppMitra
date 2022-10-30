@@ -65,6 +65,7 @@ const AdaKasbonTLScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
+          id_voucher,
           potongan,
           );
         buatKasbonBaru(
@@ -97,6 +98,7 @@ const AdaKasbonTLScreen = () => {
               hargatotalsemua,
               jumlah_kuantitas,
               pembayaran,
+              id_voucher,
               potongan,
             );
             buatKasbonBaru(
@@ -146,6 +148,7 @@ const AdaKasbonTLScreen = () => {
           hargatotalsemua,
           jumlah_kuantitas,
           pembayaran,
+          id_voucher,
           potongan,
           );
         tambahTransaksiKasbon(
@@ -174,6 +177,7 @@ const AdaKasbonTLScreen = () => {
               hargatotalsemua,
               jumlah_kuantitas,
               pembayaran,
+              id_voucher,
               potongan,
             );
             await tambahTransaksiKasbon(

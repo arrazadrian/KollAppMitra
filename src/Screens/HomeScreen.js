@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Switch, Pressable, Image, ScrollView, StatusBar, Dimensions, Alert, ActivityIndicator} from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih,  } from '../Utils/Warna';
 import { DompetKasbon, Gerobak, PreOrder, TemuLangsung } from '../assets/Images/Index';
 import moment from 'moment';
@@ -16,6 +16,7 @@ import * as Location from 'expo-location';
 import { resetPelanggan } from '../features/pelangganSlice';
 import { kosongkanKeranjang } from '../features/keranjangSlice';
 import { resetVoucher } from '../features/voucherSlice';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window')
@@ -33,6 +34,7 @@ const HomeScreen = ({ navigation }) => {
 
   //Untuk mendapatkan status saat ini,
   useEffect(() => {
+    let unmounted = false;
     async function getStatus(){
       const auth = getAuth();
       const docRef = doc(db, "mitra", auth.currentUser.uid);
@@ -66,7 +68,16 @@ const HomeScreen = ({ navigation }) => {
         console.log("No such document!");
       };
     };
-    getStatus();
+
+    if(!unmounted){
+      getStatus();
+    }
+
+    return() =>{
+      unmounted= true
+      console.log("Clear getStatus")
+    }
+
   },[])
 
   
@@ -123,34 +134,61 @@ const HomeScreen = ({ navigation }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  useEffect(() =>{ 
+  // useEffect(() =>{ 
    
-        const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-        setNamamitra(doc.data().namalengkap);
-        setNamatoko(doc.data().namatoko);
+  //       const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+  //       setNamamitra(doc.data().namalengkap);
+  //       setNamatoko(doc.data().namatoko);
         
-        console.log('getuserHome jalan (Home Screen)')
-        console.log(namamitra)
-        console.log(namatoko)
-        // Respond to data
+  //       console.log('getuserHome jalan (Home Screen)')
+  //       console.log(namamitra)
+  //       console.log(namatoko)
+  //       // Respond to data
         
-      });
-      console.log('Masuk Redux namamitra');
-      dispatch(setMitra({ namamitra, namatoko }));
+  //     });
+  //     console.log('Masuk Redux namamitra');
+  //     dispatch(setMitra({ namamitra, namatoko }));
       
-      return() => {
-        console.log('Home Unmounted');
-        unsubscribe();
-      }
+  //     return() => {
+  //       console.log('Home Unmounted');
+  //       unsubscribe();
+  //     }
  
-  },[namatoko])
+  // },[namatoko])
+
+  useFocusEffect(
+    useCallback(() => {
+          const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
+            setNamamitra(doc.data().namalengkap);
+            setNamatoko(doc.data().namatoko);
+            
+            console.log('getuserHome jalan (Home Screen)')
+            console.log(namamitra)
+            console.log(namatoko)
+
+            console.log('Masuk Redux namamitra');
+            dispatch(setMitra({ namamitra, namatoko }));
+    
+          });
+          //unsubscribe();
+          return () => {
+            console.log('Home Unmounted') 
+            unsubscribe();
+          }
+    },[namatoko])
+  );
+
+
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const geofire = require('geofire-common');
 
-
+  //ceritanya ini getLocation 
   useEffect(() => {
+    let unmounted = false
+    
+    if(!unmounted){
       (async () => {
       
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -177,6 +215,12 @@ const HomeScreen = ({ navigation }) => {
           }));
       })
       })();
+    }
+
+    return() =>{
+      unmounted= true
+      console.log("Clear getLocation")
+    }
   }, []); 
   
 

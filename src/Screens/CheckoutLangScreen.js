@@ -80,6 +80,7 @@ const CheckoutLangScreen = () => {
             hargatotalsemua,
             jumlah_kuantitas,
             pembayaran,
+            id_voucher,
             potongan,
           );
           navigation.navigate("TQScreen");
@@ -103,6 +104,7 @@ const CheckoutLangScreen = () => {
               hargatotalsemua,
               jumlah_kuantitas,
               pembayaran,
+              id_voucher,
               potongan,
             );
             await updateTersediaVoucher(
