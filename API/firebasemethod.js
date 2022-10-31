@@ -712,7 +712,7 @@ export const sampaiPM = async (id_transaksi) => {
 // UPDATE PANGGILAN PM JADI SAMPAI
 // KARENA SUDAH SAMPAI 
 
-export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas) => {
+export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran) => {
   const db = getFirestore(app);
   const docrefproduk = doc(db, "transaksi", id_transaksi);
   getDoc(docrefproduk).then(docSnap => {
@@ -726,7 +726,8 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
             jumlah_kuantitas: jumlah_kuantitas,
             panggilan: "Selesai", 
             status_transaksi: "Selesai",
-            waktu_selesai: serverTimestamp(),  
+            waktu_selesai: serverTimestamp(), 
+            pembayaran: pembayaran, 
           });
       } catch (err) {
         Alert.alert('Ada error merima PM!', err);

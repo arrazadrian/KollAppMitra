@@ -47,6 +47,7 @@ const CheckoutPMScreen = ({ route }) => {
 async function selesaikanPanggilMitra(){
   try{
     let jumlah_kuantitas = items.length;
+    let pembayaran = "Lunas"
     if (!items) {
       Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
     } else {
@@ -57,6 +58,7 @@ async function selesaikanPanggilMitra(){
         hargalayanan,
         hargatotalsemua,
         jumlah_kuantitas,
+        pembayaran,
       );
       navigation.navigate("TQScreen");
       //dispatch(kosongkanKeranjang());
