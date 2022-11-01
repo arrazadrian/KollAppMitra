@@ -78,7 +78,6 @@ const OtwScreen = ({ route }) => {
             {
               text: 'Sudah',
               onPress: async () => {
-                await dispatch(kosongkanKeranjang())
                 await sampaiPM(id_transaksi);
                 navigation.navigate("LanjutBelanjaScreen",{
                   id_transaksi: id_transaksi,
@@ -282,7 +281,7 @@ const styles = StyleSheet.create({
     },
     peta:{
         width: width,
-        height: height * 0.5,
+        height: height * 0.55,
     },
     bungkus:{
         width: width,

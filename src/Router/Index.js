@@ -27,6 +27,7 @@ import {
     CheckoutPMScreen,
     AdaKasbonTLScreen,
     AdaKasbonPOScreen,
+    AdaKasbonPMScreen,
     ScanScreen,
     ScanVoucherScreen,
     TQScreen,
@@ -89,6 +90,7 @@ export const AppUtama = () => {
           <HomeStack.Screen name="ReceiptKasbonScreen" component={ReceiptKasbonScreen} options={{ title: "Bukti Kasbon", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="AdaKasbonTLScreen" component={AdaKasbonTLScreen} options={{ title: "Kasbon Milik Pelanggan", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="AdaKasbonPOScreen" component={AdaKasbonPOScreen} options={{ title: "Kasbon Milik Pelanggan", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+          <HomeStack.Screen name="AdaKasbonPMScreen" component={AdaKasbonPMScreen} options={{ title: "Kasbon Milik Pelanggan", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
          
           <HomeStack.Screen name="LangsungScreen" component={LangsungScreen} options={{ title: "Transaksi Baru", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="LanjutBelanjaScreen" component={LanjutBelanjaScreen} options={{ title: "Lanjut Belanja", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>

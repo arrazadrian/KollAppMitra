@@ -39,11 +39,20 @@ const atasjual = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    let unmounted = false;
     const pilihKategori = () => {
       dispatch(updateKategori({pilkategori}));
       console.log("Kategori yg dipilih: " + pilkategori)
     };
-    pilihKategori();
+
+    if(!unmounted){
+      pilihKategori();
+    }
+
+    return() =>{
+      unmounted = true
+      console.log('Pilih Kategori cleared')
+    }
   }, [pilkategori]);
 
   return(

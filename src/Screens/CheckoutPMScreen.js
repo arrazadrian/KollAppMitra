@@ -108,6 +108,8 @@ async function selesaikanPanggilMitra(){
       return results;
     }, {});
 
+    
+
     const jikakosong = () => {
       if(!items.length){
         navigation.goBack();
@@ -119,6 +121,36 @@ async function selesaikanPanggilMitra(){
 
   }, [items]);
 
+  const [namamitra, setNamamitra] = useState("");
+    const [namatoko, setNamatoko] = useState("");
+    const [namapelanggan, setNamapelanggan] = useState("");
+    const [id_pelanggan, setId_pelanggan] = useState("");
+    const [phonepelanggan, setPhonepelanggan] = useState("");
+  
+    //Untuk mendapatkan data yg dibutuhkan kasbon
+    useEffect(() => {
+        // let unmounted = false; 
+        async function getDatakasbon(){
+          const db = getFirestore(app);
+          const docRef = doc(db, "transaksi", id_transaksi);
+          const docSnap = await getDoc(docRef);
+          
+          if (docSnap.exists()) {
+                setNamamitra(docSnap.data().namamitra)
+                setNamatoko(docSnap.data().namatoko)
+                setNamapelanggan(docSnap.data().namapelanggan)
+                setId_pelanggan(docSnap.data().id_pelanggan)
+                setPhonepelanggan(docSnap.data().phonepelanggan)
+                console.log('getDataKasbon jalan!')
+          } else { 
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          };
+        };
+    
+        getDatakasbon();
+    },[])
+
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
   //Harga Layananan dari route.param di atas
@@ -126,7 +158,17 @@ async function selesaikanPanggilMitra(){
  
 
   const pindahKasbon = () => {
-    navigation.navigate('AdaKasbonTLScreen')
+    navigation.navigate('AdaKasbonPMScreen',{
+      id_transaksi: id_transaksi,
+      hargalayanan: hargalayanan,
+      hargatotalsemua: hargatotalsemua,
+      namamitra: namamitra,
+      namatoko: namatoko,
+      namapelanggan: namapelanggan,
+      id_pelanggan: id_pelanggan,
+      phonepelanggan: phonepelanggan,
+
+    })
   };
 
   const ScanVoucerPromo = () => {
