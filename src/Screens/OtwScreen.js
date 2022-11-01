@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     },
     peta:{
         width: width,
-        height: height * 0.55,
+        height: height * 0.5,
     },
     bungkus:{
         width: width,

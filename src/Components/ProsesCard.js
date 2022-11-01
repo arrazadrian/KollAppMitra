@@ -7,17 +7,22 @@ import moment from 'moment';
 import localization from 'moment/locale/id';
 import "intl";
 import "intl/locale-data/jsonp/id";
+import { kosongkanKeranjang } from '../features/keranjangSlice';
+import { resetVoucher } from '../features/voucherSlice';
+import { useDispatch } from 'react-redux';
 
 const { width, height } = Dimensions.get('window')
-
 
 const ProsesCard = ({ item }) => {
 
   moment.updateLocale('id', localization);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const pindahPanggilan = () => {
+  const pindahPanggilan = async () => {
+    await dispatch(kosongkanKeranjang());
+    await dispatch(resetVoucher());
     navigation.navigate('PanggilanScreen', { 
       alamat_pelanggan: item?.alamat_pelanggan,
       id_mitra: item.id_mitra,
