@@ -77,7 +77,7 @@ const PanggilanScreen = ({ route, navigation }) => {
             alamat_mitra: alamat_mitra,
             estimasi_waktu: estimasi_waktu,
             jarak: jarak,
-            hargalayanan: hargalayanan,
+            hargalayanan: Number(hargalayanan),
           });
     };
   

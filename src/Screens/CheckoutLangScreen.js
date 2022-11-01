@@ -229,7 +229,7 @@ const CheckoutLangScreen = () => {
           { potongan ?
             (
             <View style={styles.desk}>
-              <Text>Potongam</Text>
+              <Text>Potongan</Text>
               <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
             </View>
             ):(null)
@@ -276,11 +276,6 @@ const styles = StyleSheet.create({
       color: IjoTua,
       fontSize: 18,
       fontWeight: 'bold',
-    },
-    scan:{
-      alignItems:'center',
-      justifyContent:'center',
-      paddingVertical: 2,
     },
     atas:{
       padding:10

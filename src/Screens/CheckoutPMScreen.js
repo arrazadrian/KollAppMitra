@@ -5,12 +5,15 @@ import { IjoTua, Kuning, Putih, Ijo, IjoMint } from '../Utils/Warna'
 import { useNavigation } from '@react-navigation/native'
 //import ProdukKeranjang from '../Components/ProdukKeranjang'
 import { useDispatch, useSelector } from 'react-redux'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { 
   pilihProdukKeranjang, 
   totalHarga, 
   kosongkanKeranjang,
  } from '../features/keranjangSlice'
-import { selesaikanPM } from '../../API/firebasemethod'
+import { doc, getDoc, getFirestore } from 'firebase/firestore/lite';
+import { app } from '../../Firebase/config';
+import { selesaikanPM, updateTersediaVoucher } from '../../API/firebasemethod'
 import "intl";
 import "intl/locale-data/jsonp/id";
 
@@ -26,6 +29,8 @@ const CheckoutPMScreen = ({ route }) => {
   const dispatch = useDispatch();
   const items = useSelector(pilihProdukKeranjang)
   const [kelompokProduk, setKelompokProduk] = useState([]);
+
+  const { potongan, id_voucher } = useSelector(state => state.voucher);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -50,8 +55,8 @@ async function selesaikanPanggilMitra(){
     let pembayaran = "Lunas"
     if (!items) {
       Alert.alert('Tidak ada produk yang dibeli','Transaksi tidak bisa dilakukan.');
-    } else {
-      selesaikanPM(
+    } else if (potongan == 0) {
+      await selesaikanPM(
         id_transaksi,
         kelompokProduk,
         subtotalhargaKeranjang,
@@ -59,9 +64,38 @@ async function selesaikanPanggilMitra(){
         hargatotalsemua,
         jumlah_kuantitas,
         pembayaran,
+        id_voucher,
+        potongan,
       );
       navigation.navigate("TQScreen");
       //dispatch(kosongkanKeranjang());
+    } else {
+      const db = getFirestore(app);
+      const docRefVou = doc(db, "promosi", id_voucher);
+      const docSnapVou = await getDoc(docRefVou);
+
+      if(docSnapVou.exists()){
+        if(docSnapVou.data().tersedia == false){
+          Alert.alert('Voucher sudah tidak berlaku','Kuota pengguna vouher sudah habis.');
+        } else {
+          await selesaikanPM(
+            id_transaksi,
+            kelompokProduk,
+            subtotalhargaKeranjang,
+            hargalayanan,
+            hargatotalsemua,
+            jumlah_kuantitas,
+            pembayaran,
+            id_voucher,
+            potongan,
+          );
+          await updateTersediaVoucher(
+            id_voucher,
+            potongan,
+          );
+          navigation.navigate("TQScreen");
+        }
+      }
     }
   } catch (err){
     Alert.alert('Ada error menyelesaikan Panggilan Mitra!', err.message);
@@ -85,15 +119,47 @@ async function selesaikanPanggilMitra(){
 
   }, [items]);
 
-  //console.log(kelompokProduk);
-  // console.log(kodeUID);
-  // console.log(namapelanggan);
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
-  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan
+  //Harga Layananan dari route.param di atas
+  const hargatotalsemua = subtotalhargaKeranjang + hargalayanan - potongan
  
+
+  const pindahKasbon = () => {
+    navigation.navigate('AdaKasbonTLScreen')
+  };
+
+  const ScanVoucerPromo = () => {
+    return(
+      <Pressable style={styles.scan}  onPress={pindahScanVoucher}>
+          <View style={{backgroundColor: Ijo, padding: 10, borderRadius: 20}}>
+            <Ionicons name="pricetags" size={20} color={IjoMint}/>
+          </View>
+          { id_voucher ? (
+            <View>
+              <Text style={styles.nama}>Voucher Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            </View>
+            ):(
+            <View>
+              <Text  style={styles.deskscan}>Scan QR Voucher</Text>
+            </View>
+          )
+          }
+          <Ionicons name="chevron-forward-outline" size={15} color={Ijo}/>
+      </Pressable>
+    )
+  };
+
+  const pindahScanVoucher = () =>{
+    navigation.navigate('ScanVoucherScreen',{
+      jenis_layanan: 'Panggil Mitra',
+      subtotalhargaKeranjang: subtotalhargaKeranjang,
+    })
+  }
+
   return (
     <View style={styles.latar}>
+      <ScanVoucerPromo/>
       <ScrollView style={styles.atas}>
             {Object.entries(kelompokProduk).map(([key, items]) => (
             <View key={key}>
@@ -122,6 +188,14 @@ async function selesaikanPanggilMitra(){
             <Text>Subtotal</Text>
             <Text>Rp{new Intl.NumberFormat('id-Id').format(subtotalhargaKeranjang).toString()}</Text>
           </View>
+          { potongan ?
+            (
+            <View style={styles.desk}>
+              <Text>Potongan</Text>
+              <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+            </View>
+            ):(null)
+          }
           <View style={styles.desk}>
             <Text>Biaya Layanan</Text>
             <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
@@ -134,9 +208,12 @@ async function selesaikanPanggilMitra(){
           <View style={{borderWidth: 0.5, borderColor: Ijo, marginVertical: 10}}/>
           
           <View style={styles.desk}>
-            <TouchableOpacity style={styles.tombol}
-              onPress={selesaiTransaksi}
-            >
+            <TouchableOpacity style={styles.tombolkasbon}
+                onPress={pindahKasbon}>
+                <Text style={{color:Ijo, fontWeight:'bold', textAlign:'center'}}>Masuk Kasbon</Text>
+              </TouchableOpacity>
+            <TouchableOpacity style={styles.tombollunas}
+              onPress={selesaiTransaksi}>
               <Text style={{color:Putih, fontWeight:'bold'}}>Selesaikan Pesanan</Text>
             </TouchableOpacity>
           </View>
@@ -152,22 +229,23 @@ const styles = StyleSheet.create({
       backgroundColor: Kuning,
       flex: 1,
     },
-    pelanggan:{
-      backgroundColor: Putih,
-      marginBottom: 5,
-      padding: 10,
+    scan:{
       flexDirection:'row',
-      justifyContent:'space-between',
+      borderBottomColor: Ijo,
+      borderBottomWidth: 0.5,
+      padding: 8,
+      alignItems:'center',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    deskscan:{
+      color: Ijo,
+      fontSize: 16,
     },
     nama:{
       color: IjoTua,
       fontSize: 18,
       fontWeight: 'bold',
-    },
-    scan:{
-      alignItems:'center',
-      justifyContent:'center',
-      paddingVertical: 2,
     },
     atas:{
       paddingHorizontal:10
@@ -219,9 +297,15 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight:'bold',
     },
-    tombol:{
+    tombollunas:{
       borderRadius: 10,
       padding: 10,
       backgroundColor: Ijo,
+    },
+    tombolkasbon:{
+      borderRadius: 10,
+      padding: 10,
+      backgroundColor: Putih,
+      width: '48%',
     },
 })

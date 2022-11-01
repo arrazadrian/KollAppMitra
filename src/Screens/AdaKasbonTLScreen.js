@@ -338,8 +338,8 @@ export default AdaKasbonTLScreen
 
 const styles = StyleSheet.create({
     latar:{
-        flex: 1,
-        backgroundColor: Kuning,
+      flex: 1,
+      backgroundColor: Kuning,
     },
     tombol:{
       backgroundColor: Ijo,
@@ -392,8 +392,8 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     total:{
-        color: Ijo,
-        fontSize: 18,
-        fontWeight: 'bold',
+      color: Ijo,
+      fontSize: 18,
+      fontWeight: 'bold',
     },
 })
