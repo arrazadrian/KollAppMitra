@@ -19,11 +19,7 @@ import "intl/locale-data/jsonp/id";
 
 const { width, height } = Dimensions.get('window')
  
-const CheckoutPMScreen = ({ route }) => {
-
-  const { 
-    id_transaksi, hargalayanan,
-     } = route.params;
+const CheckoutPMScreen = () => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -31,6 +27,7 @@ const CheckoutPMScreen = ({ route }) => {
   const [kelompokProduk, setKelompokProduk] = useState([]);
 
   const { potongan, id_voucher } = useSelector(state => state.voucher);
+  const { id_transaksi, namamitra, namatoko, id_pelanggan, namapelanggan, phonepelanggan, hargalayanan } = useSelector(state => state.datapm);
 
   const selesaiTransaksi =()=> {
     Alert.alert('Apakah transaksi sudah sesuai?','Pastikan belanjaan sudah sesuai dan pelanggan sudah melunasi belanjaan.',
@@ -120,40 +117,9 @@ async function selesaikanPanggilMitra(){
     jikakosong();
 
   }, [items]);
-
-  const [namamitra, setNamamitra] = useState("");
-    const [namatoko, setNamatoko] = useState("");
-    const [namapelanggan, setNamapelanggan] = useState("");
-    const [id_pelanggan, setId_pelanggan] = useState("");
-    const [phonepelanggan, setPhonepelanggan] = useState("");
-  
-    //Untuk mendapatkan data yg dibutuhkan kasbon
-    useEffect(() => {
-        // let unmounted = false; 
-        async function getDatakasbon(){
-          const db = getFirestore(app);
-          const docRef = doc(db, "transaksi", id_transaksi);
-          const docSnap = await getDoc(docRef);
-          
-          if (docSnap.exists()) {
-                setNamamitra(docSnap.data().namamitra)
-                setNamatoko(docSnap.data().namatoko)
-                setNamapelanggan(docSnap.data().namapelanggan)
-                setId_pelanggan(docSnap.data().id_pelanggan)
-                setPhonepelanggan(docSnap.data().phonepelanggan)
-                console.log('getDataKasbon jalan!')
-          } else { 
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          };
-        };
-    
-        getDatakasbon();
-    },[])
-
  
   const subtotalhargaKeranjang = useSelector(totalHarga)
-  //Harga Layananan dari route.param di atas
+  //Harga Layananan dari redux di atas
   const hargatotalsemua = subtotalhargaKeranjang + hargalayanan - potongan
  
 

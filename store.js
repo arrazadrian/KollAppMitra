@@ -8,6 +8,7 @@ import counterReducer from './src/features/counterSlice';
 import posisiReducer from './src/features/posisiSlice';
 import bobotReducer from './src/features/bobotSlice';
 import voucherReducer from './src/features/voucherSlice';
+import datapmReducer from './src/features/datapmSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     counter: counterReducer,
     posisi: posisiReducer,
     bobot: bobotReducer,
-    voucher: voucherReducer
+    voucher: voucherReducer,
+    datapm: datapmReducer,
   },
 });

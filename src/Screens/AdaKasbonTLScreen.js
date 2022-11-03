@@ -305,7 +305,7 @@ const AdaKasbonTLScreen = () => {
                         <Text style={{fontSize: 12}}>Mulai dari: {moment(item.waktu_dibuat.toDate()).calendar()}</Text>
                     </View>
                     <View>
-                        <Text style={{marginBottom: -5, fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
+                        <Text style={{fontSize: 12, textAlign:'right'}}>Total Kasbon</Text>
                         <Text style={styles.total}>Rp{new Intl.NumberFormat('id-Id').format(item.total_kasbon).toString()}</Text>
                     </View>
                 </View>

@@ -10,6 +10,8 @@ import "intl/locale-data/jsonp/id";
 import { kosongkanKeranjang } from '../features/keranjangSlice';
 import { resetVoucher } from '../features/voucherSlice';
 import { useDispatch } from 'react-redux';
+import { resetBobot } from '../features/bobotSlice';
+import { resetDatapm } from '../features/datapmSlice';
 
 const { width, height } = Dimensions.get('window')
 
@@ -23,6 +25,8 @@ const ProsesCard = ({ item }) => {
   const pindahPanggilan = async () => {
     await dispatch(kosongkanKeranjang());
     await dispatch(resetVoucher());
+    await dispatch(resetBobot());
+    await dispatch(resetDatapm());
     navigation.navigate('PanggilanScreen', { 
       alamat_pelanggan: item?.alamat_pelanggan,
       id_mitra: item.id_mitra,
@@ -38,7 +42,7 @@ const ProsesCard = ({ item }) => {
       catatan_lokasi: item?.catatan_lokasi,
       geo_alamat: item.geo_alamat,
       id_transaksi: item.id,
-      hargalayanan: item.hargalayanan
+      hargalayanan: item.hargalayanan,
     })
   };
 

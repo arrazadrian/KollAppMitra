@@ -8,18 +8,10 @@ import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
 import "intl";
 import "intl/locale-data/jsonp/id";
 
-const KeranjangPM = (props) => {
+const KeranjangPM = () => {
   const items = useSelector(pilihProdukKeranjang)
   const navigation = useNavigation();
   const totalhargaKeranjang = useSelector(totalHarga)
-
-  const handlePindahCheckout = () => {
-    navigation.navigate('CheckoutPMScreen', { 
-        id_transaksi: props.id_transaksi,
-        hargalayanan: props.hargalayanan,
-      })
-  };
-
 
   return (
     <View>
@@ -50,7 +42,7 @@ const KeranjangPM = (props) => {
                       <Pressable 
                         disabled={!items.length}
                         style={{backgroundColor: IjoTua, padding: 10, borderRadius: 10}} 
-                        onPress={handlePindahCheckout}
+                        onPress={()=>navigation.navigate('CheckoutPMScreen')}
                         >
                         <Text style={{color:Putih, fontWeight:'bold', fontSize: 18}}>Checkout</Text>
                       </Pressable>

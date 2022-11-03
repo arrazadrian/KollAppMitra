@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import * as Location from 'expo-location';
 import { updateBobot } from '../features/bobotSlice';
+import { updateDatapm } from '../features/datapmSlice';
 
 
 const { width, height } = Dimensions.get('window')
@@ -24,7 +25,7 @@ const PanggilanScreen = ({ route, navigation }) => {
     const { 
         hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
         jumlah_kuantitas, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
-        status_transaksi, catatan_lokasi, phonemitra, phonepelanggan, geo_alamat,
+        status_transaksi, catatan_lokasi, phonemitra, phonepelanggan, geo_alamat, namamitra, namatoko,
          } = route.params;
  
     moment.updateLocale('id', localization)
@@ -32,7 +33,7 @@ const PanggilanScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         const durasibalas = setInterval(() => {
-            let target = moment(waktu_dipesan.toDate()).add(2, 'days');
+            let target = moment(waktu_dipesan.toDate()).add(90, 'seconds');
             let sekarang = new Date();
             let durasi = target.diff(sekarang, 'seconds');
             if(durasi > 0 ){
@@ -59,25 +60,26 @@ const PanggilanScreen = ({ route, navigation }) => {
         }
     },[]);
 
-    const handleTerima = async () =>{
-        await terimaPM(id_transaksi,estimasi_waktu,jarak);
+    const handleTerima = () =>{
+        terimaPM(id_transaksi,estimasi_waktu);
+        dispatch(updateDatapm({
+            id_transaksi: id_transaksi, 
+            namamitra: namamitra, 
+            namatoko: namatoko,
+            id_pelanggan: id_pelanggan,
+            namapelanggan: namapelanggan, 
+            phonepelanggan: phonepelanggan, 
+            hargalayanan: Number(hargalayanan),
+        }))
         navigation.replace("OtwScreen",{
             id_transaksi: id_transaksi,
-            id_mitra : id_mitra, 
-            id_pelanggan : id_pelanggan, 
-            jenislayanan : jenislayanan,
             namapelanggan : namapelanggan, 
-            waktu_dipesan : waktu_dipesan, 
             alamat_pelanggan : alamat_pelanggan,
-            catatan_lokasi : catatan_lokasi, 
-            phonemitra : phonemitra, 
+            catatan_lokasi : catatan_lokasi,
             phonepelanggan : phonepelanggan, 
             geo_alamat : geo_alamat,
-            geo_mitra : geo_mitra,
-            alamat_mitra: alamat_mitra,
             estimasi_waktu: estimasi_waktu,
             jarak: jarak,
-            hargalayanan: Number(hargalayanan),
           });
     };
   
@@ -86,10 +88,7 @@ const PanggilanScreen = ({ route, navigation }) => {
         navigation.replace("HomeScreen");
     };
 
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
     const dispatch = useDispatch();
-    const geofire = require('geofire-common');
     const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
     const { estimasi_waktu, jarak } = useSelector(state => state.bobot);
 

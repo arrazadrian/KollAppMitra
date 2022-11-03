@@ -629,7 +629,7 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
 // API 17: terimaPM
 // UPDATE PANGGILAN PM JADI DITERIMA 
 
-export const terimaPM = async (id_transaksi, estimasi_waktu, jarak) => {
+export const terimaPM = async (id_transaksi, estimasi_waktu) => {
   const db = getFirestore(app);
   const docrefproduk = doc(db, "transaksi", id_transaksi);
   getDoc(docrefproduk).then(docSnap => {
@@ -638,7 +638,6 @@ export const terimaPM = async (id_transaksi, estimasi_waktu, jarak) => {
           updateDoc(docrefproduk, { 
             panggilan: "Diterima",
             estimasi_waktu: estimasi_waktu,
-            jarak: jarak
           });
       } catch (err) {
         Alert.alert('Ada error merima PM!', err);
@@ -677,9 +676,9 @@ export const batalPMolehMitra = async (id_transaksi) => {
     if (docSnap.exists()) {
       try {
           updateDoc(docrefproduk, { 
-            panggilan: "Dibatalkan Mitra", 
-            status_transaksi: "Dibatalkan Mitra",
-            waktu_pembatalan: serverTimestamp(),  
+            pembatalan: "Dibatalkan Mitra", 
+            status_transaksi: "Selesai",
+            waktu_selesai: serverTimestamp(),  
           });
       } catch (err) {
         Alert.alert('Ada error merima PM!', err);

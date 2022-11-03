@@ -12,58 +12,48 @@ import { app } from '../../Firebase/config';
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { batalPMolehMitra, sampaiPM } from '../../API/firebasemethod';
-import { useSelector, useDispatch } from 'react-redux';
-import { resetBobot } from '../features/bobotSlice';
-import { kosongkanKeranjang } from '../features/keranjangSlice';
+import { useSelector } from 'react-redux';
 
-const { width, height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window') 
 
 const OtwScreen = ({ route }) => {
 
   const { 
     id_transaksi,
-    id_mitra, 
-    id_pelanggan, 
-    jenislayanan,
     namapelanggan, 
-    waktu_dipesan, 
     alamat_pelanggan,
     catatan_lokasi, 
-    phonemitra, 
     phonepelanggan, 
     geo_alamat,
     estimasi_waktu,
     jarak,
-    hargalayanan,
-    panggilan,
      } = route.params;
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const { namamitra } = useSelector(state => state.mitra);
   const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
-  const dispatch = useDispatch();
+
+  const [pembatalan, setPembatalan] = useState();
 
   const db = getFirestore(app)
 
   useFocusEffect(
     useCallback(() => {
           const unsubscribe = onSnapshot(doc(db, "transaksi", id_transaksi), (doc) => {
-          if(panggilan == "Dibatalkan Pelanggan"){
+          setPembatalan(doc.data()?.pembatalan);
+          if(pembatalan == "Dibatalkan Pelanggan"){
             navigation.replace('HomeScreen');
             Alert.alert(
               'Pelanggan membatalkan panggilan mitra','Mohon maaf, sepertinya pelanggan berubah pikiran. Tetap semangat ya!.'
             );
           } 
-            // Respond to data
-            // ...
           });
-          //unsubscribe();
           return () => {
             console.log('Otw Unmounted') 
             unsubscribe();
           }
-    },[])
+    },[pembatalan])
   );
 
   const clickLanjut =()=> {
@@ -79,24 +69,7 @@ const OtwScreen = ({ route }) => {
               text: 'Sudah',
               onPress: async () => {
                 await sampaiPM(id_transaksi);
-                navigation.navigate("LanjutBelanjaScreen",{
-                  id_transaksi: id_transaksi,
-                  hargalayanan: hargalayanan,
-                  // id_mitra : id_mitra, 
-                  // id_pelanggan : id_pelanggan, 
-                  // jenislayanan : jenislayanan,
-                  // namapelanggan : namapelanggan, 
-                  // waktu_dipesan : waktu_dipesan, 
-                  // alamat_pelanggan : alamat_pelanggan,
-                  // catatan : catatan, 
-                  // phonemitra : phonemitra, 
-                  // phonepelanggan : phonepelanggan, 
-                  // geo_alamat : geo_alamat,
-                  // geo_mitra : geo_mitra,
-                  // alamat_mitra: alamat_mitra,
-                  // estimasi_waktu: estimasi_waktu,
-                  // jarak: jarak,
-                });
+                navigation.navigate("LanjutBelanjaScreen");
               }
             }
           ]
@@ -104,7 +77,7 @@ const OtwScreen = ({ route }) => {
   };
 
   const clickBatal =()=> {
-    Alert.alert('Anda yakin mau membatalkan?','Pelanggan tentunya akan kecewa bila kamu batalkan.',
+    Alert.alert('Anda yakin mau membatalkan?','Pastikan anda sudah menghubungi (telepon/sms) pelanggan untuk memberi alasan pembatalan.',
           [
             {
               text: 'Tutup',
@@ -116,7 +89,6 @@ const OtwScreen = ({ route }) => {
               text: 'Batalkan',
               onPress: async () => { 
                 await batalPMolehMitra(id_transaksi);  
-                await dispatch(resetBobot());
                 navigation.replace("HomeScreen");
                 console.log('batal dipencet');
               }
