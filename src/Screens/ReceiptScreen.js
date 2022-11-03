@@ -178,7 +178,7 @@ const ReceiptScreen = ({route}) => {
                     </View>
                   ) 
                   } 
-                  { jenislayanan == "Pre-Order" ?
+                  { status_transaksi == "Dalam Proses" && jenislayanan == "Pre-Order" ?
                     (
                     <View style={{flexDirection:'row',  marginTop: 10, flex: 1, justifyContent:'space-between'}}>
                         <TouchableOpacity style={styles.batal} onPress={batalkanTransaksiPO}>
@@ -236,7 +236,7 @@ const ReceiptScreen = ({route}) => {
               ):(
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Text style={styles.atasdesk}>Status Transaksi</Text>
-                    <Text style={styles.atasdesk}>{pembatalan}</Text>
+                    <Text style={[styles.atasdesk, {color:'tomato'}]}>{pembatalan}</Text>
               </View>
               )
             }
@@ -270,37 +270,39 @@ const ReceiptScreen = ({route}) => {
         <AlamatPelanggan/>
         <View style={styles.bagian}>
           <View style={{marginBottom: height* 0.25}}>
-            {!pembatalan ? 
+            {pembatalan && jenislayanan == "Panggil Mitra" ? 
+              (null):
               (
-                <Text  style={styles.subjudul}>Daftar Produk</Text>
-              ):(null)
-            }
-              {catatan_produk ?
-                (
-                  <View style={[styles.catatan, {marginBottom: 10}]}>
-                    <Text style={{fontWeight:'bold'}}>Catatan produk</Text>
-                    <Text style={{fontStyle:'italic'}}>{catatan_produk}</Text>
-                  </View>
-                ): !catatan_produk && jenislayanan == "Pre-Order" ? (
-                  <View style={[styles.catatan, {marginBottom: 10}]}>
-                    <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
-                  </View>
-                ):( null ) 
-              }
-                {jenislayanan != "Pre-Order" && !pembatalan && Object.entries(produk).map(([key, items]) => (
-                    <View key={key}>
-                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                          <Text style={styles.deskripsi}>
-                              <Text>{items.length}x   </Text>
-                              <Text>{items[0]?.namaproduk}</Text>
-                          </Text>
-                          <Text style={styles.harga}>
-                              <Text>Rp</Text>
-                              <Text>{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}</Text>
-                          </Text>
-                      </View>
+                <View>
+                  {catatan_produk ?
+                  (
+                    <View style={[styles.catatan, {marginBottom: 10}]}>
+                      <Text style={{fontWeight:'bold'}}>Catatan produk</Text>
+                      <Text style={{fontStyle:'italic'}}>{catatan_produk}</Text>
                     </View>
-                ))}
+                  ): !catatan_produk && jenislayanan == "Pre-Order" ? (
+                    <View style={[styles.catatan, {marginBottom: 10}]}>
+                      <Text style={{fontStyle:'italic'}}>Tanpa catatan produk...</Text>
+                    </View>
+                  ):( null ) 
+                  }
+                  {Object.entries(produk).map(([key, items]) => (
+                    <View key={key}>
+                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                            <Text style={styles.deskripsi}>
+                                <Text>{items.length}x   </Text>
+                                <Text>{items[0]?.namaproduk}</Text>
+                            </Text>
+                            <Text style={styles.harga}>
+                                <Text>Rp</Text>
+                                <Text>{new Intl.NumberFormat('id-Id').format(items[0]?.harga * items.length).toString()}</Text>
+                            </Text>
+                        </View>
+                      </View>
+                  ))}
+                </View>
+              )
+            }
           </View>
         </View>
 
