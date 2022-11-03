@@ -606,6 +606,7 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
               updateDoc(docreftran, {
                 status_transaksi: "Selesai", 
                 pembatalan: "Dibatalkan Mitra", 
+                waktu_selesai: serverTimestamp(), 
               });
           } catch (err) {
             Alert.alert('Ada error untuk membatalkan PO!', err);
@@ -631,24 +632,31 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
 // UPDATE PANGGILAN PM JADI DITERIMA 
 
 export const terimaPM = async (id_transaksi, estimasi_waktu) => {
+  const auth = getAuth();
   const db = getFirestore(app);
-  const docrefproduk = doc(db, "transaksi", id_transaksi);
-  getDoc(docrefproduk).then(docSnap => {
-    if (docSnap.exists()) {
-      try {
-          updateDoc(docrefproduk, { 
-            panggilan: "Diterima",
-            estimasi_waktu: estimasi_waktu,
-          });
-      } catch (err) {
-        Alert.alert('Ada error merima PM!', err);
-      }
-    }
-  })
+  const docreftran = doc(db, "transaksi", id_transaksi);
+  const docrefmit = doc(db, "mitra", auth.currentUser.uid);
+  const docSnaptran = await getDoc(docreftran);
+  const docSnapmit = await getDoc(docrefmit);
+  try{
+    if(docSnaptran.exists() && docSnapmit.exists()){
+      updateDoc(docreftran, { 
+        panggilan: "Diterima", 
+        estimasi_waktu: estimasi_waktu,
+      });
+      updateDoc(docSnapmit, { 
+        dipanggil: true, 
+      });
+    } else {
+      console.log("No such document!");
+    };
+  } catch (err) {
+    Alert.alert('Ada error merima PM!', err);
+  }
 };
 
 // API 18: tolakPM
-// UPDATE PANGGILAN PM JADI DITERIMA 
+// UPDATE PANGGILAN PM DITOLAK 
 
 export const tolakPM = async (id_transaksi) => {
   const db = getFirestore(app);
@@ -671,21 +679,26 @@ export const tolakPM = async (id_transaksi) => {
 // Mitra membatalkan panggilan saat otw
 
 export const batalPMolehMitra = async (id_transaksi) => {
+  const auth = getAuth();
   const db = getFirestore(app);
-  const docrefproduk = doc(db, "transaksi", id_transaksi);
-  getDoc(docrefproduk).then(docSnap => {
-    if (docSnap.exists()) {
-      try {
-          updateDoc(docrefproduk, { 
-            pembatalan: "Dibatalkan Mitra", 
-            status_transaksi: "Selesai",
-            waktu_selesai: serverTimestamp(),  
-          });
-      } catch (err) {
-        Alert.alert('Ada error merima PM!', err);
-      }
+  const docreftran = doc(db, "transaksi", id_transaksi);
+  const docrefmit = doc(db, "mitra", auth.currentUser.uid);
+  const docSnaptran = await getDoc(docreftran);
+  const docSnapmit = await getDoc(docrefmit);
+  try{
+    if(docSnaptran.exists() && docSnapmit.exists()){
+      updateDoc(docreftran, { 
+        pembatalan: "Dibatalkan Mitra", 
+        status_transaksi: "Selesai",
+        waktu_selesai: serverTimestamp(),  
+      });
+      updateDoc(docSnapmit, { 
+        dipanggil: false, 
+      });
     }
-  })
+  } catch (err) {
+    Alert.alert('Ada error merima PM!', err);
+  }
 };
 
 // API 20: sampaiPM
