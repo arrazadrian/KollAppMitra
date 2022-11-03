@@ -604,10 +604,11 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
         if (docSnap.exists()) {
           try {
               updateDoc(docreftran, {
-                status_transaksi: "Dibatalkan Mitra", 
+                status_transaksi: "Selesai", 
+                pembatalan: "Dibatalkan Mitra", 
               });
           } catch (err) {
-            Alert.alert('Ada error untuk menyelesaikan PO!', err);
+            Alert.alert('Ada error untuk membatalkan PO!', err);
           }
         }
       })
