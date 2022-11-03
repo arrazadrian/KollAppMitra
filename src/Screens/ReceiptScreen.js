@@ -25,6 +25,7 @@ const ReceiptScreen = ({route}) => {
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
     status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran, id_voucher, potongan,
+    pembatalan,
      } = route.params;
 
   const telepon = () => {
@@ -101,6 +102,104 @@ const ReceiptScreen = ({route}) => {
     });
   };
 
+  const WaktuTransaksi = () => {
+    return(
+      <View>
+        { pembatalan && waktu_selesai ? 
+          (
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <Text style={styles.atasdesk}>Waktu Pembatalan</Text>
+              <Text style={styles.atasdesk}>{moment(waktu_selesai.toDate()).calendar()}</Text>
+          </View>
+          ): !pembatalan && waktu_selesai ? (
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <Text style={styles.atasdesk}>Selesai Transaksi</Text>
+              <Text style={styles.atasdesk}>{moment(waktu_selesai.toDate()).calendar()}</Text>
+          </View>
+          ):(
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <Text style={styles.atasdesk}>Waktu Pemesanan</Text>
+              <Text style={styles.atasdesk}>{moment(waktu_dipesan.toDate()).calendar()}</Text>
+          </View>
+          )
+        }
+      </View>
+    )
+  };
+
+  const TelponSms = () => {
+    return(
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <Pressable onPress={telepon}>
+              <Image style={styles.aksi} source={Call}/>
+          </Pressable>
+          <Pressable onPress={sms}>
+              <Image style={styles.aksi} source={Chat}/>
+          </Pressable>
+        </View>
+      </View>
+    )
+  };
+
+  const CapPembayaran = () => {
+    return(
+      <View>
+        { !pembatalan && pembayaran == "Lunas" ? 
+          (
+            <Image source={Lunas} style={styles.cap}/>
+          ): !pembatalan && pembayaran == "Kasbon" ? (
+            <Image source={Kasbon} style={styles.cap}/>
+          ):(null)
+        }
+      </View>
+    )
+  };
+
+  const AlamatPelanggan = () => {
+    return(
+      <View>
+         { alamat_pelanggan ?(
+          <View>
+              <View style={styles.bagian}>
+                  <Text  style={styles.subjudul}>Alamat Tujuan</Text>
+                  <View style={{flexDirection:'row', alignItems:'center', width:'90%'}}>
+                      < Image source={Location} style={styles.location} />
+                      <Text>{alamat_pelanggan}</Text>
+                  </View>
+                  {catatan_lokasi ?(
+                    <View style={styles.catatan}>
+                      <Text style={{fontWeight:'bold'}}>Catatan lokasi</Text>
+                      <Text style={{fontStyle:'italic'}}>{catatan_lokasi}</Text>
+                    </View>
+                  ):(
+                    <View style={styles.catatan}>
+                      <Text style={{fontStyle:'italic'}}>Tanpa catatan lokasi...</Text>
+                    </View>
+                  ) 
+                  } 
+                  { jenislayanan == "Pre-Order" ?
+                    (
+                    <View style={{flexDirection:'row',  marginTop: 10, flex: 1, justifyContent:'space-between'}}>
+                        <TouchableOpacity style={styles.batal} onPress={batalkanTransaksiPO}>
+                            <Text style={{color: IjoTua}}>Batalkan Pesanan</Text>
+                        </TouchableOpacity>
+                        <View style={styles.reminder}>
+                            <Text style={{color: Putih}}>Paling lambat diantar:</Text>
+                            <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(1, 'days').format('llll')}</Text>
+                        </View>
+                    </View>
+                    ):(null)
+                  }
+              </View>
+              <GarisBatas/>
+          </View>
+        ):(null)
+        }
+      </View>
+    )
+  };
+
 
   return (
     <View style={styles.latar}>
@@ -128,27 +227,24 @@ const ReceiptScreen = ({route}) => {
                 <Text style={styles.atasdesk}>ID Transaksi</Text>
                 <Text style={styles.atasdesk}>{id_transaksi}</Text>
             </View>
-            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.atasdesk}>Status Transaksi</Text>
-                  <Text style={styles.atasdesk}>{status_transaksi}</Text>
-            </View>
+            { !pembatalan ?
+              (
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style={styles.atasdesk}>Status Transaksi</Text>
+                    <Text style={styles.atasdesk}>{status_transaksi}</Text>
+              </View>
+              ):(
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style={styles.atasdesk}>Status Transaksi</Text>
+                    <Text style={styles.atasdesk}>{pembatalan}</Text>
+              </View>
+              )
+            }
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={styles.atasdesk}>Pembayaran</Text>
                   <Text style={styles.atasdesk}>{pembayaran}</Text>
             </View>
-              { waktu_selesai ? 
-                (
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={styles.atasdesk}>Selesai Transaksi</Text>
-                    <Text style={styles.atasdesk}>{moment(waktu_selesai.toDate()).calendar()}</Text>
-                </View>
-                ):(
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={styles.atasdesk}>Waktu Pemesanan</Text>
-                    <Text style={styles.atasdesk}>{moment(waktu_dipesan.toDate()).calendar()}</Text>
-                </View>
-                )
-              }
+            <WaktuTransaksi/>
         </View>
 
         <GarisBatas/>
@@ -159,62 +255,26 @@ const ReceiptScreen = ({route}) => {
                     <Text style={styles.subjudul}>Nama Pelanggan</Text>
                     <Text style={[styles.subjudul, {color: Ijo, fontSize: 20}]}>{namapelanggan}</Text>
                 </View>
-                { status_transaksi == "Dalam Proses" && (
-                  <View style={{flexDirection: 'row'}}>
-                    <Pressable onPress={telepon}>
-                       <Image style={styles.aksi} source={Call}/>
-                    </Pressable>
-                    <Pressable  onPress={sms}>
-                        <Image style={styles.aksi} source={Chat}/>
-                    </Pressable>
-                  </View>
-                )}
-                { status_transaksi == "Selesai" && pembayaran == "Lunas" &&
-                  <Image source={Lunas} style={{width: width * 0.2, height: width * 0.2, marginVertical: -20}}/>
-                }
-                { status_transaksi == "Selesai" && pembayaran == "Kasbon" &&
-                  <Image source={Kasbon} style={{width: width * 0.2, height: width * 0.2, marginVertical: -20}}/>
+                { status_transaksi == "Dalam Proses" ?
+                  (
+                    <TelponSms/>
+                    ):(
+                    <CapPembayaran/>
+                  )
                 }
               </View>
         </View>
       
         <GarisBatas/>
               
-        { alamat_pelanggan &&
-        <View>
-            <View style={styles.bagian}>
-                <Text  style={styles.subjudul}>Alamat Tujuan</Text>
-                <View style={{flexDirection:'row', alignItems:'center', width:'90%'}}>
-                    < Image source={Location} style={styles.location} />
-                    <Text>{alamat_pelanggan}</Text>
-                </View>
-                {catatan_lokasi ?(
-                  <View style={styles.catatan}>
-                    <Text style={{fontWeight:'bold'}}>Catatan lokasi</Text>
-                    <Text style={{fontStyle:'italic'}}>{catatan_lokasi}</Text>
-                  </View>
-                ):(
-                  <View style={styles.catatan}>
-                    <Text style={{fontStyle:'italic'}}>Tanpa catatan lokasi...</Text>
-                  </View>
-                ) 
-                } 
-                <View style={{flexDirection:'row',  marginTop: 10, flex: 1, justifyContent:'space-between'}}>
-                    <TouchableOpacity style={styles.batal} onPress={batalkanTransaksiPO}>
-                        <Text style={{color: IjoTua}}>Batalkan Pesanan</Text>
-                    </TouchableOpacity>
-                    <View style={styles.reminder}>
-                        <Text style={{color: Putih}}>Paling lambat diantar:</Text>
-                        <Text style={{color: Putih, fontWeight:'bold'}}>{moment(waktu_dipesan.toDate()).add(1, 'days').format('llll')}</Text>
-                    </View>
-                </View>
-            </View>
-            <GarisBatas/>
-        </View>
-        }
+        <AlamatPelanggan/>
         <View style={styles.bagian}>
           <View style={{marginBottom: height* 0.25}}>
-              <Text  style={styles.subjudul}>Daftar Produk</Text>
+            {!pembatalan ? 
+              (
+                <Text  style={styles.subjudul}>Daftar Produk</Text>
+              ):(null)
+            }
               {catatan_produk ?
                 (
                   <View style={[styles.catatan, {marginBottom: 10}]}>
@@ -227,7 +287,7 @@ const ReceiptScreen = ({route}) => {
                   </View>
                 ):( null ) 
               }
-                {Object.entries(produk).map(([key, items]) => (
+                {jenislayanan != "Pre-Order" && !pembatalan && Object.entries(produk).map(([key, items]) => (
                     <View key={key}>
                       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                           <Text style={styles.deskripsi}>
@@ -245,39 +305,41 @@ const ReceiptScreen = ({route}) => {
         </View>
 
       </ScrollView>
-      <View style={styles.bawah}>
-          <View style={styles.bagian}>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text>Sub Total</Text>
-                  <Text>Rp{new Intl.NumberFormat('id-Id').format(hargasubtotal).toString()}</Text>
-              </View>
-              { potongan > 0 ? (
+      {!pembatalan ? (
+        <View style={styles.bawah}>
+            <View style={styles.bagian}>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text>Potongan</Text>
-                    <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+                    <Text>Sub Total</Text>
+                    <Text>Rp{new Intl.NumberFormat('id-Id').format(hargasubtotal).toString()}</Text>
                 </View>
-                ):(null)
-              }
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text>Biaya Layanan</Text>
-                  <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
-              </View>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.subjudul}>Total Harga</Text>
-                  <Text style={styles.subjudul}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
-              </View>
-              { status_transaksi == "Dalam Proses" && 
+                { potongan > 0 ? (
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text>Potongan</Text>
+                      <Text>-Rp{new Intl.NumberFormat('id-Id').format(potongan).toString()}</Text>
+                  </View>
+                  ):(null)
+                }
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <TouchableOpacity style={styles.kasbon} onPress={pindahKasbon}>
-                    <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold'}}>Masuk kasbon</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
-                    <Text style={{color: Putih, fontSize: 16, fontWeight:'bold'}}>Sudah dibayar</Text>
-                  </TouchableOpacity>
+                    <Text>Biaya Layanan</Text>
+                    <Text>Rp{new Intl.NumberFormat('id-Id').format(hargalayanan).toString()}</Text>
                 </View>
-              }
-          </View>
-      </View>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style={styles.subjudul}>Total Harga</Text>
+                    <Text style={styles.subjudul}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
+                </View>
+                { status_transaksi == "Dalam Proses" && 
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <TouchableOpacity style={styles.kasbon} onPress={pindahKasbon}>
+                      <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold'}}>Masuk kasbon</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
+                      <Text style={{color: Putih, fontSize: 16, fontWeight:'bold'}}>Sudah dibayar</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+            </View>
+        </View>
+      ):(null)}
     </View>
   )
 }
@@ -295,6 +357,11 @@ const styles = StyleSheet.create({
      height: height*0.06,
      marginRight: 10,
   },
+  cap:{
+    width: width*0.2,
+    height: width*0.2,
+    marginVertical: -10,
+ },
   subjudul:{
     fontSize: 16,
     color: IjoTua,

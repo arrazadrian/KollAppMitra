@@ -33,12 +33,14 @@ const RiwayatCard = ({ item }) => {
       waktu_dipesan: item.waktu_dipesan,
       waktu_selesai: item.waktu_selesai,
       status_transaksi: item.status_transaksi,
+      alamat_pelanggan: item?.alamat_pelanggan,
       catatan_lokasi: item?.catatan_lokasi,
       catatan_produk: item?.catatan_produk,
       pembayaran: item?.pembayaran,
       id_voucher: item.id_voucher,
       potongan: item.potongan,
       id_transaksi: item.id,
+      pembatalan: item?.pembatalan,
     })
   }
 
@@ -60,11 +62,18 @@ const RiwayatCard = ({ item }) => {
         >
             {item.namapelanggan}
         </Text>
-        <Text style={{fontSize:14, color:Ijo}}>
-            <Text>Rp{new Intl.NumberFormat('id-Id').format(item.hargatotalsemua).toString()}</Text>
-            <Text> | </Text>
-            <Text>{item.jumlah_kuantitas} Produk</Text>
-        </Text>
+          { item.pembatalan ? 
+            (
+              <Text style={{color:'tomato'}}>{item.pembatalan}</Text>
+            ):(
+            <Text style={{fontSize:16, color:Ijo}}>
+                <Text>Rp{new Intl.NumberFormat('id-Id').format(item.hargatotalsemua).toString()}</Text>
+                <Text> | </Text>
+                <Text>{item.jumlah_kuantitas} </Text>
+                <Text>Produk</Text>
+            </Text>
+            )
+          }
         <View>
           { item.jenislayanan == 'Pre-Order' ? 
             (
