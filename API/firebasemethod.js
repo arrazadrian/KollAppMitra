@@ -166,8 +166,8 @@ export const uploadProdukUtama = async (namaproduk, deskproduk, image, harga, ku
       'Produk Berhasil Dibuat','Produk masuk daftar produk utama.'
     );
   })
-  .catch((error) => {
-    console.log('Something went wrong with added product to firestore.', error);
+  .catch((err) => {
+    console.log('Something went wrong with added product to firestore.', err.message);
   });
 };
 
@@ -200,8 +200,8 @@ export const uploadProdukPre = async (namaproduk, deskproduk, image, harga, kuan
       'Produk Berhasil Dibuat','Produk masuk daftar produk pre-order.'
     );
   })
-  .catch((error) => {
-    console.log('Ada yg salah saat menambahkan produk di firestore.', error);
+  .catch((err) => {
+    console.log('Ada yg salah saat menambahkan produk di firestore.', err.message);
   });
 };
 
@@ -566,7 +566,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
     console.log("ID dokumenTLnya: ", docRef.id)
     return docRef.id;
   } catch(err){
-    console.log('Ada Error Membuat Tranksaksi.', err);
+    console.log('Ada Error Membuat Tranksaksi.', err.message);
   };
 };
 
@@ -585,7 +585,7 @@ export const selesaikanPO = async (id_transaksi, pembayaran) => {
               waktu_selesai: serverTimestamp(), 
             });
         } catch (err) {
-          Alert.alert('Ada error untuk menyelesaikan PO!', err);
+          Alert.alert('Ada error untuk menyelesaikan PO!', err.message);
         }
       }
     })
@@ -608,7 +608,7 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
                 waktu_selesai: serverTimestamp(), 
               });
           } catch (err) {
-            Alert.alert('Ada error untuk membatalkan PO!', err);
+            Alert.alert('Ada error untuk membatalkan PO!', err.message);
           }
         }
       })
@@ -620,7 +620,7 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
                 status_transaksi: "Dibatalkan Mitra", 
               });
           } catch (err) {
-            Alert.alert('Ada error untuk menyelesaikan PO!', err);
+            Alert.alert('Ada error untuk menyelesaikan PO!', err.message);
           }
         }
       })
@@ -635,23 +635,29 @@ export const terimaPM = async (id_transaksi, estimasi_waktu) => {
   const db = getFirestore(app);
   const docreftran = doc(db, "transaksi", id_transaksi);
   const docrefmit = doc(db, "mitra", auth.currentUser.uid);
-  const docSnaptran = await getDoc(docreftran);
-  const docSnapmit = await getDoc(docrefmit);
-  try{
-    if(docSnaptran.exists() && docSnapmit.exists()){
-      updateDoc(docreftran, { 
-        panggilan: "Diterima", 
-        estimasi_waktu: estimasi_waktu,
-      });
-      updateDoc(docSnapmit, { 
-        dipanggil: true, 
-      });
-    } else {
-      console.log("No such document!");
-    };
-  } catch (err) {
-    Alert.alert('Ada error merima PM!', err);
-  }
+  getDoc(docreftran).then(docSnaptran => {
+    if (docSnaptran.exists()) {
+      try {
+          updateDoc(docreftran, { 
+            panggilan: "Diterima", 
+            estimasi_waktu: estimasi_waktu, 
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err.message);
+      }
+    }
+  })
+  getDoc(docrefmit).then(docSnapmit => {
+    if (docSnapmit.exists()) {
+      try {
+          updateDoc(docrefmit, { 
+            dipanggil: true, 
+          });
+      } catch (err) {
+        Alert.alert('Ada error merima PM!', err.message);
+      }
+    }
+  })
 };
 
 // API 18: tolakPM
@@ -668,7 +674,7 @@ export const tolakPM = async (id_transaksi) => {
             status_transaksi: "Ditolak",  
           });
       } catch (err) {
-        Alert.alert('Ada error merima PM!', err);
+        Alert.alert('Ada error merima PM!', err.message);
       }
     }
   })
@@ -696,7 +702,7 @@ export const batalPMolehMitra = async (id_transaksi) => {
       });
     }
   } catch (err) {
-    Alert.alert('Ada error merima PM!', err);
+    Alert.alert('Ada error merima PM!', err.message);
   }
 };
 
@@ -714,7 +720,7 @@ export const sampaiPM = async (id_transaksi) => {
             panggilan: "Sudah Sampai",
           });
       } catch (err) {
-        Alert.alert('Ada error saat PM sudah sampai!', err);
+        Alert.alert('Ada error saat PM sudah sampai!', err.message);
       }
     }
   })
@@ -725,8 +731,10 @@ export const sampaiPM = async (id_transaksi) => {
 // KARENA SUDAH SAMPAI 
 
 export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKeranjang, hargalayanan, hargatotalsemua, jumlah_kuantitas, pembayaran, id_voucher, potongan) => {
+  const auth = getAuth();
   const db = getFirestore(app);
   const docreftran = doc(db, "transaksi", id_transaksi);
+  const docrefmit = doc(db, "mitra", auth.currentUser.uid);
   getDoc(docreftran).then(docSnap => {
     if (docSnap.exists()) {
       try {
@@ -744,7 +752,18 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
             potongan: potongan,
           });
       } catch (err) {
-        Alert.alert('Ada error menyelesaikan PM!', err);
+        Alert.alert('Ada error menyelesaikan PM1!', err.message);
+      }
+    }
+  })
+  getDoc(docrefmit).then(docSnapmit => {
+    if (docSnapmit.exists()) {
+      try {
+          updateDoc(docrefmit, { 
+            dipanggil: false, 
+          });
+      } catch (err) {
+        Alert.alert('Ada error menyelesaikan PM2!', err.message);
       }
     }
   })
@@ -781,7 +800,7 @@ export const buatKasbonBaru = async ( namamitra, namatoko, namapelanggan, id_pel
     });
     }
   } catch(err){
-    console.log('Ada Error Membuat Kasbon.', err);
+    console.log('Ada Error Membuat Kasbon.', err.message);
   };
 };
 
@@ -801,7 +820,7 @@ export const lunaskanKasbon = async (id_kasbon) => {
       console.log("No such document!");
     }
   } catch(err){
-    console.log('Ada Error melunaskan kasbon.', err);
+    console.log('Ada Error melunaskan kasbon.', err.message);
   };
 };
 
@@ -830,7 +849,7 @@ export const tambahTransaksiKasbon = async (id_kasbon, hargatotalsemua, id_trans
       console.log("No such document!");
     }
   } catch(err){
-    console.log('Ada Error manambah tranksaksi kasbon.', err);
+    console.log('Ada Error manambah tranksaksi kasbon.', err.message);
   };
 };
 
@@ -861,7 +880,7 @@ export const updateVoucherMitra = async (id_voucher, potongan) => {
     }
    
   } catch(err){
-    console.log('Ada Error update voucher.', err);
+    console.log('Ada Error update voucher.', err.message);
   };
 };
 
@@ -885,7 +904,7 @@ export const updateTersediaVoucher = async (id_voucher, potongan) => {
       console.log("No such document!");
     }
   } catch(err){
-    console.log('Ada Error update kesediaan voucher.', err);
+    console.log('Ada Error update kesediaan voucher.', err.message);
   };
 };
 
@@ -916,7 +935,7 @@ export const kurangVoucherMitra = async (id_voucher, potongan) => {
     }
    
   } catch(err){
-    console.log('Ada Error update pengurangan voucher.', err);
+    console.log('Ada Error update pengurangan voucher.', err.message);
   };
 };
 
@@ -940,6 +959,6 @@ export const kurangiTersediaVoucher = async (id_voucher, potongan) => {
       console.log("No such document!");
     }
   } catch(err){
-    console.log('Ada Error update kesediaan voucher.', err);
+    console.log('Ada Error update kesediaan voucher.', err.message);
   };
 };

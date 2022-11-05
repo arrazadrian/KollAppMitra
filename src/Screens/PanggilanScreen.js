@@ -60,17 +60,8 @@ const PanggilanScreen = ({ route, navigation }) => {
         }
     },[]);
 
-    const handleTerima = () =>{
-        terimaPM(id_transaksi,estimasi_waktu);
-        dispatch(updateDatapm({
-            id_transaksi: id_transaksi, 
-            namamitra: namamitra, 
-            namatoko: namatoko,
-            id_pelanggan: id_pelanggan,
-            namapelanggan: namapelanggan, 
-            phonepelanggan: phonepelanggan, 
-            hargalayanan: Number(hargalayanan),
-        }))
+    const handleTerima = async () =>{
+        await terimaPM(id_transaksi,estimasi_waktu);
         navigation.replace("OtwScreen",{
             id_transaksi: id_transaksi,
             namapelanggan : namapelanggan, 
@@ -79,7 +70,6 @@ const PanggilanScreen = ({ route, navigation }) => {
             phonepelanggan : phonepelanggan, 
             geo_alamat : geo_alamat,
             estimasi_waktu: estimasi_waktu,
-            jarak: jarak,
           });
     };
   
@@ -142,13 +132,21 @@ const PanggilanScreen = ({ route, navigation }) => {
     useEffect(()=>{
        // if(!alamat_mitra||!alamat_pelanggan) return;
         const abort_jar = new AbortController();
-
         (async () => {
             fetch(
                 `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${geo_mitra.lat},${geo_mitra.lng}&destinations=${geo_alamat.lat},${geo_alamat.lng}
                 &key=${GOOGLE_MAPS_APIKEY}&mode=walking`
             ,{ signal: abort_jar.signal }).then((res) => res.json())
             .then((data) => {
+                dispatch(updateDatapm({
+                    id_transaksi: id_transaksi, 
+                    namamitra: namamitra, 
+                    namatoko: namatoko,
+                    id_pelanggan: id_pelanggan,
+                    namapelanggan: namapelanggan, 
+                    phonepelanggan: phonepelanggan, 
+                    hargalayanan: Number(hargalayanan),
+                }))
                 //console.log(data.rows[0].elements[0].duration.text);
                 // console.log(data.rows[0].elements[0].distance.text);
                 let dur = data.rows[0].elements[0].duration.text;

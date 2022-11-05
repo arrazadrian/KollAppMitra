@@ -96,6 +96,7 @@ async function selesaikanPanggilMitra(){
     }
   } catch (err){
     Alert.alert('Ada error menyelesaikan Panggilan Mitra!', err.message);
+    console.log(err);
   }  
   };
 

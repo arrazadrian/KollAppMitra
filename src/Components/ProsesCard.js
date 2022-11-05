@@ -94,7 +94,6 @@ const ProsesCard = ({ item }) => {
       id_transaksi: item.id,
       panggilan: item.panggilan,
       estimasi_waktu: item.estimasi_waktu,
-      jarak: item.jarak,
     })
   };
 

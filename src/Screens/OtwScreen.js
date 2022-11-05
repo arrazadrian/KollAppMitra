@@ -26,7 +26,6 @@ const OtwScreen = ({ route }) => {
     phonepelanggan, 
     geo_alamat,
     estimasi_waktu,
-    jarak,
      } = route.params;
 
   const navigation = useNavigation();
@@ -181,7 +180,7 @@ const OtwScreen = ({ route }) => {
                   {namapelanggan}
                 </Text>
                 <Text style={{fontSize:14, color:IjoTua}}>
-                  {jarak} | {estimasi_waktu}
+                  {estimasi_waktu}
                 </Text>
               </View>
               <View style={{flexDirection:'row', flex:2.2}}>
