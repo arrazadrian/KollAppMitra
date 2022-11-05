@@ -92,6 +92,7 @@ const AkunScreen = () => {
           const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
             setNamaakun(doc.data().namalengkap);
             setFotoakun(doc.data().foto_akun);
+            setTokoakun(doc.data().namatoko)
             setPhoneakun(doc.data().phone);
             setEmailakun(doc.data().email);
             setWaktu_buka(doc.data().waktu_buka);
