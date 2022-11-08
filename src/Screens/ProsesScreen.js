@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, Image} from 'react-native'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Kuning, IjoTua, Ijo } from '../Utils/Warna'
 import ProsesCard from '../Components/ProsesCard'
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, doc, orderBy, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 import { Receipt } from '../assets/Images/Index';
 // import { useDispatch } from 'react-redux';
@@ -14,93 +14,6 @@ const { width, height } = Dimensions.get('window')
 const ProsesScreen = () => {
 
   const[proses,setProses] = useState();
-
-
-  // const dispatch = useDispatch();
-
-  // useEffect(()=>{
-  //   const fetchProses = async() => {
-  //     try{
-  //       const list = []; 
-  //       const auth = getAuth();
-  //       const db = getFirestore(app);
-  //       const colRef = collection(db, "transaksi")
-
-  //       const q = query(colRef, where("id_mitra", "==", auth.currentUser.uid), where("status_transaksi", "==", "Dalam Proses"), orderBy("waktu_dipesan","desc"));
-  //       const querySnapshot = await getDocs(q);
-  //       querySnapshot.forEach((doc) => {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         const { 
-  //           alamat_pelanggan,
-  //           geo_alamat,
-  //           catatan_lokasi,
-  //           catatan_produk,
-  //           id_mitra, 
-  //           namamitra,
-  //           namatoko,
-  //           namapelanggan,
-  //           id_pelanggan,
-  //           waktu_dipesan,
-  //           jenislayanan,
-  //           status_transaksi,
-  //           produk,
-  //           hargasubtotal,
-  //           hargalayanan,
-  //           hargatotalsemua,
-  //           jumlah_kuantitas,
-  //           phonemitra, 
-  //           phonepelanggan,
-  //           panggilan,
-  //           jarak,
-  //           estimasi_waktu,
-  //           pembayaran,
-  //         } = doc.data();
-  //         list.push({
-  //           id: doc.id,
-  //           alamat_pelanggan,
-  //           geo_alamat,
-  //           catatan_lokasi,
-  //           catatan_produk,
-  //           id_mitra, 
-  //           namamitra,
-  //           namatoko,
-  //           namapelanggan,
-  //           id_pelanggan,
-  //           waktu_dipesan,
-  //           jenislayanan,
-  //           status_transaksi,
-  //           produk,
-  //           hargasubtotal,
-  //           hargalayanan,
-  //           hargatotalsemua,
-  //           jumlah_kuantitas,
-  //           phonemitra, 
-  //           phonepelanggan,
-  //           panggilan,
-  //           jarak,
-  //           estimasi_waktu,
-  //           pembayaran,
-  //         });
-  //       });
-        
-  //       if (componentMounted.current){ // (5) is component still mounted?
-  //         setProses(list); // (1) write data to state
-  //         setLoading(false); // (2) write some value to state
-  //       }
-  //       return () => { // This code runs when component is unmounted
-  //           componentMounted.current = false; // (4) set it to false when we leave the page
-  //       }
-
-  //     } catch(err){
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchProses();
-  //   return() => {
-  //     console.log('Proses unmounted');
-  //   }
-  // },[])
-  //Tambah parameter "proses" bila mau auto refresh
 
   //Dapetin data proses, putus listener kalo pindah halaman
   useFocusEffect(

@@ -50,6 +50,7 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 jml_nilai_layanan: 0,
                 jml_nilai_produk: 0,
                 nilai_masuk: 0,  
+                token_notif: "",
             })
         })
   } catch (err) {
@@ -594,7 +595,7 @@ export const selesaikanPO = async (id_transaksi, pembayaran) => {
 // API 16: batalkanPO
 // UPDATE PO JADI TRANSAKSI YANG SELESAI
 
-export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
+export const batalkanPO = async (id_transaksi, id_voucher, potongan, token_notifpelanggan) => {
     const db = getFirestore(app);
     const docreftran = doc(db, "transaksi", id_transaksi);
     if(potongan > 0){
@@ -607,6 +608,7 @@ export const batalkanPO = async (id_transaksi, id_voucher, potongan) => {
                 pembatalan: "Dibatalkan Mitra", 
                 waktu_selesai: serverTimestamp(), 
               });
+              notifPOmitrabatal(token_notifpelanggan)
           } catch (err) {
             Alert.alert('Ada error untuk membatalkan PO!', err.message);
           }
@@ -683,7 +685,7 @@ export const tolakPM = async (id_transaksi) => {
 // API 19: batalPMolehMitra
 // Mitra membatalkan panggilan saat otw
 
-export const batalPMolehMitra = async (id_transaksi) => {
+export const batalPMolehMitra = async (id_transaksi, token_notifpelanggan) => {
   const auth = getAuth();
   const db = getFirestore(app);
   const docreftran = doc(db, "transaksi", id_transaksi);
@@ -700,6 +702,7 @@ export const batalPMolehMitra = async (id_transaksi) => {
       updateDoc(docSnapmit, { 
         dipanggil: false, 
       });
+      notifPMmitrabatal(token_notifpelanggan)
     }
   } catch (err) {
     Alert.alert('Ada error merima PM!', err.message);
@@ -710,7 +713,7 @@ export const batalPMolehMitra = async (id_transaksi) => {
 // UPDATE PANGGILAN PM JADI SAMPAI
 // KARENA SUDAH SAMPAI 
 
-export const sampaiPM = async (id_transaksi) => {
+export const sampaiPM = async (id_transaksi, token_notifpelanggan) => {
   const db = getFirestore(app);
   const docreftran = doc(db, "transaksi", id_transaksi);
   getDoc(docreftran).then(docSnap => {
@@ -719,6 +722,7 @@ export const sampaiPM = async (id_transaksi) => {
           updateDoc(docreftran, { 
             panggilan: "Sudah Sampai",
           });
+          notifPMsampai(token_notifpelanggan)
       } catch (err) {
         Alert.alert('Ada error saat PM sudah sampai!', err.message);
       }
@@ -962,3 +966,74 @@ export const kurangiTersediaVoucher = async (id_voucher, potongan) => {
     console.log('Ada Error update kesediaan voucher.', err.message);
   };
 };
+
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
+
+// API 29: notifPMsampai
+// NOTIF UNTUK PELANGGAN BAHWA PM SUDAH SAMPAI
+
+async function notifPMsampai(token_notifpelanggan) {
+  const message = {
+    to: token_notifpelanggan,
+    sound: 'default',
+    title: 'Mitra sudah sampai lokasi',
+    body: 'Selamat berbelanja!',
+    // data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+// API 30: notifPMmitrabatal
+// NOTIF UNTUK PELANGGAN BAHWA PM DIBATALKAN MITRA
+
+async function notifPMmitrabatal(token_notifpelanggan) {
+  const message = {
+    to: token_notifpelanggan,
+    sound: 'default',
+    title: 'Panggilan dibatalkan mitra',
+    body: 'Mohon maaf, mitra membatalkan panggilan',
+    // data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+// API 31: notifPOmitrabatal
+// NOTIF UNTUK PELANGGAN BAHWA PO DIBATALKAN MITRA
+
+async function notifPOmitrabatal(token_notifpelanggan) {
+  const message = {
+    to: token_notifpelanggan,
+    sound: 'default',
+    title: 'Pre-Order dibatalkan mitra',
+    body: 'Mohon maaf, mitra membatalkan pesanan',
+    // data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
