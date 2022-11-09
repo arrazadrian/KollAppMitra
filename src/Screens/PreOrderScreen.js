@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, ActivityIndicator, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
@@ -12,6 +12,7 @@ import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
 import { useDispatch, useSelector } from 'react-redux';
 import GarisBatas from '../Components/GarisBatas'
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window')
@@ -88,77 +89,47 @@ const ataspre = () => {
 const PreOrderScreen = ({navigation}) => {
 
   const[produkpreorder,setProdukpreorder] = useState();
-  const[loading, setLoading] = useState(true);
-  const componentMounted = useRef(true);
-
+  const[sizepre,setSizepre] = useState();
   const { pilkategori } = useSelector(state => state.kategori);
 
-  useEffect(()=>{
-    const fetchProdukPreOrder = async() => {
-      try{
-        const list = []; 
-        const auth = getAuth();
-        const db = getFirestore(app);
-        const docRef = doc(db, "mitra", auth.currentUser.uid);
-        const colRef = collection(docRef, "produk")
-
-        if ( pilkategori == "Semua Produk" ) {
-          const q = query(colRef, where("jenis", "==", "Produk pre-order"), orderBy("waktudibuat","desc"));
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori, tersedia} = doc.data();
-            list.push({
-              id: doc.id,
-              namaproduk,
-              deskproduk,
-              image,
-              harga,
-              kuantitas,
-              satuan,
-              kategori,
-              tersedia,
-            });
-          });
-          } else {
-            const qq = query(colRef, where("jenis", "==", "Produk pre-order"), where("kategori", "==", pilkategori), orderBy("waktudibuat","desc"));
-            const querySnapshot = await getDocs(qq);
-            querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-              const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori, tersedia} = doc.data();
-              list.push({
-                id: doc.id,
-                namaproduk,
-                deskproduk,
-                image,
-                harga,
-                kuantitas,
-                satuan,
-                kategori,
-                tersedia,
-              });
-            });
-          }
-  
-          if (componentMounted.current){ // (5) is component still mounted?
-            setProdukpreorder(list); // (1) write data to state
-            setLoading(false); // (2) write some value to state
-          }
-          return () => { // This code runs when component is unmounted
-              componentMounted.current = false; // (4) set it to false when we leave the page
-          }
-  
-        } catch(err){
-          console.log(err);
+   //Dapetin data produk pre-order, putus listener kalo pindah halaman
+   useFocusEffect(
+    useCallback(() => {
+      const auth = getAuth();
+      const db = getFirestore(app);
+      const docRef = doc(db, "mitra", auth.currentUser.uid);
+      const colRef = collection(docRef, "produk")
+      if(pilkategori == "Semua Produk"){
+        const q = query(colRef, where("jenis", "==", "Produk pre-order"), orderBy("waktudibuat","desc"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const listProdukpreorder = []; 
+          querySnapshot.forEach(doc => listProdukpreorder.push({...doc.data(), id: doc.id}));
+          setProdukpreorder(listProdukpreorder);
+          setSizepre(querySnapshot.size)
+        });
+        return () => {
+          console.log('Produk Pre-Order Unmounted'); 
+          unsubscribe();
+        }
+      } else {
+        const qq = query(colRef, where("jenis", "==", "Produk pre-order"), where("kategori", "==", pilkategori), orderBy("waktudibuat","desc"));
+        const unsubscribe = onSnapshot(qq, (querySnapshot) => {
+          const listProdukpreorder = []; 
+          querySnapshot.forEach(doc => listProdukpreorder.push({...doc.data(), id: doc.id}));
+          setProdukpreorder(listProdukpreorder);
+        });
+        return () => {
+          console.log('Produk Pre-Order Unmounted'); 
+          unsubscribe();
         }
       }
-      fetchProdukPreOrder();
     },[pilkategori])
+  );
 
 
   return (
     <View style={styles.latar}>
-      {loading ? (
+      {!produkpreorder ? (
         <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
           <ActivityIndicator size="large" color={IjoTua}/>
         </View>
@@ -174,7 +145,7 @@ const PreOrderScreen = ({navigation}) => {
           renderItem= {({item}) => <ListProduk item={item} />}
           keyExtractor={ item => item.id}
           ListHeaderComponent={ataspre}
-          ListEmptyComponent={ produkpreorder < 1 ?
+          ListEmptyComponent={ sizepre < 1 ?
             (kosongpre) : (kosongprekategori)
           }
           ListFooterComponent={<View style={{height:10}}></View>}

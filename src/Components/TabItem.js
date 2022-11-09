@@ -13,7 +13,6 @@ import { app } from '../../Firebase/config';
 import { updateProses } from '../features/counterSlice';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { useCallback } from 'react';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
