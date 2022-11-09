@@ -26,8 +26,9 @@ const AdaKasbonPOScreen = ({route}) => {
     const navigation = useNavigation();
     
     const { 
-        id_pelanggan, id_transaksi, namamitra, namatoko, namapelanggan, phonepelanggan, hargatotalsemua,
-        } = route.params;
+        id_pelanggan, id_transaksi, namamitra, namatoko, namapelanggan, 
+        phonepelanggan, hargatotalsemua, 
+    } = route.params;
 
     moment.updateLocale('id', localization);
 

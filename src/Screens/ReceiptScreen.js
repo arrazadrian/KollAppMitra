@@ -4,6 +4,8 @@ import * as Linking from 'expo-linking';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih, Pink, Hitam} from '../Utils/Warna'
 import { Kasbon, KollLong, Location, Lunas } from '../assets/Images/Index';
 import { Call, Chat } from '../assets/Icons/Index';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { app } from '../../Firebase/config';
 import moment from 'moment';
 import localization from 'moment/locale/id';
 import GarisBatas from '../Components/GarisBatas';
@@ -80,9 +82,38 @@ const ReceiptScreen = ({route}) => {
     }  
   };
 
+  const [token_notifpelanggan, setToken_notifpelanggan] = useState();
+
+  useEffect(()=>{
+    let unmounted = false
+    const getToken_notifmitra = async () =>{
+      const db = getFirestore(app)
+      const docRef = doc(db, "pelanggan", id_pelanggan);
+      const docSnap = await getDoc(docRef);
+      try{
+        if(docSnap.exists()){
+          setToken_notifpelanggan(docSnap.data()?.token_notif)
+        } else {
+          console.log("No such document!");
+        }
+      } catch(err){
+        console.log('Ada Error update kesediaan voucher.', err.message);
+      };
+    }
+    
+    if(!unmounted){
+      getToken_notifmitra()
+    }
+
+    return() => {
+      unmounted = true
+      console.log('Clear getToken_notifmitra')
+    }
+  },[])
+
   async function batalPO(){
     try{
-        await batalkanPO(id_transaksi, id_voucher, potongan);
+        await batalkanPO(id_transaksi, id_voucher, potongan, token_notifpelanggan);
         Alert.alert('Pre-Order sudah dibatalkan', 'Terima kasih sudah memberi kepastian, semangat!');
         navigation.navigate("HomeScreen"); 
     } catch (err){
@@ -329,15 +360,17 @@ const ReceiptScreen = ({route}) => {
                     <Text style={styles.subjudul}>Total Harga</Text>
                     <Text style={styles.subjudul}>Rp{new Intl.NumberFormat('id-Id').format(hargatotalsemua).toString()}</Text>
                 </View>
-                { status_transaksi == "Dalam Proses" && 
-                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <TouchableOpacity style={styles.kasbon} onPress={pindahKasbon}>
-                      <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold'}}>Masuk kasbon</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
-                      <Text style={{color: Putih, fontSize: 16, fontWeight:'bold'}}>Sudah dibayar</Text>
-                    </TouchableOpacity>
-                  </View>
+                { status_transaksi == "Dalam Proses" ? 
+                  (
+                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <TouchableOpacity style={styles.kasbon} onPress={pindahKasbon}>
+                        <Text style={{color: Ijo, fontSize: 16, fontWeight:'bold'}}>Masuk kasbon</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.diantar} onPress={selesaiTransaksiPO}>
+                        <Text style={{color: Putih, fontSize: 16, fontWeight:'bold'}}>Sudah dibayar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ):(null)
                 }
             </View>
         </View>

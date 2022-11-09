@@ -64,6 +64,7 @@ const PanggilanScreen = ({ route, navigation }) => {
         await terimaPM(id_transaksi,estimasi_waktu);
         navigation.replace("OtwScreen",{
             id_transaksi: id_transaksi,
+            id_pelanggan: id_pelanggan,
             namapelanggan : namapelanggan, 
             alamat_pelanggan : alamat_pelanggan,
             catatan_lokasi : catatan_lokasi,

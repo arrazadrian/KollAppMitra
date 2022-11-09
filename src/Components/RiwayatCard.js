@@ -23,7 +23,7 @@ const RiwayatCard = ({ item }) => {
       hargasubtotal: item.hargasubtotal,
       hargatotalsemua: item.hargatotalsemua,
       id_mitra: item.id_mitra,
-      id_pelanngan: item.id_mitra,
+      id_pelanggan: item.id_pelanggan,
       jenislayanan: item.jenislayanan,
       jumlah_kuantitas: item.jumlah_kuantitas,
       namamitra: item.namamitra,

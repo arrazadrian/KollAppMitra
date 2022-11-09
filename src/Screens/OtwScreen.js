@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View, Pressable, Dimensions, Alert, Modal, TouchableOpacity} from 'react-native';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Ijo, IjoMint, IjoTua, Kuning, Putih } from '../Utils/Warna';
 import { Call, Chat } from '../assets/Icons/Index';
@@ -7,7 +7,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import GarisBatas from '../Components/GarisBatas';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Linking from 'expo-linking';
-import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot, getDoc } from 'firebase/firestore';
 import { app } from '../../Firebase/config';
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
@@ -20,6 +20,7 @@ const OtwScreen = ({ route }) => {
 
   const { 
     id_transaksi,
+    id_pelanggan,
     namapelanggan, 
     alamat_pelanggan,
     catatan_lokasi, 
@@ -34,8 +35,35 @@ const OtwScreen = ({ route }) => {
   const { geo_mitra, alamat_mitra, geohash_mitra } = useSelector(state => state.posisi);
 
   const [pembatalan, setPembatalan] = useState();
+  const [token_notifpelanggan, setToken_notifpelanggan] = useState();
 
   const db = getFirestore(app)
+
+  useEffect(()=>{
+    let unmounted = false
+    const getToken_notifmitra = async () =>{
+      const docRef = doc(db, "pelanggan", id_pelanggan);
+      const docSnap = await getDoc(docRef);
+      try{
+        if(docSnap.exists()){
+          setToken_notifpelanggan(docSnap.data()?.token_notif)
+        } else {
+          console.log("No such document!");
+        }
+      } catch(err){
+        console.log('Ada Error update kesediaan voucher.', err.message);
+      };
+    }
+    
+    if(!unmounted){
+      getToken_notifmitra()
+    }
+
+    return() => {
+      unmounted = true
+      console.log('Clear getToken_notifmitra')
+    }
+  },[])
 
   useFocusEffect(
     useCallback(() => {
@@ -67,7 +95,7 @@ const OtwScreen = ({ route }) => {
             {
               text: 'Sudah',
               onPress: async () => {
-                await sampaiPM(id_transaksi);
+                await sampaiPM(id_transaksi, token_notifpelanggan);
                 navigation.navigate("LanjutBelanjaScreen");
               }
             }
@@ -87,7 +115,7 @@ const OtwScreen = ({ route }) => {
             {
               text: 'Batalkan',
               onPress: async () => { 
-                await batalPMolehMitra(id_transaksi);  
+                await batalPMolehMitra(id_transaksi, token_notifpelanggan);  
                 navigation.replace("HomeScreen");
                 console.log('batal dipencet');
               }

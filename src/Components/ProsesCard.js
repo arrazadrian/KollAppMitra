@@ -79,7 +79,7 @@ const ProsesCard = ({ item }) => {
       alamat_pelanggan: item.alamat_pelanggan,
       geo_alamat: item.geo_alamat,
       id_mitra: item.id_mitra,
-      id_pelanngan: item.id_pelanngan,
+      id_pelanggan: item.id_pelanggan,
       jenislayanan: item.jenislayanan,
       jumlah_kuantitas: item.jumlah_kuantitas,
       namamitra: item.namamitra,
