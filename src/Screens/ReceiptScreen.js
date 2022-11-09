@@ -101,15 +101,16 @@ const ReceiptScreen = ({route}) => {
       };
     }
     
-    if(!unmounted){
+    if(!unmounted && status_transaksi == "Dalam Proses"){
       getToken_notifmitra()
+      console.log("Token pelanggan adalah " + token_notifpelanggan)
     }
 
     return() => {
       unmounted = true
       console.log('Clear getToken_notifmitra')
     }
-  },[])
+  },[token_notifpelanggan])
 
   async function batalPO(){
     try{

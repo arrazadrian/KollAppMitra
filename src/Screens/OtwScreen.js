@@ -63,7 +63,7 @@ const OtwScreen = ({ route }) => {
       unmounted = true
       console.log('Clear getToken_notifmitra')
     }
-  },[])
+  },[token_notifpelanggan])
 
   useFocusEffect(
     useCallback(() => {
