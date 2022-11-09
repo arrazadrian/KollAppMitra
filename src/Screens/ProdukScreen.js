@@ -1,17 +1,18 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, ActivityIndicator, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
 import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, orderBy, onSnapshot } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
 import { useDispatch, useSelector } from 'react-redux';
 import GarisBatas from '../Components/GarisBatas'
+import { useFocusEffect } from '@react-navigation/native';
 
  
 const { width, height } = Dimensions.get('window')
@@ -88,77 +89,46 @@ const atasproduk = () => {
 const ProdukScreen = ({ navigation }) => {
 
   const[produkutama,setProdukUtama] = useState();
-  const[loading, setLoading] = useState(true);
-  const componentMounted = useRef(true);
-
+  const[sizeutama,setSizeutama] = useState();
   const { pilkategori } = useSelector(state => state.kategori);
 
-  useEffect(()=>{
-    const fetchProdukUtama = async() => {
-      try{
-        const list = []; 
-        const auth = getAuth();
-        const db = getFirestore(app);
-        const docRef = doc(db, "mitra", auth.currentUser.uid);
-        const colRef = collection(docRef, "produk")
-
-        if ( pilkategori == "Semua Produk" ) {
-          const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori, tersedia} = doc.data();
-            list.push({
-              id: doc.id,
-              namaproduk,
-              deskproduk,
-              image,
-              harga,
-              kuantitas,
-              satuan,
-              kategori,
-              tersedia,
-            });
-          });
-          } else {
-            const qq = query(colRef, where("jenis", "==", "Produk utama"), where("kategori", "==", pilkategori), orderBy("waktudibuat","desc"));
-            const querySnapshot = await getDocs(qq);
-            querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-              const {image, harga, namaproduk, deskproduk, kuantitas, satuan, kategori, tersedia} = doc.data();
-              list.push({
-                id: doc.id,
-                namaproduk,
-                deskproduk,
-                image,
-                harga,
-                kuantitas,
-                satuan,
-                kategori,
-                tersedia,
-              });
-            });
-          }
-  
-          if (componentMounted.current){ // (5) is component still mounted?
-            setProdukUtama(list); // (1) write data to state
-            setLoading(false); // (2) write some value to state
-          }
-          return () => { // This code runs when component is unmounted
-              componentMounted.current = false; // (4) set it to false when we leave the page
-          }
-  
-        } catch(err){
-          console.log(err);
+  //Dapetin data produk utama, putus listener kalo pindah halaman
+  useFocusEffect(
+    useCallback(() => {
+      const auth = getAuth();
+      const db = getFirestore(app);
+      const docRef = doc(db, "mitra", auth.currentUser.uid);
+      const colRef = collection(docRef, "produk")
+      if(pilkategori == "Semua Produk"){
+        const q = query(colRef, where("jenis", "==", "Produk utama"), orderBy("waktudibuat","desc"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const listProdukutama = []; 
+          querySnapshot.forEach(doc => listProdukutama.push({...doc.data(), id: doc.id}));
+          setProdukUtama(listProdukutama);
+          setSizeutama(querySnapshot.size)
+        });
+        return () => {
+          console.log('Produk Utama Unmounted'); 
+          unsubscribe();
+        }
+      } else {
+        const qq = query(colRef, where("jenis", "==", "Produk utama"), where("kategori", "==", pilkategori), orderBy("waktudibuat","desc"));
+        const unsubscribe = onSnapshot(qq, (querySnapshot) => {
+          const listProdukutama = []; 
+          querySnapshot.forEach(doc => listProdukutama.push({...doc.data(), id: doc.id}));
+          setProdukUtama(listProdukutama);
+        });
+        return () => {
+          console.log('Produk Utama Unmounted'); 
+          unsubscribe();
         }
       }
-      fetchProdukUtama();
     },[pilkategori])
-  
+  );
 
   return (
     <View style={styles.latar}>
-      {loading ? (
+      {!produkutama ? (
         <View style={{justifyContent:'center', alignItems:'center', flex: 1}}>
           <ActivityIndicator size="large" color={IjoTua}/>
         </View>
@@ -175,7 +145,7 @@ const ProdukScreen = ({ navigation }) => {
                   renderItem= {({item}) => <ListProduk item={item} />}
                   keyExtractor={(item) => item.id}
                   ListHeaderComponent= {atasproduk}
-                  ListEmptyComponent={ produkutama < 1 ?
+                  ListEmptyComponent={ sizeutama < 1 ?
                     (kosongproduk) : (kosongprodukkategori)
                   }
                   ListFooterComponent={<View style={{height:10}}></View>}

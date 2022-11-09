@@ -134,28 +134,6 @@ const HomeScreen = ({ navigation }) => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  // useEffect(() =>{ 
-   
-  //       const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-  //       setNamamitra(doc.data().namalengkap);
-  //       setNamatoko(doc.data().namatoko);
-        
-  //       console.log('getuserHome jalan (Home Screen)')
-  //       console.log(namamitra)
-  //       console.log(namatoko)
-  //       // Respond to data
-        
-  //     });
-  //     console.log('Masuk Redux namamitra');
-  //     dispatch(setMitra({ namamitra, namatoko }));
-      
-  //     return() => {
-  //       console.log('Home Unmounted');
-  //       unsubscribe();
-  //     }
- 
-  // },[namatoko])
-
   useFocusEffect(
     useCallback(() => {
           const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
