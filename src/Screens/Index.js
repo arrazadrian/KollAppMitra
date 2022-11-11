@@ -1,4 +1,3 @@
-import SplashScreen from "./SplashScreen";
 import HomeScreen from "./HomeScreen";
 import TambahScreen from "./TambahScreen";
 import TambahPreScreen from "./TambahPreScreen";
@@ -9,6 +8,7 @@ import ProsesScreen from "./ProsesScreen";
 import PanggilanScreen from "./PanggilanScreen";
 import AkunScreen from "./AkunScreen";
 import EditScreen from "./EditScreen";
+import ScreeningScreen from "./ScreeningScreen";
 import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
 import FLocScreen from "./FLocScreen";
@@ -23,7 +23,6 @@ import EditProdukScreen from "./EditProdukScreen";
 import OtwScreen from "./OtwScreen";
 import LanjutBelanjaScreen from "./LanjutBelanjaScreen";
 import TQScreen from "./TQScreen";
-import AkunJadiScreen from "./AkunJadiScreen";
 import KasbonScreen from "./KasbonScreen";
 import LunasScreen from "./LunasScreen";
 import ReceiptKasbonScreen from "./ReceiptKasbonScreen";
@@ -32,13 +31,13 @@ import AdaKasbonPOScreen from "./AdaKasbonPOScreen";
 import AdaKasbonPMScreen from "./AdaKasbonPMScreen";
 
 export {
-     SplashScreen, HomeScreen, 
+     HomeScreen, 
      RiwayatScreen, ProsesScreen,AkunScreen, 
-     SignInScreen, SignUpScreen, 
+     SignInScreen, SignUpScreen, ScreeningScreen,
      EditScreen, TambahScreen, PreOrderScreen,
      ProdukScreen, LangsungScreen, TambahPreScreen,
      CheckoutLangScreen, EditProdukScreen, DetailScreen,
-     OtwScreen, LanjutBelanjaScreen, TQScreen, AkunJadiScreen,
+     OtwScreen, LanjutBelanjaScreen, TQScreen, 
      ReceiptScreen, ScanScreen, FLocScreen, PanggilanScreen,
      CheckoutPMScreen, KasbonScreen, LunasScreen, ReceiptKasbonScreen,
      AdaKasbonTLScreen, AdaKasbonPOScreen, AdaKasbonPMScreen,ScanVoucherScreen,

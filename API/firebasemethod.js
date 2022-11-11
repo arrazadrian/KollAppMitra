@@ -99,6 +99,19 @@ export async function handleSignOut() {
   })
 };
 
+// API 3*: handleSignOutAwal
+// KELUAR DARI DALAM AKUN YG SEDANG LOGIN,
+// MENGUBAH AUTHSTATECHANGE DAN KELUAR
+
+export async function handleSignOutAwal() {
+  const auth = getAuth();
+  try {
+      signOut(auth);
+  } catch (err) {
+    Alert.alert('Ada error untuk keluar!', 'Tidak bisa keluar.');
+  }
+};
+
 // API 4: uploadgambarproduk
 // UPLOAD GAMBAR PRODUK YANG DIOPER KE
 // FUNGSI FIRESTORE SELANJUTNYA

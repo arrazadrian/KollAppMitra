@@ -291,7 +291,7 @@ const HomeScreen = ({ navigation }) => {
                 )
               }
               <View>
-                <Text style={styles.judul} onPress={() => navigation.push('OtwScreen')}>Keperluan Toko</Text>
+                <Text style={[styles.judul, {fontSize: 18}]} onPress={() => navigation.push('OtwScreen')}>Keperluan Toko</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Pressable style={styles.card} onPress={() => navigation.push('ProdukScreen')}>
                       <Image source={Gerobak} style={styles.gambar}/>
@@ -313,7 +313,7 @@ const HomeScreen = ({ navigation }) => {
                     </View>
                     <Image source={DompetKasbon} style={styles.gambardompet}/>
                   </Pressable>
-                  <Text style={styles.judul}>Bertemu di Jalan?</Text>
+                  <Text style={[styles.judul, {fontSize: 18}]}>Bertemu di Jalan?</Text>
                   <Pressable style={styles.langsung} onPress={ async () => {
                     await dispatch(kosongkanKeranjang());
                     await dispatch(resetPelanggan());

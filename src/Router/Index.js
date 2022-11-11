@@ -17,6 +17,7 @@ import {
     PanggilanScreen,
     AkunScreen, 
     EditScreen,
+    ScreeningScreen,
     SignInScreen, 
     SignUpScreen, 
     FLocScreen,
@@ -31,7 +32,6 @@ import {
     ScanScreen,
     ScanVoucherScreen,
     TQScreen,
-    AkunJadiScreen,
 } from '../Screens/Index.js';
 import TabNavigasi from '../Components/TabNavigasi.js';
 import { Ijo, Putih } from '../Utils/Warna.js';
@@ -67,7 +67,6 @@ return(
         <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
-        <Stack.Screen name="AkunJadiScreen" component={AkunJadiScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </Provider>
   </NavigationContainer>
@@ -79,6 +78,7 @@ export const AppUtama = () => {
     <NavigationContainer>
       <Provider store={store}>
         <HomeStack.Navigator>
+          <HomeStack.Screen name="ScreeningScreen" component={ScreeningScreen} options={{ headerShown: false }}/>
           <HomeStack.Screen name="HomeScreen" component={HomeStackScreen} options={{ headerShown: false }}/>
           <HomeStack.Screen name="ProdukScreen" component={ProdukScreen} options={{ title: "Daftar Produk Utama", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
           <HomeStack.Screen name="PreOrderScreen" component={PreOrderScreen} options={{ title: "Daftar Produk Pre-Order", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
