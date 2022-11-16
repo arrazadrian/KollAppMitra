@@ -185,12 +185,20 @@ const HomeScreen = ({ navigation }) => {
           &location_type=ROOFTOP&result_type=street_address&key=${GOOGLE_MAPS_APIKEY}`
       ).then((res) => res.json())
       .then((data) => {
-          //console.log(data.results[0].formatted_address);
+         // console.log(data)
+         if(!data.results[0]?.formatted_address){
           dispatch(updatePosisi({
-          geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
-          alamat_mitra: data.results[0]?.formatted_address,
-          geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+            geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+            alamat_mitra: "Nama jalan belum terdaftar",
+            geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
           }));
+         } else {
+          dispatch(updatePosisi({
+            geo_mitra: {lat:location.coords.latitude, lng:location.coords.longitude},
+            alamat_mitra: data.results[0]?.formatted_address,
+            geohash_mitra: geofire.geohashForLocation([location.coords.latitude,location.coords.longitude])
+          }));
+        }
       })
       })();
     }
