@@ -42,52 +42,74 @@ const JualProduk = ({item}) => {
 
   return (
     <View>
-       <View style={styles.container}>
-        <Pressable onPress={pindahDetail}>
-            <Image source={{uri: item.image}} style={styles.gambar}/> 
-        </Pressable>
-        <View>
-            <Text 
-            style={{fontSize:18, fontWeight:'bold'}}
-            numberOfLines={1}
-            >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
-            <Text
-            style={{fontSize:16}}
-            numberOfLines={1}
-            >{item.namaproduk}</Text> 
-            <Text>{item.kuantitas} {item.satuan}</Text> 
-        </View>
-      <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
-        <TouchableOpacity
-          style={{        
-            height: width * 0.07,
-            width: width * 0.07,
-            borderRadius: 20,
-            backgroundColor: !items.length ? (Abu) : (IjoTua),
-            alignItems:'center',
-            justifyContent:'center',
-          }}
-          disabled={!items.length}
-          onPress={buangProduk}
-        > 
-          <Text style={styles.logoTombol}>-</Text>
-        </TouchableOpacity>
-        <Text style={{fontSize: 20}}>{items.length}</Text>
-        <TouchableOpacity
-          style={{
-            height: width * 0.07,
-            width: width * 0.07,
-            borderRadius: 20,
-            backgroundColor: IjoTua,
-            alignItems:'center',
-            justifyContent:'center',
-          }}
-          onPress={tambahProduk}
-        >
-          <Text style={styles.logoTombol}>+</Text>
-        </TouchableOpacity>
-    </View>
+      {item.tersedia ?
+      (
+        <View style={styles.container}>
+            <Pressable onPress={pindahDetail}>
+                <Image source={{uri: item.image}} style={styles.gambar}/> 
+            </Pressable>
+            <View>
+                <Text 
+                style={{fontSize:18, fontWeight:'bold'}}
+                numberOfLines={1}
+                >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
+                <Text
+                style={{fontSize:16}}
+                numberOfLines={1}
+                >{item.namaproduk}</Text> 
+                <Text>{item.kuantitas} {item.satuan}</Text> 
+            </View>
+          <View style={{flexDirection:'row', marginTop: 5, justifyContent:'space-around', alignItems:'center'}}>
+            <TouchableOpacity
+              style={{        
+                height: width * 0.07,
+                width: width * 0.07,
+                borderRadius: 20,
+                backgroundColor: !items.length ? (Abu) : (IjoTua),
+                alignItems:'center',
+                justifyContent:'center',
+              }}
+              disabled={!items.length}
+              onPress={buangProduk}
+            > 
+              <Text style={styles.logoTombol}>-</Text>
+            </TouchableOpacity>
+            <Text style={{fontSize: 20}}>{items.length}</Text>
+            <TouchableOpacity
+              style={{
+                height: width * 0.07,
+                width: width * 0.07,
+                borderRadius: 20,
+                backgroundColor: IjoTua,
+                alignItems:'center',
+                justifyContent:'center',
+              }}
+              onPress={tambahProduk}
+            >
+              <Text style={styles.logoTombol}>+</Text>
+            </TouchableOpacity>
+            </View>
        </View> 
+      ):(
+        <View style={styles.container}>
+           <Pressable onPress={pindahDetail}>
+               <Text style={styles.habis}>Stok Habis</Text>
+               <Image source={{uri:item.image}} style={styles.gambarhabis} />
+           </Pressable>
+           <View>
+               <Text 
+               style={{fontSize:18, fontWeight:'bold'}}
+               numberOfLines={1}
+               >Rp{new Intl.NumberFormat('id-Id').format(item.harga).toString()}</Text> 
+               <Text 
+               style={{fontSize:16}}
+               numberOfLines={1}
+               >{item.namaproduk}</Text> 
+               <Text>{item.kuantitas} {item.satuan}</Text> 
+           </View>
+        </View> 
+      )}
+       
     </View>
   )
 }
@@ -117,5 +139,22 @@ const styles = StyleSheet.create({
         color: Putih,
         fontWeight: 'bold',
         fontSize: 16,
-    }
+    },
+    gambarhabis: {
+      width:  width * 0.25,
+      height: width * 0.25,
+      borderRadius: 10,
+      alignSelf: 'center',
+      resizeMode: 'cover',
+      opacity: 0.3,
+  },
+  habis:{
+      position:'absolute',
+      fontSize: 12,
+      fontWeight: 'bold',
+      color: 'tomato',
+      textAlign: 'center',
+      top: width * 0.1,
+      left:  width * 0.04,
+  },
 })
