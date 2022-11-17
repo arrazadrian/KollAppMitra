@@ -61,31 +61,6 @@ const AkunScreen = () => {
   const auth = getAuth();
   const db = getFirestore(app)
 
-  // useEffect(() =>{
-
-  //   const unsubscribe = onSnapshot(doc(db, "mitra", auth.currentUser.uid ), (doc) => {
-  //   setNamaakun(doc.data().namalengkap);
-  //   setFotoakun(doc.data().foto_akun);
-  //   setTokoakun(doc.data().namatoko);
-  //   setPhoneakun(doc.data().phone);
-  //   setEmailakun(doc.data().email);
-  //   setWaktu_buka(doc.data().waktu_buka);
-  //   setWaktu_tutup(doc.data().waktu_tutup);
-  //   setAlamat(doc.data().alamat);
-  //   setRating_layanan(doc.data().rating_layanan);
-  //   setRating_produk(doc.data().rating_produk);
-  //   setPoin(doc.data().poin_potongan);
-  //   console.log('getuserAkun jalan (Akun Screen)')
-  //     // Respond to data
-  //     // ...
-  //   });
-    
-  //   return() =>{
-  //     console.log('Akun Unmounted');
-  //     unsubscribe();
-  //   }
-  // },[])
-
   //Dapetin data mitra akun, putus listener kalo pindah halaman
   useFocusEffect(
     useCallback(() => {
@@ -160,7 +135,13 @@ const AkunScreen = () => {
                 </View>
                 <View style={styles.kotakpoin}>
                   <Text style={[styles.subisi, {textAlign:'center'}]}>Poin Potongan</Text>
-                  <Text style={[styles.subjudul, {color: Ijo, fontSize: 22, textAlign:'center'}]}>{new Intl.NumberFormat('id-Id').format(poin).toString()}</Text>
+                  { poin ?
+                    (
+                    <Text style={[styles.subjudul, {color: Ijo, fontSize: 22, textAlign:'center'}]}>{new Intl.NumberFormat('id-Id').format(poin).toString()}</Text>
+                      ):(
+                    <Text style={[styles.subjudul, {color: Ijo, fontSize: 22, textAlign:'center'}]}>0</Text>
+                    )
+                  }
                 </View>
                 <View style={{borderBottomColor: Ijo, borderBottomWidth: 1}}>
                   <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Info</Text>
