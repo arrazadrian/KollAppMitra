@@ -26,12 +26,12 @@ const TambahPreScreen = ({navigation}) => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-      console.log(result.uri);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      console.log(result.assets[0].uri);
     }
     
-    return result.uri
+    return result.assets[0].uri
     
   };
 

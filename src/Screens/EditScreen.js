@@ -41,11 +41,11 @@ const EditScreen = ({navigation, route}) => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setFotoakun(result.uri);
-      console.log(result.uri);
+    if (!result.canceled) {
+      setFotoakun(result.assets[0].uri);
+      console.log(result.assets[0].uri);
     }  
-    return result.uri
+    return result.assets[0].uri
   };
 
   const handleperbaruiakun = () =>{

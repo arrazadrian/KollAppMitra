@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, Pressable, Dimensions, FlatList, ActivityIndica
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { Ijo, IjoTua, Kuning, Putih, IjoMint  } from '../Utils/Warna'
 import ListProduk from '../Components/ListProduk'
-import PencarianBar from '../Components/PencarianBar'
+// import PencarianBar from '../Components/PencarianBar'
 import ProdukKosong from '../Components/ProdukKosong'
 //import { daftarproduk } from '../Data/daftarproduk'
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, doc, orderBy } from "firebase/firestore";
+import { getFirestore, collection, query, where, onSnapshot, doc, orderBy } from "firebase/firestore";
 import { app } from '../../Firebase/config';
 import { updateKategori } from '../features/kategoriSlice'
 import { jeniskategori } from '../Data/jeniskategori'
