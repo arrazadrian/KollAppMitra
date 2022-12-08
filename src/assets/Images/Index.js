@@ -32,6 +32,8 @@ import Kosong from './kosong.png'
 import Bag from './Bag.png'
 import Location from './Location.png'   
 import Bawah from './Bawah.png'
+import Blokir from './blokir.png'
+import Validasi from './validasi.png'
 
 export { Splash, Awan, gerobaksplash,
         DPdefault, LogoMitra, kollsplash,
@@ -44,4 +46,5 @@ export { Splash, Awan, gerobaksplash,
         mitrasplash, Kosong, DefaultFoto,
         PanggilMitra, Location, Receipt,
         Kasbon, Lunas, DompetKasbon,
+        Blokir, Validasi,
     }

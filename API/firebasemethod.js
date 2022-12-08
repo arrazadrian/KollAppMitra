@@ -33,6 +33,7 @@ export async function registration(email, password, namalengkap, namatoko, buka,
         .then(() => {
             setDoc(doc(db, "mitra", auth.currentUser.uid),{
                 id_mitra: auth.currentUser.uid,
+                akun: "Menunggu Validasi",
                 email: email,
                 namalengkap: namalengkap,
                 namatoko: namatoko,
