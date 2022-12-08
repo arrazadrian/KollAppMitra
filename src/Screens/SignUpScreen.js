@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity, Pressable } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
@@ -17,6 +17,8 @@ const SignUpScreen = () => {
   const { geo, alamat, geohash } = useSelector(state => state.mangkal);
 
   const [namalengkap, setNamalengkap] = useState('');
+  const [ktp, setKtp] = useState();
+  const [diriKtp, setDiriKtp] = useState();
   const [namatoko, setNamatoko] = useState('');
   const [buka, setBuka] = useState('');
   const [tutup, setTutup] = useState('');
@@ -154,12 +156,12 @@ const SignUpScreen = () => {
               </View>
               <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
                       <View style={{marginBottom: 10, width: '47%'}}>
-                        <Pressable style={styles.foto}>
+                        <Pressable style={styles.foto} onPress={() => navigation.navigate('FotoKTPScreen')}>
                             <Text style={styles.ktp}>Ambil foto KTP</Text>
                         </Pressable>
                       </View>
                       <View style={{marginBottom: 10, width: '47%'}}>
-                        <Pressable style={styles.foto}>
+                        <Pressable style={styles.foto} onPress={() => navigation.navigate('FotoDiriKTPScreen')}>
                             <Text style={styles.ktp}>Ambil foto diri & KTP</Text>
                         </Pressable>
                       </View>

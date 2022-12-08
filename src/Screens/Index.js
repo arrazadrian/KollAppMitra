@@ -29,6 +29,8 @@ import ReceiptKasbonScreen from "./ReceiptKasbonScreen";
 import AdaKasbonTLScreen from "./AdaKasbonTLScreen";
 import AdaKasbonPOScreen from "./AdaKasbonPOScreen";
 import AdaKasbonPMScreen from "./AdaKasbonPMScreen";
+import FotoDiriKTPScreen from "./FotoDiriKTPScreen";
+import FotoKTPScreen from "./FotoKTPScreen";
 
 export {
      HomeScreen, 
@@ -41,4 +43,5 @@ export {
      ReceiptScreen, ScanScreen, FLocScreen, PanggilanScreen,
      CheckoutPMScreen, KasbonScreen, LunasScreen, ReceiptKasbonScreen,
      AdaKasbonTLScreen, AdaKasbonPOScreen, AdaKasbonPMScreen,ScanVoucherScreen,
+     FotoDiriKTPScreen, FotoKTPScreen,
     };

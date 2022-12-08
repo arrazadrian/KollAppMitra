@@ -34,6 +34,8 @@ import Location from './Location.png'
 import Bawah from './Bawah.png'
 import Blokir from './blokir.png'
 import Validasi from './validasi.png'
+import FrameKTP from './frameKTP.png'
+import FrameDiri from './framediriktp.png'
 
 export { Splash, Awan, gerobaksplash,
         DPdefault, LogoMitra, kollsplash,
@@ -46,5 +48,5 @@ export { Splash, Awan, gerobaksplash,
         mitrasplash, Kosong, DefaultFoto,
         PanggilMitra, Location, Receipt,
         Kasbon, Lunas, DompetKasbon,
-        Blokir, Validasi,
+        Blokir, Validasi, FrameKTP, FrameDiri,
     }

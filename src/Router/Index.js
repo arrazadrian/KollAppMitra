@@ -21,6 +21,8 @@ import {
     SignInScreen, 
     SignUpScreen, 
     FLocScreen,
+    FotoDiriKTPScreen,
+    FotoKTPScreen,
     ProdukScreen,
     PreOrderScreen,
     LangsungScreen,
@@ -67,6 +69,8 @@ return(
         <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FLocScreen" component={FLocScreen} options={{ title: "Lokasi Mangkal", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
+        <Stack.Screen name="FotoDiriKTPScreen" component={FotoDiriKTPScreen} options={{ title: "Foto Diri bersama KTP", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo} }}/>
+        <Stack.Screen name="FotoKTPScreen" component={FotoKTPScreen} options={{ title: "Foto KTP", headerTintColor: Putih, headerStyle:{backgroundColor: Ijo}  }}/>
       </Stack.Navigator>
     </Provider>
   </NavigationContainer>
