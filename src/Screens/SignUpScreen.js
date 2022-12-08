@@ -152,6 +152,18 @@ const SignUpScreen = () => {
                   autoCorrect={false}
                   />
               </View>
+              <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                      <View style={{marginBottom: 10, width: '47%'}}>
+                        <Pressable style={styles.foto}>
+                            <Text style={styles.ktp}>Ambil foto KTP</Text>
+                        </Pressable>
+                      </View>
+                      <View style={{marginBottom: 10, width: '47%'}}>
+                        <Pressable style={styles.foto}>
+                            <Text style={styles.ktp}>Ambil foto diri & KTP</Text>
+                        </Pressable>
+                      </View>
+              </View>
               <View style={{left: 5, marginBottom: 5}}>
                   <Text style={styles.subjudul}>Nama Toko</Text>
               </View>
@@ -338,11 +350,26 @@ const styles = StyleSheet.create({
     color: Putih,
     fontSize: 16,
   },
+  ktp:{
+    color: Ijo,
+    fontWeight:'bold',
+    textAlign:'center',
+    fontSize: 12,
+  },
   input: {
     backgroundColor: Putih,
+    justifyContent:'center',
+    alignItems:'center',
     height: 40,
     borderRadius: 10,
     paddingStart: 10,
+  },
+  foto:{
+    backgroundColor:IjoMint,
+    justifyContent:'center',
+    alignItems:'center',
+    height: 40,
+    borderRadius: 10,
   },
   tombol:{
     width: width*0.84,
@@ -353,5 +380,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-  }
+  },
 })
