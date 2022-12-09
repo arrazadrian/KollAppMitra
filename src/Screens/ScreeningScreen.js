@@ -54,7 +54,7 @@ const ScreeningScreen = () => {
                 if (docSnap.exists()) {
                     setAkun(docSnap.data().akun)
                 } else {
-                    handleSignOut()
+                    handleSignOutAwal()
                     Alert.alert("User tidak ditemukan!", "Salah menulis email/kata sandi.");
                 }
             })

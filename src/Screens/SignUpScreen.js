@@ -6,6 +6,7 @@ import { registration } from '../../API/firebasemethod';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetMangkal } from '../features/mangkalSlice';
+import { resetKTP } from '../features/ktpSlice';
 
 const { height, width } = Dimensions.get('window')
 
@@ -121,7 +122,7 @@ const SignUpScreen = () => {
     } else if (password !== passwordConfirmation) {
       Alert.alert('Kata sandi tidak sama','Mohon cek ulang penulisan.');
     } else {
-      registration(
+      await registration(
         email,
         password,
         namalengkap,
@@ -135,9 +136,9 @@ const SignUpScreen = () => {
         foto_ktp,
         foto_diri,
       );
+      await dispatch(resetMangkal())
+      await dispatch(resetKTP())
       emptyState();
-      dispatch(resetMangkal())
-      dispatch(resetKTP())
     }
   };
 
