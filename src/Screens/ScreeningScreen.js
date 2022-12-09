@@ -13,9 +13,12 @@ const { height, width } = Dimensions.get('window')
 const Peringatan = () => {
     return(
         <View>
+            <Text style={styles.judul}>
+                Akun Anda Kami Blokir 
+            </Text>
             <Image source={Blokir} style={styles.gambar}/>
             <Text style={styles.tulisan}>
-                Akun anda sedang <Text style={{fontWeight:'bold'}}>diblokir</Text> karena ada aktivitas mencurigakan. Silahkan hubungi layanan mitra Koll untuk aktivasi.
+                Mohon maaf akun anda sedang <Text style={{fontWeight:'bold'}}>diblokir</Text> karena ada aktivitas mencurigakan. Silahkan hubungi layanan mitra Koll untuk aktivasi.
             </Text>
             <TouchableOpacity style={styles.tombol} onPress={handleSignOutAwal}>
                 <Text style={styles.keluar}>Keluar</Text>
@@ -27,6 +30,9 @@ const Peringatan = () => {
 const Tunggu = () => {
     return(
         <View>
+            <Text style={styles.judul}>
+                Terima Kasih Sudah Mendaftar
+            </Text>
             <Image source={Validasi} style={styles.gambar}/>
             <Text style={styles.tulisan}>
                 Akun baru anda masih dalam proses validasi, pengerjaan paling lambat tiga hari kerja.
@@ -61,7 +67,7 @@ const ScreeningScreen = () => {
         }
 
        if(!unmounted){
-           getData()
+           setTimeout(getData, 6000)
        }
 
        return() =>{ 
@@ -120,6 +126,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Ijo,
         marginBottom: 50,
+    },
+    judul:{
+        textAlign:'center',
+        width: width * 0.8,
+        fontSize: 20,
+        color: Ijo,
+        marginBottom: 10,
+        fontWeight:'bold',
     },
     keluar:{
         textAlign:'center',
