@@ -34,8 +34,10 @@ import Location from './Location.png'
 import Bawah from './Bawah.png'
 import Blokir from './blokir.png'
 import Validasi from './validasi.png'
-import FrameKTP from './frameKTP.png'
 import FrameDiri from './framediriktp.png'
+import FrameKTP from './frameKTP.png'
+import Distord_diri from './distord_diri.jpg'
+import Distord_ktp from './distord_ktp.jpg'
 
 export { Splash, Awan, gerobaksplash,
         DPdefault, LogoMitra, kollsplash,
@@ -49,4 +51,5 @@ export { Splash, Awan, gerobaksplash,
         PanggilMitra, Location, Receipt,
         Kasbon, Lunas, DompetKasbon,
         Blokir, Validasi, FrameKTP, FrameDiri,
+        Distord_diri, Distord_ktp,
     }

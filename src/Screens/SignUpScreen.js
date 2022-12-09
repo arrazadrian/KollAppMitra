@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, TouchableOpacity, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import { Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
+import { Abu, Ijo, IjoMint, IjoTua, Putih } from '../Utils/Warna';
 import { useNavigation } from '@react-navigation/native';
 import { registration } from '../../API/firebasemethod';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -15,10 +15,9 @@ const SignUpScreen = () => {
   const dispatch = useDispatch();
 
   const { geo, alamat, geohash } = useSelector(state => state.mangkal);
+  const { foto_ktp, foto_diri } = useSelector(state => state.ktp);
 
   const [namalengkap, setNamalengkap] = useState('');
-  const [ktp, setKtp] = useState();
-  const [diriKtp, setDiriKtp] = useState();
   const [namatoko, setNamatoko] = useState('');
   const [buka, setBuka] = useState('');
   const [tutup, setTutup] = useState('');
@@ -159,11 +158,29 @@ const SignUpScreen = () => {
                         <Pressable style={styles.foto} onPress={() => navigation.navigate('FotoKTPScreen')}>
                             <Text style={styles.ktp}>Ambil foto KTP</Text>
                         </Pressable>
+                        { foto_ktp ? (
+                          <Image source={{uri: foto_ktp}} style={styles.gambarktp}/>
+                        ):
+                        (
+                        <View style={styles.gambarkosong}>
+                          <Text style={{color: Ijo, fontSize: 12, textAlign:'center'}}>Hasil foto KTP</Text>
+                        </View>
+                        )
+                        }
                       </View>
                       <View style={{marginBottom: 10, width: '47%'}}>
                         <Pressable style={styles.foto} onPress={() => navigation.navigate('FotoDiriKTPScreen')}>
                             <Text style={styles.ktp}>Ambil foto diri & KTP</Text>
                         </Pressable>
+                        { foto_diri ? (
+                          <Image source={{uri: foto_diri}} style={styles.gambarktp}/>
+                        ):
+                        (
+                          <View style={styles.gambarkosong}>
+                            <Text style={{color: Ijo, fontSize: 12, textAlign:'center'}}>Hasil foto diri & KTP</Text>
+                          </View>
+                        )
+                        }
                       </View>
               </View>
               <View style={{left: 5, marginBottom: 5}}>
@@ -357,6 +374,21 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     textAlign:'center',
     fontSize: 12,
+  },
+  gambarktp:{
+    width: width * 0.37,
+    height: height * 0.25, 
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  gambarkosong:{
+    width: width * 0.37,
+    height: height * 0.25, 
+    borderRadius: 10,
+    marginTop: 10,
+    backgroundColor: Abu,
+    justifyContent:'center',
+    alignItems:'center',
   },
   input: {
     backgroundColor: Putih,

@@ -9,6 +9,7 @@ import posisiReducer from './src/features/posisiSlice';
 import bobotReducer from './src/features/bobotSlice';
 import voucherReducer from './src/features/voucherSlice';
 import datapmReducer from './src/features/datapmSlice';
+import ktpReducer from './src/features/ktpSlice';
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     bobot: bobotReducer,
     voucher: voucherReducer,
     datapm: datapmReducer,
+    ktp: ktpReducer,
   },
 });
