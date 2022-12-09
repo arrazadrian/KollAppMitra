@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   pojoklogo: {
     width:  width*0.25,
     height: height*0.1,
-    top: height*0.03,
-    left: width*0.03,
+    top: height*0.05,
+    left: width*0.05,
     position: `absolute`,
   },
   pasar:{
