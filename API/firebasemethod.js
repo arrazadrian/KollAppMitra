@@ -25,12 +25,14 @@ import { v4 as uuidv4 } from 'uuid';
 // MEMBUAT AKUN BARU DENGAN EMAIL DAN PASSWORD, 
 // LALU MEMBUAT DOKUMEN BARU PADA COLLECTION MITRA
 
-export async function registration(email, password, namalengkap, namatoko, buka, tutup, geo, alamat, geohash, phone ) {
+export async function registration(email, password, namalengkap, namatoko, buka, tutup, geo, alamat, geohash, phone, foto_ktp, foto_diri ) {
     const auth = getAuth();
     const db = getFirestore(app);
   try {
     await createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then(async () => {
+            const url_ktp = await uploadfotoktp(foto_ktp);
+            const url_diri = await uploadfotodiri(foto_diri);
             setDoc(doc(db, "mitra", auth.currentUser.uid),{
                 id_mitra: auth.currentUser.uid,
                 akun: "Menunggu Validasi",
@@ -52,6 +54,8 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 jml_nilai_produk: 0,
                 nilai_masuk: 0,  
                 token_notif: "",
+                foto_ktp: url_ktp,
+                foto_diri: url_diri,
             })
         })
   } catch (err) {
@@ -1064,3 +1068,81 @@ async function notifPOmitrabatal(token_notifpelanggan) {
     body: JSON.stringify(message),
   });
 }
+
+  // API 32: uploadfotoktp
+  // UPLOAD FOTO KTP YANG DIOPER KE
+  // FUNGSI FIRESTORE SELANJUTNYA
+
+  async function uploadfotoktp(uri) {
+    try{
+      const uploadUri = uri;
+      let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
+
+      // Add uuid to File Name
+      filename = uuidv4() + '.' + extension;
+
+      // Why are we using XMLHttpRequest? See:
+      // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+      const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+              resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+              console.log(e);
+              reject(new TypeError("Network request failed"));
+            };
+            xhr.responseType = "blob";
+            xhr.open("GET", uri, true);
+            xhr.send(null);
+      });
+      const fileRef = ref(getStorage(app), `ktp/${filename}`);
+      const result = await uploadBytes(fileRef, blob);
+      
+      // We're done with the blob, close and release it
+      blob.close();
+      
+      return await getDownloadURL(fileRef);
+    } catch (err) {
+      Alert.alert('Ada error pada foto ktp!', err.message);
+    }
+  };
+
+  // API 33: uploadfotodiri
+  // UPLOAD FOTO DIRI YANG DIOPER KE
+  // FUNGSI FIRESTORE SELANJUTNYA
+
+  async function uploadfotodiri(uri) {
+    try{
+      const uploadUri = uri;
+      let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
+
+      // Add uuid to File Name
+      filename = uuidv4() + '.' + extension;
+
+      // Why are we using XMLHttpRequest? See:
+      // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+      const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+              resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+              console.log(e);
+              reject(new TypeError("Network request failed"));
+            };
+            xhr.responseType = "blob";
+            xhr.open("GET", uri, true);
+            xhr.send(null);
+      });
+      const fileRef = ref(getStorage(app), `diri/${filename}`);
+      const result = await uploadBytes(fileRef, blob);
+      
+      // We're done with the blob, close and release it
+      blob.close();
+      
+      return await getDownloadURL(fileRef);
+    } catch (err) {
+      Alert.alert('Ada error pada foto diri!', err.message);
+    }
+  };

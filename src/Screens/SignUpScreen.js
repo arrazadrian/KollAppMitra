@@ -97,6 +97,10 @@ const SignUpScreen = () => {
   const handleSignUp = async () =>{
     if (!namalengkap) {
       Alert.alert('Nama lengkap masih kosong','Isi nama lengkap dengan benar.');
+    } else if (!foto_ktp) {
+      Alert.alert('Foto KTP masih kosong','Ambil foto KTP terlebih dahulu.');
+    } else if (!foto_diri) {
+      Alert.alert('Foto diri masih kosong','Ambil foto diri terlebih dahulu.');
     } else if (!namatoko) {
       Alert.alert('Nama toko masih kosong','Isi nama toko dengan benar.');
     } else if (!buka) {
@@ -128,9 +132,12 @@ const SignUpScreen = () => {
         alamat,
         geohash,
         phone,
+        foto_ktp,
+        foto_diri,
       );
       emptyState();
       dispatch(resetMangkal())
+      dispatch(resetKTP())
     }
   };
 
