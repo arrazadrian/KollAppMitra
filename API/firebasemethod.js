@@ -1146,3 +1146,25 @@ async function notifPOmitrabatal(token_notifpelanggan) {
       Alert.alert('Ada error pada foto diri!', err.message);
     }
   };
+
+  // API 34: tambahTagihan
+  // MENAMBAH TAGIHAN UNTUK MITRA
+  // SETIAP ADA TRANSAKSI
+
+ export const tambahTagihan = async (id_mitra, hargatotalsemua) => {
+    const db = getFirestore(app);
+    const docRef = doc(db, "mitra", id_mitra);
+    const docSnap = await getDoc(docRef);
+    let tagihan20 = hargatotalsemua * 0.2;
+    try{
+      if(docSnap.exists()){
+          updateDoc(docRef, { 
+            tagihan: docSnap.data().tagihan + tagihan20, 
+          });
+      } else {
+        console.log("No such document!");
+      }
+    } catch(err){
+      console.log('Ada Error update tagihan mitra.', err.message);
+    };
+  };
