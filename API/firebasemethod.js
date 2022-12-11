@@ -56,6 +56,8 @@ export async function registration(email, password, namalengkap, namatoko, buka,
                 token_notif: "",
                 foto_ktp: url_ktp,
                 foto_diri: url_diri,
+                tagihan: 0,
+                poin_potongan: 0,
             })
         })
   } catch (err) {
@@ -127,7 +129,7 @@ async function uploadgambarproduk(uri) {
     let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
 
     // Add uuid to File Name
-    filename = uuidv4() + '.' + extension;
+    let filename = uuidv4() + '.' + extension;
 
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
@@ -455,7 +457,7 @@ async function uploadgambarakun(uri) {
     let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
 
     // Add uuid to File Name
-    filename = uuidv4() + '.' + extension;
+    let filename = uuidv4() + '.' + extension;
 
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
@@ -582,6 +584,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
       id_voucher: id_voucher,
       potongan: potongan,
    });
+    tambahTagihan(auth.currentUser.uid, hargatotalsemua);
     console.log("ID dokumenTLnya: ", docRef.id)
     return docRef.id;
   } catch(err){
@@ -592,7 +595,8 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
 // API 16: selesaikanPO
 // UPDATE PO JADI TRANSAKSI YANG SELESAI
 
-export const selesaikanPO = async (id_transaksi, pembayaran) => {
+export const selesaikanPO = async (id_transaksi, pembayaran, hargatotalsemua) => {
+    const auth = getAuth();  
     const db = getFirestore(app);
     const docreftran = doc(db, "transaksi", id_transaksi);
     getDoc(docreftran).then(docSnap => {
@@ -603,6 +607,7 @@ export const selesaikanPO = async (id_transaksi, pembayaran) => {
               status_transaksi: "Selesai", 
               waktu_selesai: serverTimestamp(), 
             });
+            tambahTagihan(auth.currentUser.uid, hargatotalsemua);
         } catch (err) {
           Alert.alert('Ada error untuk menyelesaikan PO!', err.message);
         }
@@ -786,6 +791,7 @@ export const selesaikanPM = async (id_transaksi, kelompokProduk, subtotalhargaKe
             id_voucher: id_voucher,
             potongan: potongan,
           });
+          tambahTagihan(auth.currentUser.uid, hargatotalsemua);
       } catch (err) {
         Alert.alert('Ada error menyelesaikan PM1!', err.message);
       }
@@ -1079,7 +1085,7 @@ async function notifPOmitrabatal(token_notifpelanggan) {
       let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
 
       // Add uuid to File Name
-      filename = uuidv4() + '.' + extension;
+      let filename = uuidv4() + '.' + extension;
 
       // Why are we using XMLHttpRequest? See:
       // https://github.com/expo/expo/issues/2402#issuecomment-443726662
@@ -1118,7 +1124,7 @@ async function notifPOmitrabatal(token_notifpelanggan) {
       let extension = uploadUri.substring(uploadUri.lastIndexOf('.') + 1);
 
       // Add uuid to File Name
-      filename = uuidv4() + '.' + extension;
+      let filename = uuidv4() + '.' + extension;
 
       // Why are we using XMLHttpRequest? See:
       // https://github.com/expo/expo/issues/2402#issuecomment-443726662

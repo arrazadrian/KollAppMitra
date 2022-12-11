@@ -75,7 +75,7 @@ const ReceiptScreen = ({route}) => {
   async function selesaiPO(){
     let pembayaran = 'Lunas';
     try{
-        selesaikanPO(id_transaksi, pembayaran);
+        selesaikanPO(id_transaksi, pembayaran, hargatotalsemua);
         navigation.navigate("TQScreen"); 
     } catch (err){
       Alert.alert('Ada error menyelesaikan pre-order!', err.message);

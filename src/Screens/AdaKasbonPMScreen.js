@@ -11,7 +11,7 @@ import {
  } from '../features/keranjangSlice'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { buatKasbonBaru, buatTransaksiTL, selesaikanPM, tambahTransaksiKasbon, updateTersediaVoucher } from '../../API/firebasemethod'
+import { buatKasbonBaru, selesaikanPM, tambahTransaksiKasbon, updateTersediaVoucher } from '../../API/firebasemethod'
 import moment from 'moment'
 import localization from 'moment/locale/id'
 import "intl";

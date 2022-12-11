@@ -60,7 +60,7 @@ const AdaKasbonPOScreen = ({route}) => {
             Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
           } else {
             //Disini update selesai PO dan pembayarannya kasbon
-            selesaikanPO(id_transaksi, pembayaran);
+            selesaikanPO(id_transaksi, pembayaran, hargatotalsemua);
             buatKasbonBaru(
               namamitra,
               namatoko,
@@ -89,7 +89,7 @@ const AdaKasbonPOScreen = ({route}) => {
           } else if (!namatoko) {
             Alert.alert('Nama toko kosong','Silahkan tutup dan buka kembali aplikasi ini.');
           } else {
-            selesaikanPO(id_transaksi, pembayaran);
+            selesaikanPO(id_transaksi, pembayaran, hargatotalsemua);
             tambahTransaksiKasbon(
               id_kasbon,
               hargatotalsemua,

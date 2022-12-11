@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, Alert, Dimensions, ActivityIndicator, ScrollView, Modal } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Abu, Ijo, IjoMint, IjoTua, Kuning, Putih} from '../Utils/Warna';
 import { KollLong, DefaultFoto } from '../assets/Images/Index';
@@ -15,7 +15,7 @@ import "intl/locale-data/jsonp/id";
 const { width, height } = Dimensions.get('window')
 
 const AkunScreen = () => {
-  
+   
   const navigation = useNavigation();
 
   const pindahEdit = () => {
@@ -47,6 +47,8 @@ const AkunScreen = () => {
           )
   }
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [namaakun, setNamaakun] = useState('')
   const [fotoakun, setFotoakun] = useState('')
   const [tokoakun, setTokoakun] = useState('')
@@ -58,6 +60,7 @@ const AkunScreen = () => {
   const [rating_layanan, setRating_layanan] = useState()
   const [rating_produk, setRating_produk] = useState()
   const [poin, setPoin] = useState()
+  const [tagihan, setTagihan] = useState()
   const auth = getAuth();
   const db = getFirestore(app)
 
@@ -76,6 +79,7 @@ const AkunScreen = () => {
             setRating_layanan(doc.data().rating_layanan);
             setRating_produk(doc.data().rating_produk);
             setPoin(doc.data().poin_potongan);
+            setTagihan(doc.data().tagihan);
             console.log('getuserAkun jalan (Akun Screen)')
             // Respond to data
             // ...
@@ -90,6 +94,26 @@ const AkunScreen = () => {
 
   return (
     <View style={styles.latar}>
+         <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                swipeDirection = "down"
+                onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                }}
+                >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={{fontSize: 18, color: Ijo, fontWeight: 'bold'}}>Info</Text>
+                        <Text style={{textAlign:'center', marginVertical: 5}}>
+                            Bagian Koll berasal dari 20% tiap tranksaksi dan poin potongan berasal dari voucher yang digunakan pelanggan. Total tagihan
+                            harus dibayar ke akun virtual Koll tiap bulannya.
+                        </Text>
+                        <Ionicons name="close-circle-outline" size={30} color={Ijo} onPress={() => { setModalVisible(!modalVisible) }} />
+                    </View>
+                </View>
+            </Modal>
         <ScrollView>
           <View style={styles.atas}>
             <Image source={KollLong} style={styles.logo}/>
@@ -133,15 +157,25 @@ const AkunScreen = () => {
                         </View>
                     </View>
                 </View>
-                <View style={styles.kotakpoin}>
-                  <Text style={[styles.subisi, {textAlign:'center'}]}>Poin Potongan</Text>
-                  { poin ?
-                    (
-                    <Text style={[styles.subjudul, {color: Ijo, fontSize: 22, textAlign:'center'}]}>{new Intl.NumberFormat('id-Id').format(poin).toString()}</Text>
-                      ):(
-                    <Text style={[styles.subjudul, {color: Ijo, fontSize: 22, textAlign:'center'}]}>0</Text>
-                    )
-                  }
+                <View>
+                    <View style={{flexDirection:'row', justifyContent:'space-between', paddingHorizontal:10, alignItems:'center', marginBottom: 5}}>
+                      <Text style={{color: Ijo, fontSize: 14, fontWeight:'bold'}}>Bagi Hasil untuk Koll</Text>
+                      <Ionicons name="information-circle-outline" size={14} color={Ijo} onPress={() => {setModalVisible(true)}}/>
+                    </View>
+                    <View style={styles.kotakpoin}>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={styles.rekap}>Bagian Koll</Text>
+                          <Text style={styles.rekap}>Rp{new Intl.NumberFormat('id-Id').format(tagihan).toString()}</Text>
+                      </View>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={styles.rekap}>Poin Potongan</Text>
+                          <Text style={styles.rekap}>Rp{new Intl.NumberFormat('id-Id').format(poin).toString()}</Text>
+                      </View>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={[styles.subisi, {fontSize: 14, fontWeight:'bold'}]}>Total Tagihan</Text>
+                          <Text style={[styles.subjudul, {color: Putih, fontSize: 14}]}>Rp{new Intl.NumberFormat('id-Id').format(tagihan-poin).toString()}</Text>
+                      </View>
+                    </View>
                 </View>
                 <View style={{borderBottomColor: Ijo, borderBottomWidth: 1}}>
                   <Text style={{color: Putih, fontSize: 22, fontWeight: 'bold'}}>Info</Text>
@@ -230,9 +264,11 @@ const styles = StyleSheet.create({
   }, 
   kotakpoin:{
     borderColor: Ijo,
-    borderWidth: 0.5,
     borderRadius: 10,
-    padding: 5,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     marginBottom: 10,
   },
   subjudul:{
@@ -244,10 +280,27 @@ const styles = StyleSheet.create({
     color: Putih, 
     fontSize: 16, 
   },
+  rekap:{
+    color: Ijo, 
+    fontSize: 12, 
+  },
   logout:{
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
     marginVertical: 20,
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    },
+  contoh:{
+      width: width * 0.6,
+      height: width * 0.8,
+      borderRadius: 10,
+      marginVertical: 10,
   },
 })
