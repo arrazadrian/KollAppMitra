@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Pressable, Modal } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Pressable, Modal, Alert } from 'react-native'
 import React, {useState} from 'react'
 import { Ijo, Kuning, Putih } from '../Utils/Warna'
 import Ionicons from '@expo/vector-icons/Ionicons'
