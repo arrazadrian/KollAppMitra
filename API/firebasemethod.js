@@ -573,6 +573,7 @@ export const buatTransaksiTL = async ( namamitra, namatoko, namapelanggan, id_pe
       namapelanggan: namapelanggan,
       id_pelanggan: id_pelanggan,
       waktu_selesai: serverTimestamp(),
+      waktu_dipesan:  serverTimestamp(),
       jenislayanan: 'Temu Langsung',
       status_transaksi: 'Selesai',
       produk: kelompokProduk,
