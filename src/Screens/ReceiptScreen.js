@@ -277,10 +277,14 @@ const ReceiptScreen = ({route}) => {
                         <Text style={styles.atasdesk}>Status Transaksi</Text>
                         <Text style={[styles.atasdesk, {color:'tomato'}]}>{pembatalan}</Text>
                   </View>
-                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <Text style={styles.atasdesk}>Biaya Pembatalan</Text>
-                        <Text style={styles.atasdesk}>Rp{biayaBatal}</Text>
-                  </View>
+                  { jenislayanan == 'Panggil Mitra' ? 
+                    (
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                            <Text style={styles.atasdesk}>Biaya Pembatalan</Text>
+                            <Text style={styles.atasdesk}>Rp{biayaBatal}</Text>
+                      </View>
+                    ):(null)
+                  }
               </View>
               )
             }
