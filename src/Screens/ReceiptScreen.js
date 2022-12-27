@@ -27,7 +27,7 @@ const ReceiptScreen = ({route}) => {
     hargalayanan, hargasubtotal, hargatotalsemua, id_mitra, id_pelanggan, id_transaksi,  jenislayanan,
     jumlah_kuantitas, namamitra, namatoko, namapelanggan, produk, waktu_selesai, waktu_dipesan, alamat_pelanggan,
     status_transaksi, catatan_lokasi, catatan_produk, phonemitra, phonepelanggan, pembayaran, id_voucher, potongan,
-    pembatalan,
+    pembatalan, biayaBatal,
      } = route.params;
 
   const telepon = () => {
@@ -261,21 +261,29 @@ const ReceiptScreen = ({route}) => {
             </View>
             { !pembatalan ?
               (
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={styles.atasdesk}>Status Transaksi</Text>
-                    <Text style={styles.atasdesk}>{status_transaksi}</Text>
+              <View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style={styles.atasdesk}>Status Transaksi</Text>
+                        <Text style={styles.atasdesk}>{status_transaksi}</Text>
+                  </View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style={styles.atasdesk}>Pembayaran</Text>
+                        <Text style={styles.atasdesk}>{pembayaran}</Text>
+                  </View>
               </View>
               ):(
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={styles.atasdesk}>Status Transaksi</Text>
-                    <Text style={[styles.atasdesk, {color:'tomato'}]}>{pembatalan}</Text>
+              <View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style={styles.atasdesk}>Status Transaksi</Text>
+                        <Text style={[styles.atasdesk, {color:'tomato'}]}>{pembatalan}</Text>
+                  </View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style={styles.atasdesk}>Biaya Pembatalan</Text>
+                        <Text style={styles.atasdesk}>Rp{biayaBatal}</Text>
+                  </View>
               </View>
               )
             }
-            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={styles.atasdesk}>Pembayaran</Text>
-                  <Text style={styles.atasdesk}>{pembayaran}</Text>
-            </View>
             <WaktuTransaksi/>
         </View>
 

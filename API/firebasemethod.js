@@ -727,7 +727,7 @@ export const batalPMolehMitra = async (id_transaksi, token_notifpelanggan) => {
         });
         notifPMmitrabatal(token_notifpelanggan)
       } catch (err) {
-        Alert.alert('Ada error untuk membatalkan PO dari mitra!', err.message);
+        Alert.alert('Ada error untuk membatalkan PM dari mitra!', err.message);
       }
     }
   })
@@ -1175,3 +1175,39 @@ async function notifPOmitrabatal(token_notifpelanggan) {
       console.log('Ada Error update tagihan mitra.', err.message);
     };
   };
+
+
+// API 35: handleBatallanjut
+// Pelanggan tidak jadi lanjut berbelanja
+
+export const handleBatallanjut = async (id_transaksi, biayaBatal) => {
+  const auth = getAuth();
+  const db = getFirestore(app);
+  const docreftran = doc(db, "transaksi", id_transaksi);
+  const docrefmit = doc(db, "mitra", auth.currentUser.uid);
+  await getDoc(docreftran).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+        updateDoc(docreftran, {
+          pembatalan: "Tidak berbelanja", 
+          status_transaksi: "Selesai",
+          waktu_selesai: serverTimestamp(),  
+          biayaBatal: biayaBatal,
+        });
+      } catch (err) {
+        Alert.alert('Ada error untuk membatalkan PO dari mitra!', err.message);
+      }
+    }
+  })
+  await getDoc(docrefmit).then(docSnap => {
+    if (docSnap.exists()) {
+      try {
+        updateDoc(docrefmit, { 
+          dipanggil: false, 
+        });
+      } catch (err) {
+        Alert.alert('Ada error untuk update status dipanggil!', err.message);
+      }
+    }
+  })
+};

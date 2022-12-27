@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Image, Alert } from 'react-native'
 import React from 'react'
 import { AbuTua, Ijo, IjoTua, Putih } from '../Utils/Warna'
 import { Bag } from '../assets/Images/Index'
@@ -7,11 +7,54 @@ import { useSelector } from "react-redux";
 import { pilihProdukKeranjang, totalHarga } from '../features/keranjangSlice'
 import "intl";
 import "intl/locale-data/jsonp/id";
+import { handleBatallanjut } from '../../API/firebasemethod'
 
 const KeranjangPM = () => {
   const items = useSelector(pilihProdukKeranjang)
   const navigation = useNavigation();
   const totalhargaKeranjang = useSelector(totalHarga)
+  const { id_transaksi, hargalayanan } = useSelector(state => state.datapm);
+
+  const handleTidakJadi =()=> {
+    if(hargalayanan == 0){
+      let biayaBatal = 5000
+      Alert.alert(`Pelanggan tidak jadi berbelanja?`,`Pelanggan harus membayar biaya pembatalan sebesar Rp${biayaBatal} tunai.`,
+          [
+                {
+                  text: 'Batal',
+                  onPress: () => {
+                    console.log('Batal dipencet')
+                  }
+                },
+                {
+                  text: 'Ya',
+                  onPress: async () => {
+                    await handleBatallanjut(id_transaksi, biayaBatal);
+                    navigation.navigate('HomeScreen');
+                  }
+                }
+          ]
+      )
+    } else { 
+        Alert.alert(`Pelanggan tidak jadi berbelanja?`,`Pelanggan harus membayar biaya pembatalan sebesar Rp${hargalayanan} tunai.`,
+          [
+                {
+                  text: 'Batal',
+                  onPress: () => {
+                    console.log('Batal dipencet')
+                  }
+                },
+                {
+                  text: 'Ya',
+                  onPress: async () => {
+                    await handleBatallanjut(id_transaksi, biayaBatal);
+                    navigation.navigate('HomeScreen');
+                  }
+                }
+          ]
+        )
+    }
+  }
 
   return (
     <View>
@@ -33,11 +76,12 @@ const KeranjangPM = () => {
                   </View>
                   { !items.length ?
                     (
-                      <View style={{width: 85}}>
-                        <Text style={{fontStyle:'italic', color: Putih}}>
-                          Pilih produk pelangan
-                        </Text>
-                      </View>
+                      <Pressable 
+                        style={{backgroundColor: Putih, padding: 10, borderRadius: 10}} 
+                        onPress={handleTidakJadi}
+                        >
+                        <Text style={{color:Ijo, fontWeight:'bold', fontSize: 18}}>Tidak Jadi</Text>
+                      </Pressable>
                     ):(
                       <Pressable 
                         disabled={!items.length}

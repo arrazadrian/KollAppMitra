@@ -41,6 +41,7 @@ const RiwayatCard = ({ item }) => {
       potongan: item.potongan,
       id_transaksi: item.id,
       pembatalan: item?.pembatalan,
+      biayaBatal: item?. biayaBatal,
     })
   }
 
